@@ -1,0 +1,11 @@
+services:
+  # A name for this container
+  flask-app:
+    container_name: engagement-hub
+    build: .
+    stdin_open: true
+    tty: true
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
