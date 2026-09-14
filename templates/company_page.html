@@ -2,14 +2,10 @@
 {% extends 'shared/layout.html' %}
 {% block maincontent %}
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/company_page.css') }}">
+    {% block extrastyle %}{% endblock %}
 <title>MSU Engineering Hub</title>
 <style>
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    color: white;
-    background-color: #18453B;
-}
 </style>
 </head>
 <body>
