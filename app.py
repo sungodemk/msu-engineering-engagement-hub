@@ -27,7 +27,7 @@ def portfolio():
 def stewardship():
     return render_template('Stewardship_queue_page.html')
 
-@app.route('/overview')
+@app.route('/company_page_overview')
 def overview():
     return render_template('company_page/overview.html')
 
