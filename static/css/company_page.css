@@ -9,11 +9,11 @@ body {
 }
 
 .title_box {
-    width: 900px;
-    height: 100px;
-    position: absolute;
-    top: 150px;
-    left: 400px;
+    width: 70vw;
+    height: 20vh;
+    position: relative;
+    top: 2vh;
+    left: 15vw;
 
     background-color: white;
     color: #18453B;
@@ -26,33 +26,33 @@ body {
 }
 
 .c_title_text {
-    font-size: 30px;
+    font-size: 2vw;
     font-weight: bold;
     text-align: center;
     color: #18453B;
     position: relative;
-    top: -10px;
-    right: 50px;
+    top: -3vh;
+    right: 3vw;
 }
 
 .location {
     font-size: 1.0em;
     color: black;
     position: relative;
-    top: 30px;
-    right: 400px;
+    top: 1vh;
+    right: 32vw;
 }
 
 .tier_box {
     background-color: rgb(135, 250, 135);
     position: relative;
-    top: -7px;
-    right: 400px;
-    border: 1px solid #18453B;
+    top: -2.5vh;
+    right: 35vw;
+    border: 0.01vw solid #18453B;
 }
 
 .tier_text {
-    font-size: 15px;
+    font-size: 1.0em;
     color: black;
     position: relative;
 }
@@ -61,6 +61,6 @@ body {
     font-size: 1.0em;
     color: black;
     position: relative;
-    top: 30px;
-    right: 300px;
+    top: 6vh;
+    right: 70vw;
 }
