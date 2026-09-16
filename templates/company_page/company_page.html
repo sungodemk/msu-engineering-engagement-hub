@@ -1,0 +1,42 @@
+<!--Zhixiang Miao-->
+{% extends 'shared/layout.html' %}
+{% block maincontent %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/company_page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/company_avatar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/company_page_navbar.css') }}">
+    {% block extrastyle %}{% endblock %}
+<title>MSU Engineering Hub</title>
+<style>
+</style>
+</head>
+<!-- <nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+    </ul>
+</nav> -->
+<!-- <img class="company_avatar" src="../static/images/base_avatar.png" alt="Company Avatar"> -->
+<!-- <div>
+    <aside>
+        <nav>
+            <button>Click Me</button>
+        </nav>
+    </aside>
+</div> -->
+<!-- The navigation bar -->
+<div class="c_nav">
+    <div class="c_nav_middle">
+        <span class="c_title">MSU Engineering Hub Company Page</span>
+    </div>
+    <!-- Navigation Links -->
+    <div class="c_nav_left" id="c_nav_links">
+        <a href="/overview">Overview</a>
+        <a href="/summary">Summary</a>
+    </div>
+    
+</div>
+<body>
+<!-- <img class="company_avatar" src="../static/images/base_avatar.png" alt="Company Avatar"> -->
+</body>
+<!--Learned the above HTML knowledges from this open source: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements-->
+{% endblock %}
