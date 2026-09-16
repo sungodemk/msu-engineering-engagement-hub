@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     color: white;
-    background-color: #18453B; /*Planning on using this MSU green color for the later tabs, 
-                                   but put it there for now so I can feel easier to use it later.*/
+    background-color: white; 
+    /* background-color: #18453B; /*Planning on using this MSU green color for the later tabs,  */
+                                   /* but put it there for now so I can feel easier to use it later.*/ 
 }
