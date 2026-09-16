@@ -2,7 +2,44 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     color: white;
-    background-color: white; 
+    background-color: rgba(210, 209, 209, 0.916); 
     /* background-color: #18453B; /*Planning on using this MSU green color for the later tabs,  */
                                    /* but put it there for now so I can feel easier to use it later.*/ 
+}
+
+.title_box {
+    width: 900px;
+    height: 100px;
+    position: absolute;
+    top: 200px;
+    left: 400px;
+
+    background-color: white;
+    color: #18453B;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    border: 1px solid #18453B;
+}
+
+.c_title_text {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    color: #18453B;
+    position: relative;
+    top: -10px;
+    right: 50px;
+    /* right: 850px; */
+}
+
+.location {
+    font-size: 1.0em;
+    color: black;
+    position: relative;
+    top: 30px;
+    right: 850px;
+    text-align: center;
 }

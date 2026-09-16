@@ -1,9 +1,8 @@
 {% extends "company_page/company_page.html" %}
 {% block maincontent %}
-<!-- <h1>Overview</h1> -->
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/company_avatar.css') }}">
     {% block extrastyle %}{% endblock %}
 </head>
-<img class="company_avatar" src="../static/images/base_avatar.png" alt="Company Avatar">
+<img class="company_avatar" src="../static/images/blank_company_avatar.png" alt="Company Avatar">
 {% endblock %}
