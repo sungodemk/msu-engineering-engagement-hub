@@ -13,7 +13,7 @@ def home():
 
 @app.route('/company')
 def company():
-    return render_template('company_page.html')
+    return render_template('company_page/company_page.html')
 
 @app.route('/persons')
 def persons():
@@ -26,6 +26,10 @@ def portfolio():
 @app.route('/stewardship')
 def stewardship():
     return render_template('Stewardship_queue_page.html')
+
+@app.route('/overview')
+def overview():
+    return render_template('company_page/overview.html')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), use_reloader=True)
