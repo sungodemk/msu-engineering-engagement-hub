@@ -22,7 +22,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 5%;
-    border: 1px solid #18453B;
+    border: 0.05vw solid #18453B;
 }
 
 .c_title_text {
@@ -31,7 +31,7 @@ body {
     text-align: center;
     color: #18453B;
     position: relative;
-    top: -3vh;
+    top: -4vh;
     right: 3vw;
 }
 
@@ -46,7 +46,7 @@ body {
 .tier_box {
     background-color: rgb(135, 250, 135);
     position: relative;
-    top: -2.5vh;
+    top: -3.8vh;
     right: 35vw;
     border: 0.01vw solid #18453B;
 }
