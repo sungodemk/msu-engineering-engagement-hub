@@ -9,11 +9,11 @@ body {
 }
 
 .title_box {
-    width: 70vw;
-    height: 20vh;
+    width: 68vw;
+    height: 15vh;
     position: relative;
     top: 2vh;
-    left: 15vw;
+    left: 19vw;
 
     background-color: white;
     color: #18453B;
@@ -40,14 +40,16 @@ body {
     color: black;
     position: relative;
     top: 1vh;
-    right: 32vw;
+    right: 27vw;
 }
 
 .tier_box {
+    width: 3vw;
+    height: 3vh;
     background-color: rgb(135, 250, 135);
     position: relative;
-    top: -3.8vh;
-    right: 35vw;
+    top: -3.5vh;
+    right: 20vw;
     border: 0.01vw solid #18453B;
 }
 
@@ -55,12 +57,158 @@ body {
     font-size: 1.0em;
     color: black;
     position: relative;
+    top: 0.5vh;
+    text-align: center;
 }
 
 .owner {
     font-size: 1.0em;
     color: black;
     position: relative;
-    top: 6vh;
-    right: 70vw;
+    top: 5vh;
+    right: 51vw;
+}
+
+
+
+.log_ac_box {
+    height: 2vw;
+    width: 9vw;
+    background-color: #18453B;
+    color: white;
+    position: relative;
+    border: 0.05vw solid #18453B;
+    text-align: center;
+    font-size: 1.0em;
+}
+
+.total_giving_box {
+    width: 15vw;
+    height: 15vh;
+    background-color: white;
+    color: black;
+    font-size: 1.0em;
+    text-align: center;
+    position: relative;
+    top: 9vh;
+    left: 19vw;
+    border: 0.01vw solid #18453B;
+}
+
+.total_giving_amount {
+    font-size: 1.0em;
+    text-align: center;
+    color: black;
+    position: relative;
+}
+
+.award_box {
+    width: 15vw;
+    height: 15vh;
+    background-color: white;
+    position: relative;
+    top: -6vh;
+    left: 40vw;
+    border: 0.01vw solid #18453B;
+}
+
+.award_text {
+    font-size: 1.2em;
+    color: black;
+    text-align: center;
+    position: relative;
+    top: 2.5vh;
+    font-weight: bold;
+}
+
+.caps_team_box {
+    width: 15vw;
+    height: 15vh;
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-size: 1.0em;
+    position: relative;
+    top: -21vh;
+    left: 61vw;
+    border: 0.01vw solid #18453B;
+}
+
+.last_contact_box {
+    width: 15vw;
+    height: 15vh;
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-size: 1.0em;
+    position: relative;
+    top: -36vh;
+    left: 82vw;
+    border: 0.01vw solid #18453B;
+}
+
+.inbound_box {
+    background-color: white;
+    width: 36vw;
+    height: 50vh;
+    position: relative;
+    top: -30vh;
+    left: 19vw;
+    border: 0.01vw solid #18453B;
+}
+
+.inbound_title_box {
+    height: 3vh;
+    width: 36vw;
+    font-size: 1.0em;
+    background-color: rgb(204, 238, 245);
+    color: #18453B;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    border: 0.01vw solid black;
+}
+
+.outbound_box {
+    background-color: white;
+    width: 36vw;
+    height: 50vh;
+    position: relative;
+    top: -80vh;
+    left: 61vw;
+    border: 0.01vw solid #18453B;
+}
+
+.outbound_title_box {
+    height: 3vh;
+    width: 36vw;
+    font-size: 1.0em;
+    background-color: rgb(204, 238, 245);
+    color: #18453B;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    border: 0.01vw solid black;
+}
+
+.activity_box {
+    width: 78vw;
+    height: 150vh;
+    background-color: white;
+    position: relative;
+    top: -70vh;
+    left: 19vw;
+    border: 0.01vw solid #18453B;
+}
+
+.activity_title {
+    width: 78vw;
+    height: 3vh;
+    background-color: rgb(204, 238, 245);
+    font-size: 1.0em;
+    color: #18453B;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    border: 0.01vw solid black;
 }
