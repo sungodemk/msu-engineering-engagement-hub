@@ -1,3 +1,4 @@
+-- migrate:up
 Create Table source_records (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     source_system text NOT NULL, --'Salesforce, Kuali, handshake'
@@ -13,4 +14,8 @@ Create Table source_records (
 create trigger source_records_set_updated_at BEFORE UPDATE ON source_records
 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
+
+
+-- migrate:down
 drop table if exists source_records;
+drop function if exists set_updated_at();

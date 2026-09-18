@@ -1,0 +1,38 @@
+[
+  {
+    "awardId": "AWD-0027",
+    "sponsorName": "Halverson Motors",
+    "title" :  "Battery Thermal Management for Heavy Vehicles",
+    "piName": "K. Nguyen",
+    "piEmail":  null,
+    "leadUnit":  "Mechanical Engineering",
+    "startDate":   "2025-01-01",
+    "endDate": "2027-12-31",
+    "totalAmount": 240000,
+    "status": "Active"
+  },
+  {
+    "awardId": "AWD-0031",
+    "sponsorName": "Halverson Motors, Inc.",
+    "title": "Fatigue Modeling of Welded Frame Joints",
+    "piName":  "R. Osei",
+    "piEmail": "osei@msu.edu",
+    "leadUnit": "Mechanical Engineering",
+    "startDate":   "2024-08-18",
+    "endDate" : "2026-06-30",
+    "totalAmount": 155000,
+    "status": "Active"
+  },
+  {
+    "awardId":    "AWD-0042",
+    "sponsorName": "Brightline Aerospace LLC",
+    "title": "Additive Manufacturing of Turbine Brackets",
+    "piName": "S. Patel",
+    "piEmail": "patels@msu.edu",
+    "leadUnit": "Chemical Engineering and Materials Science",
+    "startDate": "2023-09-01",
+    "endDate":  "2025-08-31",
+    "totalAmount":  410000,
+    "status":  "Closed"
+  }
+]

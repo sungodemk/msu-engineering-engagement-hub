@@ -1,3 +1,4 @@
+--migrate:up
 Create Table entities (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     entity_type text NOT NULL, --'person, organization, event, etc'
@@ -8,8 +9,8 @@ Create Table entities (
     attributes jsonb NOT NULL DEFAULT '{}'::jsonb,
       check (jsonb_typeof(attributes) = 'object'),
     merged_into_id uuid REFERENCES entities(id), 
-    created_at timestamptz DEFAULT NOT NULL now(),
-    updated_at timestamptz DEFAULT NOT NULL now(),
+    created_at timestamptz NOT NULL DEFAULT now(),
+    updated_at timestamptz NOT NULL DEFAULT now(),
     check (merged_into_id IS NULL OR merged_into_id <> id),
     check (email is null or entity_type = 'person')
 );
@@ -29,7 +30,7 @@ create table entity_source_records (
     linked_type TEXT NOT NULL default 'origin' CHECK (linked_type IN ('origin', 'mention')), 
     --origin: the source record that was merged into the entity 
     --mention: a source record that was linked to the entity but not merged
-    linked_at timestamptz DEFAULT NOT NULL now(),
+    linked_at timestamptz NOT NULL DEFAULT now(),
     primary key (entity_id, source_record_id)
 );
 
