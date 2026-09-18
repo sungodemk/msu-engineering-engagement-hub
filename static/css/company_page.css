@@ -212,3 +212,231 @@ body {
     position: relative;
     border: 0.01vw solid black;
 }
+
+.unit_box {
+    width: 16vw;
+    height: 20vh;
+    background-color: white;
+    position: relative;
+    top: -60vh;
+    left: 19vw;
+}
+
+.unit_title {
+    font-size: 1.0em;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgb(204, 238, 245);
+    position: relative;
+    border: 0.01vw solid black;
+}
+
+.owner_box {
+    width: 16vw;
+    height: 20vh;
+    background-color: white;
+    position: relative;
+    top: -80vh;
+    left: 34vw;
+}
+
+.owner_title {
+    font-size: 1.0em;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgb(204, 238, 245);
+    position: relative;
+    border: 0.01vw solid black;
+}
+
+.subj_box {
+    width: 31vw;
+    height: 20vh;
+    background-color: white;
+    position: relative;
+    top: -100vh;
+    left: 50vw;
+}
+
+.subj_title {
+    font-size: 1.0em;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgb(204, 238, 245);
+    position: relative;
+    border: 0.01vw solid black;
+}
+
+.status_box {
+    width: 16vw;
+    height: 20vh;
+    background-color: white;
+    position: relative;
+    top: -120vh;
+    left: 81vw;
+}
+
+.status_title {
+    font-size: 1.0em;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgb(204, 238, 245);
+    position: relative;
+    border: 0.01vw solid black;
+}
+
+.research_award_box {
+    width: 78vw;
+    height: 30vh;
+    background-color: white;
+    position: relative;
+    top: -140vh;
+    left: 19vw;
+    border: 0.01vw solid #18453B;
+}
+
+.research_award_title {
+    font-size: 1.0em;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgb(204, 238, 245);
+    position: relative;
+    border: 0.01vw solid black;
+}
+
+.award_id {
+    width: 9vw;
+    height: 2vh;
+    background-color: #18453B;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border: 0.01vw solid white;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.sponsor_name {
+    width: 15vw;
+    height: 2vh;
+    background-color: #18453B;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border: 0.01vw solid white;
+    position: relative;
+    /* top: -5.1vh; */
+    top: -2.11vh;
+    left: 9vw;
+}
+
+.research_title {
+    width: 15vw;
+    height: 2vh;
+    background-color: #18453B;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border: 0.01vw solid white;
+    position: relative;
+    top: -4.22vh;
+    left: 24vw;
+}
+
+.PI {
+    width: 9vw;
+    height: 2vh;
+    background-color: #18453B;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border: 0.01vw solid white;
+    position: relative;
+    top: -6.33vh;
+    left: 39vw;
+}
+
+.lead_unit {
+    width: 14vw;
+    height: 2vh;
+    background-color: #18453B;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border: 0.01vw solid white;
+    position: relative;
+    top: -8.45vh;
+    left: 48vw;
+}
+
+.award_amount {
+    width: 8vw;
+    height: 2vh;
+    background-color: #18453B;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border: 0.01vw solid white;
+    position: relative;
+    top: -10.56vh;
+    left: 62vw;
+}
+
+.research_status {
+    width: 8vw;
+    height: 2vh;
+    background-color: #18453B;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border: 0.01vw solid white;
+    position: relative;
+    top: -12.67vh;
+    left: 70vw;
+}
+
+.contacts_box {
+    width: 78vw;
+    height: 20vh;
+    background-color: white;
+    position: relative;
+    top: -120vh;
+    left: 19vw;
+    border: 0.01vw solid #18453B;
+}
+
+.contacts_title {
+    font-size: 1.0em;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgb(204, 238, 245);
+    position: relative;
+    border: 0.01vw solid black;
+}
+
+.relationship_map_box {
+    width: 78vw;
+    height: 100vh;
+    background-color: white;
+    position: relative;
+    top: -100vh;
+    left: 19vw;
+    border: 0.01vw solid #18453B;
+}
+
+.relationship_map_title {
+    font-size: 1.0em;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgb(204, 238, 245);
+    position: relative;
+    border: 0.01vw solid black;
+}
