@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../css/footer.css';
 import '../css/main.css';
 import '../css/navbar.css';
@@ -12,10 +13,10 @@ function Layout({ children }) {
             </div>
             {/* Navigation Links */}
             <div className="nav_right" id="nav_links">
-                <a href="/backend/static">Home</a>
-                <a href="/company">Company</a>
-                <a href="/persons">Persons</a>
-                <a href="/portfolio">Portfolio</a>
+                <Link to="/">Home</Link>
+                <Link to="/company">Company</Link>
+                <Link to="/persons">Persons</Link>
+                <Link to="/portfolio">Portfolio</Link>
             </div>
         </nav>
         {/* main content */}
