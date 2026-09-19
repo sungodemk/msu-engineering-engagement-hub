@@ -1,0 +1,4 @@
+flask
+gunicorn
+Flask-Failsafe
+flask-cors

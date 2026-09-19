@@ -1,7 +1,9 @@
 import os
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session, flash
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
 
 @app.route('/')
 def root():

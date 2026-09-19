@@ -2,10 +2,23 @@ services:
   # A name for this container
   flask-app:
     container_name: engagement-hub
-    build: .
+    build:
+      context: ./backend
     stdin_open: true
     tty: true
     ports:
       - "8080:8080"
     volumes:
-      - .:/app
+      - ./backend:/app
+
+  react-app:
+    container_name: engagement-hub-frontend
+    build:
+      context: ./frontend
+    stdin_open: true
+    tty: true
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules

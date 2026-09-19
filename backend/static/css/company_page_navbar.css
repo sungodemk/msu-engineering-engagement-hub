@@ -15,7 +15,7 @@
 }
 
 /* left side of navbar */
-.c_nav_left a {
+.c_nav_right a {
     color: white;
     text-decoration: none;
     margin-left: 1vw;
@@ -27,12 +27,4 @@
 .c_title {
     font-size: 1.0em;
     font-weight: bold;
-}
-
-.c_nav_middle {
-    color: white;
-    text-align: center;
-    margin: 50vh;
-    opacity: 1;
-    transition: opacity 0.3s ease;
 }

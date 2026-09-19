@@ -1,0 +1,18 @@
+.home-body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+.home-nav {
+    margin: 20px 0;
+}
+.home-nav a {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #18453B;
+        text-decoration: none;
+        color: white;
+}
+.home-nav a:hover {
+    background-color: #0f2e27;
+}
