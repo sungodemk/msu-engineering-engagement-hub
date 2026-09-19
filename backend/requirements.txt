@@ -2,3 +2,4 @@ flask
 gunicorn
 Flask-Failsafe
 flask-cors
+psycopg[binary]
