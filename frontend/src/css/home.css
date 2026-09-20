@@ -1,18 +1,96 @@
-.home-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
+/*Emmanuel Koshy*/
+
+.home { max-width: 1200px;
+    margin: 0 auto;
+
 }
-.home-nav {
-    margin: 20px 0;
+
+.badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background-color: #dfe8e4;
+    color: #18453B;
+    font-size: 0.75em;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
-.home-nav a {
-        display: inline-block;
-        padding: 10px 20px;
-        margin: 5px;
-        background-color: #18453B;
-        text-decoration: none;
-        color: white;
+
+
+.home h1 {
+    font-size: 2.1em;
+    margin: 18px 0 10px;
+    color: #0e2c23
 }
-.home-nav a:hover {
-    background-color: #0f2e27;
+
+.lede {
+    color:#4a5b55;
+    line-height: 1.6;
+    margin-bottom: 32px;
 }
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+
+.card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.card-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-tag {
+    background:#eef1f0;
+    color: #18453B;
+    font-size: 0.75em;
+    padding: 5px 12px;
+    border-radius: 999px;
+}
+
+.card h2 {
+    font-size: 1.5em;
+    margin: 16px 0 8px;
+    color: #16241f;
+
+}
+
+.card p {
+    font-size: 0.80em;
+    line-height: 1.4;
+    color:#5a6b65;
+    margin-bottom: 16px;
+
+}
+
+.card a {
+
+    color: #4a5b55;
+    text-decoration: none;
+    font-size: 0.85em;
+}
+
+.card a:hover {
+    color: #18453B;
+
+}
+.card-icon{
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background:#f0f3f2;
+    display: grid;
+    place-items: center;
+
+}
+
