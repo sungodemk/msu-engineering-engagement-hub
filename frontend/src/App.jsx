@@ -11,7 +11,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/company" element={<CompanyPage />} />
+          <Route path="/company_page" element={<CompanyPage />} />
           <Route path="/persons" element={<Placeholder title="Persons" />} />
           <Route path="/portfolio" element={<Placeholder title="Portfolio" />} />
           <Route path="/stewardship" element={<Placeholder title="Stewardship" />} />
