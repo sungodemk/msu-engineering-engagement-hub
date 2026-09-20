@@ -14,3 +14,10 @@ body {
     flex-direction: column;
     min-height: 100%;
 }
+
+/* Emmanuel styling (stacks children vertically) */
+.shell{
+    flex: 1;
+    display: flex;
+    min-height: 0;
+}
