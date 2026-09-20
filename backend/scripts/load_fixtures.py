@@ -62,6 +62,32 @@ def link_entity(cur, entity_id, source_record_id):
         (entity_id, source_record_id),
     )
 
+def insert_affiliations(cur, salesforce, contacts, accounts, source_ids):
+    for affiliation in salesforce["affiliations"]:
+        cur.execute(
+            """
+            INSERT INTO edges (
+                from_entity_id,
+                to_entity_id,
+                edge_type,
+                edge_role,
+                valid_from,
+                valid_to,
+                source_record_id
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """,
+            (
+                contacts[affiliation["ContactId"]],
+                accounts[affiliation["AccountId"]],
+                "employed_by",
+                affiliation["Role__c"],
+                affiliation["StartDate__c"],
+                affiliation["EndDate__c"],
+                source_ids[affiliation["Id"]],
+            ),
+        )
+
 
 def main():
     with open(
@@ -271,12 +297,21 @@ def main():
                     ),
                 )
 
+            insert_affiliations(
+                cur,
+                salesforce,
+                contacts,
+                accounts,
+                source_ids,
+            )
+
             # prints basic row counts so the fixture load can be checked immediately 
             for table in [
                 "source_records",
                 "entities",
                 "entity_source_records",
                 "activities",
+                "edges",
             ]:
                 cur.execute(f"SELECT count(*) FROM {table}")
                 print(f"{table}: {cur.fetchone()[0]}")
