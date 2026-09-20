@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-import Layout from './layout.jsx';
 import '../css/company_page.css';
 
 function CompanyPage() {
