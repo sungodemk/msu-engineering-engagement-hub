@@ -8,7 +8,6 @@
                                    /* but put it there for now so I can feel easier to use it later.*/ 
 .company-page{
     text-align: center;
-    color: white;
     background-color: rgba(215, 213, 213, 0.957);
 }
 
@@ -17,7 +16,7 @@
     height: 15vh;
     position: relative;
     top: 2vh;
-    left: 19vw;
+    left: 1vw;
 
     background-color: white;
     color: #18453B;
@@ -26,6 +25,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 5%;
+    border-radius: 0.5vw;
     border: 0.05vw solid #18453B;
 }
 
@@ -95,7 +95,8 @@
     text-align: center;
     position: relative;
     top: 9vh;
-    left: 19vw;
+    left: 1vw;
+    border-radius: 0.5vw;
     border: 0.01vw solid #18453B;
 }
 
@@ -112,7 +113,8 @@
     background-color: white;
     position: relative;
     top: -6vh;
-    left: 40vw;
+    left: 21vw;
+    border-radius: 0.5vw;
     border: 0.01vw solid #18453B;
 }
 
@@ -134,7 +136,8 @@
     font-size: 1.0em;
     position: relative;
     top: -21vh;
-    left: 61vw;
+    left: 41.5vw;
+    border-radius: 0.5vw;
     border: 0.01vw solid #18453B;
 }
 
@@ -147,7 +150,8 @@
     font-size: 1.0em;
     position: relative;
     top: -36vh;
-    left: 82vw;
+    left: 61.5vw;
+    border-radius: 0.5vw;
     border: 0.01vw solid #18453B;
 }
 
@@ -157,7 +161,8 @@
     height: 50vh;
     position: relative;
     top: -30vh;
-    left: 19vw;
+    left: 1vw;
+    border-radius: 0.5vw;
     border: 0.01vw solid #18453B;
 }
 
@@ -170,6 +175,9 @@
     text-align: center;
     font-weight: bold;
     position: relative;
+    border-radius: 0.5vw;
+    border-bottom-left-radius: 0vw;
+    border-bottom-right-radius: 0vw;
     border: 0.01vw solid black;
 }
 
@@ -179,7 +187,8 @@
     height: 50vh;
     position: relative;
     top: -80vh;
-    left: 61vw;
+    left: 40.5vw;
+    border-radius: 0.5vw;
     border: 0.01vw solid #18453B;
 }
 
@@ -192,21 +201,25 @@
     text-align: center;
     font-weight: bold;
     position: relative;
+    border-radius: 0.5vw;
+    border-bottom-left-radius: 0vw;
+    border-bottom-right-radius: 0vw;
     border: 0.01vw solid black;
 }
 
 .activity_box {
-    width: 78vw;
+    width: 75.5vw;
     height: 150vh;
     background-color: white;
     position: relative;
     top: -70vh;
-    left: 19vw;
+    left: 1vw;
+    border-radius: 0.5vw;
     border: 0.01vw solid #18453B;
 }
 
 .activity_title {
-    width: 78vw;
+    width: 75.5vw;
     height: 3vh;
     background-color: rgb(204, 238, 245);
     font-size: 1.0em;
@@ -214,6 +227,9 @@
     text-align: center;
     font-weight: bold;
     position: relative;
+    border-radius: 0.5vw;
+    border-bottom-left-radius: 0vw;
+    border-bottom-right-radius: 0vw;
     border: 0.01vw solid black;
 }
 
@@ -223,7 +239,9 @@
     background-color: white;
     position: relative;
     top: -60vh;
-    left: 19vw;
+    left: 1vw;
+    border-top-left-radius: 0.5vw;
+    border-bottom-left-radius: 0.5vw;
 }
 
 .unit_title {
@@ -233,6 +251,7 @@
     font-weight: bold;
     background-color: rgb(204, 238, 245);
     position: relative;
+    border-top-left-radius: 0.5vw;
     border: 0.01vw solid black;
 }
 
@@ -242,7 +261,7 @@
     background-color: white;
     position: relative;
     top: -80vh;
-    left: 34vw;
+    left: 17vw;
 }
 
 .owner_title {
@@ -261,7 +280,7 @@
     background-color: white;
     position: relative;
     top: -100vh;
-    left: 50vw;
+    left: 33vw;
 }
 
 .subj_title {
@@ -275,12 +294,14 @@
 }
 
 .status_box {
-    width: 16vw;
+    width: 12.5vw;
     height: 20vh;
     background-color: white;
     position: relative;
     top: -120vh;
-    left: 81vw;
+    left: 64vw;
+    border-top-right-radius: 0.5vw;
+    border-bottom-right-radius: 0.5vw;
 }
 
 .status_title {
@@ -290,6 +311,7 @@
     font-weight: bold;
     background-color: rgb(204, 238, 245);
     position: relative;
+    border-top-right-radius: 0.5vw;
     border: 0.01vw solid black;
 }
 
@@ -298,8 +320,9 @@
     height: 30vh;
     background-color: white;
     position: relative;
-    top: -140vh;
-    left: 19vw;
+    top: -110vh;
+    left: 0vw;
+    border-radius: 0.5vw;
     border: 0.01vw solid #18453B;
 }
 
@@ -310,6 +333,8 @@
     font-weight: bold;
     background-color: rgb(204, 238, 245);
     position: relative;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
     border: 0.01vw solid black;
 }
 
@@ -407,11 +432,11 @@
 
 .contacts_box {
     width: 78vw;
-    height: 20vh;
+    height: 50vh;
     background-color: white;
     position: relative;
-    top: -120vh;
-    left: 19vw;
+    top: -95vh;
+    border-radius: 0.5vw;
     border: 0.01vw solid #18453B;
 }
 
@@ -422,6 +447,8 @@
     font-weight: bold;
     background-color: rgb(204, 238, 245);
     position: relative;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
     border: 0.01vw solid black;
 }
 
@@ -430,8 +457,7 @@
     height: 100vh;
     background-color: white;
     position: relative;
-    top: -100vh;
-    left: 19vw;
+    border-radius: 0.5vw;
     border: 0.01vw solid #18453B;
 }
 
@@ -442,5 +468,7 @@
     font-weight: bold;
     background-color: rgb(204, 238, 245);
     position: relative;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
     border: 0.01vw solid black;
 }
