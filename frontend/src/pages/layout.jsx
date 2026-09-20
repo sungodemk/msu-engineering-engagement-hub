@@ -3,13 +3,13 @@ import '../css/footer.css';
 import '../css/main.css';
 import '../css/navbar.css';
 
-/* Emmanuel Koshy */S
+/* Emmanuel Koshy */
 const navItems = [
     {to: '/', label: 'Home'},
-    {to: '/company', label: 'Company'},
-    {to: '/persons', label: 'Persons'},
-    {to: '/portfolio', label: 'Portfolio'},
-    {to: '/stewardship', label: 'Stewardship Queue'}
+    {to: '/company_page', label: 'Company',icon:"🏢"},
+    {to: '/persons', label: 'Persons', icon:"👤"},
+    {to: '/portfolio', label: 'Portfolio', icon:"📂"},
+    {to: '/stewardship', label: 'Stewardship Queue',icon:"📊"}
 ];
 
 function Layout({ children }) {

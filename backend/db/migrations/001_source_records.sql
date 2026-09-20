@@ -17,5 +17,4 @@ FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
 
 -- migrate:down
-drop table if exists source_records;
 drop function if exists set_updated_at();

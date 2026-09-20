@@ -7,5 +7,5 @@ END;
 $$ LANGUAGE plpgsql;
 
 
---- migrate:down
+-- migrate:down
 drop function if exists set_updated_at();

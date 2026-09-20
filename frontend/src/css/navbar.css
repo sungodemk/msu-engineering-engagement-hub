@@ -5,12 +5,12 @@
 .sidebar {
     width: 220px;
     flex-shrink: 0;
-    background-color: #18533B;
+    background-color: #18453B;
     color: #fff;
     padding: 16px 12px;
     box-sizing: border-box;
     overflow-y: auto;
-}S
+}
 
 .brand { display: flex; 
     align-items: center; 
@@ -23,22 +23,22 @@
     height: 32px;
     border-radius: 6px;
     background-color: #fff;
-    color: #18533B;
+    color: #18453B;
     display: grid;
     place-items: center;
     font-weight: bold;
 
 }
 
-.brand-name {
-    font-size: 0.9em;
-    font-weight: bold;
-    
-}
-.brand-subtitle {
+.brand-name,.brand-sub{
+    white-space:nowrap;
+    line-height: 1.2;
+}  
+ 
+.brand-sub {
     font-size: 0.8em;
     opacity: 0.8;
-}
+} 
 
 .sidebar-search {
     width: 100%;
