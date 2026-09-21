@@ -1,0 +1,27 @@
+.graph-page {
+    padding: 20px 40px;
+}
+
+.graph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.graph-eyebrow {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    letter-spacing: 0.05em;
+    margin: 0 0 4px 0;
+}
+
+.company-select {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: white;
+}

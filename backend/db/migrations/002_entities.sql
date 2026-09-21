@@ -40,7 +40,7 @@ create index esr_source_record_id_idx ON entity_source_records (source_record_id
 create view live_entities as
 select * from entities where merged_into_id is null;
 
---migrate:down
+-- migrate:down
 drop view if exists live_entities;
 drop table if exists entity_source_records;
 drop table if exists entities;

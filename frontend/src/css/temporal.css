@@ -1,0 +1,57 @@
+.temporal-wrapper {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.temporal-svg {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.temporal-year-label {
+    font-size: 13px;
+    fill: #333;
+    font-weight: bold;
+}
+
+.temporal-category-label {
+    font-size: 15px;
+    font-weight: bold;
+    fill: #1a1a1a;
+}
+
+.temporal-category-count {
+    font-size: 12px;
+    fill: #666;
+}
+
+.temporal-row-line {
+    stroke: #ddd;
+    stroke-dasharray: 3, 3;
+}
+
+.temporal-today-line {
+    stroke: #1a1a1a;
+    stroke-width: 1.5;
+    stroke-dasharray: 4, 4;
+}
+
+.temporal-dot {
+    cursor: pointer;
+}
+
+.temporal-dot:hover {
+    opacity: 0.8;
+}
+
+.temporal-bar {
+    stroke-width: 1.5;
+    cursor: pointer;
+}
+
+.temporal-amount-label {
+    font-size: 11px;
+    fill: #3b6fd6;
+    font-weight: bold;
+}
