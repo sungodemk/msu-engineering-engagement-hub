@@ -1,0 +1,108 @@
+.persons-page {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) 320px;
+    gap: 20px;
+    align-items: start;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+    color:#1d2327
+}
+
+.pp-main,.pp-side{
+    display: grid;
+    gap: 16px;
+    min-width:0;
+
+
+}
+
+.pp-card {
+
+    background: #ffffff;
+    border: 1px solid #e3e6e8;
+    border-radius: 10px;
+    padding: 18px 20px;
+
+}
+
+.pp-section-title{
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.pp-label{
+    color: #6b7378;
+    font-size: 0.9rem;
+}
+
+/*header*/
+.pp-header{
+
+    display:flex;
+    gap: 18px;
+    align-items: center;
+
+}
+
+.pp-avatar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #18453b;
+    color: #ffffff;
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+.pp-header-text {
+    flex: 1;
+
+}
+
+.pp-name{
+    font-size: 1.4rem;
+    font-weight: 700;
+
+}
+
+.pp-title,.pp-company{
+    margin-top: 4px;
+    color: #6b7378;
+
+}
+
+.pp-owner {
+    text-align: right;
+}       
+
+/*alumni*/
+
+.pp-alumni {
+    background: #eef6f1;
+    border-color: #b9dcc7;
+}
+
+.pp-alumni-row{
+    display: flex;
+    gap: 40px;
+    font-weight: 700;
+}
+
+.pp-big-number{
+
+    font-size: 2rem;
+    font-weight: 800;
+
+}
+
+@media (max-width:900px){
+    .persons-page{
+        grid-template-columns: 1fr;
+    }
+}
