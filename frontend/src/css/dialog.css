@@ -1,0 +1,181 @@
+/* Zhixiang Miao */
+
+.dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.activity_type_title {
+    position: relative;
+    left: 1.6vw;
+    top: 2vw;
+}
+
+.log_form {
+    position: relative;
+    background-color: white;
+    top: 15vh;
+    left: 35vw;
+    width: 30vw;
+    height: 75vh;
+    border: 1px solid #18453B;
+    border-radius: 0.5vw;
+    opacity: 1;
+}
+
+.activity_type_box {
+    position: relative;
+    left: -5.2vw;
+    top: 1.5vw;
+    height: 2vw;
+    width: 12vw; 
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+.save_act_button {
+    text-align: center;
+    position: relative;
+    color: white;
+    background-color: #18453B;
+    font-weight: bold;
+    left: -3vw;
+    top: 28vw;
+    height: 2vw;
+    width: 8vw;
+    cursor: pointer;
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+.cancel_button {
+    text-align: center;
+    position: relative;
+    color: #18453B;
+    background-color: white;
+    font-weight: bold;
+    left: -4vw;
+    top: 28vw;
+    height: 2vw;
+    width: 4vw;
+    cursor: pointer;
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+.lg_act_dia_title_box {
+    width: 100%;
+    height: 5vw;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+.ast_required {
+    color: red;
+}
+
+.lg_act_dia_title {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #18453B;
+    margin-bottom: 2vw;
+    position: relative;
+    left: -10vw;
+    top: 2vh;
+}
+
+.lg_act_dia_company {
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: rgba(34, 33, 33, 0.547);
+    margin-bottom: 2vw;
+    position: relative;
+    left: -10.5vw;
+    top: -1vh;
+}
+
+.category_title {
+    position: relative;
+    left: 9vw;
+}
+
+.category_box {
+    position: relative;
+    left: -3.8vw;
+    top: 1.5vw;
+    height: 2vw;
+    width: 12vw;
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+.date_title {
+    position: relative;
+    left: -6vw;
+    top: 3vw;
+}
+
+.date_box {
+    position: relative;
+    left: -2vw;
+    top: 1.5vw;
+    height: 2vw;
+    width: 12vw;
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+.contact_title {
+    position: relative;
+    left: 11vw;
+    top: 1vw;
+}
+
+.contact_box {
+    position: relative;
+    left: -7.6vw;
+    top: 1.5vw;
+    height: 2vw;
+    width: 12vw;
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+.subject_title {
+    position: relative;
+    left: 1.6vw;
+    top: 4vw;
+}
+
+.subject_box {
+    position: relative;
+    left: -3.2vw;
+    top: 1.7vw;
+    height: 2vw;
+    width: 26vw;
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+.notes_title {
+    position: relative;
+    left: -9.8vw;
+    top: 7vw;
+}
+
+.notes_box {
+    position: relative;
+    left: 9.8vw;
+    top: 1vh;
+    height: 10vw;
+    width: 26vw;
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
