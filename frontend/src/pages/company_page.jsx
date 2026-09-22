@@ -34,50 +34,86 @@ function CompanyPage() {
             </div>
             
             <div className='total_giving_box'>
-                <h2>Total Giving</h2>
+                <div className="total_giving_title">TOTAL GIVING</div>
                 <div className="total_giving_amount">$0</div>
+                <div className='giving_message'>No giving recorded yet</div>
             </div>
             <div className='award_box'>
-                <div className='award_text'>Active Research Awards</div>
+                <div className='award_title'>ACTIVE RESEARCH AWARDS</div>
+                <div className='total_award_amount'>0</div>
+                <div className='award_message'>No awards yet</div>
             </div>
-            <div className='caps_team_box'><h2>Capstone Teams</h2></div>
-            <div className='last_contact_box'><h2>Last Contact</h2></div>
+            <div className='caps_team_box'>
+                <div className='caps_team_title'>CAPSTONE TEAMS</div>
+                <div className='num_of_teams'>0</div>
+                <div className='caps_team_message'>No capstone teams yet</div>
+            </div>
+            <div className='last_contact_date_box'>
+                <div className='last_contact_date_title'>LAST CONTACT</div>
+                <div className='last_contact_date'>Jan 1, 2026</div>
+            </div>
             <div className='inbound_box'>
-                <div className='inbound_title_box'>⬇ Inbound to MSU</div>
+                <div className='inbound_title_box'>
+                    <div className='inbound_title'>⬇ Inbound to MSU</div>
+                </div>
             </div>
             <div className='outbound_box'>
-                <div className='outbound_title_box'>⬆ Outbound from MSU</div>
+                <div className='outbound_title_box'>
+                    <div className='outbound_title'>⬆ Outbound from MSU</div>
+                </div>
             </div>
-            <div className="activity_box">
-                <div className="activity_title">Activity Timeline</div>
+            {/* <div className="activity_box">
+                <div className="activity_title_box">
+                    <div className="activity_title">Activity Timeline</div>
+                </div>
             </div>
-            <div className="unit_box">
-                <div className="unit_title">MSU Unit</div>
+            <div className="msu_unit_box">
+                <div className="msu_unit_title_box">
+                    <div className="msu_unit_title">MSU Unit</div>
+                </div>
             </div>
             <div className="owner_box">
-                <div className="owner_title">Owner</div>
+                <div className="owner_title_box">
+                    <div className="owner_title">Owner</div>
+                </div>
             </div>
             <div className="subj_box">
                 <div className="subj_title">Subject</div>
             </div>
             <div className="status_box">
                 <div className="status_title">Status</div>
+            </div> */}
+            <div className="msu_task_box">
+                <div className="msu_task_title_box">
+                    <div className="msu_task_title">
+                        <div className="msu_unit_title">MSU UNIT</div>
+                        <div className="owner_title">OWNER</div>
+                        <div className="subj_title">SUBJECT</div>
+                        <div className="status_title">STATUS</div>
+                    </div>
+                </div>
             </div>
             <div className="research_award_box">
-                <div className="research_award_title">Research Awards</div>
-                <div className="award_id">Award ID</div>
-                <div className="sponsor_name">Sponsor Name</div>
-                <div className="research_title">Title</div>
-                <div className="PI">PI</div>
-                <div className="lead_unit">Lead Unit</div>
-                <div className="award_amount">Amount</div>
-                <div className="research_status">Research Status</div>
+                <div className="research_award_title">🔬Research Awards</div>
+                <div className="label_section">
+                    <div className="award_id_label">AWARD ID</div>
+                    <div className="sponsor_name_label">SPONSOR NAME</div>
+                    <div className="research_title_label">TITLE</div>
+                    <div className="PI_label">PI</div>
+                    <div className="lead_unit_label">LEAD UNIT</div>
+                    <div className="award_amount_label">AMOUNT</div>
+                    <div className="research_status_label">STATUS</div>
+                </div>
             </div>
             <div className="contacts_box">
-                <div className="contacts_title">Contacts at Company</div>
+                <div className="contacts_title_box">
+                    <div className="contacts_title">Contacts at Company</div>
+                </div>
             </div>
             <div className="relationship_map_box">
-                <div className="relationship_map_title">Relationship Map</div>
+                <div className="relationship_map_title_box">
+                    <div className="relationship_map_title">Relationship Map</div>
+                </div>
             </div>
             <Dialog className='log_activity_dialog' open_dialog={isDialogOpen}>
                 <form className='log_form'> 

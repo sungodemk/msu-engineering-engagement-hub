@@ -2,468 +2,559 @@
 
 .company-page{
     text-align: center;
-    background-color: rgba(215, 213, 213, 0.957);
 }
 
 .title_box {
-    width: 68vw;
-    height: 15vh;
+    width: 65vw;
+    height: 12vh;
     position: relative;
     top: 2vh;
     left: 1vw;
 
     background-color: white;
-    color: #18453B;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 5%;
     border-radius: 0.5vw;
-    border: 0.05vw solid #18453B;
+    border-bottom: 0.01vw solid #e3e6e8;
 }
 
 .c_title_text {
-    font-size: 2vw;
+    font-size: 1.5em;
     font-weight: bold;
     text-align: center;
-    color: #18453B;
+    color: black;
     position: relative;
-    top: -4vh;
-    right: 3vw;
+    top: -1vh;
+    right: 1.5vw;
 }
 
 .location {
-    font-size: 1.0em;
-    color: black;
+    font-size: 0.9em;
+    color: rgb(109, 108, 108);
     position: relative;
-    top: 4vh;
-    right: 27vw;
+    top: 3vh;
+    right: 21.6vw;
 }
 
 .tier_box {
-    width: 3vw;
-    height: 3vh;
-    background-color: rgb(135, 250, 135);
+    width: 2.5vw;
+    height: 2.5vh;
+    background-color: rgb(209, 247, 209);
     position: relative;
-    top: -3.5vh;
+    top: -1vh;
     right: 20vw;
+    border-radius: 0.2vw;
     border: 0.01vw solid #18453B;
 }
 
 .tier_text {
-    font-size: 1.0em;
-    color: black;
+    font-size: 0.8em;
+    color: #18453B;
     position: relative;
     top: 0.5vh;
     text-align: center;
 }
 
 .owner {
-    font-size: 1.0em;
-    color: black;
+    font-size: 0.9em;
+    color: rgb(109, 108, 108);
     position: relative;
-    top: 4vh;
-    right: 20vw;
+    top: 3vh;
+    right: 36vw;
 }
 
 
 
 .log_ac_box {
     height: 2vw;
-    width: 9vw;
+    width: 7vw;
     background-color: #18453B;
     color: white;
     position: relative;
+    top: -1vh;
+    border-radius: 0.5vw;
     border: 0.05vw solid #18453B;
     text-align: center;
     cursor: pointer;
-    font-size: 1.0em;
+    font-size: 0.9em;
 }
 
 .total_giving_box {
     width: 15vw;
-    height: 15vh;
+    height: 13vh;
     background-color: white;
-    color: black;
-    font-size: 1.0em;
-    text-align: center;
     position: relative;
-    top: 9vh;
+    top: 5vh;
     left: 1vw;
     border-radius: 0.5vw;
-    border: 0.01vw solid #18453B;
+    border-bottom: 0.01vw solid #e3e6e8;
+}
+
+.total_giving_title {
+    font-size: 0.8em;
+    text-align: center;
+    color: rgb(99, 99, 99);
+    position: relative;
+    top: 2.5vh;
+    left: -3.8vw;
+    font-weight: bold;
 }
 
 .total_giving_amount {
-    font-size: 1.0em;
+    font-size: 1.5em;
     text-align: center;
+    font-weight: bold;
     color: black;
     position: relative;
+    top: 3.5vh;
+    left: -5.5vw;
+}
+
+.giving_message {
+    font-size: 0.8em;
+    color: #18453B;
+    text-align: center;
+    position: relative;
+    top: 4.5vh;
+    left: -2.5vw;
 }
 
 .award_box {
     width: 15vw;
-    height: 15vh;
+    height: 13vh;
     background-color: white;
     position: relative;
-    top: -6vh;
-    left: 21vw;
+    top: -8vh;
+    left: 20.3vw;
     border-radius: 0.5vw;
-    border: 0.01vw solid #18453B;
+    border-bottom: 0.01vw solid #e3e6e8;
 }
 
-.award_text {
-    font-size: 1.2em;
-    color: black;
+.award_title {
+    font-size: 0.8em;
     text-align: center;
+    color: rgb(99, 99, 99);
     position: relative;
     top: 2.5vh;
+    left: -1vw;
     font-weight: bold;
+}
+
+.total_award_amount {
+    font-size: 1.5em;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    position: relative;
+    top: 3.5vh;
+    left: -6vw;
+}
+
+.award_message {
+    font-size: 0.8em;
+    color: #18453B;
+    text-align: center;
+    position: relative;
+    top: 4.5vh;
+    left: -4vw;
 }
 
 .caps_team_box {
     width: 15vw;
-    height: 15vh;
+    height: 13vh;
     background-color: white;
-    color: black;
-    text-align: center;
-    font-size: 1.0em;
     position: relative;
     top: -21vh;
-    left: 41.5vw;
+    left: 39.5vw;
     border-radius: 0.5vw;
-    border: 0.01vw solid #18453B;
+    border-bottom: 0.01vw solid #e3e6e8;
 }
 
-.last_contact_box {
-    width: 15vw;
-    height: 15vh;
-    background-color: white;
-    color: black;
+.caps_team_title {
+    font-size: 0.8em;
     text-align: center;
-    font-size: 1.0em;
+    color: rgb(99, 99, 99);
     position: relative;
-    top: -36vh;
-    left: 61.5vw;
+    top: 2.5vh;
+    left: -2.8vw;
+    font-weight: bold;
+}
+
+.num_of_teams {
+    font-size: 1.5em;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    position: relative;
+    top: 3.5vh;
+    left: -6vw;
+}
+
+.caps_team_message {
+    font-size: 0.8em;
+    color: #18453B;
+    text-align: center;
+    position: relative;
+    top: 4.5vh;
+    left: -2.5vw;
+}
+
+.last_contact_date_box {
+    width: 15vw;
+    height: 13vh;
+    background-color: white;
+    position: relative;
+    top: -34vh;
+    left: 58.8vw;
     border-radius: 0.5vw;
-    border: 0.01vw solid #18453B;
+    border-bottom: 0.01vw solid #e3e6e8;
+}
+
+.last_contact_date_title {
+    font-size: 0.8em;
+    text-align: center;
+    color: rgb(99, 99, 99);
+    position: relative;
+    top: 2.5vh;
+    left: -3vw;
+    font-weight: bold;
+}
+
+.last_contact_date {
+    font-size: 1.5em;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    position: relative;
+    top: 3.5vh;
+    left: -2vw;
 }
 
 .inbound_box {
     background-color: white;
-    width: 36vw;
+    width: 34.2vw;
     height: 50vh;
     position: relative;
     top: -30vh;
     left: 1vw;
     border-radius: 0.5vw;
-    border: 0.01vw solid #18453B;
+    border: 1px solid #e3e6e8;
 }
 
 .inbound_title_box {
-    height: 3vh;
-    width: 36vw;
-    font-size: 1.0em;
-    background-color: rgb(204, 238, 245);
-    color: #18453B;
-    text-align: center;
-    font-weight: bold;
+    height: 6vh;
+    width: 34.2vw;
+    background-color: #f8fbfa;
     position: relative;
     border-radius: 0.5vw;
     border-bottom-left-radius: 0vw;
     border-bottom-right-radius: 0vw;
-    border: 0.01vw solid black;
+    border-bottom: 1px solid #e3e6e8;
+}
+
+.inbound_title {
+    font-size: 0.9em;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    top: 2vh;
+    left: -12.5vw;
 }
 
 .outbound_box {
     background-color: white;
-    width: 36vw;
+    width: 34.2vw;
     height: 50vh;
     position: relative;
     top: -80vh;
-    left: 40.5vw;
+    left: 39.6vw;
     border-radius: 0.5vw;
-    border: 0.01vw solid #18453B;
+    border: 1px solid #e3e6e8;
 }
 
 .outbound_title_box {
-    height: 3vh;
-    width: 36vw;
-    font-size: 1.0em;
-    background-color: rgb(204, 238, 245);
-    color: #18453B;
-    text-align: center;
-    font-weight: bold;
+    height: 6vh;
+    width: 34.2vw;
+    background-color: #f8fbfa;
     position: relative;
     border-radius: 0.5vw;
     border-bottom-left-radius: 0vw;
     border-bottom-right-radius: 0vw;
-    border: 0.01vw solid black;
+    border-bottom: 1px solid #e3e6e8;
+}
+
+.outbound_title {
+    font-size: 0.9em;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    top: 2vh;
+    left: -11.5vw;
 }
 
 .activity_box {
-    width: 75.5vw;
-    height: 150vh;
+    width: 72.8vw;
+    height: 100vh;
     background-color: white;
     position: relative;
     top: -70vh;
     left: 1vw;
     border-radius: 0.5vw;
-    border: 0.01vw solid #18453B;
+    border-bottom: 1px solid #e3e6e8;
 }
 
-.activity_title {
-    width: 75.5vw;
-    height: 3vh;
-    background-color: rgb(204, 238, 245);
-    font-size: 1.0em;
-    color: #18453B;
-    text-align: center;
-    font-weight: bold;
-    position: relative;
+.activity_title_box {
+    width: 72.8vw;
+    height: 6vh;
+    background-color: #f8fbfa;
     border-radius: 0.5vw;
     border-bottom-left-radius: 0vw;
     border-bottom-right-radius: 0vw;
-    border: 0.01vw solid black;
+    border-bottom: 1px solid #e3e6e8;
 }
 
-.unit_box {
-    width: 16vw;
-    height: 20vh;
+.activity_title {
+    font-size: 0.9em;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    top: 2.5vh;
+    left: -32vw;
+}
+
+.msu_task_box {
+    width: 72.8vw;
+    height: 25vh;
+    background-color: white;
+    position: relative;
+    top: -70vh;
+    left: 1vw;
+    border-radius: 0.5vw;
+    border: 1px solid #e3e6e8;
+}
+
+.msu_task_title_box {
+    width: 72.8vw;
+    height: 4vh;
+    background-color: #f8fbfa;
+    position: relative;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
+    border-bottom: 1px solid #e3e6e8;
+}
+
+.msu_unit_title {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    top: 1.5vh;
+    left: -33vw;
+}
+
+.owner_title {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    top: -0.2vh;
+    left: -19vw;
+}
+
+.subj_title {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    top: -1.9vh;
+    left: -2vw;
+}
+
+.status_title {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    top: -3.5vh;
+    left: 30vw;
+}
+
+.research_award_box {
+    width: 72.8vw;
+    height: 40vh;
     background-color: white;
     position: relative;
     top: -60vh;
     left: 1vw;
-    border-top-left-radius: 0.5vw;
-    border-bottom-left-radius: 0.5vw;
-}
-
-.unit_title {
-    font-size: 1.0em;
-    color: black;
-    text-align: center;
-    font-weight: bold;
-    background-color: rgb(204, 238, 245);
-    position: relative;
-    border-top-left-radius: 0.5vw;
-    border: 0.01vw solid black;
-}
-
-.owner_box {
-    width: 16vw;
-    height: 20vh;
-    background-color: white;
-    position: relative;
-    top: -80vh;
-    left: 17vw;
-}
-
-.owner_title {
-    font-size: 1.0em;
-    color: black;
-    text-align: center;
-    font-weight: bold;
-    background-color: rgb(204, 238, 245);
-    position: relative;
-    border: 0.01vw solid black;
-}
-
-.subj_box {
-    width: 31vw;
-    height: 20vh;
-    background-color: white;
-    position: relative;
-    top: -100vh;
-    left: 33vw;
-}
-
-.subj_title {
-    font-size: 1.0em;
-    color: black;
-    text-align: center;
-    font-weight: bold;
-    background-color: rgb(204, 238, 245);
-    position: relative;
-    border: 0.01vw solid black;
-}
-
-.status_box {
-    width: 12.5vw;
-    height: 20vh;
-    background-color: white;
-    position: relative;
-    top: -120vh;
-    left: 64vw;
-    border-top-right-radius: 0.5vw;
-    border-bottom-right-radius: 0.5vw;
-}
-
-.status_title {
-    font-size: 1.0em;
-    color: black;
-    text-align: center;
-    font-weight: bold;
-    background-color: rgb(204, 238, 245);
-    position: relative;
-    border-top-right-radius: 0.5vw;
-    border: 0.01vw solid black;
-}
-
-.research_award_box {
-    width: 78vw;
-    height: 30vh;
-    background-color: white;
-    position: relative;
-    top: -110vh;
-    left: 0vw;
     border-radius: 0.5vw;
-    border: 0.01vw solid #18453B;
+    border: 1px solid #e3e6e8;
 }
 
 .research_award_title {
-    font-size: 1.0em;
+    font-size: 0.9em;
     color: black;
     text-align: center;
     font-weight: bold;
-    background-color: rgb(204, 238, 245);
     position: relative;
-    border-top-left-radius: 0.5vw;
-    border-top-right-radius: 0.5vw;
-    border: 0.01vw solid black;
+    top: 2vh;
+    left: -31.5vw;
 }
 
-.award_id {
-    width: 9vw;
-    height: 2vh;
-    background-color: #18453B;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    border: 0.01vw solid white;
+.label_section {
+    width: 72.8vw;
+    height: 4vh;
+    background-color: #f8fbfa;
     position: relative;
-    top: 0;
-    left: 0;
+    top: 4vh;
+    left: 0vw;
+    border-top: 1px solid #e3e6e8;
+    border-bottom: 1px solid #e3e6e8;
 }
 
-.sponsor_name {
-    width: 15vw;
-    height: 2vh;
-    background-color: #18453B;
-    color: white;
+.award_id_label {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
     text-align: center;
     font-weight: bold;
-    border: 0.01vw solid white;
     position: relative;
-    /* top: -5.1vh; */
-    top: -2.11vh;
-    left: 9vw;
+    top: 1.5vh;
+    left: -33.5vw;
 }
 
-.research_title {
-    width: 15vw;
-    height: 2vh;
-    background-color: #18453B;
-    color: white;
+.sponsor_name_label {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
     text-align: center;
     font-weight: bold;
-    border: 0.01vw solid white;
     position: relative;
-    top: -4.22vh;
-    left: 24vw;
+    top: -0.2vh;
+    left: -22vw;
 }
 
-.PI {
-    width: 9vw;
-    height: 2vh;
-    background-color: #18453B;
-    color: white;
+.research_title_label {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
     text-align: center;
     font-weight: bold;
-    border: 0.01vw solid white;
     position: relative;
-    top: -6.33vh;
-    left: 39vw;
+    top: -1.8vh;
+    left: -9vw;
 }
 
-.lead_unit {
-    width: 14vw;
-    height: 2vh;
-    background-color: #18453B;
-    color: white;
+.PI_label {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
     text-align: center;
     font-weight: bold;
-    border: 0.01vw solid white;
     position: relative;
-    top: -8.45vh;
-    left: 48vw;
+    top: -3.5vh;
+    left: 5vw;
 }
 
-.award_amount {
-    width: 8vw;
-    height: 2vh;
-    background-color: #18453B;
-    color: white;
+.lead_unit_label {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
     text-align: center;
     font-weight: bold;
-    border: 0.01vw solid white;
     position: relative;
-    top: -10.56vh;
-    left: 62vw;
+    top: -5.1vh;
+    left: 15vw;
 }
 
-.research_status {
-    width: 8vw;
-    height: 2vh;
-    background-color: #18453B;
-    color: white;
+.award_amount_label {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
     text-align: center;
     font-weight: bold;
-    border: 0.01vw solid white;
     position: relative;
-    top: -12.67vh;
-    left: 70vw;
+    top: -6.78vh;
+    left: 26vw;
+}
+
+.research_status_label {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    top: -8.42vh;
+    left: 33vw;
 }
 
 .contacts_box {
-    width: 78vw;
-    height: 50vh;
+    width: 72.8vw;
+    height: 30vh;
     background-color: white;
     position: relative;
-    top: -95vh;
+    top: -50vh;
+    left: 1vw;
     border-radius: 0.5vw;
-    border: 0.01vw solid #18453B;
+    border: 1px solid #e3e6e8;
+}
+
+.contacts_title_box {
+    width: 72.8vw;
+    height: 5vh;
+    background-color: #f8fbfa;
+    position: relative;
+    top: 0vh;
+    left: 0vw;
+    border-top: 1px solid #e3e6e8;
+    border-bottom: 1px solid #e3e6e8;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
 }
 
 .contacts_title {
-    font-size: 1.0em;
+    font-size: 0.9em;
     color: black;
     text-align: center;
     font-weight: bold;
-    background-color: rgb(204, 238, 245);
     position: relative;
-    border-top-left-radius: 0.5vw;
-    border-top-right-radius: 0.5vw;
-    border: 0.01vw solid black;
+    top: 1.8vh;
+    left: -30.5vw;
 }
 
 .relationship_map_box {
-    width: 78vw;
-    height: 100vh;
+    width: 72.8vw;
+    height: 50vh;
     background-color: white;
     position: relative;
+    top: -40vh;
+    left: 1vw;
     border-radius: 0.5vw;
-    border: 0.01vw solid #18453B;
+    border: 1px solid #e3e6e8;
+}
+
+.relationship_map_title_box {
+    width: 72.8vw;
+    height: 5vh;
+    background-color: #f8fbfa;
+    position: relative;
+    top: 0vh;
+    left: 0vw;
+    border-top: 1px solid #e3e6e8;
+    border-bottom: 1px solid #e3e6e8;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
 }
 
 .relationship_map_title {
-    font-size: 1.0em;
+    font-size: 0.9em;
     color: black;
     text-align: center;
     font-weight: bold;
-    background-color: rgb(204, 238, 245);
     position: relative;
-    border-top-left-radius: 0.5vw;
-    border-top-right-radius: 0.5vw;
-    border: 0.01vw solid black;
+    top: 1.8vh;
+    left: -31.2vw;
 }
