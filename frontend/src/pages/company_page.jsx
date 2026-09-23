@@ -62,27 +62,6 @@ function CompanyPage() {
                     <div className='outbound_title'>⬆ Outbound from MSU</div>
                 </div>
             </div>
-            {/* <div className="activity_box">
-                <div className="activity_title_box">
-                    <div className="activity_title">Activity Timeline</div>
-                </div>
-            </div>
-            <div className="msu_unit_box">
-                <div className="msu_unit_title_box">
-                    <div className="msu_unit_title">MSU Unit</div>
-                </div>
-            </div>
-            <div className="owner_box">
-                <div className="owner_title_box">
-                    <div className="owner_title">Owner</div>
-                </div>
-            </div>
-            <div className="subj_box">
-                <div className="subj_title">Subject</div>
-            </div>
-            <div className="status_box">
-                <div className="status_title">Status</div>
-            </div> */}
             <div className="msu_task_box">
                 <div className="msu_task_title_box">
                     <div className="msu_task_title">
