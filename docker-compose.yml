@@ -1,4 +1,32 @@
 services:
+  db:
+    image: postgres:17
+    container_name: engagement-hub-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dev
+      POSTGRES_DB: engagement
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d engagement"]
+      interval: 5s
+      retries: 10
+
+  migrate:
+    image: ghcr.io/amacneil/dbmate
+    container_name: engagement-hub-migrate
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgres://postgres:dev@db:5432/engagement?sslmode=disable"
+    volumes:
+      - ./backend/db/migrations:/db/migrations
+    command: --migrations-dir /db/migrations --no-dump-schema up
+
   # A name for this container
   flask-app:
     container_name: engagement-hub
@@ -9,9 +37,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DATABASE_URL: "postgresql://postgres:dev@host.docker.internal:5432/postgres"
+      DATABASE_URL: "postgresql://postgres:dev@db:5432/engagement"
     volumes:
       - ./backend:/app
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
 
   react-app:
     container_name: engagement-hub-frontend
@@ -24,3 +55,8 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+
+volumes:
+  pgdata:
+
+

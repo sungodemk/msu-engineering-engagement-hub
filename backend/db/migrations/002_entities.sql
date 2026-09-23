@@ -1,4 +1,4 @@
---migrate:up
+-- migrate:up
 Create Table entities (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     entity_type text NOT NULL, --'person, organization, event, etc'
