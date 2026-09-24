@@ -10,7 +10,20 @@ function CompanyPage() {
     useEffect(() => {
         document.title = "Company Page";
     }, []);
+
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    const [daysPassed, setDaysPassed] = useState(null);
+
+    // Referenced these links for fetching the Python function return value into Company Page: 
+    // https://react.dev/reference/react/useEffect
+    // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+    // https://www.geeksforgeeks.org/reactjs/fetching-data-from-an-api-with-useeffect-and-usestate-hook/
+    useEffect(() => {
+        fetch("http://localhost:8080/api/days_passed/start_date")
+        .then(result => {return result.json();})
+        .then(data => {return setDaysPassed(data.days_passed);})
+    }, []);
 
     return (
         <div className="company-page">
@@ -51,6 +64,9 @@ function CompanyPage() {
             <div className='last_contact_date_box'>
                 <div className='last_contact_date_title'>LAST CONTACT</div>
                 <div className='last_contact_date'>Jan 1, 2026</div>
+                <div className='days_passed_from_lcd'>
+                    {`${daysPassed} days ago`}
+                </div>
             </div>
             <div className='inbound_box'>
                 <div className='inbound_title_box'>

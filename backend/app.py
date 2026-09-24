@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify, render_template, redirect, url_for, s
 from flask_cors import CORS
 import psycopg
 from psycopg.rows import dict_row
+from days_calculator.days_calculator import days_passed_calc
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -77,6 +78,12 @@ def temporal(company_id):
             FROM activities WHERE company_entity_id = %s ORDER BY occurred_on """, (company_id,))
             rows = cur.fetchall()
     return jsonify(rows)
+
+@app.route("/api/days_passed/start_date")
+def count_days():
+    start_date = "Jan 1, 2026"
+    days_passed = days_passed_calc(start_date)
+    return jsonify({"days_passed": days_passed})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), use_reloader=True)
