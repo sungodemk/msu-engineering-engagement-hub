@@ -1,4 +1,4 @@
-import json
+import csv
 import os
 from pathlib import Path
 
@@ -9,14 +9,69 @@ from psycopg.types.json import Jsonb
 ROOT = Path(__file__).resolve().parents[1]
 DATABASE_URL = os.environ["DATABASE_URL"]
 
+ACCOUNT_COLUMNS = {
+    "id": "External_ID__c",
+    "name": "Name",
+    "record_type": "RecordType.Name",
+    "industry": "Industry",
+    "city": "BillingCity",
+    "state": "BillingState",
+    "unit_code": "Unit_Code__c",
+    "parent_id": "Parent.External_ID__c",
+}
+
+CONTACT_COLUMNS = {
+    "id": "External_ID__c",
+    "first_name": "FirstName",
+    "last_name": "LastName",
+    "email": "Email",
+    "title": "Title",
+    "city": "MailingCity",
+    "state": "MailingState",
+    "constituent_type": "Constituent_Type__c",
+    "deceased": "npsp__Deceased__c",
+    "do_not_contact": "npsp__Do_Not_Contact__c",
+    "do_not_solicit": "Do_Not_Solicit__c",
+}
+
+ACCOUNT_TYPES = {
+    "Business Organization": "organization",
+    "University Department": "msu_unit",
+    "Educational Institution": "msu_unit",
+    "Academic Program": "msu_unit",
+}
+
+
+def read_csv(path):
+    with open(path, encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+
+        return [
+            {
+                key: value if value != "" else None
+                for key, value in row.items()
+            }
+            for row in reader
+        ]
+
 
 def normalize_name(name):
     return name.strip().lower()
 
 
-# stores raw fixture record as JSONB and keep the generated database ID 
-# so normalized rows can trace back to the source record
-def insert_source_record(cur, system, table, record_id, payload):
+def to_bool(value):
+    return value == "TRUE"
+
+
+def remove_nulls(attributes):
+    return {
+        key: value
+        for key, value in attributes.items()
+        if value is not None
+    }
+
+
+def insert_source_record(cur, source_table, source_pk, payload):
     cur.execute(
         """
         INSERT INTO source_records (
@@ -28,28 +83,35 @@ def insert_source_record(cur, system, table, record_id, payload):
         VALUES (%s, %s, %s, %s)
         RETURNING id
         """,
-        (system, table, record_id, Jsonb(payload)),
+        ("salesforce", source_table, source_pk, Jsonb(payload)),
     )
     return cur.fetchone()[0]
 
 
-def insert_entity(cur, entity_type, display_name):
+def insert_entity(cur, entity_type, display_name, email, attributes):
     cur.execute(
         """
         INSERT INTO entities (
             entity_type,
             display_name,
-            normalized_name
+            normalized_name,
+            email,
+            attributes
         )
-        VALUES (%s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s)
         RETURNING id
         """,
-        (entity_type, display_name, normalize_name(display_name)),
+        (
+            entity_type,
+            display_name,
+            normalize_name(display_name),
+            email,
+            Jsonb(attributes),
+        ),
     )
     return cur.fetchone()[0]
 
 
-# links each normalized entity back to the raw source record it was generated from
 def link_entity(cur, entity_id, source_record_id):
     cur.execute(
         """
@@ -62,259 +124,131 @@ def link_entity(cur, entity_id, source_record_id):
         (entity_id, source_record_id),
     )
 
-def insert_affiliations(cur, salesforce, contacts, accounts, source_ids):
-    for affiliation in salesforce["affiliations"]:
-        cur.execute(
-            """
-            INSERT INTO edges (
-                from_entity_id,
-                to_entity_id,
-                edge_type,
-                edge_role,
-                valid_from,
-                valid_to,
-                source_record_id
+
+def load_accounts(cur, rows):
+    account_entities = {}
+
+    for account in rows:
+        record_type = account[ACCOUNT_COLUMNS["record_type"]]
+
+        if record_type not in ACCOUNT_TYPES:
+            raise ValueError(
+                f"Unsupported Account record type: {record_type}"
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """,
-            (
-                contacts[affiliation["ContactId"]],
-                accounts[affiliation["AccountId"]],
-                "employed_by",
-                affiliation["Role__c"],
-                affiliation["StartDate__c"],
-                affiliation["EndDate__c"],
-                source_ids[affiliation["Id"]],
-            ),
+
+        source_id = insert_source_record(
+            cur,
+            "Account",
+            account[ACCOUNT_COLUMNS["id"]],
+            account,
         )
+
+        # companies such as UM Digital are not treated as duplicates.
+        attributes = remove_nulls({
+            "record_type": record_type,
+            "industry": account[ACCOUNT_COLUMNS["industry"]],
+            "city": account[ACCOUNT_COLUMNS["city"]],
+            "state": account[ACCOUNT_COLUMNS["state"]],
+            "unit_code": account[ACCOUNT_COLUMNS["unit_code"]],
+            "parent_external_id": account[ACCOUNT_COLUMNS["parent_id"]],
+        })
+
+        entity_id = insert_entity(
+            cur,
+            ACCOUNT_TYPES[record_type],
+            account[ACCOUNT_COLUMNS["name"]],
+            None,
+            attributes,
+        )
+
+        account_entities[account[ACCOUNT_COLUMNS["id"]]] = entity_id
+        link_entity(cur, entity_id, source_id)
+
+    return account_entities
+
+
+def load_contacts(cur, rows):
+    contact_entities = {}
+
+    for contact in rows:
+        source_id = insert_source_record(
+            cur,
+            "Contact",
+            contact[CONTACT_COLUMNS["id"]],
+            contact,
+        )
+
+        display_name = (
+            f'{contact[CONTACT_COLUMNS["first_name"]]} '
+            f'{contact[CONTACT_COLUMNS["last_name"]]}'
+        ).strip()
+
+        attributes = remove_nulls({
+            "title": contact[CONTACT_COLUMNS["title"]],
+            "city": contact[CONTACT_COLUMNS["city"]],
+            "state": contact[CONTACT_COLUMNS["state"]],
+            "constituent_type":
+                contact[CONTACT_COLUMNS["constituent_type"]],
+            "deceased":
+                to_bool(contact[CONTACT_COLUMNS["deceased"]]),
+            "do_not_contact":
+                to_bool(contact[CONTACT_COLUMNS["do_not_contact"]]),
+            "do_not_solicit":
+                to_bool(contact[CONTACT_COLUMNS["do_not_solicit"]]),
+        })
+
+        entity_id = insert_entity(
+            cur,
+            "person",
+            display_name,
+            contact[CONTACT_COLUMNS["email"]],
+            attributes,
+        )
+
+        contact_entities[contact[CONTACT_COLUMNS["id"]]] = entity_id
+        link_entity(cur, entity_id, source_id)
+
+    return contact_entities
 
 
 def main():
-    with open(
-        ROOT / "db" / "seeds" / "salesforce.json",
-        encoding="utf-8",
-    ) as f:
-        salesforce = json.load(f)
-
-    with open(
-        ROOT / "db" / "seeds" / "kuali_awards.json",
-        encoding="utf-8",
-    ) as f:
-        kuali = json.load(f)
+    accounts = read_csv(
+        ROOT / "db" / "seeds" / "01_Account.csv"
+    )
+    contacts = read_csv(
+        ROOT / "db" / "seeds" / "02_Contact.csv"
+    )
 
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
-            # clears previously loaded fixture data so rerunning this script
-            # produces the same result instead of duplicating rows.
+            # the cascade clears rows in tables that depend on these records.
             cur.execute(
-                """
-                TRUNCATE TABLE entities, source_records CASCADE
-                """
+                "TRUNCATE TABLE entities, source_records CASCADE"
             )
 
-            source_ids = {}
+            # keep mappings for affiliations and other files added later.
+            account_entities = load_accounts(cur, accounts)
+            contact_entities = load_contacts(cur, contacts)
 
-            for group, records in salesforce.items():
-                for record in records:
-                    source_ids[record["Id"]] = insert_source_record(
-                        cur,
-                        "salesforce",
-                        group,
-                        record["Id"],
-                        record,
-                    )
-
-            for award in kuali:
-                source_ids[award["awardId"]] = insert_source_record(
-                    cur,
-                    "kuali",
-                    "awards",
-                    award["awardId"],
-                    award,
-                )
-
-            accounts = {}
-            contacts = {}
-            users = {}
-            units = {}
-            sponsors = {}
-
-            for account in salesforce["accounts"]:
-                entity_id = insert_entity(
-                    cur,
-                    "organization",
-                    account["Name"],
-                )
-                accounts[account["Id"]] = entity_id
-                link_entity(
-                    cur,
-                    entity_id,
-                    source_ids[account["Id"]],
-                )
-
-            for contact in salesforce["contacts"]:
-                name = f'{contact["FirstName"]} {contact["LastName"]}'
-
-                entity_id = insert_entity(
-                    cur,
-                    "person",
-                    name,
-                )
-                contacts[contact["Id"]] = entity_id
-                link_entity(
-                    cur,
-                    entity_id,
-                    source_ids[contact["Id"]],
-                )
-
-            for user in salesforce["users"]:
-                entity_id = insert_entity(
-                    cur,
-                    "person",
-                    user["Name"],
-                )
-                users[user["Id"]] = entity_id
-                link_entity(
-                    cur,
-                    entity_id,
-                    source_ids[user["Id"]],
-                )
-
-                unit_name = user["Unit__c"]
-
-                # reuses one entity when the same MSU unit appears in multiple records
-                if unit_name not in units:
-                    units[unit_name] = insert_entity(
-                        cur,
-                        "msu_unit",
-                        unit_name,
-                    )
-
-            for award in kuali:
-                unit_name = award["leadUnit"]
-
-                if unit_name not in units:
-                    units[unit_name] = insert_entity(
-                        cur,
-                        "msu_unit",
-                        unit_name,
-                    )
-
-                sponsor_name = award["sponsorName"]
-
-                if sponsor_name not in sponsors:
-                    sponsors[sponsor_name] = insert_entity(
-                        cur,
-                        "organization",
-                        sponsor_name,
-                    )
-
-                link_entity(
-                    cur,
-                    sponsors[sponsor_name],
-                    source_ids[award["awardId"]],
-                )
-
-            for task in salesforce["tasks"]:
-                task_type = task["Type"].lower()
-
-                # converts Salesforce task types into the activity types used by our schema
-                if task_type == "meeting":
-                    activity_type = "touchpoint"
-                    status = None
-                elif task_type == "ask":
-                    activity_type = "ask"
-                    status = task["Status"].lower()
-                else:
-                    raise ValueError(
-                        f"Unsupported task type: {task['Type']}"
-                    )
-
-                notes = f'{task["Subject"]}: {task["Description"]}'
-
-                cur.execute(
-                    """
-                    INSERT INTO activities (
-                        company_entity_id,
-                        person_entity_id,
-                        msu_unit_entity_id,
-                        activity_type,
-                        occurred_on,
-                        ended_on,
-                        amount,
-                        status,
-                        owner_entity_id,
-                        notes,
-                        source_record_id
-                    )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    """,
-                    (
-                        accounts[task["WhatId"]],
-                        contacts[task["WhoId"]],
-                        None, # disclaimer: task owner does not necessarily identify the MSU unit for the activity
-                        activity_type,
-                        task["ActivityDate"],
-                        None,
-                        None,
-                        status,
-                        users[task["OwnerId"]],
-                        notes,
-                        source_ids[task["Id"]],
-                    ),
-                )
-
-            for award in kuali:
-                cur.execute(
-                    """
-                    INSERT INTO activities (
-                        company_entity_id,
-                        person_entity_id,
-                        msu_unit_entity_id,
-                        activity_type,
-                        occurred_on,
-                        ended_on,
-                        amount,
-                        status,
-                        owner_entity_id,
-                        notes,
-                        source_record_id
-                    )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    """,
-                    (
-                        sponsors[award["sponsorName"]],
-                        None,
-                        units[award["leadUnit"]],
-                        "award",
-                        award["startDate"],
-                        award["endDate"],
-                        award["totalAmount"],
-                        None, # activities.status is reserved for asks
-                        None,
-                        award["title"],
-                        source_ids[award["awardId"]],
-                    ),
-                )
-
-            insert_affiliations(
-                cur,
-                salesforce,
-                contacts,
-                accounts,
-                source_ids,
-            )
-
-            # prints basic row counts so the fixture load can be checked immediately 
             for table in [
                 "source_records",
                 "entities",
                 "entity_source_records",
-                "activities",
-                "edges",
             ]:
                 cur.execute(f"SELECT count(*) FROM {table}")
                 print(f"{table}: {cur.fetchone()[0]}")
+
+            cur.execute(
+                """
+                SELECT entity_type, count(*)
+                FROM entities
+                GROUP BY entity_type
+                ORDER BY entity_type
+                """
+            )
+
+            for entity_type, count in cur.fetchall():
+                print(f"{entity_type}: {count}")
 
 
 if __name__ == "__main__":
