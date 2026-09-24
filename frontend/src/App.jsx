@@ -17,7 +17,7 @@ function App() {
           <Route path="/persons" element={< PersonsPage />} />
           <Route path="/portfolio" element={<Placeholder title="Portfolio" />} />
           <Route path="/stewardship" element={<Placeholder title="Stewardship" />} />
-          <Route path="/company/:id" element={<TemporalPage />} />
+          <Route path="/temporal" element={<TemporalPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>
