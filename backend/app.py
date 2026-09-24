@@ -12,33 +12,6 @@ DATABASE_URL = os.environ["DATABASE_URL"]
 def get_db_connection():
     return psycopg.connect(DATABASE_URL, row_factory=dict_row)
 
-@app.route('/')
-def root():
-    return redirect('/home')
-
-@app.route('/home')
-def home():
-    return render_template('Homepage.html')
-
-@app.route('/company')
-def company():
-    return render_template('company_page/company_page.html')
-
-@app.route('/persons')
-def persons():
-    return render_template('Persons_page.html')
-
-@app.route('/portfolio')
-def portfolio():
-    return render_template('Portfolio_page.html')
-
-@app.route('/stewardship')
-def stewardship():
-    return render_template('Stewardship_queue_page.html')
-
-@app.route('/company_page_overview')
-def overview():
-    return render_template('company_page/overview.html')
 
 # List all companies
 @app.route('/api/companies')
