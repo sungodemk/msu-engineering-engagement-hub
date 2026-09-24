@@ -102,12 +102,12 @@ function CompanyPage() {
             </div>
             <div className="contacts_box">
                 <div className="contacts_title_box">
-                    <div className="contacts_title">Contacts at Company</div>
+                    <div className="contacts_title">𝌕Contacts at Company</div>
                 </div>
             </div>
             <div className="relationship_map_box">
                 <div className="relationship_map_title_box">
-                    <div className="relationship_map_title">Relationship Map</div>
+                    <div className="relationship_map_title">📈Relationship Map</div>
                 </div>
             </div>
             <Dialog className='log_activity_dialog' open_dialog={isDialogOpen}>
