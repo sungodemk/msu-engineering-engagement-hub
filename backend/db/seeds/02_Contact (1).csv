@@ -1,0 +1,188 @@
+External_ID__c,FirstName,LastName,Title,Email,MailingCity,MailingState,Constituent_Type__c,npsp__Deceased__c,Date_of_Death__c,Do_Not_Solicit__c,npsp__Do_Not_Contact__c,Contact_Channel_Restriction__c,Contact_Preference_Notes__c,Alumni_Awards__c,Self_Reported_Affinities__c,Address_Last_Updated__c,Description,Synthetic__c
+STF-001,Kathleen,Giltner,"Associate Director, Engineering Corporate Relations",kathleen.giltner@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-002,Jason,Fairchild,"Associate Director, Engineering Corporate Relations",jason.fairchild@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-003,Sara,Burcham,"Assistant Director, Engineering Corporate Relations",sara.burcham@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-004,Colin,Coolidge,"Assistant Director, Engineering Corporate Relations",colin.coolidge@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-005,Megan,Dobie,"Associate Director, Engineering Corporate Relations",megan.dobie@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-006,Patrick,Collins,"Director, Engineering Corporate Relations",patrick.collins@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-007,Michelle,Van Hoosen,Senior Director of Development,michelle.vanhoosen@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-008,Jennifer,Emmons,"Director, Employer Services, Center for Spartan Engineering",jennifer.emmons@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-009,Robert,Bessey,"Professor, Chemical Engineering and Materials Science",robert.bessey@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-010,Anne,Farrall,"Professor, Electrical and Computer Engineering",anne.farrall@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-011,David,Snyder,"Professor and Capstone Coordinator, Mechanical Engineering",david.snyder@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-012,Laura,Holden,"Director, Applied Engineering Sciences",laura.holden@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-013,Thomas,Linton,"Professor and Chair, Mechanical Engineering",thomas.linton@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-014,Kevin,Erickson,"Associate Professor, Electrical and Computer Engineering",kevin.erickson@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-015,Susan,Beal,"Associate Professor, Mechanical Engineering",susan.beal@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-016,James,Anthony,"Professor, Mechanical Engineering",james.anthony@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-017,Scott,Marshall,"Director of Corporate Relations, Broad College",scott.marshall@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-018,William,Towar,"Senior Instructor and Capstone Coordinator, ECE",william.towar@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-019,Margaret,Hulett,"Professor and Chair, Electrical and Computer Engineering",margaret.hulett@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-020,Victor,Moores,"Professor, Electrical and Computer Engineering",victor.moores@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-021,Gregory,Bennett,"Professor and Chair, Computer Science and Engineering",gregory.bennett@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-022,Teresa,Cavanaugh,"Associate Professor, Computer Science and Engineering",teresa.cavanaugh@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-023,Samuel,Dunckel,"Assistant Professor, Computer Science and Engineering",samuel.dunckel@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-024,Elaine,Clemens,"Teaching Professor and Capstone Coordinator, CSE",elaine.clemens@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-025,Richard,Chandler,"Professor, Mechanical Engineering",richard.chandler@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-026,Henry,Clippert,"Associate Professor, Mechanical Engineering",henry.clippert@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-027,Lucas,Waverly,"Professor, Chemical Engineering and Materials Science",lucas.waverly@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-028,Amy,Creyts,"Professor, Chemical Engineering and Materials Science",amy.creyts@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-029,Nathan,Jolly,"Associate Professor, Chemical Engineering and Materials Science",nathan.jolly@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-030,Karen,Willoughby,"Associate Professor, Biomedical Engineering",karen.willoughby@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-031,Eric,Marfitt,"Professor, School of Packaging",eric.marfitt@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-032,Timothy,Marsh,"Director, Broad Executive Development",timothy.marsh@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-033,Beth,Collingwood,"Coordinator, Engineering Student Organizations",beth.collingwood@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-034,Donna,Whitehills,"Associate Director, MSU Business Connect",donna.whitehills@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-035,Bruce,Wardcliff,"Licensing Manager, MSU Technologies",bruce.wardcliff@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+STF-036,Tanya,Seymour,"Director, Engineering Inclusive Excellence",tanya.seymour@msu.example.com,East Lansing,MI,Faculty/Staff,,,,,,,,,,,TRUE
+PER-0001,Dana,Kedzie,"VP, Propulsion & Powertrain Engineering",dana.kedzie@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0002,Brian,Eppley,"Director, Manufacturing Engineering",brian.eppley@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0003,Marcus,Hagadorn,"Director, ADAS Engineering",marcus.hagadorn@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0004,Kevin,Bogue,Campus Recruiting Lead,kevin.bogue@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0005,Elena,Chittenden,"Technical Fellow, Battery Materials",elena.chittenden@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0006,Andre,Cowles,"Lead Engineer, Vehicle Structures",andre.cowles@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0007,Samira,Gilchrist,"Senior Engineer, Software-Defined Vehicle",samira.gilchrist@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0008,Jordan,McDonel,Software Engineer II,jordan.mcdonel@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0009,Robert,Butterfield,Chief Technology Officer,robert.butterfield@alumni.example.com,Bloomfield Hills,MI,Alumni,,,,,,,,,,,TRUE
+PER-0010,Teresa,Morrill,"SVP, Global Product Development",teresa.morrill@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0011,Kwame,Jenison,"Director, Autonomous Driving Software",kwame.jenison@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0012,Laura,Conrad,"Director, Sustainability & Materials",laura.conrad@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0013,Daniel,Pasant,"Senior Manager, Manufacturing Launch",daniel.pasant@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0014,Maria,Eustace,"Chief Engineer, Truck Programs",maria.eustace@rcmc.example.com,Detroit,MI,Alumni;Corporate Contact,,,TRUE,,,Requested no solicitations (2022). Open to student mentoring and guest lectures.,,,,,TRUE
+PER-0020,Carla,Landon,"VP, Vehicle Engineering",carla.landon@gra.example.com,Auburn Hills,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0021,Derek,Wonders,"Director, Electrification R&D",derek.wonders@gra.example.com,Auburn Hills,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0022,Nadia,Haslett,"VP, Global Purchasing & Supply Chain",nadia.haslett@gra.example.com,Auburn Hills,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0023,Heather,Nisbet,"Manager, Community Relations",heather.nisbet@gra.example.com,Auburn Hills,MI,Corporate Contact,,,,,,,,,,,TRUE
+PER-0024,Michael,Rather,"Manager, Chassis Engineering",michael.rather@gra.example.com,Auburn Hills,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0025,Aisha,Trowbridge,Software Engineer,aisha.trowbridge@gra.example.com,Auburn Hills,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0026,Paul,Munn,"VP, Manufacturing",paul.munn@alumni.example.com,Rochester Hills,MI,Alumni,,,,,,,,,,,TRUE
+PER-0027,Gregory,Mayo,Chief Technology Officer,gregory.mayo@gra.example.com,Auburn Hills,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0028,Vanessa,Briggs,"Director, Battery Systems",vanessa.briggs@gra.example.com,Auburn Hills,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0029,Luis,Chestnut,Associate Engineer,luis.chestnut@gra.example.com,Auburn Hills,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0030,Rebecca,Holt,"Director, Supplier Quality",rebecca.holt@gra.example.com,Auburn Hills,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0031,Samuel,Case,"Senior Manager, Powertrain Integration",samuel.case@gra.example.com,Auburn Hills,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0040,Sofia,Bryan,"VP Engineering, Michigan Technical Center",sofia.bryan@gcm.example.com,Novi,MI,Corporate Contact,,,,,,,,,,,TRUE
+PER-0041,Nicole,Williamston,"Head of Talent Acquisition, North America",nicole.williamston@gcm.example.com,Novi,MI,Corporate Contact,,,,,,,,,,,TRUE
+PER-0042,Ethan,Fee,"Engineering Manager, Battery Management Systems",ethan.fee@gcm.example.com,Novi,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0043,Lena,Wills,"Director, Thermal Systems",lena.wills@gcm.example.com,Novi,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0044,Tyler,Owen,Firmware Engineer,tyler.owen@gcm.example.com,Novi,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0045,Victor,Mason,"Engineering Manager, Platform Integration",victor.mason@gra.example.com,Auburn Hills,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0046,Amara,Phillips,"Principal Scientist, Cell Chemistry",amara.phillips@gcm.example.com,Novi,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0047,Kevin,Cole,Associate Controls Engineer,kevin.cole@gcm.example.com,Novi,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0048,Diane,Shaw,"Director, Vehicle Integration",diane.shaw@gcm.example.com,Novi,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0049,Hector,Armstrong,"Director, Manufacturing Engineering",hector.armstrong@gcm.example.com,Novi,MI,Alumni;Corporate Contact,,,,TRUE,,Requested no contact of any kind (2023).,,,,,TRUE
+PER-0060,Rick,Campbell,President,rick.campbell@bpc.example.com,Holland,MI,Alumni;Corporate Contact,,,,,,,,,,Announced retirement effective 12/31/2026 (see 3/24/2026 contact report).,TRUE
+PER-0061,Megan,Adams,Chief Operating Officer,megan.adams@bpc.example.com,Holland,MI,Corporate Contact,,,,,,,,,,Named President effective 1/1/2027.,TRUE
+PER-0062,Gary,Baker,Chief Financial Officer,gary.baker@bpc.example.com,Holland,MI,Corporate Contact,,,,,,,,,,,TRUE
+PER-0063,Jake,Wilson,Manufacturing Engineer,jake.wilson@bpc.example.com,Holland,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0064,Nathan,Bailey,"VP, Operations",nathan.bailey@bpc.example.com,Holland,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0065,Carmen,Williams,Director of Quality,carmen.williams@bpc.example.com,Holland,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0066,Alicia,Morrill,Controls Engineering Manager,alicia.morrill@bpc.example.com,Holland,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0067,Ryan,Holt,Process Engineer,ryan.holt@bpc.example.com,Holland,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0068,Olivia,Harrison,"Engineering Manager, Product Development",olivia.harrison@bpc.example.com,Holland,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0080,Brenda,Holmes,VP Engineering,brenda.holmes@hms.example.com,Dayton,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0081,Craig,Williams,University Relations Specialist,craig.williams@tds.example.com,Troy,MI,Corporate Contact,,,,,,,,,,,TRUE
+PER-0082,Ravi,Munn,"Principal Engineer, NVH",ravi.munn@tds.example.com,Troy,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0083,Tom,Shaw,Driveline Engineer,tom.shaw@tds.example.com,Troy,MI,Alumni,,,,,,,,,,,TRUE
+PER-0084,Alyssa,Kobs,"University Relations Lead, Michigan",alyssa.kobs@tds.example.com,Troy,MI,Corporate Contact,,,,,,,,,,,TRUE
+PER-0085,Scott,Hagadorn,"Director, Driveline Engineering",scott.hagadorn@tds.example.com,Troy,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0086,Lauren,Gilchrist,Electrification Engineer,lauren.gilchrist@tds.example.com,Troy,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0087,Ben,Fee,Associate Engineer,ben.fee@tds.example.com,Troy,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0088,Nora,Abbot,Materials Lab Manager,nora.abbot@tds.example.com,Troy,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0089,Monica,Case,Test Engineer,monica.case@tds.example.com,Troy,MI,Alumni,,,,,,,,,,,TRUE
+PER-0100,Janet,Rather,"Chief Scientist, Advanced Sensing",janet.rather@ldt.example.com,Sterling Heights,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0101,Paul,Bryan,"Director, University Research Programs",paul.bryan@ldt.example.com,Sterling Heights,MI,Corporate Contact,,,,,,,,,,,TRUE
+PER-0102,Keisha,Cowles,"Senior Research Engineer, Autonomy",keisha.cowles@ldt.example.com,Sterling Heights,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0103,Ian,Chestnut,Software Engineer,ian.chestnut@ldt.example.com,Sterling Heights,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0104,Warren,Chittenden,"President, Ground Systems Division",warren.chittenden@ldt.example.com,Sterling Heights,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0105,Nina,Butterfield,Research Scientist,nina.butterfield@ldt.example.com,Sterling Heights,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0106,Andre,Yakeley,Cybersecurity Engineering Manager,andre.yakeley@ldt.example.com,Sterling Heights,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0107,Tamara,Trowbridge,"Director, Business Development",tamara.trowbridge@ldt.example.com,Sterling Heights,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0108,James,Landon,"VP, Government Relations",james.landon@ldt.example.com,Sterling Heights,MI,Alumni;Corporate Contact,,,,,LDT Corporate Communications,Route all contact through LDT Corporate Communications (requested 2020).,,,,,TRUE
+PER-0120,Michelle,Pasant,"Senior Manager, University Recruiting Programs",michelle.pasant@sha.example.com,Phoenix,AZ,Corporate Contact,,,,,,,,,,,TRUE
+PER-0121,David,Haslett,"Engineering Manager, Structures",david.haslett@sha.example.com,Phoenix,AZ,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0122,Grace,Nisbet,Community Investment Manager,grace.nisbet@sha.example.com,Phoenix,AZ,Corporate Contact,,,,,,,,,,,TRUE
+PER-0123,Kenneth,Eppley,"VP, Propulsion Systems",kenneth.eppley@sha.example.com,Phoenix,AZ,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0124,Martin,Cobb,"VP, Mission Systems Engineering",martin.cobb@sha.example.com,Phoenix,AZ,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0125,Lisa,Williamston,"Site Lead, Michigan Engineering Office",lisa.williamston@sha.example.com,Ann Arbor,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0126,Emily,Landon,"Director, Flight Software",emily.landon@sha.example.com,Phoenix,AZ,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0127,Shreya,Kedzie,Avionics Engineering Manager,shreya.kedzie@sha.example.com,Phoenix,AZ,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0128,Tyrone,Bogue,Structures Engineer,tyrone.bogue@sha.example.com,Phoenix,AZ,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0140,Carlos,Phillips,"Chief Engineer, RF Systems",carlos.phillips@hms.example.com,Dayton,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0141,Monique,Owen,"Director, Cyber Resilience",monique.owen@hms.example.com,Dayton,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0142,Gerald,Mason,Chief Technology Officer,gerald.mason@alumni.example.com,Kettering,OH,Alumni,,,,,,,,,,,TRUE
+PER-0143,Ingrid,Kobs,"Director, Corporate Citizenship",ingrid.kobs@hms.example.com,Dayton,OH,Corporate Contact,,,,,,,,,,,TRUE
+PER-0144,Jamal,Yakeley,Systems Engineer,jamal.yakeley@hms.example.com,Dayton,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0145,Hassan,Nisbet,President,hassan.nisbet@hms.example.com,Dayton,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0146,Peter,Eaton,"Director, RF Hardware",peter.eaton@hms.example.com,Dayton,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0147,Leah,Munn,Cybersecurity Engineer,leah.munn@hms.example.com,Dayton,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0148,Diana,Pasant,"Director, Test & Evaluation",diana.pasant@hms.example.com,Dayton,OH,Alumni;Corporate Contact,,,,,,,College of Engineering Distinguished Alumni Award (2019),,,,TRUE
+PER-0149,Ronald,Trowbridge,Senior Systems Engineer,,Beavercreek,OH,Alumni,TRUE,2025-02-14,,,,,,,,,TRUE
+PER-0160,Naomi,Bryan,"Director, Biomaterials R&D",naomi.bryan@cdm.example.com,Grand Rapids,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0161,Sean,Gilchrist,"Senior Manager, Cardiac Rhythm Firmware",sean.gilchrist@cdm.example.com,Grand Rapids,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0162,Ray,Cowles,"VP Operations, Michigan Site",ray.cowles@cdm.example.com,Grand Rapids,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0163,Tessa,Wills,Quality Engineer,tessa.wills@cdm.example.com,Grand Rapids,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0164,Imani,Bogue,Principal Scientist,imani.bogue@cdm.example.com,Grand Rapids,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0165,Rafael,Wonders,"SVP, Global R&D",rafael.wonders@cdm.example.com,Minneapolis,MN,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0166,Kristen,Case,"Director, Regulatory Affairs",kristen.case@cdm.example.com,Minneapolis,MN,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0167,Deon,Eppley,Associate Engineer,deon.eppley@cdm.example.com,Grand Rapids,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0168,Alison,Eustace,Senior Process Engineer,alison.eustace@cdm.example.com,Grand Rapids,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0169,S.,Gilchrist,,sgilchrist11@mail.example.com,Grand Rapids,MI,Alumni,,,,,,,,,,,TRUE
+PER-0180,Brandon,Cole,"Engineering Manager, E-commerce Platform",brandon.cole@um.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0181,Victoria,Akers,"VP, Supply Chain Strategy",victoria.akers@um.example.com,Columbus,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0182,Nathaniel,Hubbard,"Director, Packaging Engineering",nathaniel.hubbard@um.example.com,Columbus,OH,Corporate Contact,,,,,,,,,,,TRUE
+PER-0183,Gordon,Williamston,Chief Technology Officer,gordon.williamston@um.example.com,Columbus,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0184,Farah,Hubbard,"Director, Store Technology & IoT",farah.hubbard@um.example.com,Columbus,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0185,Colin,Abbot,Software Engineer II,colin.abbot@um.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0186,Janelle,Phillips,Packaging Materials Manager,janelle.phillips@um.example.com,Columbus,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0187,Noah,Bailey,Senior Data Engineer,noah.bailey@umdigital.example.com,Detroit,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0200,Gloria,Kedzie,"VP, New Energy Ventures",gloria.kedzie@whe.example.com,Houston,TX,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0201,Wes,Bailey,Technical Manager,wes.bailey@whe.example.com,Toledo,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0202,Mariana,Case,Reliability Engineering Manager,mariana.case@whe.example.com,Houston,TX,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0203,Kenji,Armstrong,Process Engineer,kenji.armstrong@whe.example.com,Toledo,OH,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0209,Todd,McDonel,University Recruiting Manager,todd.mcdonel@whe.example.com,Houston,TX,Corporate Contact,,,,,,,,,,,TRUE
+PER-0204,Harold,Mayo,Chief Operating Officer,harold.mayo@whe.example.com,Houston,TX,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0205,Serena,Fee,"Director, Pipeline Integrity",serena.fee@whe.example.com,Houston,TX,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0206,Jalen,Rather,Process Engineer,jalen.rather@whe.example.com,Houston,TX,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0207,Tara,Akers,"Director, Strategy",tara.akers@whe.example.com,Houston,TX,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0208,Glenn,Owen,"Director, Health, Safety & Environment",glenn.owen@whe.example.com,Houston,TX,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0220,Patricia,Campbell,"Director, Corporate Philanthropy",patricia.campbell@flcb.example.com,Chicago,IL,Corporate Contact,,,,,,,,,,,TRUE
+PER-0221,Graham,Berkey,"SVP, Global Manufacturing",graham.berkey@flcb.example.com,Chicago,IL,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0222,Yvonne,Akers,Philanthropy Program Specialist,yvonne.akers@flcb.example.com,Chicago,IL,Corporate Contact,,,,,,,,,,,TRUE
+PER-0223,Luca,Baker,Manufacturing Engineering Manager,luca.baker@flcb.example.com,Grand Rapids,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0224,Ramona,Hagadorn,Chief Supply Chain Officer,ramona.hagadorn@flcb.example.com,Chicago,IL,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0225,Isaac,Perry,"Director, Product Sustainability",isaac.perry@flcb.example.com,Chicago,IL,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0226,Felix,Cowles,Controls Engineer,felix.cowles@flcb.example.com,Grand Rapids,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0227,Maya,Hubbard,Associate Engineer,maya.hubbard@flcb.example.com,Grand Rapids,MI,Alumni;Corporate Contact,,,,,,,,Alumni survey 2025: attended an MSU pre-college engineering camp (2016),,,TRUE
+PER-0228,Lorraine,Berkey,"VP, Brand Marketing",lorraine.berkey@flcb.example.com,Chicago,IL,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0240,Elaine,Berkey,Chief Technology Officer,elaine.berkey@gw.example.com,Bay City,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0241,Rohan,Campbell,"R&D Director, Polymers",rohan.campbell@gw.example.com,Bay City,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0242,Sun-Hee,Williams,Senior Scientist,sunhee.williams@gw.example.com,Bay City,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0243,Dale,Perry,"Director, University Relations",dale.perry@gw.example.com,Bay City,MI,Corporate Contact,,,,,,,,,,,TRUE
+PER-0244,Gavin,Armstrong,Plant Engineering Manager,gavin.armstrong@gw.example.com,Bay City,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0245,Howard,Akers,"Executive VP, Specialty Materials",howard.akers@gw.example.com,Bay City,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0246,Ana,Yakeley,Process Engineer,ana.yakeley@gw.example.com,Bay City,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0247,Brett,Gilchrist,"Director, Process Automation",brett.gilchrist@gw.example.com,Bay City,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0248,Nadine,Cobb,"VP, Commercial",nadine.cobb@gw.example.com,Bay City,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0249,Walter,Williamston,Chief Executive Officer,walter.williamston@alumni.example.com,Midland,MI,Alumni,,,,,,,,,,,TRUE
+PER-0260,Frances,Chittenden,"VP, Grid Modernization",frances.chittenden@ggpl.example.com,Flint,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0261,Terrence,Morrill,"Director, System Planning",terrence.morrill@ggpl.example.com,Flint,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0262,Priscilla,Hagadorn,"Manager, Workforce Development & University Programs",priscilla.hagadorn@ggpl.example.com,Flint,MI,Corporate Contact,,,,,,,,,,,TRUE
+PER-0263,Ian,Armstrong,"Senior Engineer, Distributed Energy Resources",ian.armstrong@ggpl.example.com,Flint,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0264,Jorge,Campbell,"Manager, Substation Engineering",jorge.campbell@ggpl.example.com,Flint,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0265,Regina,Eppley,"Director, Community Relations",regina.eppley@ggpl.example.com,Flint,MI,Corporate Contact,,,,,,,,,,,TRUE
+PER-0266,Leonard,Wilson,President & COO,leonard.wilson@ggpl.example.com,Flint,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0267,Kiara,Eaton,Protection Engineer,kiara.eaton@ggpl.example.com,Flint,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0268,Dominic,Fee,"Director, Generation Engineering",dominic.fee@ggpl.example.com,Flint,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0269,Sabrina,Cole,"Manager, Hydro & Dam Safety",sabrina.cole@ggpl.example.com,Flint,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0270,Marjorie,Hubbard,"Director, Transmission Planning",marjorie.hubbard@ggpl.example.com,Flint,MI,Alumni;Corporate Contact,,,,,,,,,2025-04-21,,TRUE
+PER-0280,Rashad,Mason,"VP Engineering, Developer Platform",rashad.mason@sst.example.com,Seattle,WA,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0281,Rochelle,Kobs,Social Impact Program Manager,rochelle.kobs@sst.example.com,Seattle,WA,Corporate Contact,,,,,,,,,,,TRUE
+PER-0282,Arjun,Baker,"Senior Engineering Manager, Cloud Infrastructure",arjun.baker@sst.example.com,Seattle,WA,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0283,Tasha,Williams,Software Engineer,tasha.williams@sst.example.com,Seattle,WA,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0284,Zach,Holt,Developer Advocate,zach.holt@sst.example.com,Seattle,WA,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0285,Imran,Wilson,"Director, Site Reliability Engineering",imran.wilson@sst.example.com,Seattle,WA,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0286,Lily,Morrill,"Principal Engineer, Machine Learning",lily.morrill@sst.example.com,Seattle,WA,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0287,Marco,Eaton,Software Engineer,marco.eaton@sst.example.com,Seattle,WA,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0288,Hana,Trowbridge,"Hardware Engineering Manager, Data Centers",hana.trowbridge@sst.example.com,Seattle,WA,Alumni;Corporate Contact,,,,,,,,,,,TRUE
+PER-0289,Samir,Kedzie,"Director, Security Engineering",samir.kedzie@sst.example.com,Grand Rapids,MI,Alumni;Corporate Contact,,,,,,,,,,,TRUE

@@ -1,0 +1,27 @@
+External_ID__c,Name,npsp__Active__c,Owning_Unit__c,Synthetic__c
+GAU-001,Engineering Scholarships (Corporate),TRUE,ecr,TRUE
+GAU-002,Applied Engineering Sciences Program Support,TRUE,aes_program,TRUE
+GAU-003,Broad College Supply Chain Programs,TRUE,broad_college,TRUE
+GAU-004,Engineering Pre-College (K-12) Outreach,TRUE,precollege_programs,TRUE
+GAU-005,Engineering Student Organizations and Design Day,TRUE,student_orgs_office,TRUE
+GAU-006,Engineering Inclusive Excellence,TRUE,inclusive_excellence,TRUE
+GAU-007,GRA Inclusive Excellence Scholarship,TRUE,inclusive_excellence,TRUE
+GAU-008,Beaumont Machining Excellence Fund,TRUE,dept_me,TRUE
+GAU-009,TDS Driveline Scholarship and ME Fund,TRUE,dept_me,TRUE
+GAU-010,HMS Engineering Scholarship,TRUE,ecr,TRUE
+GAU-011,Women in Computing (CSE),TRUE,dept_cse,TRUE
+GAU-012,Engineering General Fund (Unrestricted),TRUE,dean_office,TRUE
+GAU-013,Broad Supply Chain Case Competition,TRUE,broad_college,TRUE
+GAU-014,Broad Supply Chain Scholarship,TRUE,broad_college,TRUE
+GAU-015,School of Packaging Design Competition,TRUE,school_of_packaging,TRUE
+GAU-016,WHE Chemical Engineering Scholarship,TRUE,dept_chems,TRUE
+GAU-017,Low-Carbon Energy Graduate Fellowship,TRUE,dept_chems,TRUE
+GAU-018,Farm Lane Makerspace,TRUE,dean_office,TRUE
+GAU-019,Engineering Summer Camps (Need-Based),TRUE,precollege_programs,TRUE
+GAU-020,Farm Lane Sustainability Award (Design Day),TRUE,student_orgs_office,TRUE
+GAU-021,G&W Chemical Engineering Scholarships,TRUE,dept_chems,TRUE
+GAU-022,Materials Science Undergraduate Research,TRUE,dept_chems,TRUE
+GAU-024,First-Year Engineering Programs,TRUE,dean_office,TRUE
+GAU-025,ChEMS Equipment and Instrumentation,TRUE,dept_chems,TRUE
+GAU-026,ME Machine Shop Equipment,TRUE,dept_me,TRUE
+GAU-027,Center for Spartan Engineering Career Readiness Fund,TRUE,center_spartan_engineering,TRUE

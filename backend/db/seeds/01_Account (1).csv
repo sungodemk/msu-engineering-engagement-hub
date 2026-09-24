@@ -1,0 +1,44 @@
+External_ID__c,Name,RecordType.Name,Type,Industry,Industry_Detail__c,Parent.External_ID__c,BillingCity,BillingState,Giving_Guidelines__c,Giving_Cycle_Deadline__c,Unit_Code__c,Synthetic__c
+ORG-100,Michigan State University,Educational Institution,Educational Institution,,,,,,,,,TRUE
+ORG-101,MSU College of Engineering,University Department,Educational Institution,,,ORG-100,,,,,college_engineering,TRUE
+ORG-102,Eli Broad College of Business,University Department,Educational Institution,,,ORG-100,,,,,broad_college,TRUE
+ORG-103,MSU College of Agriculture and Natural Resources,University Department,Educational Institution,,,ORG-100,,,,,canr,TRUE
+ORG-110,Engineering Corporate Relations,University Department,Educational Institution,,,ORG-101,,,,,ecr,TRUE
+ORG-111,Engineering Development,University Department,Educational Institution,,,ORG-101,,,,,development,TRUE
+ORG-112,Center for Spartan Engineering (Employer Services),University Department,Educational Institution,,,ORG-101,,,,,center_spartan_engineering,TRUE
+ORG-113,Department of Mechanical Engineering,University Department,Educational Institution,,,ORG-101,,,,,dept_me,TRUE
+ORG-114,Department of Electrical and Computer Engineering,University Department,Educational Institution,,,ORG-101,,,,,dept_ece,TRUE
+ORG-115,Department of Computer Science and Engineering,University Department,Educational Institution,,,ORG-101,,,,,dept_cse,TRUE
+ORG-116,Department of Chemical Engineering and Materials Science,University Department,Educational Institution,,,ORG-101,,,,,dept_chems,TRUE
+ORG-117,Department of Civil and Environmental Engineering,University Department,Educational Institution,,,ORG-101,,,,,dept_civil,TRUE
+ORG-118,Department of Biomedical Engineering,University Department,Educational Institution,,,ORG-101,,,,,dept_bme,TRUE
+ORG-119,Applied Engineering Sciences Program,Academic Program,Educational Institution,,,ORG-101,,,,,aes_program,TRUE
+ORG-120,Engineering Dean's Office,University Department,Educational Institution,,,ORG-101,,,,,dean_office,TRUE
+ORG-121,Engineering Student Organizations Office,University Department,Educational Institution,,,ORG-101,,,,,student_orgs_office,TRUE
+ORG-122,Engineering Pre-College Programs,University Department,Educational Institution,,,ORG-101,,,,,precollege_programs,TRUE
+ORG-123,Office of Sponsored Programs,University Department,Educational Institution,,,ORG-100,,,,,sponsored_programs,TRUE
+ORG-124,MSU Technologies,University Department,Educational Institution,,,ORG-100,,,,,msu_technologies,TRUE
+ORG-125,Broad College Corporate Relations,University Department,Educational Institution,,,ORG-102,,,,,broad_college,TRUE
+ORG-126,Broad Executive Development,University Department,Educational Institution,,,ORG-102,,,,,broad_exec_ed,TRUE
+ORG-127,School of Packaging,University Department,Educational Institution,,,ORG-103,,,,,school_of_packaging,TRUE
+ORG-128,MSU Business Connect,University Department,Educational Institution,,,ORG-100,,,,,business_connect,TRUE
+ORG-129,Engineering Inclusive Excellence,University Department,Educational Institution,,,ORG-101,,,,,inclusive_excellence,TRUE
+ORG-016,Ostwald Mobility Group,Business Organization,Corporation,Manufacturing,Automotive Supplier,,"Stuttgart, Germany",,,,,TRUE
+ORG-001,Red Cedar Motor Company,Business Organization,Corporation,Transportation,Automotive OEM,,Detroit,MI,,,,TRUE
+ORG-002,Grand River Automotive,Business Organization,Corporation,Transportation,Automotive OEM,,Auburn Hills,MI,,,,TRUE
+ORG-003,Green Current Motors,Business Organization,Corporation,Transportation,Automotive OEM (EV),,Novi,MI,,,,TRUE
+ORG-004,Beaumont Precision Components,Business Organization,Corporation,Manufacturing,Automotive Supplier (Tier 2),,Holland,MI,,,,TRUE
+ORG-005,Tailgate Drive Systems,Business Organization,Corporation,Manufacturing,Automotive Supplier (Tier 1),ORG-016,Troy,MI,,,,TRUE
+ORG-006,Laconia Defense Technologies,Business Organization,Corporation,Government,Defense Contractor,,Sterling Heights,MI,,,,TRUE
+ORG-007,Spartan Helm Aerospace,Business Organization,Corporation,Engineering,Aerospace & Defense,,Phoenix,AZ,,March 1 (annual Community Investment grant cycle),,TRUE
+ORG-008,Hoplite Mission Systems,Business Organization,Corporation,Government,Defense Contractor,,Dayton,OH,,,,TRUE
+ORG-009,Circle Drive Medical,Business Organization,Corporation,Healthcare,Medical Devices,,Minneapolis,MN,,,,TRUE
+ORG-010,Union Mercantile,Business Organization,Corporation,Retail,Retail,,Columbus,OH,,,,TRUE
+ORG-011,Wells Hall Energy,Business Organization,Corporation,Energy,Oil & Gas / New Energy,,Houston,TX,,,,TRUE
+ORG-012,Farm Lane Consumer Brands,Business Organization,Corporation,Manufacturing,Consumer Goods,,Chicago,IL,,,,TRUE
+ORG-013,Greene & Whyte Materials,Business Organization,Corporation,Chemicals,Specialty Chemicals & Polymers,,Bay City,MI,,,,TRUE
+ORG-014,Go Green Power & Light,Business Organization,Corporation,Utilities,Electric Utility,,Flint,MI,"Not eligible: scholarships, endowments, capital projects. Eligible: programs building the regional engineering workforce; priority for first-generation students and students from the service territory.",,,TRUE
+ORG-015,Spartan Stack Technologies,Business Organization,Corporation,Technology,Cloud & Software,,Seattle,WA,,,,TRUE
+ORG-017,UM Digital LLC,Business Organization,Corporation,Technology,Retail Technology,ORG-010,Detroit,MI,,,,TRUE
+ORG-018,Red Cedar Motors,Business Organization,Corporation,,,,,,,,,TRUE
+ORG-019,GRA Inc.,Business Organization,Corporation,,,,,,,,,TRUE

@@ -1,0 +1,17 @@
+External_ID__c,Subject__c,Type__c,Due_Date__c,Status__c,Completed_Date__c,Account__r.External_ID__c,Contact__r.External_ID__c,Opportunity__r.External_ID__c,Assigned_To__r.External_ID__c,Notes__c,Synthetic__c
+ACT-0001,Introduction meeting with Megan Adams (President-elect),Follow-up,2026-05-31,Open,,ORG-004,PER-0061,,STF-001,Campbell offered to introduce Adams before his 12/31/2026 retirement.,TRUE
+ACT-0002,Pledge payment reminder,Pledge Reminder,2021-07-15,Completed,2021-07-15,ORG-005,PER-0080,OPP-0039,STF-001,Automated reminder sent. No response.,TRUE
+ACT-0003,Pledge payment reminder,Pledge Reminder,2022-07-15,Completed,2022-07-15,ORG-005,PER-0080,OPP-0039,STF-001,Automated reminder sent. No response.,TRUE
+ACT-0004,Submit concept-based proposal before SHA FY2027 cycle,Deadline,2027-01-15,Open,,ORG-007,PER-0123,OPP-0042,STF-003,,TRUE
+ACT-0005,2020 makerspace impact report,Stewardship Report,2020-01-31,Completed,2020-01-28,ORG-012,PER-0222,OPP-0132,STF-005,,TRUE
+ACT-0006,2021 makerspace impact report,Stewardship Report,2021-01-31,Completed,2021-01-26,ORG-012,PER-0222,OPP-0132,STF-005,,TRUE
+ACT-0007,2022 makerspace impact report,Stewardship Report,2022-01-31,Completed,2022-01-27,ORG-012,PER-0222,OPP-0132,STF-005,,TRUE
+ACT-0008,2023 makerspace impact report,Stewardship Report,2023-01-31,Completed,2023-01-30,ORG-012,PER-0222,OPP-0132,STF-005,,TRUE
+ACT-0009,2024 makerspace impact report,Stewardship Report,2024-01-31,Completed,2024-01-29,ORG-012,PER-0222,OPP-0132,STF-005,,TRUE
+ACT-0010,2025 makerspace impact report,Stewardship Report,2025-01-31,Completed Late,2025-03-12,ORG-012,PER-0222,OPP-0132,STF-005,,TRUE
+ACT-0011,2026 makerspace impact report,Stewardship Report,2026-01-31,Completed,2026-01-28,ORG-012,PER-0222,OPP-0132,STF-005,,TRUE
+ACT-0012,2027 makerspace impact report,Stewardship Report,2027-01-31,Open,,ORG-012,PER-0222,OPP-0132,STF-005,"Requires data from makerspace, Design Day office.",TRUE
+ACT-0013,2026 summer camp participation report,Stewardship Report,2026-09-30,Open,,ORG-012,PER-0220,,STF-005,Data from Pre-College Programs.,TRUE
+ACT-0014,Draft reporting plan for makerspace refresh proposal,Follow-up,2026-10-15,Open,,ORG-012,PER-0220,OPP-0150,STF-005,,TRUE
+ACT-0015,Send WHE two-way value summary,Follow-up,2026-06-30,Open,,ORG-011,PER-0200,OPP-0131,STF-004,"Needs data from MSU Technologies, facility billing, and Broad Executive Development.",TRUE
+ACT-0016,Draft proposal for SST first-year / bridge / mentoring pillar,Follow-up,2022-12-31,Open,,ORG-015,PER-0281,OPP-0180,STF-003,,TRUE

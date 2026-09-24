@@ -1,0 +1,198 @@
+External_ID__c,npe5__Contact__r.External_ID__c,npe5__Organization__r.External_ID__c,npe5__Role__c,Department__c,npe5__Status__c,npe5__StartDate__c,npe5__EndDate__c,npe5__Primary__c,Synthetic__c
+AFF-00001,STF-001,ORG-110,"Associate Director, Engineering Corporate Relations",,Current,2014-08-01,,TRUE,TRUE
+AFF-00002,STF-002,ORG-110,"Associate Director, Engineering Corporate Relations",,Current,2017-06-01,,TRUE,TRUE
+AFF-00003,STF-003,ORG-110,"Assistant Director, Engineering Corporate Relations",,Current,2022-09-01,,TRUE,TRUE
+AFF-00004,STF-004,ORG-110,"Assistant Director, Engineering Corporate Relations",,Current,2021-05-01,,TRUE,TRUE
+AFF-00005,STF-005,ORG-110,"Associate Director, Engineering Corporate Relations",,Current,2015-03-01,,TRUE,TRUE
+AFF-00006,STF-006,ORG-110,"Director, Engineering Corporate Relations",,Former,2012-01-01,2021-12-31,TRUE,TRUE
+AFF-00007,STF-007,ORG-111,Senior Director of Development,,Current,2013-01-01,,TRUE,TRUE
+AFF-00008,STF-008,ORG-112,"Director, Employer Services, Center for Spartan Engineering",,Current,2011-01-01,,TRUE,TRUE
+AFF-00009,STF-009,ORG-116,"Professor, Chemical Engineering and Materials Science",,Current,2005-08-15,,TRUE,TRUE
+AFF-00010,STF-010,ORG-114,"Professor, Electrical and Computer Engineering",,Current,2008-08-15,,TRUE,TRUE
+AFF-00011,STF-011,ORG-113,"Professor and Capstone Coordinator, Mechanical Engineering",,Current,2003-08-15,,TRUE,TRUE
+AFF-00012,STF-012,ORG-119,"Director, Applied Engineering Sciences",,Current,2012-08-15,,TRUE,TRUE
+AFF-00013,STF-013,ORG-113,"Professor and Chair, Mechanical Engineering",,Current,2001-08-15,,TRUE,TRUE
+AFF-00014,STF-014,ORG-114,"Associate Professor, Electrical and Computer Engineering",,Current,2014-08-15,,TRUE,TRUE
+AFF-00015,STF-015,ORG-113,"Associate Professor, Mechanical Engineering",,Current,2016-08-15,,TRUE,TRUE
+AFF-00016,STF-016,ORG-113,"Professor, Mechanical Engineering",,Current,2006-08-15,,TRUE,TRUE
+AFF-00017,STF-017,ORG-125,"Director of Corporate Relations, Broad College",,Current,2015-01-01,,TRUE,TRUE
+AFF-00018,STF-018,ORG-114,"Senior Instructor and Capstone Coordinator, ECE",,Current,2010-08-15,,TRUE,TRUE
+AFF-00019,STF-019,ORG-114,"Professor and Chair, Electrical and Computer Engineering",,Current,2004-08-15,,TRUE,TRUE
+AFF-00020,STF-020,ORG-114,"Professor, Electrical and Computer Engineering",,Current,2009-08-15,,TRUE,TRUE
+AFF-00021,STF-021,ORG-115,"Professor and Chair, Computer Science and Engineering",,Current,2007-08-15,,TRUE,TRUE
+AFF-00022,STF-022,ORG-115,"Associate Professor, Computer Science and Engineering",,Current,2013-08-15,,TRUE,TRUE
+AFF-00023,STF-023,ORG-115,"Assistant Professor, Computer Science and Engineering",,Current,2019-08-15,,TRUE,TRUE
+AFF-00024,STF-024,ORG-115,"Teaching Professor and Capstone Coordinator, CSE",,Current,2011-08-15,,TRUE,TRUE
+AFF-00025,STF-025,ORG-113,"Professor, Mechanical Engineering",,Current,2002-08-15,,TRUE,TRUE
+AFF-00026,STF-026,ORG-113,"Associate Professor, Mechanical Engineering",,Current,2015-08-15,,TRUE,TRUE
+AFF-00027,STF-027,ORG-116,"Professor, Chemical Engineering and Materials Science",,Current,2008-08-15,,TRUE,TRUE
+AFF-00028,STF-028,ORG-116,"Professor, Chemical Engineering and Materials Science",,Current,2010-08-15,,TRUE,TRUE
+AFF-00029,STF-029,ORG-116,"Associate Professor, Chemical Engineering and Materials Science",,Current,2015-08-15,,TRUE,TRUE
+AFF-00030,STF-030,ORG-118,"Associate Professor, Biomedical Engineering",,Current,2016-08-15,,TRUE,TRUE
+AFF-00031,STF-031,ORG-127,"Professor, School of Packaging",,Current,2009-08-15,,TRUE,TRUE
+AFF-00032,STF-032,ORG-126,"Director, Broad Executive Development",,Current,2016-01-01,,TRUE,TRUE
+AFF-00033,STF-033,ORG-121,"Coordinator, Engineering Student Organizations",,Current,2018-01-01,,TRUE,TRUE
+AFF-00034,STF-034,ORG-128,"Associate Director, MSU Business Connect",,Current,2017-01-01,,TRUE,TRUE
+AFF-00035,STF-035,ORG-124,"Licensing Manager, MSU Technologies",,Current,2014-01-01,,TRUE,TRUE
+AFF-00036,STF-036,ORG-129,"Director, Engineering Inclusive Excellence",,Current,2018-07-01,,TRUE,TRUE
+AFF-00037,PER-0001,ORG-001,"Director, Powertrain Engineering",Propulsion,Former,2014-01-01,2020-06-30,FALSE,TRUE
+AFF-00038,PER-0001,ORG-001,"VP, Propulsion & Powertrain Engineering",Propulsion,Current,2020-07-01,,TRUE,TRUE
+AFF-00039,PER-0002,ORG-001,"Director, Manufacturing Engineering",Manufacturing,Current,2019-06-01,,TRUE,TRUE
+AFF-00040,PER-0003,ORG-001,"Senior Manager, ADAS Validation",ADAS,Former,2019-07-01,2023-03-31,FALSE,TRUE
+AFF-00041,PER-0003,ORG-001,"Director, ADAS Engineering",ADAS,Current,2023-04-01,,TRUE,TRUE
+AFF-00042,PER-0004,ORG-001,Campus Recruiting Lead,Talent Acquisition,Current,2021-03-01,,TRUE,TRUE
+AFF-00043,PER-0005,ORG-001,"Technical Fellow, Battery Materials",Research & Development,Current,2016-10-01,,TRUE,TRUE
+AFF-00044,PER-0006,ORG-001,"Lead Engineer, Vehicle Structures",Body & Structures,Current,2018-04-01,,TRUE,TRUE
+AFF-00045,PER-0007,ORG-001,"Senior Engineer, Software-Defined Vehicle",Software,Current,2020-02-01,,TRUE,TRUE
+AFF-00046,PER-0008,ORG-001,Software Engineer II,Software,Current,2017-03-01,,TRUE,TRUE
+AFF-00047,PER-0009,ORG-001,Chief Technology Officer,Executive,Former,2009-10-01,2019-06-30,TRUE,TRUE
+AFF-00048,PER-0010,ORG-001,"SVP, Global Product Development",Product Development,Current,2021-03-01,,TRUE,TRUE
+AFF-00049,PER-0011,ORG-018,"Director, Autonomous Driving Software",,Current,2022-06-01,,TRUE,TRUE
+AFF-00050,PER-0012,ORG-001,"Director, Sustainability & Materials",Sustainability,Current,2019-05-01,,TRUE,TRUE
+AFF-00051,PER-0013,ORG-001,"Senior Manager, Manufacturing Launch",Manufacturing,Current,2020-11-01,,TRUE,TRUE
+AFF-00052,PER-0014,ORG-001,"Chief Engineer, Truck Programs",Truck Programs,Current,2021-10-01,,TRUE,TRUE
+AFF-00053,PER-0020,ORG-002,"VP, Vehicle Engineering",Vehicle Engineering,Current,2018-12-01,,TRUE,TRUE
+AFF-00054,PER-0021,ORG-002,"Director, Electrification R&D",Research & Development,Current,2017-04-01,,TRUE,TRUE
+AFF-00055,PER-0022,ORG-002,"VP, Global Purchasing & Supply Chain",Purchasing,Current,2020-04-01,,TRUE,TRUE
+AFF-00056,PER-0023,ORG-002,"Manager, Community Relations",Community Relations,Current,2016-10-01,,TRUE,TRUE
+AFF-00057,PER-0024,ORG-002,"Manager, Chassis Engineering",Chassis,Current,2019-09-01,,TRUE,TRUE
+AFF-00058,PER-0025,ORG-002,Software Engineer,Software,Current,2016-09-01,,TRUE,TRUE
+AFF-00059,PER-0026,ORG-002,"VP, Manufacturing",Manufacturing,Former,2004-04-01,2018-03-31,TRUE,TRUE
+AFF-00060,PER-0027,ORG-002,Chief Technology Officer,Executive,Current,2022-05-01,,TRUE,TRUE
+AFF-00061,PER-0028,ORG-002,"Director, Battery Systems",Electrification,Current,2021-04-01,,TRUE,TRUE
+AFF-00062,PER-0029,ORG-002,Associate Engineer,Vehicle Engineering,Current,2024-06-01,,TRUE,TRUE
+AFF-00063,PER-0030,ORG-019,"Director, Supplier Quality",,Current,2019-01-01,,TRUE,TRUE
+AFF-00064,PER-0031,ORG-002,"Senior Manager, Powertrain Integration",Powertrain,Current,2015-04-01,,TRUE,TRUE
+AFF-00065,PER-0040,ORG-003,"VP Engineering, Michigan Technical Center",Engineering,Current,2021-12-01,,TRUE,TRUE
+AFF-00066,PER-0041,ORG-003,"Head of Talent Acquisition, North America",Talent Acquisition,Current,2021-10-01,,TRUE,TRUE
+AFF-00067,PER-0042,ORG-003,Senior Battery Engineer,Battery Systems,Former,2020-04-01,2024-01-31,FALSE,TRUE
+AFF-00068,PER-0042,ORG-003,"Engineering Manager, Battery Management Systems",Battery Systems,Current,2024-02-01,,TRUE,TRUE
+AFF-00069,PER-0043,ORG-003,"Director, Thermal Systems",Thermal Systems,Current,2022-10-01,,TRUE,TRUE
+AFF-00070,PER-0044,ORG-003,Firmware Engineer,Embedded Software,Current,2022-06-01,,TRUE,TRUE
+AFF-00071,PER-0045,ORG-002,"Engineering Manager, Platform Integration",Platform,Current,2003-06-01,,TRUE,TRUE
+AFF-00072,PER-0046,ORG-003,"Principal Scientist, Cell Chemistry",Cell Engineering,Current,2021-02-01,,TRUE,TRUE
+AFF-00073,PER-0047,ORG-003,Associate Controls Engineer,Controls,Current,2024-06-01,,TRUE,TRUE
+AFF-00074,PER-0048,ORG-003,"Senior Manager, Vehicle Integration",Vehicle Integration,Former,2019-12-01,2026-06-30,FALSE,TRUE
+AFF-00075,PER-0048,ORG-003,"Director, Vehicle Integration",Vehicle Integration,Current,2026-07-01,,TRUE,TRUE
+AFF-00076,PER-0049,ORG-003,"Director, Manufacturing Engineering",Manufacturing,Current,2021-08-01,,TRUE,TRUE
+AFF-00077,PER-0060,ORG-004,Engineer,Engineering,Former,1988-11-01,2004-06-30,FALSE,TRUE
+AFF-00078,PER-0060,ORG-004,VP Engineering,Engineering,Former,2004-07-01,2012-06-30,FALSE,TRUE
+AFF-00079,PER-0060,ORG-004,President,Executive,Current,2012-07-01,,TRUE,TRUE
+AFF-00080,PER-0061,ORG-004,Chief Operating Officer,Executive,Current,2022-08-01,,TRUE,TRUE
+AFF-00081,PER-0062,ORG-004,Chief Financial Officer,Finance,Current,2015-07-01,,TRUE,TRUE
+AFF-00082,PER-0063,ORG-004,Manufacturing Engineer,Manufacturing,Current,2019-06-01,,TRUE,TRUE
+AFF-00083,PER-0064,ORG-004,"VP, Operations",Operations,Current,2015-07-01,,TRUE,TRUE
+AFF-00084,PER-0065,ORG-004,Director of Quality,Quality,Current,2018-06-01,,TRUE,TRUE
+AFF-00085,PER-0066,ORG-004,Controls Engineering Manager,Controls,Current,2020-04-01,,TRUE,TRUE
+AFF-00086,PER-0067,ORG-004,Process Engineer,Manufacturing,Current,2021-06-01,,TRUE,TRUE
+AFF-00087,PER-0068,ORG-001,"Senior Engineer, Body Structures",Body & Structures,Former,2008-06-01,2024-02-29,FALSE,TRUE
+AFF-00088,PER-0068,ORG-004,"Engineering Manager, Product Development",Engineering,Current,2024-03-01,,TRUE,TRUE
+AFF-00089,PER-0080,ORG-005,VP Engineering,Engineering,Former,2010-05-01,2021-06-30,FALSE,TRUE
+AFF-00090,PER-0080,ORG-008,VP Engineering,Engineering,Current,2022-05-01,,TRUE,TRUE
+AFF-00091,PER-0081,ORG-005,University Relations Specialist,Human Resources,Former,2014-07-01,2021-06-30,TRUE,TRUE
+AFF-00092,PER-0082,ORG-005,"Principal Engineer, NVH",Driveline Engineering,Current,2012-10-01,,TRUE,TRUE
+AFF-00093,PER-0083,ORG-005,Driveline Engineer,Driveline Engineering,Former,2016-06-01,2022-06-30,TRUE,TRUE
+AFF-00094,PER-0084,ORG-005,"University Relations Lead, Michigan",Human Resources,Former,2022-03-01,2024-01-31,TRUE,TRUE
+AFF-00095,PER-0085,ORG-005,"Director, Driveline Engineering",Driveline Engineering,Current,2023-01-01,,TRUE,TRUE
+AFF-00096,PER-0086,ORG-005,Electrification Engineer,Electrification,Current,2021-05-01,,TRUE,TRUE
+AFF-00097,PER-0087,ORG-005,Associate Engineer,Driveline Engineering,Current,2025-06-01,,TRUE,TRUE
+AFF-00098,PER-0088,ORG-005,Materials Lab Manager,Materials Lab,Current,2017-03-01,,TRUE,TRUE
+AFF-00099,PER-0089,ORG-005,Test Engineer,Validation,Former,2004-06-01,2019-05-31,TRUE,TRUE
+AFF-00100,PER-0100,ORG-006,"Chief Scientist, Advanced Sensing",Advanced Sensing,Current,2014-11-01,,TRUE,TRUE
+AFF-00101,PER-0101,ORG-006,"Director, University Research Programs",Research Partnerships,Current,2019-06-01,,TRUE,TRUE
+AFF-00102,PER-0102,ORG-006,"Senior Research Engineer, Autonomy",Autonomy,Current,2018-01-01,,TRUE,TRUE
+AFF-00103,PER-0103,ORG-006,Software Engineer,Software,Current,2019-06-01,,TRUE,TRUE
+AFF-00104,PER-0104,ORG-006,"President, Ground Systems Division",Ground Systems,Current,2020-08-01,,TRUE,TRUE
+AFF-00105,PER-0105,ORG-006,Research Scientist,Advanced Sensing,Current,2018-08-01,,TRUE,TRUE
+AFF-00106,PER-0106,ORG-006,Cybersecurity Engineering Manager,Cybersecurity,Current,2020-04-01,,TRUE,TRUE
+AFF-00107,PER-0107,ORG-006,"Director, Business Development",Business Development,Current,2022-11-01,,TRUE,TRUE
+AFF-00108,PER-0108,ORG-006,"VP, Government Relations",Government Relations,Current,2019-02-01,,TRUE,TRUE
+AFF-00109,PER-0120,ORG-007,"Senior Manager, University Recruiting Programs",Talent Acquisition,Current,2019-05-01,,TRUE,TRUE
+AFF-00110,PER-0121,ORG-007,"Engineering Manager, Structures",Structures,Current,2014-05-01,,TRUE,TRUE
+AFF-00111,PER-0122,ORG-007,Community Investment Manager,Community Investment,Current,2021-01-01,,TRUE,TRUE
+AFF-00112,PER-0123,ORG-007,"VP, Propulsion Systems",Propulsion,Current,2019-03-01,,TRUE,TRUE
+AFF-00113,PER-0124,ORG-007,"VP, Mission Systems Engineering",Mission Systems,Current,2018-03-01,,TRUE,TRUE
+AFF-00114,PER-0125,ORG-007,"Site Lead, Michigan Engineering Office",Michigan Engineering Office,Current,2023-07-01,,TRUE,TRUE
+AFF-00115,PER-0126,ORG-007,"Director, Flight Software",Flight Software,Current,2020-06-01,,TRUE,TRUE
+AFF-00116,PER-0127,ORG-007,Avionics Engineering Manager,Avionics,Current,2021-07-01,,TRUE,TRUE
+AFF-00117,PER-0128,ORG-007,Structures Engineer,Structures,Current,2020-06-01,,TRUE,TRUE
+AFF-00118,PER-0140,ORG-008,"Chief Engineer, RF Systems",RF Systems,Current,2016-07-01,,TRUE,TRUE
+AFF-00119,PER-0141,ORG-008,"Director, Cyber Resilience",Cyber,Current,2019-10-01,,TRUE,TRUE
+AFF-00120,PER-0142,ORG-008,Chief Technology Officer,Executive,Former,2006-12-01,2020-12-31,TRUE,TRUE
+AFF-00121,PER-0143,ORG-008,"Director, Corporate Citizenship",Corporate Citizenship,Current,2020-02-01,,TRUE,TRUE
+AFF-00122,PER-0144,ORG-008,Systems Engineer,Systems Engineering,Current,2015-06-01,,TRUE,TRUE
+AFF-00123,PER-0145,ORG-008,President,Executive,Current,2024-10-01,,TRUE,TRUE
+AFF-00124,PER-0146,ORG-008,"Director, RF Hardware",RF Systems,Current,2019-02-01,,TRUE,TRUE
+AFF-00125,PER-0147,ORG-008,Cybersecurity Engineer,Cyber,Current,2019-10-01,,TRUE,TRUE
+AFF-00126,PER-0148,ORG-008,"Director, Test & Evaluation",Test & Evaluation,Current,2017-10-01,,TRUE,TRUE
+AFF-00127,PER-0149,ORG-008,Senior Systems Engineer,Systems Engineering,Former,1990-01-01,2014-12-31,TRUE,TRUE
+AFF-00128,PER-0160,ORG-009,"Director, Biomaterials R&D",Research & Development,Current,2018-12-01,,TRUE,TRUE
+AFF-00129,PER-0161,ORG-009,"Senior Manager, Cardiac Rhythm Firmware",Firmware,Current,2019-04-01,,TRUE,TRUE
+AFF-00130,PER-0162,ORG-009,"VP Operations, Michigan Site",Operations,Current,2020-09-01,,TRUE,TRUE
+AFF-00131,PER-0163,ORG-009,Quality Engineer,Quality,Current,2022-06-01,,TRUE,TRUE
+AFF-00132,PER-0164,ORG-009,Principal Scientist,Research & Development,Current,2016-04-01,,TRUE,TRUE
+AFF-00133,PER-0165,ORG-009,"SVP, Global R&D",Research & Development,Current,2021-08-01,,TRUE,TRUE
+AFF-00134,PER-0166,ORG-009,"Director, Regulatory Affairs",Regulatory,Current,2019-10-01,,TRUE,TRUE
+AFF-00135,PER-0167,ORG-009,Associate Engineer,Firmware,Current,2023-06-01,,TRUE,TRUE
+AFF-00136,PER-0168,ORG-009,Senior Process Engineer,Process Development,Current,2019-02-01,,TRUE,TRUE
+AFF-00137,PER-0169,ORG-009,,,Current,2020-05-01,,TRUE,TRUE
+AFF-00138,PER-0180,ORG-010,"Engineering Manager, E-commerce Platform",Technology,Current,2019-07-01,,TRUE,TRUE
+AFF-00139,PER-0181,ORG-010,"VP, Supply Chain Strategy",Supply Chain,Current,2018-04-01,,TRUE,TRUE
+AFF-00140,PER-0182,ORG-010,"Director, Packaging Engineering",Packaging,Current,2017-03-01,,TRUE,TRUE
+AFF-00141,PER-0183,ORG-010,Chief Technology Officer,Executive,Current,2022-03-01,,TRUE,TRUE
+AFF-00142,PER-0184,ORG-010,"Director, Store Technology & IoT",Technology,Current,2020-10-01,,TRUE,TRUE
+AFF-00143,PER-0185,ORG-010,Software Engineer II,Technology,Current,2021-06-01,,TRUE,TRUE
+AFF-00144,PER-0186,ORG-010,Packaging Materials Manager,Packaging,Current,2019-08-01,,TRUE,TRUE
+AFF-00145,PER-0187,ORG-017,Senior Data Engineer,,Current,2020-07-01,,TRUE,TRUE
+AFF-00146,PER-0200,ORG-011,"VP, New Energy Ventures",New Energy Ventures,Current,2021-01-01,,TRUE,TRUE
+AFF-00147,PER-0201,ORG-011,Technical Manager,Refining & Chemicals,Current,2017-05-01,,TRUE,TRUE
+AFF-00148,PER-0202,ORG-011,Reliability Engineering Manager,Upstream Operations,Current,2018-07-01,,TRUE,TRUE
+AFF-00149,PER-0203,ORG-011,Process Engineer,Refining & Chemicals,Current,2016-06-01,,TRUE,TRUE
+AFF-00150,PER-0209,ORG-011,University Recruiting Manager,Human Resources,Current,2016-08-01,,TRUE,TRUE
+AFF-00151,PER-0204,ORG-011,Chief Operating Officer,Executive,Current,2020-05-01,,TRUE,TRUE
+AFF-00152,PER-0205,ORG-011,"Director, Pipeline Integrity",Upstream Operations,Current,2019-12-01,,TRUE,TRUE
+AFF-00153,PER-0206,ORG-011,Process Engineer,New Energy Ventures,Current,2025-08-01,,TRUE,TRUE
+AFF-00154,PER-0207,ORG-011,"Director, Strategy",New Energy Ventures,Current,2022-12-01,,TRUE,TRUE
+AFF-00155,PER-0208,ORG-011,"Director, Health, Safety & Environment",Upstream Operations,Former,2014-04-01,2024-02-29,FALSE,TRUE
+AFF-00156,PER-0208,ORG-011,"Director, Health, Safety & Environment",New Energy Ventures,Current,2024-03-01,,TRUE,TRUE
+AFF-00157,PER-0220,ORG-012,"Director, Corporate Philanthropy",Corporate Philanthropy,Current,2015-02-01,,TRUE,TRUE
+AFF-00158,PER-0221,ORG-012,"SVP, Global Manufacturing",Manufacturing,Current,2016-10-01,,TRUE,TRUE
+AFF-00159,PER-0222,ORG-012,Philanthropy Program Specialist,Corporate Philanthropy,Current,2020-01-01,,TRUE,TRUE
+AFF-00160,PER-0223,ORG-012,Manufacturing Engineering Manager,West Michigan Plant,Current,2019-11-01,,TRUE,TRUE
+AFF-00161,PER-0224,ORG-012,Chief Supply Chain Officer,Executive,Current,2021-08-01,,TRUE,TRUE
+AFF-00162,PER-0225,ORG-012,"Director, Product Sustainability",Sustainability,Current,2020-03-01,,TRUE,TRUE
+AFF-00163,PER-0226,ORG-012,Controls Engineer,West Michigan Plant,Current,2022-06-01,,TRUE,TRUE
+AFF-00164,PER-0227,ORG-012,Associate Engineer,West Michigan Plant,Current,2024-06-01,,TRUE,TRUE
+AFF-00165,PER-0228,ORG-012,"VP, Brand Marketing",Marketing,Current,2018-09-01,,TRUE,TRUE
+AFF-00166,PER-0240,ORG-013,Chief Technology Officer,Executive,Current,2019-08-01,,TRUE,TRUE
+AFF-00167,PER-0241,ORG-013,"R&D Director, Polymers",Research & Development,Current,2017-02-01,,TRUE,TRUE
+AFF-00168,PER-0242,ORG-013,Senior Scientist,Research & Development,Current,2014-05-01,,TRUE,TRUE
+AFF-00169,PER-0243,ORG-013,"Director, University Relations",Human Resources,Current,2014-10-01,,TRUE,TRUE
+AFF-00170,PER-0244,ORG-013,Plant Engineering Manager,Operations,Current,2018-12-01,,TRUE,TRUE
+AFF-00171,PER-0245,ORG-013,"Executive VP, Specialty Materials",Specialty Materials,Current,2020-11-01,,TRUE,TRUE
+AFF-00172,PER-0246,ORG-013,Process Engineer,Operations,Current,2019-06-01,,TRUE,TRUE
+AFF-00173,PER-0247,ORG-013,"Director, Process Automation",Operations,Current,2021-12-01,,TRUE,TRUE
+AFF-00174,PER-0248,ORG-013,"VP, Commercial",Commercial,Current,2022-11-01,,TRUE,TRUE
+AFF-00175,PER-0249,ORG-013,Chief Executive Officer,Executive,Former,2005-06-01,2015-12-31,TRUE,TRUE
+AFF-00176,PER-0260,ORG-014,"VP, Grid Modernization",Grid Modernization,Current,2020-05-01,,TRUE,TRUE
+AFF-00177,PER-0261,ORG-014,"Director, System Planning",System Planning,Current,2016-12-01,,TRUE,TRUE
+AFF-00178,PER-0262,ORG-014,"Manager, Workforce Development & University Programs",Human Resources,Current,2018-06-01,,TRUE,TRUE
+AFF-00179,PER-0263,ORG-014,"Senior Engineer, Distributed Energy Resources",Grid Modernization,Current,2019-01-01,,TRUE,TRUE
+AFF-00180,PER-0264,ORG-014,"Manager, Substation Engineering",Substations,Current,2019-03-01,,TRUE,TRUE
+AFF-00181,PER-0265,ORG-014,"Director, Community Relations",Community Relations,Current,2017-12-01,,TRUE,TRUE
+AFF-00182,PER-0266,ORG-014,President & COO,Executive,Current,2021-02-01,,TRUE,TRUE
+AFF-00183,PER-0267,ORG-014,Protection Engineer,System Protection,Current,2016-06-01,,TRUE,TRUE
+AFF-00184,PER-0268,ORG-014,"Director, Generation Engineering",Generation,Current,2020-02-01,,TRUE,TRUE
+AFF-00185,PER-0269,ORG-014,"Manager, Hydro & Dam Safety",Generation,Current,2021-11-01,,TRUE,TRUE
+AFF-00186,PER-0270,ORG-014,"Director, Transmission Planning",Transmission,Current,2025-04-01,,TRUE,TRUE
+AFF-00187,PER-0280,ORG-015,"Director, Developer Platform",Developer Platform,Former,2016-06-01,2021-06-30,FALSE,TRUE
+AFF-00188,PER-0280,ORG-015,"VP Engineering, Developer Platform",Developer Platform,Current,2021-07-01,,TRUE,TRUE
+AFF-00189,PER-0281,ORG-015,Social Impact Program Manager,Social Impact,Current,2021-09-01,,TRUE,TRUE
+AFF-00190,PER-0282,ORG-015,"Senior Engineering Manager, Cloud Infrastructure",Cloud Infrastructure,Current,2019-04-01,,TRUE,TRUE
+AFF-00191,PER-0283,ORG-015,Software Engineer,Cloud Infrastructure,Current,2020-06-01,,TRUE,TRUE
+AFF-00192,PER-0284,ORG-015,Developer Advocate,Developer Relations,Current,2021-04-01,,TRUE,TRUE
+AFF-00193,PER-0285,ORG-015,"Director, Site Reliability Engineering",Reliability,Current,2019-07-01,,TRUE,TRUE
+AFF-00194,PER-0286,ORG-015,"Principal Engineer, Machine Learning",Machine Learning,Current,2020-08-01,,TRUE,TRUE
+AFF-00195,PER-0287,ORG-015,Software Engineer,Developer Platform,Current,2023-06-01,,TRUE,TRUE
+AFF-00196,PER-0288,ORG-015,"Hardware Engineering Manager, Data Centers",Infrastructure Hardware,Current,2019-04-01,,TRUE,TRUE
+AFF-00197,PER-0289,ORG-015,"Director, Security Engineering",Security,Current,2018-01-01,,TRUE,TRUE

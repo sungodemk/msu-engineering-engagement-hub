@@ -1,0 +1,74 @@
+External_ID__c,Contact_Date__c,Contact_Type__c,Purpose__c,Account__r.External_ID__c,Primary_Contact__r.External_ID__c,Additional_Attendees__c,Staff__r.External_ID__c,Additional_MSU_Staff__c,Unit__c,Summary__c,Opportunity__r.External_ID__c,Synthetic__c
+CR-00001,2019-03-26,Meeting,Solicitation,ORG-012,PER-0221,Patricia Campbell,STF-005,,ecr,Makerspace naming gift agreement signed.,OPP-0219,TRUE
+CR-00002,2019-04-16,Meeting,Solicitation,ORG-014,PER-0265,,STF-006,,ecr,Scholarship request declined; GGPL giving guidelines explained.,OPP-0172,TRUE
+CR-00003,2019-06-12,Meeting,Stewardship,ORG-004,PER-0060,,STF-001,,ecr,Finalized in-kind gift of CNC vertical mill for the ME machine shop.,OPP-0033,TRUE
+CR-00004,2019-10-08,Meeting,Cultivation,ORG-005,PER-0080,Craig Williams,STF-001,,ecr,Annual review. Discussed a three-year pledge.,,TRUE
+CR-00005,2020-01-28,Stewardship Report,Stewardship,ORG-012,PER-0220,,STF-005,,ecr,2020 makerspace impact report delivered.,,TRUE
+CR-00006,2020-02-19,Meeting,Solicitation,ORG-005,PER-0080,,STF-001,,ecr,"Three-year pledge signed ($20,000/yr, 2020-2022).",OPP-0220,TRUE
+CR-00007,2020-10-06,Call,Solicitation,ORG-008,PER-0143,,STF-006,Tanya Seymour,ecr,HMS declined to renew Inclusive Excellence support; giving priorities reset under the new corporate citizenship director. Scholarship support continues.,OPP-0227,TRUE
+CR-00008,2020-10-14,Meeting,Solicitation,ORG-014,PER-0265,,STF-006,,ecr,"Reframed request approved: annual support for first-year engineering programs, priority for first-generation students.",OPP-0223,TRUE
+CR-00009,2020-10-20,Meeting,Solicitation,ORG-002,PER-0023,,STF-002,Tanya Seymour,ecr,Proposed an annual Inclusive Excellence scholarship. Nisbet supportive; decision expected in GRA's Q1 cycle.,OPP-0222,TRUE
+CR-00010,2020-11-10,Meeting,Solicitation,ORG-008,PER-0141,,STF-006,Gregory Bennett,ecr,Proposed annual support for Women in Computing. Owen championing internally.,OPP-0224,TRUE
+CR-00011,2021-01-26,Stewardship Report,Stewardship,ORG-012,PER-0222,,STF-005,,ecr,2021 makerspace impact report delivered.,,TRUE
+CR-00012,2021-03-18,Meeting,Stewardship,ORG-005,PER-0080,,STF-001,,ecr,Holmes shares news of acquisition by Ostwald Mobility Group. University partnerships under review.,,TRUE
+CR-00013,2021-06-08,Call,Discovery,ORG-013,PER-0242,,STF-004,Nathan Jolly,ecr,Prof. Jolly routed Williams's offer of a surplus instrument to ECR.,OPP-0225,TRUE
+CR-00014,2021-10-12,Meeting,Stewardship,ORG-013,PER-0243,,STF-004,,ecr,In-kind instrument gift finalized.,OPP-0170,TRUE
+CR-00015,2021-11-09,Meeting,Discovery,ORG-011,PER-0200,,STF-004,,ecr,Kedzie introduced the new New Energy Ventures division and wants an MSU partnership.,,TRUE
+CR-00016,2022-01-18,Meeting,Discovery,ORG-014,PER-0260,,STF-004,,ecr,Introduction. Learned about the co-op program.,,TRUE
+CR-00017,2022-01-27,Stewardship Report,Stewardship,ORG-012,PER-0222,,STF-005,,ecr,2022 makerspace impact report delivered.,,TRUE
+CR-00018,2022-02-15,Meeting,Solicitation,ORG-013,PER-0243,,STF-004,Tanya Seymour,ecr,G&W agreed to annual support for Engineering Inclusive Excellence beginning 2022.,,TRUE
+CR-00019,2022-05-17,Meeting,Solicitation,ORG-011,PER-0200,,STF-004,Robert Bessey,ecr,Joint meeting with Prof. Bessey. Research project and graduate fellowship proposed as a package.,OPP-0221,TRUE
+CR-00020,2022-06-14,Call,Discovery,ORG-008,PER-0080,,STF-003,,ecr,Holmes reached out after joining HMS; wants to return to the Engineering Advisory Board representing HMS.,,TRUE
+CR-00021,2022-10-18,Call,Discovery,ORG-015,PER-0281,,STF-003,,ecr,"Introduction. Kobs described SST giving pillars including first-year experience, bridge programs, and mentoring, and invited a proposal.",OPP-0180,TRUE
+CR-00022,2022-11-15,Call,Discovery,ORG-007,PER-0120,,STF-003,,ecr,First corporate relations contact. SHA centralized university philanthropy in 2022; requested restoration of student organization support; referred to Community Investment.,OPP-0228,TRUE
+CR-00023,2023-01-30,Stewardship Report,Stewardship,ORG-012,PER-0222,,STF-005,,ecr,2023 makerspace impact report delivered.,,TRUE
+CR-00024,2023-02-14,Meeting,Cultivation,ORG-001,PER-0007,,STF-001,Gregory Bennett,ecr,Samira Gilchrist interested in supporting Women in Computing; RCMC to begin annual support in 2023.,,TRUE
+CR-00025,2023-03-08,Meeting,Stewardship,ORG-013,PER-0243,,STF-004,Jennifer Emmons,ecr,Stewardship of G&W's career readiness support; reviewed co-op program outcomes with the Center for Spartan Engineering.,,TRUE
+CR-00026,2023-03-21,Meeting,Discovery,ORG-007,PER-0122,,STF-003,,ecr,Community Investment declined to restore recruiter-funded student organization support; prefers multi-year signature commitments and is open to a named faculty or program investment tied to aerospace talent.,OPP-0228,TRUE
+CR-00027,2023-05-10,Meeting,Cultivation,ORG-001,PER-0003,,STF-001,,ecr,Quarterly check-in. Discussed possible in-kind gift of retired ADAS sensor test rigs for an ECE teaching lab.,OPP-0013,TRUE
+CR-00028,2023-06-07,Call,Discovery,ORG-005,PER-0084,,STF-001,,ecr,Exploratory call. Kobs interested in rebuilding the partnership; any spending beyond recruiting needs Ostwald approval.,,TRUE
+CR-00029,2023-07-12,Email,Cultivation,ORG-005,PER-0084,,STF-001,,ecr,Follow-up with three partnership options and a note on the open pledge balance. Kobs will take it to leadership.,OPP-0229,TRUE
+CR-00030,2023-09-26,Call,Discovery,ORG-006,PER-0101,,STF-003,,ecr,Introductory call. Bryan mentioned LDT has funded several MSU labs and sent a list of five projects.,,TRUE
+CR-00031,2023-10-03,Email,Cultivation,ORG-005,PER-0084,,STF-001,,ecr,Check-in. Kobs says Ostwald leadership has not responded.,OPP-0229,TRUE
+CR-00032,2023-10-13,Board Meeting,Stewardship,ORG-008,PER-0080,,STF-003,,ecr,Engineering Advisory Board summary. Holmes urged more systems engineering and requirements practice in the curriculum.,,TRUE
+CR-00033,2023-10-17,Meeting,Cultivation,ORG-007,PER-0122,Kenneth Eppley,STF-003,,ecr,Eppley joins as executive sponsor. Interest in an endowed faculty role in aerospace structures.,OPP-0042,TRUE
+CR-00034,2023-11-14,Meeting,Solicitation,ORG-014,PER-0262,Regina Eppley,STF-004,Jennifer Emmons,ecr,"GGPL agreed to add career readiness support for co-op preparation, which fits its workforce program guidelines.",,TRUE
+CR-00035,2024-01-29,Stewardship Report,Stewardship,ORG-012,PER-0222,,STF-005,,ecr,2024 makerspace impact report delivered.,,TRUE
+CR-00036,2024-03-12,Meeting,Stewardship,ORG-001,PER-0001,Marcus Hagadorn,STF-001,,ecr,Annual partnership review. RCMC interested in expanding capstone involvement to three projects.,,TRUE
+CR-00037,2024-03-19,Meeting,Stewardship,ORG-011,PER-0200,Wes Bailey,STF-004,,ecr,Annual review across divisions. Bailey mentioned regular spending at an MSU testing lab (not previously known to ECR).,,TRUE
+CR-00038,2024-03-19,Meeting,Cultivation,ORG-013,PER-0240,Dale Perry,STF-004,,ecr,"Discussed a graduate fellowship in sustainable materials. Because it carries reporting and IP terms, it was routed to Sponsored Programs as a research agreement rather than a gift.",OPP-0230,TRUE
+CR-00039,2024-04-18,Meeting,Cultivation,ORG-006,PER-0101,Janet Rather,STF-003,,ecr,Discussed an unclassified capstone track and an autonomy graduate fellowship. LDT legal to review capstone IP terms.,OPP-0040,TRUE
+CR-00040,2024-05-14,Campus Visit,Cultivation,ORG-012,PER-0221,,STF-005,,ecr,Makerspace visit. Berkey asked about a capstone project; connected him with Prof. Snyder (ME capstone).,,TRUE
+CR-00041,2024-06-11,Campus Visit,Cultivation,ORG-007,PER-0123,,STF-003,Thomas Linton,ecr,Campus visit and lab tours; scoped the faculty role with the ME Chair.,OPP-0042,TRUE
+CR-00042,2024-06-18,Internal Note,Cultivation,ORG-005,,,STF-001,,ecr,Closing the partnership options proposal: Kobs has left TDS and Ostwald never responded.,OPP-0229,TRUE
+CR-00043,2024-09-17,Meeting,Stewardship,ORG-004,PER-0060,,STF-001,,ecr,Annual review. Campbell mentions plans to retire in a couple of years.,,TRUE
+CR-00044,2024-10-09,Event,Stewardship,ORG-008,PER-0143,,STF-003,,ecr,HMS Engineering Scholarship recipient luncheon; Kobs attended and met this year's recipients.,,TRUE
+CR-00045,2025-01-22,Meeting,Cultivation,ORG-008,PER-0141,,STF-003,Gregory Bennett,ecr,Follow-up on Owen's interest in students eligible for cleared roles. Discussed support for the cyber defense student team.,OPP-0218,TRUE
+CR-00046,2025-02-06,Meeting,Stewardship,ORG-002,PER-0020,Heather Nisbet,STF-002,,ecr,Annual review. Inclusive Excellence scholarship renewed; Landon open to a larger commitment.,,TRUE
+CR-00047,2025-02-20,Email,Stewardship,ORG-012,PER-0222,,STF-005,,ecr,Akers asked where the overdue 2025 impact report is.,,TRUE
+CR-00048,2025-03-04,Internal Note,Discovery,ORG-003,,,STF-002,Jennifer Emmons,ecr,Internal handoff from Career Services: GCM is now a top-10 intern employer for Engineering. Fairchild assigned as relationship manager.,,TRUE
+CR-00049,2025-03-12,Stewardship Report,Stewardship,ORG-012,PER-0222,,STF-005,,ecr,2025 makerspace impact report delivered (late).,,TRUE
+CR-00050,2025-03-18,Call,Cultivation,ORG-007,PER-0122,,STF-003,,ecr,Earliest commitment is SHA FY2027. SHA requests a concept paper.,OPP-0042,TRUE
+CR-00051,2025-04-22,Meeting,Discovery,ORG-003,PER-0040,Ethan Fee,STF-002,,ecr,Introductory meeting. Bryan wants a battery engineering talent pipeline; no philanthropy budget until 2026.,,TRUE
+CR-00052,2025-05-20,Meeting,Cultivation,ORG-014,PER-0260,Priscilla Hagadorn,STF-004,,ecr,"Discussed a power systems workforce program. Chittenden referred to 'our team's work on the DOE project', which ECR did not know about.",OPP-0179,TRUE
+CR-00053,2025-06-12,Meeting,Stewardship,ORG-011,PER-0209,,STF-004,Jennifer Emmons,ecr,Reviewed WHE's career readiness support and intern outcomes with the Center for Spartan Engineering. McDonel wants more co-op-ready ChE students.,,TRUE
+CR-00054,2025-08-19,Meeting,Stewardship,ORG-012,PER-0220,,STF-005,,ecr,Farm Lane shifting toward measurable outcomes; future gifts need a clearer reporting plan.,,TRUE
+CR-00055,2025-09-16,Meeting,Cultivation,ORG-001,PER-0007,Marcus Hagadorn,STF-001,Gregory Bennett,ecr,Discussed a fund for CSE student projects on software-defined vehicles.,OPP-0217,TRUE
+CR-00056,2025-09-18,Stewardship Report,Stewardship,ORG-011,PER-0201,,STF-004,,ecr,WHE Chemical Engineering Scholarship recipient thank-you letters delivered.,,TRUE
+CR-00057,2025-10-17,Board Meeting,Stewardship,ORG-001,PER-0002,,STF-001,Laura Holden,ecr,Summary of fall AES Advisory Board meeting. Brian Eppley said new hires need stronger AI and data fluency and more practice applying AI tools to manufacturing problems; proposed applied AI modules in AES curriculum and a workforce upskilling partnership for current RCMC engineers.,,TRUE
+CR-00058,2025-10-17,Board Meeting,Stewardship,ORG-008,PER-0080,,STF-003,,ecr,Engineering Advisory Board summary. Holmes said graduates need stronger AI readiness.,,TRUE
+CR-00059,2025-10-21,Call,Cultivation,ORG-006,PER-0101,,STF-003,,ecr,Capstone IP terms still in review. Fellowship not in LDT budget until FY27.,OPP-0041,TRUE
+CR-00060,2025-10-21,Meeting,Stewardship,ORG-013,PER-0240,,STF-004,,ecr,Annual review. Berkey open to discussing an endowed chemical engineering scholarship.,OPP-0171,TRUE
+CR-00061,2025-11-04,Stewardship Report,Stewardship,ORG-014,PER-0265,,STF-004,,ecr,First-year program participation report delivered. Eppley asked how many participants come from GGPL's service territory.,,TRUE
+CR-00062,2025-11-06,Meeting,Cultivation,ORG-007,PER-0122,Kenneth Eppley,STF-003,,ecr,Concept paper reviewed. SHA wants a student organization support component included.,OPP-0042,TRUE
+CR-00063,2025-11-14,Event,Stewardship,ORG-001,PER-0009,,STF-001,,ecr,Engineering Advisory Board emeritus dinner. Butterfield remains enthusiastic about RCMC's partnership with the college.,,TRUE
+CR-00064,2026-01-28,Stewardship Report,Stewardship,ORG-012,PER-0222,,STF-005,,ecr,2026 makerspace impact report delivered.,,TRUE
+CR-00065,2026-02-11,Meeting,Cultivation,ORG-001,PER-0003,,STF-001,,ecr,Quarterly check-in. Sensor rig donation is in RCMC legal review.,OPP-0013,TRUE
+CR-00066,2026-02-25,Meeting,Solicitation,ORG-002,PER-0020,,STF-002,Michelle Van Hoosen,ecr,Joint ECR/Development meeting. Proposed a four-year gift toward an Engineering Student Success Center.,OPP-0020,TRUE
+CR-00067,2026-03-24,Meeting,Cultivation,ORG-004,PER-0060,,STF-001,,ecr,Campbell confirms retirement effective 12/31/2026; Megan Adams (COO) will succeed him. He offered to introduce her; meeting not yet scheduled.,OPP-0034,TRUE
+CR-00068,2026-04-14,Meeting,Cultivation,ORG-011,PER-0200,,STF-004,,ecr,Fellowship renewal discussed. Kedzie asked for a single summary of everything WHE receives from MSU to justify the increase internally.,OPP-0131,TRUE
+CR-00069,2026-04-22,Meeting,Cultivation,ORG-001,PER-0001,,STF-001,,ecr,Introduced naming opportunity for the Vehicle Autonomy Lab. Kedzie receptive; asked for a written proposal.,OPP-0012,TRUE
+CR-00070,2026-06-09,Meeting,Solicitation,ORG-012,PER-0220,Graham Berkey,STF-005,,ecr,Discussed makerspace equipment refresh. Campbell wants a reporting plan in the proposal.,OPP-0150,TRUE
+CR-00071,2026-06-16,Meeting,Solicitation,ORG-003,PER-0040,Nicole Williamston,STF-002,,ecr,Proposed Battery Engineering Fellows program. GCM reviewing in Q4 budget.,OPP-0021,TRUE
+CR-00072,2026-08-19,Email,Stewardship,ORG-002,PER-0023,,STF-002,,ecr,Nisbet reports Landon was surprised by an ME lab equipment request received weeks after ECR's proposal. Asks MSU to consolidate requests through a single point of contact.,,TRUE
+CR-00073,2026-08-25,Meeting,Cultivation,ORG-008,PER-0080,Ingrid Kobs,STF-003,,ecr,Annual review. Discussed restoring Inclusive Excellence support.,OPP-0064,TRUE

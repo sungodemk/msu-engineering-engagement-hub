@@ -1,0 +1,62 @@
+Object,Field Label,API Name,Type,Values / Notes
+All objects,External ID,External_ID__c,"Text(20), External ID, Unique","Upsert key on every object below (Account, Contact, npe5__Affiliation__c, npe01__OppPayment__c, npsp__Allocation__c, npsp__General_Accounting_Unit__c, Opportunity, and all custom objects)"
+All objects,Synthetic,Synthetic__c,Checkbox,TRUE on every record in this dataset
+Account,Industry Detail,Industry_Detail__c,Text(80),
+Account,Giving Guidelines,Giving_Guidelines__c,Long Text Area(2000),
+Account,Giving Cycle Deadline,Giving_Cycle_Deadline__c,Text(255),
+Account,Unit Code,Unit_Code__c,Text(40),MSU units only; matches the shared vocabulary unit codes
+Account,Record types,RecordType,Record Types,Educational Institution; University Department; Academic Program; Business Organization (EDA-style)
+Contact,Constituent Type,Constituent_Type__c,Multi-Select Picklist,Alumni; Corporate Contact; Faculty/Staff
+Contact,Date of Death,Date_of_Death__c,Date,Used with npsp__Deceased__c
+Contact,Do Not Solicit,Do_Not_Solicit__c,Checkbox,"Open to engagement, no asks"
+Contact,Contact Channel Restriction,Contact_Channel_Restriction__c,Text(255),Contact only through this channel
+Contact,Contact Preference Notes,Contact_Preference_Notes__c,Long Text Area(1000),
+Contact,Alumni Awards,Alumni_Awards__c,Text(255),
+Contact,Self-Reported Affinities,Self_Reported_Affinities__c,Long Text Area(1000),Links the person reported themselves
+Contact,Address Last Updated,Address_Last_Updated__c,Date,
+npe5__Affiliation__c,Department,Department__c,Text(120),Division or department at the organization
+Degree__c (new object),Contact,Contact__c,Lookup(Contact),
+Degree__c (new object),Degree Type,Degree_Type__c,Picklist,BS; MS; PhD; MBA
+Degree__c (new object),Major,Major__c,Text(120),
+Degree__c (new object),College,College__c,Picklist,College of Engineering; Eli Broad College of Business
+Degree__c (new object),Class Year,Class_Year__c,Text(4),
+Relationship_Assignment__c (new object),Staff,Staff__c,Lookup(Contact),MSU staff are Contacts affiliated with unit Accounts (EDA-style)
+Relationship_Assignment__c (new object),Account,Account__c,Lookup(Account),Either Account or Contact is populated
+Relationship_Assignment__c (new object),Contact,Contact__c,Lookup(Contact),
+Relationship_Assignment__c (new object),Role,Role__c,Picklist,Primary Relationship Manager; Secondary Relationship Manager; Primary Relationship Manager (Broad College)
+Relationship_Assignment__c (new object),Unit,Unit__c,Text(40),Unit code
+Relationship_Assignment__c (new object),Start Date,Start_Date__c,Date,
+Relationship_Assignment__c (new object),End Date,End_Date__c,Date,
+Relationship_Assignment__c (new object),Status,Status__c,Picklist,Active; Inactive
+npsp__General_Accounting_Unit__c,Owning Unit,Owning_Unit__c,Text(40),Unit code
+Opportunity,Record types,RecordType,Record Types,Donation and In-Kind Gift (NPSP defaults); add Pledge and Proposal
+Opportunity,Stage values,StageName,Picklist values,Closed Won; Pledged; Funded; Identified; Cultivation; Proposal in Development; Proposal Submitted; Company Review; On Hold; Declined; Closed - No Action
+Opportunity,Type values,Type,Picklist values,Corporate Gift; Corporate Sponsorship; In-Kind Gift; Naming Gift; Endowment; Fellowship; Program Partnership; Matching/Volunteer Grant
+Opportunity,Solicitor,Solicitor__c,Lookup(Contact),MSU staff contact
+Opportunity,Co-Solicitor,Co_Solicitor__c,Lookup(Contact),
+Opportunity,Resulting Gift,Resulting_Gift__c,Lookup(Opportunity),On funded proposals: the gift the proposal produced
+Opportunity,Owning Unit,Owning_Unit__c,Text(40),Unit code
+Opportunity,Proposal Opened Date,Proposal_Opened_Date__c,Date,
+Opportunity,Expected Submission Date,Expected_Submission_Date__c,Date,
+Opportunity,Gift Memo,Gift_Memo__c,Text(255),
+Contact_Report__c (new object),Contact Date,Contact_Date__c,Date,
+Contact_Report__c (new object),Contact Type,Contact_Type__c,Picklist,Meeting; Call; Email; Campus Visit; Board Meeting; Event; Stewardship Report; Internal Note
+Contact_Report__c (new object),Purpose,Purpose__c,Picklist,Discovery; Cultivation; Solicitation; Stewardship
+Contact_Report__c (new object),Account,Account__c,Lookup(Account),
+Contact_Report__c (new object),Primary Contact,Primary_Contact__c,Lookup(Contact),
+Contact_Report__c (new object),Additional Attendees,Additional_Attendees__c,Text(255),Names as typed by staff
+Contact_Report__c (new object),Staff,Staff__c,Lookup(Contact),MSU staff contact who logged the report
+Contact_Report__c (new object),Additional MSU Staff,Additional_MSU_Staff__c,Text(255),Names as typed by staff
+Contact_Report__c (new object),Unit,Unit__c,Text(40),Unit code
+Contact_Report__c (new object),Summary,Summary__c,Long Text Area(5000),
+Contact_Report__c (new object),Opportunity,Opportunity__c,Lookup(Opportunity),
+Action_Item__c (new object),Subject,Subject__c,Text(255),
+Action_Item__c (new object),Type,Type__c,Picklist,Follow-up; Stewardship Report; Pledge Reminder; Deadline
+Action_Item__c (new object),Due Date,Due_Date__c,Date,
+Action_Item__c (new object),Status,Status__c,Picklist,Open; Completed; Completed Late
+Action_Item__c (new object),Completed Date,Completed_Date__c,Date,
+Action_Item__c (new object),Account,Account__c,Lookup(Account),
+Action_Item__c (new object),Contact,Contact__c,Lookup(Contact),
+Action_Item__c (new object),Opportunity,Opportunity__c,Lookup(Opportunity),
+Action_Item__c (new object),Assigned To,Assigned_To__c,Lookup(Contact),MSU staff contact
+Action_Item__c (new object),Notes,Notes__c,Long Text Area(2000),

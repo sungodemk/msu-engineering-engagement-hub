@@ -1,0 +1,50 @@
+External_ID__c,Staff__r.External_ID__c,Account__r.External_ID__c,Contact__r.External_ID__c,Role__c,Unit__c,Start_Date__c,End_Date__c,Status__c,Synthetic__c
+ASG-0001,STF-001,ORG-001,,Primary Relationship Manager,ecr,2016-01-01,,Active,TRUE
+ASG-0002,STF-001,,PER-0001,Primary Relationship Manager,ecr,2016-01-01,,Active,TRUE
+ASG-0003,STF-001,,PER-0002,Primary Relationship Manager,ecr,2021-03-01,,Active,TRUE
+ASG-0004,STF-001,,PER-0003,Primary Relationship Manager,ecr,2020-01-15,,Active,TRUE
+ASG-0005,STF-001,,PER-0009,Primary Relationship Manager,ecr,2016-01-01,,Active,TRUE
+ASG-0006,STF-002,ORG-002,,Primary Relationship Manager,ecr,2019-01-01,,Active,TRUE
+ASG-0007,STF-002,,PER-0020,Primary Relationship Manager,ecr,2019-01-01,,Active,TRUE
+ASG-0008,STF-002,,PER-0023,Primary Relationship Manager,ecr,2019-01-01,,Active,TRUE
+ASG-0009,STF-007,,PER-0020,Secondary Relationship Manager,development,2025-11-01,,Active,TRUE
+ASG-0010,STF-017,,PER-0022,Primary Relationship Manager (Broad College),broad_college,2022-01-01,,Active,TRUE
+ASG-0011,STF-002,ORG-003,,Primary Relationship Manager,ecr,2025-03-04,,Active,TRUE
+ASG-0012,STF-002,,PER-0040,Primary Relationship Manager,ecr,2025-04-22,,Active,TRUE
+ASG-0013,STF-001,ORG-004,,Primary Relationship Manager,ecr,2016-01-01,,Active,TRUE
+ASG-0014,STF-001,,PER-0060,Primary Relationship Manager,ecr,2016-01-01,,Active,TRUE
+ASG-0015,STF-001,ORG-005,,Primary Relationship Manager,ecr,2016-01-01,,Active,TRUE
+ASG-0016,STF-001,,PER-0080,Primary Relationship Manager,ecr,2016-01-01,2021-06-30,Inactive,TRUE
+ASG-0017,STF-001,,PER-0081,Primary Relationship Manager,ecr,2016-01-01,2021-06-30,Inactive,TRUE
+ASG-0018,STF-001,,PER-0084,Primary Relationship Manager,ecr,2023-06-07,2024-01-31,Inactive,TRUE
+ASG-0019,STF-003,ORG-006,,Primary Relationship Manager,ecr,2023-09-26,,Active,TRUE
+ASG-0020,STF-003,,PER-0101,Primary Relationship Manager,ecr,2023-09-26,,Active,TRUE
+ASG-0021,STF-003,ORG-007,,Primary Relationship Manager,ecr,2022-11-15,,Active,TRUE
+ASG-0022,STF-003,,PER-0120,Primary Relationship Manager,ecr,2022-11-15,,Active,TRUE
+ASG-0023,STF-003,,PER-0122,Primary Relationship Manager,ecr,2023-03-21,,Active,TRUE
+ASG-0024,STF-003,,PER-0123,Primary Relationship Manager,ecr,2023-10-17,,Active,TRUE
+ASG-0025,STF-006,ORG-008,,Primary Relationship Manager,ecr,2016-01-01,2021-12-31,Inactive,TRUE
+ASG-0026,STF-003,ORG-008,,Primary Relationship Manager,ecr,2022-06-14,,Active,TRUE
+ASG-0027,STF-003,,PER-0080,Primary Relationship Manager,ecr,2022-06-14,,Active,TRUE
+ASG-0028,STF-006,,PER-0142,Primary Relationship Manager,ecr,2016-01-01,2021-12-31,Inactive,TRUE
+ASG-0029,STF-003,,PER-0142,Primary Relationship Manager,ecr,2022-06-14,,Active,TRUE
+ASG-0030,STF-003,,PER-0143,Primary Relationship Manager,ecr,2022-06-14,,Active,TRUE
+ASG-0031,STF-017,ORG-010,,Primary Relationship Manager (Broad College),broad_college,2017-01-01,,Active,TRUE
+ASG-0032,STF-017,,PER-0181,Primary Relationship Manager (Broad College),broad_college,2018-06-01,,Active,TRUE
+ASG-0033,STF-004,ORG-011,,Primary Relationship Manager,ecr,2021-11-09,,Active,TRUE
+ASG-0034,STF-004,,PER-0200,Primary Relationship Manager,ecr,2021-11-09,,Active,TRUE
+ASG-0035,STF-004,,PER-0201,Primary Relationship Manager,ecr,2021-11-09,,Active,TRUE
+ASG-0036,STF-005,ORG-012,,Primary Relationship Manager,ecr,2016-01-01,,Active,TRUE
+ASG-0037,STF-005,,PER-0220,Primary Relationship Manager,ecr,2016-01-01,,Active,TRUE
+ASG-0038,STF-005,,PER-0221,Primary Relationship Manager,ecr,2018-06-01,,Active,TRUE
+ASG-0039,STF-005,,PER-0222,Primary Relationship Manager,ecr,2020-09-01,,Active,TRUE
+ASG-0040,STF-006,ORG-013,,Primary Relationship Manager,ecr,2016-01-01,2021-05-31,Inactive,TRUE
+ASG-0041,STF-004,ORG-013,,Primary Relationship Manager,ecr,2021-06-01,,Active,TRUE
+ASG-0042,STF-004,,PER-0240,Primary Relationship Manager,ecr,2021-06-01,,Active,TRUE
+ASG-0043,STF-004,,PER-0243,Primary Relationship Manager,ecr,2021-06-01,,Active,TRUE
+ASG-0044,STF-006,ORG-014,,Primary Relationship Manager,ecr,2019-01-01,2021-12-31,Inactive,TRUE
+ASG-0045,STF-004,ORG-014,,Primary Relationship Manager,ecr,2022-01-18,,Active,TRUE
+ASG-0046,STF-004,,PER-0260,Primary Relationship Manager,ecr,2022-01-18,,Active,TRUE
+ASG-0047,STF-004,,PER-0265,Primary Relationship Manager,ecr,2022-01-18,,Active,TRUE
+ASG-0048,STF-003,ORG-015,,Primary Relationship Manager,ecr,2022-10-18,,Active,TRUE
+ASG-0049,STF-003,,PER-0281,Primary Relationship Manager,ecr,2022-10-18,,Active,TRUE

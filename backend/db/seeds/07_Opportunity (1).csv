@@ -1,0 +1,231 @@
+External_ID__c,Name,RecordType.Name,Account.External_ID__c,npsp__Primary_Contact__r.External_ID__c,StageName,Amount,CloseDate,Type,Solicitor__r.External_ID__c,Co_Solicitor__r.External_ID__c,Owning_Unit__c,Proposal_Opened_Date__c,Expected_Submission_Date__c,npsp__In_Kind_Type__c,npsp__In_Kind_Description__c,Gift_Memo__c,Description,Synthetic__c
+OPP-0001,RCMC Annual Corporate Grant 2016,Donation,ORG-001,PER-0001,Closed Won,95000,2016-12-10,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0002,RCMC Annual Corporate Grant 2017,Donation,ORG-001,PER-0001,Closed Won,98000,2017-12-10,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0003,RCMC Annual Corporate Grant 2018,Donation,ORG-001,PER-0001,Closed Won,100000,2018-12-10,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0004,RCMC Annual Corporate Grant 2019,Donation,ORG-001,PER-0001,Closed Won,104000,2019-12-10,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0005,RCMC Annual Corporate Grant 2020,Donation,ORG-001,PER-0001,Closed Won,108000,2020-12-10,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0006,RCMC Annual Corporate Grant 2021,Donation,ORG-001,PER-0001,Closed Won,110000,2021-12-10,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0007,RCMC Annual Corporate Grant 2022,Donation,ORG-001,PER-0001,Closed Won,110000,2022-12-10,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0008,RCMC Annual Corporate Grant 2023,Donation,ORG-001,PER-0001,Closed Won,112000,2023-12-10,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0009,RCMC Annual Corporate Grant 2024,Donation,ORG-001,PER-0001,Closed Won,115000,2024-12-10,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0010,RCMC Annual Corporate Grant 2025,Donation,ORG-001,PER-0001,Closed Won,110000,2025-12-10,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0011,RCMC Annual Corporate Grant 2026,Proposal,ORG-001,PER-0001,Proposal Submitted,110000,2026-12-15,Corporate Gift,STF-001,,ecr,2026-08-01,,,,,Annual renewal; expected Q4 2026.,TRUE
+OPP-0012,RCMC Vehicle Autonomy Lab Naming,Proposal,ORG-001,PER-0001,Proposal in Development,750000,2027-06-30,Naming Gift,STF-001,,ecr,2026-04-22,,,,,Naming opportunity introduced to Dana Kedzie 4/22/2026. Proposal in draft.,TRUE
+OPP-0013,RCMC In-Kind: ADAS Sensor Test Rigs for ECE,Proposal,ORG-001,PER-0003,Company Review,80000,2026-12-31,In-Kind Gift,STF-001,,ecr,2023-05-10,,,,,Estimated value. Retired sensor test rigs for an ECE teaching lab; in RCMC legal review since early 2026.,TRUE
+OPP-0014,GRA Inclusive Excellence Scholarship 2021,Donation,ORG-002,PER-0023,Closed Won,10000,2021-02-15,Corporate Gift,STF-002,,ecr,,,,,,,TRUE
+OPP-0015,GRA Inclusive Excellence Scholarship 2022,Donation,ORG-002,PER-0023,Closed Won,10000,2022-02-15,Corporate Gift,STF-002,,ecr,,,,,,,TRUE
+OPP-0016,GRA Inclusive Excellence Scholarship 2023,Donation,ORG-002,PER-0023,Closed Won,10000,2023-02-15,Corporate Gift,STF-002,,ecr,,,,,,,TRUE
+OPP-0017,GRA Inclusive Excellence Scholarship 2024,Donation,ORG-002,PER-0023,Closed Won,10000,2024-02-15,Corporate Gift,STF-002,,ecr,,,,,,,TRUE
+OPP-0018,GRA Inclusive Excellence Scholarship 2025,Donation,ORG-002,PER-0023,Closed Won,10000,2025-02-15,Corporate Gift,STF-002,,ecr,,,,,,,TRUE
+OPP-0019,GRA Inclusive Excellence Scholarship 2026,Donation,ORG-002,PER-0023,Closed Won,10000,2026-02-15,Corporate Gift,STF-002,,ecr,,,,,,,TRUE
+OPP-0020,GRA Engineering Student Success Center (4-Year),Proposal,ORG-002,PER-0020,Proposal Submitted,100000,2026-12-31,Corporate Gift,STF-002,STF-007,ecr,2026-02-25,,,,,"Jointly proposed by ECR and Development 2/25/2026. $25,000/yr for 4 years.",TRUE
+OPP-0021,GCM Battery Engineering Fellows (3-Year),Proposal,ORG-003,PER-0040,Company Review,60000,2026-12-31,Program Partnership,STF-002,,ecr,2026-06-16,,,,,Under review in GCM's Q4 budget cycle.,TRUE
+OPP-0022,Beaumont Machining Excellence Fund 2016,Donation,ORG-004,PER-0060,Closed Won,15000,2016-09-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0023,Beaumont Machining Excellence Fund 2017,Donation,ORG-004,PER-0060,Closed Won,15000,2017-09-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0024,Beaumont Machining Excellence Fund 2018,Donation,ORG-004,PER-0060,Closed Won,15000,2018-09-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0025,Beaumont Machining Excellence Fund 2019,Donation,ORG-004,PER-0060,Closed Won,15000,2019-09-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0026,Beaumont Machining Excellence Fund 2020,Donation,ORG-004,PER-0060,Closed Won,15000,2020-09-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0027,Beaumont Machining Excellence Fund 2021,Donation,ORG-004,PER-0060,Closed Won,15000,2021-09-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0028,Beaumont Machining Excellence Fund 2022,Donation,ORG-004,PER-0060,Closed Won,15000,2022-09-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0029,Beaumont Machining Excellence Fund 2023,Donation,ORG-004,PER-0060,Closed Won,15000,2023-09-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0030,Beaumont Machining Excellence Fund 2024,Donation,ORG-004,PER-0060,Closed Won,15000,2024-09-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0031,Beaumont Machining Excellence Fund 2025,Donation,ORG-004,PER-0060,Closed Won,15000,2025-09-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0032,Beaumont Machining Excellence Fund 2026,Donation,ORG-004,PER-0060,Closed Won,15000,2026-09-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0033,BPC In-Kind: CNC Vertical Mill,In-Kind Gift,ORG-004,PER-0060,Closed Won,85000,2019-06-12,In-Kind Gift,STF-001,,ecr,,,Goods,CNC vertical machining center for the ME machine shop,,,TRUE
+OPP-0034,BPC Machining Excellence Fund 3-Year Commitment,Proposal,ORG-004,PER-0060,Proposal in Development,75000,2026-12-15,Corporate Gift,STF-001,,ecr,2026-03-24,,,,,Goal: secure a multi-year commitment before Rick Campbell retires 12/31/2026.,TRUE
+OPP-0035,TDS Driveline Scholarship and ME Fund 2016,Donation,ORG-005,PER-0080,Closed Won,20000,2016-06-30,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0036,TDS Driveline Scholarship and ME Fund 2017,Donation,ORG-005,PER-0080,Closed Won,20000,2017-06-30,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0037,TDS Driveline Scholarship and ME Fund 2018,Donation,ORG-005,PER-0080,Closed Won,20000,2018-06-30,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0038,TDS Driveline Scholarship and ME Fund 2019,Donation,ORG-005,PER-0080,Closed Won,20000,2019-06-30,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0039,TDS 3-Year Pledge 2020-2022,Pledge,ORG-005,PER-0080,Pledged,60000,2020-02-19,Corporate Gift,STF-001,,ecr,,,,,,"$20,000/yr for 3 years. Signed 2/19/2020.",TRUE
+OPP-0040,LDT Unclassified Capstone Track (2 projects/yr),Proposal,ORG-006,PER-0101,Company Review,10000,2026-12-31,Program Partnership,STF-003,,ecr,2024-04-18,,,,,Annual amount. Capstone IP terms in LDT legal review since 2024.,TRUE
+OPP-0041,LDT Autonomy Graduate Fellowship,Proposal,ORG-006,PER-0101,On Hold,30000,2027-09-30,Fellowship,STF-003,,ecr,2024-04-18,,,,,Annual amount. Not in LDT budget until FY27.,TRUE
+OPP-0042,SHA Endowed Professorship in Aerospace Structures + Student Org Fund,Proposal,ORG-007,PER-0123,Proposal in Development,2125000,2027-06-30,Endowment,STF-003,,ecr,2023-10-17,2027-01-15,,,,"$2,000,000 endowed professorship over 5 years plus $25,000/yr student organization fund (5 yrs). Co-developed with ME Chair.",TRUE
+OPP-0043,HMS Engineering Scholarship 2016,Donation,ORG-008,PER-0142,Closed Won,10000,2016-09-20,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0044,HMS Engineering Scholarship 2017,Donation,ORG-008,PER-0142,Closed Won,10000,2017-09-20,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0045,HMS Engineering Scholarship 2018,Donation,ORG-008,PER-0142,Closed Won,10000,2018-09-20,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0046,HMS Engineering Scholarship 2019,Donation,ORG-008,PER-0142,Closed Won,10000,2019-09-20,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0047,HMS Engineering Scholarship 2020,Donation,ORG-008,PER-0143,Closed Won,10000,2020-09-20,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0048,HMS Engineering Scholarship 2021,Donation,ORG-008,PER-0143,Closed Won,10000,2021-09-20,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0049,HMS Engineering Scholarship 2022,Donation,ORG-008,PER-0143,Closed Won,10000,2022-09-20,Corporate Gift,STF-003,,ecr,,,,,,,TRUE
+OPP-0050,HMS Engineering Scholarship 2023,Donation,ORG-008,PER-0143,Closed Won,10000,2023-09-20,Corporate Gift,STF-003,,ecr,,,,,,,TRUE
+OPP-0051,HMS Engineering Scholarship 2024,Donation,ORG-008,PER-0143,Closed Won,10000,2024-09-20,Corporate Gift,STF-003,,ecr,,,,,,,TRUE
+OPP-0052,HMS Engineering Scholarship 2025,Donation,ORG-008,PER-0143,Closed Won,10000,2025-09-20,Corporate Gift,STF-003,,ecr,,,,,,,TRUE
+OPP-0053,HMS Engineering Scholarship 2026,Donation,ORG-008,PER-0143,Closed Won,10000,2026-09-20,Corporate Gift,STF-003,,ecr,,,,,,,TRUE
+OPP-0054,HMS Engineering Inclusive Excellence 2016,Donation,ORG-008,PER-0142,Closed Won,10000,2016-09-20,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0055,HMS Engineering Inclusive Excellence 2017,Donation,ORG-008,PER-0142,Closed Won,10000,2017-09-20,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0056,HMS Engineering Inclusive Excellence 2018,Donation,ORG-008,PER-0142,Closed Won,10000,2018-09-20,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0057,HMS Engineering Inclusive Excellence 2019,Donation,ORG-008,PER-0142,Closed Won,10000,2019-09-20,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0058,HMS Women in Computing 2021,Donation,ORG-008,PER-0141,Closed Won,2500,2021-03-10,Corporate Gift,,,dept_cse,,,,,,,TRUE
+OPP-0059,HMS Women in Computing 2022,Donation,ORG-008,PER-0141,Closed Won,2500,2022-03-10,Corporate Gift,,,dept_cse,,,,,,,TRUE
+OPP-0060,HMS Women in Computing 2023,Donation,ORG-008,PER-0141,Closed Won,2500,2023-03-10,Corporate Gift,,,dept_cse,,,,,,,TRUE
+OPP-0061,HMS Women in Computing 2024,Donation,ORG-008,PER-0141,Closed Won,2500,2024-03-10,Corporate Gift,,,dept_cse,,,,,,,TRUE
+OPP-0062,HMS Women in Computing 2025,Donation,ORG-008,PER-0141,Closed Won,2500,2025-03-10,Corporate Gift,,,dept_cse,,,,,,,TRUE
+OPP-0063,HMS Women in Computing 2026,Donation,ORG-008,PER-0141,Closed Won,2500,2026-03-10,Corporate Gift,,,dept_cse,,,,,,,TRUE
+OPP-0064,HMS Restore Engineering Inclusive Excellence Support,Proposal,ORG-008,PER-0080,Cultivation,10000,2027-06-30,Corporate Gift,STF-003,,ecr,2026-08-25,,,,,Annual amount.,TRUE
+OPP-0065,Circle Drive Medical Volunteer Grant 2019-1,Donation,ORG-009,,Closed Won,500,2019-03-18,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0066,Circle Drive Medical Volunteer Grant 2019-2,Donation,ORG-009,,Closed Won,1000,2019-06-24,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0067,Circle Drive Medical Volunteer Grant 2020-1,Donation,ORG-009,,Closed Won,500,2020-03-18,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0068,Circle Drive Medical Volunteer Grant 2020-2,Donation,ORG-009,,Closed Won,1000,2020-06-24,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0069,Circle Drive Medical Volunteer Grant 2020-3,Donation,ORG-009,,Closed Won,1500,2020-09-16,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0070,Circle Drive Medical Volunteer Grant 2021-1,Donation,ORG-009,,Closed Won,1000,2021-03-18,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0071,Circle Drive Medical Volunteer Grant 2021-2,Donation,ORG-009,,Closed Won,1000,2021-06-24,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0072,Circle Drive Medical Volunteer Grant 2021-3,Donation,ORG-009,,Closed Won,1500,2021-09-16,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0073,Circle Drive Medical Volunteer Grant 2022-1,Donation,ORG-009,,Closed Won,500,2022-03-18,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0074,Circle Drive Medical Volunteer Grant 2022-2,Donation,ORG-009,,Closed Won,1500,2022-06-24,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0075,Circle Drive Medical Volunteer Grant 2022-3,Donation,ORG-009,,Closed Won,1000,2022-09-16,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0076,Circle Drive Medical Volunteer Grant 2022-4,Donation,ORG-009,,Closed Won,500,2022-12-09,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0077,Circle Drive Medical Volunteer Grant 2023-1,Donation,ORG-009,,Closed Won,1000,2023-03-18,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0078,Circle Drive Medical Volunteer Grant 2023-2,Donation,ORG-009,,Closed Won,1500,2023-06-24,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0079,Circle Drive Medical Volunteer Grant 2023-3,Donation,ORG-009,,Closed Won,1000,2023-09-16,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0080,Circle Drive Medical Volunteer Grant 2024-1,Donation,ORG-009,,Closed Won,1500,2024-03-18,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0081,Circle Drive Medical Volunteer Grant 2024-2,Donation,ORG-009,,Closed Won,1000,2024-06-24,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0082,Circle Drive Medical Volunteer Grant 2024-3,Donation,ORG-009,,Closed Won,1000,2024-09-16,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0083,Circle Drive Medical Volunteer Grant 2024-4,Donation,ORG-009,,Closed Won,500,2024-12-09,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0084,Circle Drive Medical Volunteer Grant 2025-1,Donation,ORG-009,,Closed Won,1000,2025-03-18,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0085,Circle Drive Medical Volunteer Grant 2025-2,Donation,ORG-009,,Closed Won,1500,2025-06-24,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0086,Circle Drive Medical Volunteer Grant 2025-3,Donation,ORG-009,,Closed Won,1500,2025-09-16,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0087,Circle Drive Medical Volunteer Grant 2026-1,Donation,ORG-009,,Closed Won,1000,2026-03-18,Matching/Volunteer Grant,,,,,,,,Employee volunteer grant,,TRUE
+OPP-0088,Union Mercantile Supply Chain Case Competition 2017,Donation,ORG-010,PER-0181,Closed Won,15000,2017-01-20,Corporate Sponsorship,STF-017,,broad_college,,,,,,,TRUE
+OPP-0089,Union Mercantile Supply Chain Case Competition 2018,Donation,ORG-010,PER-0181,Closed Won,15000,2018-01-20,Corporate Sponsorship,STF-017,,broad_college,,,,,,,TRUE
+OPP-0090,Union Mercantile Supply Chain Case Competition 2019,Donation,ORG-010,PER-0181,Closed Won,15000,2019-01-20,Corporate Sponsorship,STF-017,,broad_college,,,,,,,TRUE
+OPP-0091,Union Mercantile Supply Chain Case Competition 2020,Donation,ORG-010,PER-0181,Closed Won,15000,2020-01-20,Corporate Sponsorship,STF-017,,broad_college,,,,,,,TRUE
+OPP-0092,Union Mercantile Supply Chain Case Competition 2021,Donation,ORG-010,PER-0181,Closed Won,15000,2021-01-20,Corporate Sponsorship,STF-017,,broad_college,,,,,,,TRUE
+OPP-0093,Union Mercantile Supply Chain Case Competition 2022,Donation,ORG-010,PER-0181,Closed Won,15000,2022-01-20,Corporate Sponsorship,STF-017,,broad_college,,,,,,,TRUE
+OPP-0094,Union Mercantile Supply Chain Case Competition 2023,Donation,ORG-010,PER-0181,Closed Won,15000,2023-01-20,Corporate Sponsorship,STF-017,,broad_college,,,,,,,TRUE
+OPP-0095,Union Mercantile Supply Chain Case Competition 2024,Donation,ORG-010,PER-0181,Closed Won,15000,2024-01-20,Corporate Sponsorship,STF-017,,broad_college,,,,,,,TRUE
+OPP-0096,Union Mercantile Supply Chain Case Competition 2025,Donation,ORG-010,PER-0181,Closed Won,15000,2025-01-20,Corporate Sponsorship,STF-017,,broad_college,,,,,,,TRUE
+OPP-0097,Union Mercantile Supply Chain Case Competition 2026,Donation,ORG-010,PER-0181,Closed Won,15000,2026-01-20,Corporate Sponsorship,STF-017,,broad_college,,,,,,,TRUE
+OPP-0098,Union Mercantile Supply Chain Scholarship 2019,Donation,ORG-010,PER-0181,Closed Won,10000,2019-08-15,Corporate Gift,STF-017,,broad_college,,,,,,,TRUE
+OPP-0099,Union Mercantile Supply Chain Scholarship 2020,Donation,ORG-010,PER-0181,Closed Won,10000,2020-08-15,Corporate Gift,STF-017,,broad_college,,,,,,,TRUE
+OPP-0100,Union Mercantile Supply Chain Scholarship 2021,Donation,ORG-010,PER-0181,Closed Won,10000,2021-08-15,Corporate Gift,STF-017,,broad_college,,,,,,,TRUE
+OPP-0101,Union Mercantile Supply Chain Scholarship 2022,Donation,ORG-010,PER-0181,Closed Won,10000,2022-08-15,Corporate Gift,STF-017,,broad_college,,,,,,,TRUE
+OPP-0102,Union Mercantile Supply Chain Scholarship 2023,Donation,ORG-010,PER-0181,Closed Won,10000,2023-08-15,Corporate Gift,STF-017,,broad_college,,,,,,,TRUE
+OPP-0103,Union Mercantile Supply Chain Scholarship 2024,Donation,ORG-010,PER-0181,Closed Won,10000,2024-08-15,Corporate Gift,STF-017,,broad_college,,,,,,,TRUE
+OPP-0104,Union Mercantile Supply Chain Scholarship 2025,Donation,ORG-010,PER-0181,Closed Won,10000,2025-08-15,Corporate Gift,STF-017,,broad_college,,,,,,,TRUE
+OPP-0105,Union Mercantile Supply Chain Scholarship 2026,Donation,ORG-010,PER-0181,Closed Won,10000,2026-08-15,Corporate Gift,STF-017,,broad_college,,,,,,,TRUE
+OPP-0106,Union Mercantile Packaging Design Competition 2018,Donation,ORG-010,PER-0182,Closed Won,5000,2018-02-01,Corporate Sponsorship,,,school_of_packaging,,,,,,,TRUE
+OPP-0107,Union Mercantile Packaging Design Competition 2019,Donation,ORG-010,PER-0182,Closed Won,5000,2019-02-01,Corporate Sponsorship,,,school_of_packaging,,,,,,,TRUE
+OPP-0108,Union Mercantile Packaging Design Competition 2020,Donation,ORG-010,PER-0182,Closed Won,5000,2020-02-01,Corporate Sponsorship,,,school_of_packaging,,,,,,,TRUE
+OPP-0109,Union Mercantile Packaging Design Competition 2021,Donation,ORG-010,PER-0182,Closed Won,5000,2021-02-01,Corporate Sponsorship,,,school_of_packaging,,,,,,,TRUE
+OPP-0110,Union Mercantile Packaging Design Competition 2022,Donation,ORG-010,PER-0182,Closed Won,5000,2022-02-01,Corporate Sponsorship,,,school_of_packaging,,,,,,,TRUE
+OPP-0111,Union Mercantile Packaging Design Competition 2023,Donation,ORG-010,PER-0182,Closed Won,5000,2023-02-01,Corporate Sponsorship,,,school_of_packaging,,,,,,,TRUE
+OPP-0112,Union Mercantile Packaging Design Competition 2024,Donation,ORG-010,PER-0182,Closed Won,5000,2024-02-01,Corporate Sponsorship,,,school_of_packaging,,,,,,,TRUE
+OPP-0113,Union Mercantile Packaging Design Competition 2025,Donation,ORG-010,PER-0182,Closed Won,5000,2025-02-01,Corporate Sponsorship,,,school_of_packaging,,,,,,,TRUE
+OPP-0114,Union Mercantile Packaging Design Competition 2026,Donation,ORG-010,PER-0182,Closed Won,5000,2026-02-01,Corporate Sponsorship,,,school_of_packaging,,,,,,,TRUE
+OPP-0115,WHE Chemical Engineering Scholarship 2016,Donation,ORG-011,PER-0201,Closed Won,15000,2016-08-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0116,WHE Chemical Engineering Scholarship 2017,Donation,ORG-011,PER-0201,Closed Won,15000,2017-08-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0117,WHE Chemical Engineering Scholarship 2018,Donation,ORG-011,PER-0201,Closed Won,15000,2018-08-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0118,WHE Chemical Engineering Scholarship 2019,Donation,ORG-011,PER-0201,Closed Won,15000,2019-08-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0119,WHE Chemical Engineering Scholarship 2020,Donation,ORG-011,PER-0201,Closed Won,15000,2020-08-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0120,WHE Chemical Engineering Scholarship 2021,Donation,ORG-011,PER-0201,Closed Won,15000,2021-08-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0121,WHE Chemical Engineering Scholarship 2022,Donation,ORG-011,PER-0201,Closed Won,15000,2022-08-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0122,WHE Chemical Engineering Scholarship 2023,Donation,ORG-011,PER-0201,Closed Won,15000,2023-08-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0123,WHE Chemical Engineering Scholarship 2024,Donation,ORG-011,PER-0201,Closed Won,15000,2024-08-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0124,WHE Chemical Engineering Scholarship 2025,Donation,ORG-011,PER-0201,Closed Won,15000,2025-08-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0125,WHE Chemical Engineering Scholarship 2026,Donation,ORG-011,PER-0201,Closed Won,15000,2026-08-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0126,WHE Low-Carbon Energy Graduate Fellowship 2022,Donation,ORG-011,PER-0200,Closed Won,50000,2022-07-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0127,WHE Low-Carbon Energy Graduate Fellowship 2023,Donation,ORG-011,PER-0200,Closed Won,50000,2023-07-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0128,WHE Low-Carbon Energy Graduate Fellowship 2024,Donation,ORG-011,PER-0200,Closed Won,50000,2024-07-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0129,WHE Low-Carbon Energy Graduate Fellowship 2025,Donation,ORG-011,PER-0200,Closed Won,50000,2025-07-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0130,WHE Low-Carbon Energy Graduate Fellowship 2026,Donation,ORG-011,PER-0200,Closed Won,50000,2026-07-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0131,WHE Low-Carbon Fellowship Renewal and Increase (3-Year),Proposal,ORG-011,PER-0200,Proposal in Development,225000,2027-06-30,Fellowship,STF-004,,ecr,2026-04-14,,,,,"$75,000/yr for 3 years (up from $50,000/yr).",TRUE
+OPP-0132,Farm Lane Makerspace Naming Gift,Pledge,ORG-012,PER-0221,Closed Won,500000,2019-03-26,Naming Gift,STF-005,,ecr,,,,,,"$100,000/yr, 2019-2023. Stewardship: annual impact report due Jan 31 through 2029.",TRUE
+OPP-0133,Farm Lane Engineering Summer Camps 2016,Donation,ORG-012,PER-0220,Closed Won,20000,2016-05-01,Corporate Gift,STF-005,,ecr,,,,,,,TRUE
+OPP-0134,Farm Lane Engineering Summer Camps 2017,Donation,ORG-012,PER-0220,Closed Won,20000,2017-05-01,Corporate Gift,STF-005,,ecr,,,,,,,TRUE
+OPP-0135,Farm Lane Engineering Summer Camps 2018,Donation,ORG-012,PER-0220,Closed Won,20000,2018-05-01,Corporate Gift,STF-005,,ecr,,,,,,,TRUE
+OPP-0136,Farm Lane Engineering Summer Camps 2019,Donation,ORG-012,PER-0220,Closed Won,20000,2019-05-01,Corporate Gift,STF-005,,ecr,,,,,,,TRUE
+OPP-0137,Farm Lane Engineering Summer Camps 2020,Donation,ORG-012,PER-0220,Closed Won,20000,2020-05-01,Corporate Gift,STF-005,,ecr,,,,,,,TRUE
+OPP-0138,Farm Lane Engineering Summer Camps 2021,Donation,ORG-012,PER-0220,Closed Won,20000,2021-05-01,Corporate Gift,STF-005,,ecr,,,,,,,TRUE
+OPP-0139,Farm Lane Engineering Summer Camps 2022,Donation,ORG-012,PER-0220,Closed Won,20000,2022-05-01,Corporate Gift,STF-005,,ecr,,,,,,,TRUE
+OPP-0140,Farm Lane Engineering Summer Camps 2023,Donation,ORG-012,PER-0220,Closed Won,20000,2023-05-01,Corporate Gift,STF-005,,ecr,,,,,,,TRUE
+OPP-0141,Farm Lane Engineering Summer Camps 2024,Donation,ORG-012,PER-0220,Closed Won,20000,2024-05-01,Corporate Gift,STF-005,,ecr,,,,,,,TRUE
+OPP-0142,Farm Lane Engineering Summer Camps 2025,Donation,ORG-012,PER-0220,Closed Won,20000,2025-05-01,Corporate Gift,STF-005,,ecr,,,,,,,TRUE
+OPP-0143,Farm Lane Engineering Summer Camps 2026,Donation,ORG-012,PER-0220,Closed Won,20000,2026-05-01,Corporate Gift,STF-005,,ecr,,,,,,,TRUE
+OPP-0144,Farm Lane Sustainability Award 2021,Donation,ORG-012,PER-0220,Closed Won,2500,2021-04-01,Corporate Sponsorship,STF-005,,ecr,,,,,,,TRUE
+OPP-0145,Farm Lane Sustainability Award 2022,Donation,ORG-012,PER-0220,Closed Won,2500,2022-04-01,Corporate Sponsorship,STF-005,,ecr,,,,,,,TRUE
+OPP-0146,Farm Lane Sustainability Award 2023,Donation,ORG-012,PER-0220,Closed Won,2500,2023-04-01,Corporate Sponsorship,STF-005,,ecr,,,,,,,TRUE
+OPP-0147,Farm Lane Sustainability Award 2024,Donation,ORG-012,PER-0220,Closed Won,2500,2024-04-01,Corporate Sponsorship,STF-005,,ecr,,,,,,,TRUE
+OPP-0148,Farm Lane Sustainability Award 2025,Donation,ORG-012,PER-0220,Closed Won,2500,2025-04-01,Corporate Sponsorship,STF-005,,ecr,,,,,,,TRUE
+OPP-0149,Farm Lane Sustainability Award 2026,Donation,ORG-012,PER-0220,Closed Won,2500,2026-04-01,Corporate Sponsorship,STF-005,,ecr,,,,,,,TRUE
+OPP-0150,Farm Lane Makerspace Equipment Refresh (3-Year),Proposal,ORG-012,PER-0220,Proposal in Development,250000,2027-03-31,Corporate Gift,STF-005,,ecr,2026-06-09,,,,,Farm Lane requires a reporting plan in the proposal.,TRUE
+OPP-0151,G&W Chemical Engineering Scholarships 2016,Donation,ORG-013,PER-0243,Closed Won,20000,2016-09-01,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0152,G&W Chemical Engineering Scholarships 2017,Donation,ORG-013,PER-0243,Closed Won,20000,2017-09-01,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0153,G&W Chemical Engineering Scholarships 2018,Donation,ORG-013,PER-0243,Closed Won,20000,2018-09-01,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0154,G&W Chemical Engineering Scholarships 2019,Donation,ORG-013,PER-0243,Closed Won,20000,2019-09-01,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0155,G&W Chemical Engineering Scholarships 2020,Donation,ORG-013,PER-0243,Closed Won,20000,2020-09-01,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0156,G&W Chemical Engineering Scholarships 2021,Donation,ORG-013,PER-0243,Closed Won,20000,2021-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0157,G&W Chemical Engineering Scholarships 2022,Donation,ORG-013,PER-0243,Closed Won,20000,2022-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0158,G&W Chemical Engineering Scholarships 2023,Donation,ORG-013,PER-0243,Closed Won,20000,2023-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0159,G&W Chemical Engineering Scholarships 2024,Donation,ORG-013,PER-0243,Closed Won,20000,2024-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0160,G&W Chemical Engineering Scholarships 2025,Donation,ORG-013,PER-0243,Closed Won,20000,2025-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0161,G&W Chemical Engineering Scholarships 2026,Donation,ORG-013,PER-0243,Closed Won,20000,2026-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0162,G&W Materials Science Undergraduate Research 2019,Donation,ORG-013,PER-0243,Closed Won,15000,2019-09-01,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0163,G&W Materials Science Undergraduate Research 2020,Donation,ORG-013,PER-0243,Closed Won,15000,2020-09-01,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0164,G&W Materials Science Undergraduate Research 2021,Donation,ORG-013,PER-0243,Closed Won,15000,2021-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0165,G&W Materials Science Undergraduate Research 2022,Donation,ORG-013,PER-0243,Closed Won,15000,2022-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0166,G&W Materials Science Undergraduate Research 2023,Donation,ORG-013,PER-0243,Closed Won,15000,2023-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0167,G&W Materials Science Undergraduate Research 2024,Donation,ORG-013,PER-0243,Closed Won,15000,2024-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0168,G&W Materials Science Undergraduate Research 2025,Donation,ORG-013,PER-0243,Closed Won,15000,2025-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0169,G&W Materials Science Undergraduate Research 2026,Donation,ORG-013,PER-0243,Closed Won,15000,2026-09-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0170,G&W In-Kind: Gel Permeation Chromatography System,In-Kind Gift,ORG-013,PER-0242,Closed Won,120000,2021-10-12,In-Kind Gift,STF-004,,ecr,,,Goods,Surplus GPC system for ChEMS polymer characterization lab,,,TRUE
+OPP-0171,G&W Endowed Chemical Engineering Scholarship,Proposal,ORG-013,PER-0240,Cultivation,500000,2027-12-31,Endowment,STF-004,,ecr,2025-10-21,,,,,,TRUE
+OPP-0172,GGPL Engineering Scholarship Request,Proposal,ORG-014,PER-0265,Declined,20000,2019-04-16,Corporate Gift,STF-006,,ecr,2019-02-01,,,,,Declined: scholarships not eligible under GGPL giving guidelines.,TRUE
+OPP-0173,GGPL First-Year Engineering Programs 2020,Donation,ORG-014,PER-0265,Closed Won,25000,2020-11-15,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0174,GGPL First-Year Engineering Programs 2021,Donation,ORG-014,PER-0265,Closed Won,25000,2021-11-15,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0175,GGPL First-Year Engineering Programs 2022,Donation,ORG-014,PER-0265,Closed Won,25000,2022-11-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0176,GGPL First-Year Engineering Programs 2023,Donation,ORG-014,PER-0265,Closed Won,25000,2023-11-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0177,GGPL First-Year Engineering Programs 2024,Donation,ORG-014,PER-0265,Closed Won,25000,2024-11-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0178,GGPL First-Year Engineering Programs 2025,Donation,ORG-014,PER-0265,Closed Won,25000,2025-11-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0179,GGPL Power Systems Workforce Program (3-Year),Proposal,ORG-014,PER-0260,Proposal in Development,180000,2027-06-30,Program Partnership,STF-004,,ecr,2025-05-20,,,,,"$60,000/yr for 3 years for co-op coordination through the Center for Spartan Engineering and power systems lab support. May split between workforce budget and philanthropy (first-year component).",TRUE
+OPP-0180,"SST First-Year, Bridge, and Mentoring Giving Pillar",Proposal,ORG-015,PER-0281,Identified,,2027-06-30,Program Partnership,STF-003,,ecr,2022-10-18,,,,,SST invited a proposal under its first-year experience / bridge / mentoring pillar (10/18/2022). No proposal submitted.,TRUE
+OPP-0181,Red Cedar Motor Company Unrestricted Gift 2018,Donation,ORG-001,PER-0001,Closed Won,25000,2018-06-15,Corporate Gift,STF-001,,ecr,,,,,,Unrestricted gift to the College of Engineering.,TRUE
+OPP-0182,Red Cedar Motor Company Unrestricted Gift 2023,Donation,ORG-001,PER-0001,Closed Won,25000,2023-05-19,Corporate Gift,STF-001,,ecr,,,,,,Unrestricted gift to the College of Engineering.,TRUE
+OPP-0183,Beaumont Precision Components Unrestricted Gift 2017,Donation,ORG-004,PER-0060,Closed Won,5000,2017-12-12,Corporate Gift,STF-001,,ecr,,,,,,Unrestricted gift to the College of Engineering.,TRUE
+OPP-0184,Beaumont Precision Components Unrestricted Gift 2022,Donation,ORG-004,PER-0060,Closed Won,5000,2022-12-14,Corporate Gift,STF-001,,ecr,,,,,,Unrestricted gift to the College of Engineering.,TRUE
+OPP-0185,Tailgate Drive Systems Unrestricted Gift 2017,Donation,ORG-005,PER-0080,Closed Won,5000,2017-04-10,Corporate Gift,STF-001,,ecr,,,,,,Unrestricted gift to the College of Engineering.,TRUE
+OPP-0186,Tailgate Drive Systems Unrestricted Gift 2019,Donation,ORG-005,PER-0080,Closed Won,5000,2019-11-05,Corporate Gift,STF-001,,ecr,,,,,,Unrestricted gift to the College of Engineering.,TRUE
+OPP-0187,Greene & Whyte Materials Unrestricted Gift 2016,Donation,ORG-013,PER-0243,Closed Won,10000,2016-11-18,Corporate Gift,STF-006,,ecr,,,,,,Unrestricted gift to the College of Engineering.,TRUE
+OPP-0188,Greene & Whyte Materials Unrestricted Gift 2018,Donation,ORG-013,PER-0243,Closed Won,10000,2018-11-16,Corporate Gift,STF-006,,ecr,,,,,,Unrestricted gift to the College of Engineering.,TRUE
+OPP-0189,Greene & Whyte Materials Unrestricted Gift 2020,Donation,ORG-013,PER-0243,Closed Won,10000,2020-11-20,Corporate Gift,STF-006,,ecr,,,,,,Unrestricted gift to the College of Engineering.,TRUE
+OPP-0190,Wells Hall Energy Unrestricted Gift 2023,Donation,ORG-011,PER-0200,Closed Won,10000,2023-12-05,Corporate Gift,STF-004,,ecr,,,,,,Unrestricted gift to the College of Engineering.,TRUE
+OPP-0191,Wells Hall Energy Unrestricted Gift 2025,Donation,ORG-011,PER-0200,Closed Won,10000,2025-12-03,Corporate Gift,STF-004,,ecr,,,,,,Unrestricted gift to the College of Engineering.,TRUE
+OPP-0192,RCMC Women in Computing 2023,Donation,ORG-001,PER-0007,Closed Won,5000,2023-03-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0193,RCMC Women in Computing 2024,Donation,ORG-001,PER-0007,Closed Won,5000,2024-03-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0194,RCMC Women in Computing 2025,Donation,ORG-001,PER-0007,Closed Won,5000,2025-03-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0195,RCMC Women in Computing 2026,Donation,ORG-001,PER-0007,Closed Won,5000,2026-03-15,Corporate Gift,STF-001,,ecr,,,,,,,TRUE
+OPP-0196,G&W Engineering Inclusive Excellence 2022,Donation,ORG-013,PER-0243,Closed Won,7500,2022-02-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0197,G&W Engineering Inclusive Excellence 2023,Donation,ORG-013,PER-0243,Closed Won,7500,2023-02-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0198,G&W Engineering Inclusive Excellence 2024,Donation,ORG-013,PER-0243,Closed Won,7500,2024-02-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0199,G&W Engineering Inclusive Excellence 2025,Donation,ORG-013,PER-0243,Closed Won,7500,2025-02-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0200,G&W Engineering Inclusive Excellence 2026,Donation,ORG-013,PER-0243,Closed Won,7500,2026-02-20,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0201,WHE Career Readiness Support 2022,Donation,ORG-011,PER-0209,Closed Won,10000,2022-04-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0202,WHE Career Readiness Support 2023,Donation,ORG-011,PER-0209,Closed Won,10000,2023-04-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0203,WHE Career Readiness Support 2024,Donation,ORG-011,PER-0209,Closed Won,10000,2024-04-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0204,WHE Career Readiness Support 2025,Donation,ORG-011,PER-0209,Closed Won,10000,2025-04-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0205,WHE Career Readiness Support 2026,Donation,ORG-011,PER-0209,Closed Won,10000,2026-04-01,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0206,G&W Career Readiness Support 2019,Donation,ORG-013,PER-0243,Closed Won,5000,2019-05-15,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0207,G&W Career Readiness Support 2020,Donation,ORG-013,PER-0243,Closed Won,5000,2020-05-15,Corporate Gift,STF-006,,ecr,,,,,,,TRUE
+OPP-0208,G&W Career Readiness Support 2021,Donation,ORG-013,PER-0243,Closed Won,5000,2021-05-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0209,G&W Career Readiness Support 2022,Donation,ORG-013,PER-0243,Closed Won,5000,2022-05-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0210,G&W Career Readiness Support 2023,Donation,ORG-013,PER-0243,Closed Won,5000,2023-05-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0211,G&W Career Readiness Support 2024,Donation,ORG-013,PER-0243,Closed Won,5000,2024-05-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0212,G&W Career Readiness Support 2025,Donation,ORG-013,PER-0243,Closed Won,5000,2025-05-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0213,G&W Career Readiness Support 2026,Donation,ORG-013,PER-0243,Closed Won,5000,2026-05-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0214,GGPL Career Readiness Support 2023,Donation,ORG-014,PER-0262,Closed Won,10000,2023-11-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0215,GGPL Career Readiness Support 2024,Donation,ORG-014,PER-0262,Closed Won,10000,2024-11-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0216,GGPL Career Readiness Support 2025,Donation,ORG-014,PER-0262,Closed Won,10000,2025-11-15,Corporate Gift,STF-004,,ecr,,,,,,,TRUE
+OPP-0217,RCMC Software-Defined Vehicle Student Projects Fund (3-Year),Proposal,ORG-001,PER-0007,Proposal in Development,30000,2026-12-31,Program Partnership,STF-001,,ecr,2025-09-16,,,,,"$10,000/yr for 3 years for CSE student projects on software-defined vehicles. Developed with the CSE Chair.",TRUE
+OPP-0218,HMS Cyber Defense Student Team Support,Proposal,ORG-008,PER-0141,Cultivation,5000,2027-06-30,Corporate Sponsorship,STF-003,,ecr,2025-01-22,,,,,Annual amount. Follows Monique Owen's interest in students eligible for cleared roles.,TRUE
+OPP-0219,Farm Lane Makerspace Naming Proposal,Proposal,ORG-012,PER-0221,Funded,500000,2019-03-26,Naming Gift,STF-005,,ecr,2018-10-15,,,,,,TRUE
+OPP-0220,TDS 3-Year Pledge Proposal,Proposal,ORG-005,PER-0080,Funded,60000,2020-02-19,Corporate Gift,STF-001,,ecr,2019-10-08,,,,,,TRUE
+OPP-0221,WHE Low-Carbon Energy Graduate Fellowship Proposal,Proposal,ORG-011,PER-0200,Funded,50000,2022-07-15,Fellowship,STF-004,,ecr,2022-05-17,,,,,"Annual amount, renewing.",TRUE
+OPP-0222,GRA Inclusive Excellence Scholarship Proposal,Proposal,ORG-002,PER-0023,Funded,10000,2021-02-15,Corporate Gift,STF-002,,ecr,2020-10-20,,,,,"Annual amount, renewing.",TRUE
+OPP-0223,GGPL First-Year Engineering Programs Proposal,Proposal,ORG-014,PER-0265,Funded,25000,2020-10-14,Program Partnership,STF-006,,ecr,2020-08-03,,,,,"Annual amount, renewing. Reframed after the 2019 scholarship request was declined.",TRUE
+OPP-0224,HMS Women in Computing Proposal,Proposal,ORG-008,PER-0141,Funded,2500,2021-03-10,Corporate Gift,STF-006,,ecr,2020-11-10,,,,,"Annual amount, renewing.",TRUE
+OPP-0225,G&W In-Kind Instrument Proposal,Proposal,ORG-013,PER-0242,Funded,120000,2021-10-12,In-Kind Gift,STF-004,,ecr,2021-06-08,,,,,,TRUE
+OPP-0226,BPC In-Kind CNC Mill Proposal,Proposal,ORG-004,PER-0060,Funded,85000,2019-06-12,In-Kind Gift,STF-001,,ecr,2019-02-12,,,,,,TRUE
+OPP-0227,HMS Engineering Inclusive Excellence Renewal,Proposal,ORG-008,PER-0143,Declined,10000,2020-10-06,Corporate Gift,STF-006,,ecr,2020-09-01,,,,,Declined: HMS reset its giving priorities in 2020. Scholarship support continued.,TRUE
+OPP-0228,SHA Student Organization Support Restoration,Proposal,ORG-007,PER-0122,Declined,21000,2023-03-21,Corporate Sponsorship,STF-003,,ecr,2022-11-15,,,,,Declined: SHA no longer funds student organizations through recruiting; redirected to Community Investment's multi-year grant process.,TRUE
+OPP-0229,TDS Partnership Renewal Options,Proposal,ORG-005,PER-0084,Closed - No Action,,2024-06-18,Program Partnership,STF-001,,ecr,2023-07-12,,,,,Three partnership options sent to Alyssa Kobs. Closed after Kobs left TDS and Ostwald did not respond.,TRUE
+OPP-0230,G&W Graduate Fellowship in Sustainable Materials,Proposal,ORG-013,PER-0240,Closed - No Action,90000,2024-04-02,Fellowship,STF-004,,ecr,2024-03-19,,,,,Routed to Sponsored Programs as a research agreement because of reporting and IP terms; not a gift.,TRUE
