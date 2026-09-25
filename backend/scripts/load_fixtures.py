@@ -5,6 +5,8 @@ from pathlib import Path
 import psycopg
 from psycopg.types.json import Jsonb
 
+from company_page_fixtures import get_contact_dates, get_latest_contact_dates
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DATABASE_URL = os.environ["DATABASE_URL"]
@@ -127,6 +129,18 @@ def link_entity(cur, entity_id, source_record_id):
 
 def load_accounts(cur, rows):
     account_entities = {}
+    '''
+    Because accounts includes the company (or organization) id (no duplicates), 
+    so I feel easier to track the specific company id and get the corresponding contact reports
+    including the last contact date of a company. Because a company can have many contact reports,
+    instead of getting duplicated id, I chose to load multiple reports into the same company,
+    if they shares the same company id. And because this file is already being able to load fixtures, 
+    so I don't have to set up another load fixtures again. 
+    '''
+    contact_reports = read_csv(
+        ROOT / "db" / "seeds" / "10_Contact_Report__c.csv"
+    )
+    latest_contact_dates = get_latest_contact_dates(contact_reports)
 
     for account in rows:
         record_type = account[ACCOUNT_COLUMNS["record_type"]]
@@ -147,6 +161,7 @@ def load_accounts(cur, rows):
         attributes = remove_nulls({
             "record_type": record_type,
             "industry": account[ACCOUNT_COLUMNS["industry"]],
+            "latest_contact_date": latest_contact_dates.get(account[ACCOUNT_COLUMNS["id"]]),
             "city": account[ACCOUNT_COLUMNS["city"]],
             "state": account[ACCOUNT_COLUMNS["state"]],
             "unit_code": account[ACCOUNT_COLUMNS["unit_code"]],
@@ -218,6 +233,7 @@ def main():
     contacts = read_csv(
         ROOT / "db" / "seeds" / "02_Contact.csv"
     )
+    
 
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
