@@ -64,12 +64,18 @@ def list_persons():
                     p.display_name,
                     p.email,
                     COALESCE(emp.edge_role, p.attributes->>'title') AS title,
+                    emp.company_id,
                     emp.company,
-                    strpos(COALESCE(p.attributes->>'constituent_type', ''),
-                           'Faculty/Staff') > 0 AS is_staff
+                    emp.employer_type,
+                    emp.since
                 FROM live_entities p
                 LEFT JOIN LATERAL (
-                    SELECT e.edge_role, c.display_name AS company
+                    SELECT 
+                        c.id AS company_id,
+                        c.display_name AS company,
+                        c.entity_type AS employer_type,
+                        e.edge_role,
+                        e.valid_from::text AS since
                     FROM edges e
                     JOIN entities c ON c.id = e.to_entity_id
                     WHERE e.from_entity_id = p.id
@@ -85,7 +91,6 @@ def list_persons():
     return jsonify(rows)
 
 # everything for the Persons page in one response (Emmanuel)
-
 @app.route('/api/persons/<person_id>')
 def get_person(person_id):
     try:

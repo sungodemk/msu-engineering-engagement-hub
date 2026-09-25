@@ -106,3 +106,181 @@
         grid-template-columns: 1fr;
     }
 }
+
+/*header flags for persons page */
+
+.pp-flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+
+}
+
+
+.pp-flag {
+    padding: 2px 8px;
+    border: 1px solid #fda29b;
+    border-radius: 4px;
+    background: #fef3f2;
+    color: #b42318;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.pp-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+
+
+}
+
+.pp-row + .pp-row {
+    border-top: 1px solid #e3e6e8;
+
+}
+
+.pp-row-main {
+    font-weight: 600;
+
+}
+
+.pp-activity {
+
+    padding: 12px 0;
+
+}
+
+.pp-activity + .pp-activity {
+    border-top: 1px solid #e3e6e8;
+}
+
+.pp-activity-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: #6b7378;
+    font-size: 0.85rem;
+}
+
+.pp-activity-type {
+    color: #18453b;
+    font-weight: 700;
+}
+
+.pp-activity-notes {
+    margin: 4px 0 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/*quick stats*/
+
+.pp-stat-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    font-size: 0.9rem;
+
+}
+
+.pp-stat-row span:first-child{
+    
+    color: #6b7378;
+
+}
+
+.pp-stat-row span:last-child{
+    font-weight: 700;
+    overflow-wrap:anywhere;
+    text-align: right;
+}
+
+.pp-empty{
+    color:#6b7378;
+
+}
+
+
+/*person list*/
+
+.persons-list{
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.pp-list-controls {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 12px;
+
+}
+
+.pp-search {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #e3e6e8;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.pp-select {
+    max-width: 320px;
+    padding: 8px 12px;
+    border: 1px solid #e3e6e8;
+    border-radius: 6px;
+    background: #ffffff;
+    font-size: 0.95rem;
+}
+
+.pp-list-summary {
+    margin-bottom: 8px;
+    color: #6b7378;
+    font-size: 0.9rem;
+}
+
+.pp-table-wrap {
+    overflow-x: auto;
+}
+.pp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.pp-table th {
+    padding: 8px;
+    border-bottom: 1px solid #e3e6e8;
+    color: #6b7378;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.pp-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e3e6e8;
+}
+
+.pp-table tbody tr {
+    cursor:pointer;
+}
+
+.pp-table tbody tr:hover {
+    background:#eef6f1;
+
+}
+
+.pp-person-name {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: none ;
+}

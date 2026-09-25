@@ -33,6 +33,15 @@ CONTACT_COLUMNS = {
     "do_not_contact": "npsp__Do_Not_Contact__c",
     "do_not_solicit": "Do_Not_Solicit__c",
 }
+#(Emmanuel)
+AFFILIATION_COLUMNS = {
+    "id": "External_ID__c",
+    "contact_id": "npe5__Contact__r.External_ID__c",
+    "organization_id": "npe5__Organization__r.External_ID__c",
+    "role": "npe5__Role__c",
+    "start_date": "npe5__StartDate__c",
+    "end_date": "npe5__EndDate__c",
+}
 
 ACCOUNT_TYPES = {
     "Business Organization": "organization",
@@ -209,14 +218,54 @@ def load_contacts(cur, rows):
         link_entity(cur, entity_id, source_id)
 
     return contact_entities
+    
+# loading affiliations into perons page (Emmanuel)
+def load_affiliations(cur, rows, account_entities, contact_entities):
+    for affiliation in rows:
+        source_id = insert_source_record(
+            cur, 
+            "npe5__Affiliation__c",
+            affiliation[AFFILIATION_COLUMNS["id"]],
+            affiliation,
+        )
+        # current jobs dont have a end date so valid_to stays NULL
+        cur.execute(
+            """
+            INSERT INTO edges (
+                from_entity_id,
+                to_entity_id,
+                edge_type,
+                edge_role,
+                valid_from,
+                valid_to,
+                source_record_id
+            )
+            VALUES (%s, %s, 'employed_by',%s, %s, %s, %s)
+            """,
+            (
+                contact_entities[affiliation[AFFILIATION_COLUMNS["contact_id"]]],
+                account_entities[affiliation[AFFILIATION_COLUMNS["organization_id"]]],
+                affiliation[AFFILIATION_COLUMNS["role"]],
+                affiliation[AFFILIATION_COLUMNS["start_date"]],
+                affiliation[AFFILIATION_COLUMNS["end_date"]],
+                source_id,
 
-
+            ),
+        )
+            
+            
+            
+            
 def main():
     accounts = read_csv(
         ROOT / "db" / "seeds" / "01_Account.csv"
     )
     contacts = read_csv(
         ROOT / "db" / "seeds" / "02_Contact.csv"
+    )
+
+    affiliations = read_csv(
+        ROOT / "db" / "seeds" / "03_npe5__Affiliation__c.csv"
     )
 
     with psycopg.connect(DATABASE_URL) as conn:
@@ -229,11 +278,13 @@ def main():
             # keep mappings for affiliations and other files added later.
             account_entities = load_accounts(cur, accounts)
             contact_entities = load_contacts(cur, contacts)
+            load_affiliations(cur, affiliations, account_entities, contact_entities)
 
             for table in [
                 "source_records",
                 "entities",
                 "entity_source_records",
+                "edges",
             ]:
                 cur.execute(f"SELECT count(*) FROM {table}")
                 print(f"{table}: {cur.fetchone()[0]}")
