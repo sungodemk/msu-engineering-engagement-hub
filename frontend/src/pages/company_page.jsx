@@ -13,48 +13,26 @@ function CompanyPage() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+    const [daysPassed, setDaysPassed] = useState(null);
 
     // Referenced these links for fetching the Python function return value into Company Page: 
     // https://react.dev/reference/react/useEffect
     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     // https://www.geeksforgeeks.org/reactjs/fetching-data-from-an-api-with-useeffect-and-usestate-hook/
-
-    const [companies, setCompanies] = useState([]);
-    const [selectedId, setSelectedId] = useState('');
-
-    // Found the .find() method to get the corresponding company from the companies array based on its id
-    // from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
-    const company = companies.find((comp_page) => comp_page === selectedId);
-
     useEffect(() => {
-        fetch("http://localhost:8080/api/companies")
-        .then(result => result.json())
-        .then(data => {
-            setCompanies(data);
-            setSelectedId(data.length > 0 ? data[0].id : '');
-        });
-
+        fetch("http://localhost:8080/api/days_passed/start_date")
+        .then(result => {return result.json();})
+        .then(data => {return setDaysPassed(data.days_passed);})
     }, []);
-
-    function handleChange(e) {
-        setSelectedId(e.target.value);
-    }
 
     return (
         <div className="company-page">
-            <select className="company_select" value={selectedId} onChange={handleChange}>
-            {companies.map(c => (
-                <option key={c.id} value={c.id}>
-                {c.display_name}
-                </option>
-            ))}
-            </select>
             <div className='title_box'>
                 <div className='c_title_text'>
-                    {company ? company?.display_name : "Company Name"}
+                    Company Name
                 </div>
                 <div className='location'>
-                    📍{company?.city && company?.state ? `${company.city}, ${company.state}` : 'Location'}
+                    📍Location
                 </div>
                 <div className='tier_box'>
                     <div className='tier_text'>
@@ -85,11 +63,9 @@ function CompanyPage() {
             </div>
             <div className='last_contact_date_box'>
                 <div className='last_contact_date_title'>LAST CONTACT</div>
-                <div className='last_contact_date'>
-                    {company?.latest_contact_date ? company.latest_contact_date : 'N/A'}
-                </div>
+                <div className='last_contact_date'>Jan 1, 2026</div>
                 <div className='days_passed_from_lcd'>
-                    {company?.days_passed ? `${company.days_passed} days ago` : 'N/A'}
+                    {`${daysPassed} days ago`}
                 </div>
             </div>
             <div className='inbound_box'>
@@ -100,11 +76,6 @@ function CompanyPage() {
             <div className='outbound_box'>
                 <div className='outbound_title_box'>
                     <div className='outbound_title'>⬆ Outbound from MSU</div>
-                </div>
-            </div>
-            <div className='activity_box'>
-                <div className='activity_title_box'>
-                    <div className='activity_title'>Activity Timeline</div>
                 </div>
             </div>
             <div className="msu_task_box">
