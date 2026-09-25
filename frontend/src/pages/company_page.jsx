@@ -24,7 +24,7 @@ function CompanyPage() {
 
     // Found the .find() method to get the corresponding company from the companies array based on its id
     // from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
-    const company = companies.find((comp_page) => comp_page === selectedId);
+    const company = companies.find((c) => c.id === selectedId);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/companies")

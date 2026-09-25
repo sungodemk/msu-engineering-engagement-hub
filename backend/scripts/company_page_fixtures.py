@@ -1,3 +1,9 @@
+# Zhixiang Miao
+"""
+The file contains company page fixtures, 
+it's mainly the helper function for load_fixtures.py file to load company fixtures in there. 
+"""
+
 CONTACT_REPORT_COLUMNS = {
     "id": "External_ID__c",
     "contact_date": "Contact_Date__c",

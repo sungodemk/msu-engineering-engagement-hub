@@ -4,6 +4,8 @@
 '''
 
 from datetime import datetime as dt
+
+# To calculate days passed from a start date to today. 
 def days_passed_calc(start_date):
     today = dt.today()
     formatted_start_date = dt.strptime(start_date, "%Y-%m-%d")
