@@ -4,6 +4,7 @@ from pathlib import Path
 
 import psycopg
 from psycopg.types.json import Jsonb
+from company_page_fixtures import get_contact_dates, get_latest_contact_dates, get_giving_amount
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -146,6 +147,13 @@ def load_accounts(cur, rows):
     account_entities = {}
     units_by_code = {}
 
+    # (Zhixiang Miao) Load contact reports data and get the last company contact date.
+    contact_reports = read_csv(
+        ROOT / "db" / "seeds" / "10_Contact_Report__c.csv"
+    )
+    latest_contact_dates = get_latest_contact_dates(contact_reports)
+
+
     for account in rows:
         record_type = account[ACCOUNT_COLUMNS["record_type"]]
 
@@ -165,6 +173,7 @@ def load_accounts(cur, rows):
         attributes = remove_nulls({
             "record_type": record_type,
             "industry": account[ACCOUNT_COLUMNS["industry"]],
+            "latest_contact_date": latest_contact_dates.get(account[ACCOUNT_COLUMNS["id"]]),
             "city": account[ACCOUNT_COLUMNS["city"]],
             "state": account[ACCOUNT_COLUMNS["state"]],
             "unit_code": account[ACCOUNT_COLUMNS["unit_code"]],

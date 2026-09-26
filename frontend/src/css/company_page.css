@@ -15,7 +15,9 @@
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 11px;
+
     padding: 0 5%;
     border-radius: 0.5vw;
     border-bottom: 0.01vw solid #e3e6e8;
@@ -34,9 +36,9 @@
 .location {
     font-size: 0.9em;
     color: rgb(109, 108, 108);
-    position: relative;
-    top: 3vh;
-    right: 21.6vw;
+    position: absolute;
+    top: 4.9em;
+    left: 2.5em;
 }
 
 .tier_box {
@@ -45,7 +47,6 @@
     background-color: rgb(209, 247, 209);
     position: relative;
     top: -1vh;
-    right: 20vw;
     border-radius: 0.2vw;
     border: 0.01vw solid #18453B;
 }
@@ -61,9 +62,10 @@
 .owner {
     font-size: 0.9em;
     color: rgb(109, 108, 108);
-    position: relative;
-    top: 3vh;
-    right: 36vw;
+    position: absolute;
+    top: 5em;
+    left: 20em;
+
 }
 
 
@@ -79,7 +81,16 @@
     border: 0.05vw solid #18453B;
     text-align: center;
     cursor: pointer;
-    font-size: 0.9em;
+        margin-left: auto;
+}
+
+.company_select {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: white;
+
 }
 
 .total_giving_box {
@@ -123,7 +134,7 @@
 }
 
 .award_box {
-    width: 15vw;
+   width: 15vw;
     height: 13vh;
     background-color: white;
     position: relative;
@@ -228,22 +239,22 @@
     text-align: center;
     font-weight: bold;
     color: black;
-    position: relative;
-    top: 3.5vh;
-    left: -2vw;
+    position: absolute;
+    top: 1.85em;
+    left: 1em;
 }
 
 .days_passed_from_lcd {
     font-size: 0.8em;
     color: #18453B;
     text-align: center;
-    position: relative;
-    top: 4.5vh;
-    left: -3.8vw;
+    position: absolute;
+    top: 6.5em;
+    left: 2em;
 }
 
 .inbound_box {
-    background-color: white;
+   background-color: white;
     width: 34.2vw;
     height: 50vh;
     position: relative;
@@ -342,7 +353,7 @@
     height: 25vh;
     background-color: white;
     position: relative;
-    top: -70vh;
+    top: -60vh;
     left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
@@ -403,7 +414,7 @@
     height: 40vh;
     background-color: white;
     position: relative;
-    top: -60vh;
+    top: -50vh;
     left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
@@ -505,7 +516,7 @@
     height: 30vh;
     background-color: white;
     position: relative;
-    top: -50vh;
+    top: -40vh;
     left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
@@ -536,10 +547,10 @@
 
 .relationship_map_box {
     width: 72.8vw;
-    height: 50vh;
+    height: 80vh;
     background-color: white;
     position: relative;
-    top: -40vh;
+    top: -30vh;
     left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
