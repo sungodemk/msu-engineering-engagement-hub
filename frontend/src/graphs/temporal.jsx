@@ -8,7 +8,7 @@ const CATEGORY_META = {
   touchpoint: { label: 'Touchpoints', color: '#5b5f68' },
 };
 
-// maps a date to an x-pixel position between chartStart and chartEnd
+// maps a date to a position between chartStart and chartEnd
 function dateToX(date, minDate, maxDate, chartLeft, chartRight) {
   const total = maxDate - minDate;
   const elapsed = new Date(date) - minDate;
@@ -29,9 +29,9 @@ function Temporal({ activities }) {
   const maxDate = new Date();
 
   const chartLeft = 200;   // reserved for category labels
-  const chartRight = 900;
-  const rowHeight = 90;
-  const chartWidth = 900;
+  const chartRight = 900;  // reserved for right margin
+  const rowHeight = 90;    // vertical space per category row
+  const chartWidth = 940;  // total width of the chart
   const chartHeight = categories.length * rowHeight + 60;
 
   // build year tick marks along the top

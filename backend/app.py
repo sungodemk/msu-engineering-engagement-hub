@@ -14,7 +14,7 @@ def get_db_connection():
     return psycopg.connect(DATABASE_URL, row_factory=dict_row)
 
 
-# List all companies
+# List all companies (Alvin)
 @app.route('/api/companies')
 def list_companies():
     with get_db_connection() as conn:
@@ -27,7 +27,7 @@ def list_companies():
             rows = cur.fetchall()
     return jsonify(rows)
 
-# Look up a company by ID
+# Look up a company by ID (Alvin)
 @app.route('/api/companies/<company_id>')
 def get_company(company_id):
     with get_db_connection() as conn:
@@ -42,7 +42,7 @@ def get_company(company_id):
         return jsonify({"error": "Company not found"}), 404
     return jsonify(row)
 
-# Get temporal activities for a company
+# Get temporal activities for a company (Alvin)
 @app.route('/api/companies/<company_id>/temporal')
 def temporal(company_id):
     with get_db_connection() as conn:
@@ -139,6 +139,56 @@ def get_person(person_id):
 
     })
 
+# Queries everything needed for the Portfolio page in one response (Alvin)
+@app.route('/api/portfolio')
+def portfolio():
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            # Owner comes from most recent activity with a non-null owner_entity_id.
+            cur.execute("""WITH giving AS (
+                    SELECT company_entity_id, SUM(amount) AS total_giving
+                    FROM activities
+                    WHERE activity_type = 'gift'
+                    GROUP BY company_entity_id ),
+                research AS (
+                    SELECT company_entity_id, COUNT(*) AS active_research
+                    FROM activities
+                    WHERE activity_type = 'award'
+                      AND (ended_on IS NULL OR ended_on >= CURRENT_DATE)
+                    GROUP BY company_entity_id ),
+                recruiting AS (
+                    SELECT company_entity_id, COUNT(*) AS recruiting_volume
+                    FROM activities
+                    WHERE activity_type = 'recruiting'
+                    GROUP BY company_entity_id ),
+                last_activity AS (
+                    SELECT company_entity_id, MAX(occurred_on) AS last_activity_date
+                    FROM activities
+                    GROUP BY company_entity_id ),
+                latest_owner AS (
+                    SELECT DISTINCT ON (company_entity_id)
+                        company_entity_id, owner_entity_id
+                    FROM activities
+                    WHERE owner_entity_id IS NOT NULL
+                    ORDER BY company_entity_id, occurred_on DESC)
+                SELECT e.id, e.display_name AS name, e.attributes->>'industry' AS sector,
+                    owner.display_name AS owner, la.last_activity_date,
+                    COALESCE(g.total_giving, 0) AS total_giving,
+                    COALESCE(r.active_research, 0) AS active_research,
+                    COALESCE(rec.recruiting_volume, 0) AS recruiting_volume
+                FROM entities e
+                LEFT JOIN giving g ON g.company_entity_id = e.id
+                LEFT JOIN research r ON r.company_entity_id = e.id
+                LEFT JOIN recruiting rec ON rec.company_entity_id = e.id
+                LEFT JOIN last_activity la ON la.company_entity_id = e.id
+                LEFT JOIN latest_owner lo ON lo.company_entity_id = e.id
+                LEFT JOIN entities owner ON owner.id = lo.owner_entity_id
+                WHERE e.entity_type = 'organization'
+                  AND e.merged_into_id IS NULL
+                ORDER BY la.last_activity_date DESC NULLS LAST
+            """)
+            rows = cur.fetchall()
+    return jsonify(rows)
 
 
 @app.route("/api/days_passed/start_date")
