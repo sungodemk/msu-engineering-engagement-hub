@@ -153,6 +153,11 @@ def load_accounts(cur, rows):
     )
     latest_contact_dates = get_latest_contact_dates(contact_reports)
 
+    opportunity = read_csv(
+        ROOT / "db" / "seeds" / "07_Opportunity.csv"
+    )
+    total_giving_amount = get_giving_amount(opportunity)
+
 
     for account in rows:
         record_type = account[ACCOUNT_COLUMNS["record_type"]]
@@ -173,7 +178,8 @@ def load_accounts(cur, rows):
         attributes = remove_nulls({
             "record_type": record_type,
             "industry": account[ACCOUNT_COLUMNS["industry"]],
-            "latest_contact_date": latest_contact_dates.get(account[ACCOUNT_COLUMNS["id"]]),
+            "latest_contact_date": latest_contact_dates.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) Added contact date attributes for the company. 
+            "total_giving_amount": total_giving_amount.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) Added giving amount attributes for the company. 
             "city": account[ACCOUNT_COLUMNS["city"]],
             "state": account[ACCOUNT_COLUMNS["state"]],
             "unit_code": account[ACCOUNT_COLUMNS["unit_code"]],

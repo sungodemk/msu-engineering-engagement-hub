@@ -119,18 +119,18 @@
     text-align: center;
     font-weight: bold;
     color: black;
-    position: relative;
-    top: 3.5vh;
-    left: -5.5vw;
+    position: absolute;
+    top: 1.9em;
+    left: 1em;
 }
 
 .giving_message {
     font-size: 0.8em;
     color: #18453B;
     text-align: center;
-    position: relative;
-    top: 4.5vh;
-    left: -2.5vw;
+    position: absolute;
+    top: 6.5em;
+    left: 2em;
 }
 
 .award_box {

@@ -64,7 +64,9 @@ function CompanyPage() {
             
             <div className='total_giving_box'>
                 <div className="total_giving_title">TOTAL GIVING</div>
-                <div className="total_giving_amount">$0</div>
+                <div className="total_giving_amount">
+                    {company?.total_giving_amount ? `$${company.total_giving_amount}` : '$0'}
+                </div>
                 <div className='giving_message'>No giving recorded yet</div>
             </div>
             <div className='award_box'>

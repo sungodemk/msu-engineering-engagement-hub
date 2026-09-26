@@ -25,7 +25,8 @@ def list_companies():
                 attributes ->> 'city' AS city,
                 attributes ->> 'state' AS state,
                 attributes ->> 'parent_external_id' AS parent,
-                attributes ->> 'latest_contact_date' AS latest_contact_date
+                attributes ->> 'latest_contact_date' AS latest_contact_date,
+                attributes ->> 'total_giving_amount' AS total_giving_amount
                 FROM entities WHERE entity_type = 'organization'
                 ORDER BY display_name
             """)

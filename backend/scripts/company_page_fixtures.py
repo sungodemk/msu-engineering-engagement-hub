@@ -22,7 +22,7 @@ OPPORTUNITY_COLUMNS = {
     "opp_id": "External_ID__c",
     "name": "Name",
     "record_type": "RecordType.Name",
-    "org_id": "Account__r.External_ID__c",
+    "org_id": "Account.External_ID__c",
     "npsp_primary_contact_id": "npsp_Primary_Contact__r.External_ID__c",
     "stage": "StageName",
     "amount": "Amount",
@@ -53,7 +53,8 @@ def get_giving_amount(rows):
     giving_amount_each_company = {}
     for opp in rows:
         org_id = opp[OPPORTUNITY_COLUMNS["org_id"]]
-        amount = opp[OPPORTUNITY_COLUMNS["amount"]]
+        temp = opp[OPPORTUNITY_COLUMNS["amount"]]
+        amount = float(temp) if temp else 0
         if org_id not in giving_amount_each_company:
             giving_amount_each_company[org_id] = 0
         giving_amount_each_company[org_id] += amount
