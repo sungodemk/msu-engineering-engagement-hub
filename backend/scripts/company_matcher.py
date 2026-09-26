@@ -1,7 +1,10 @@
 import os
 import re
+from itertools import combinations
 
 import psycopg
+from rapidfuzz import fuzz
+from rapidfuzz.distance import JaroWinkler
 
 
 DATABASE_URL = os.environ["DATABASE_URL"]
@@ -32,6 +35,31 @@ def normalize_name(name):
     return " ".join(words)
 
 
+def acronym_score(name1, name2):
+    words1 = name1.split()
+    words2 = name2.split()
+
+    if len(words1) == 1 and len(words2) > 1:
+        acronym = "".join(word[0] for word in words2)
+        return 1.0 if words1[0] == acronym else 0.0
+
+    if len(words2) == 1 and len(words1) > 1:
+        acronym = "".join(word[0] for word in words1)
+        return 1.0 if words2[0] == acronym else 0.0
+
+    return 0.0
+
+
+def is_parent_child(company1, company2):
+    parent1 = company1[3]
+    parent2 = company2[3]
+
+    source_pk1 = company1[4]
+    source_pk2 = company2[4]
+
+    return parent1 == source_pk2 or parent2 == source_pk1
+
+
 def main():
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
@@ -56,21 +84,54 @@ def main():
 
             companies = cur.fetchall()
 
-            for (
-                entity_id,
-                display_name,
-                source_record_id,
-                parent_external_id,
-                source_pk,
-            ) in companies:
-                normalized = normalize_name(display_name)
+    results = []
 
-                print(
-                    f"{source_pk}: "
-                    f"{display_name} -> {normalized}"
-                )
+    for company1, company2 in combinations(companies, 2):
+        if is_parent_child(company1, company2):
+            continue
 
-            print(f"\nCompanies loaded: {len(companies)}")
+        name1 = normalize_name(company1[1])
+        name2 = normalize_name(company2[1])
+
+        # catches minor spelling difference
+        jaro = JaroWinkler.similarity(name1, name2)
+        # catches partial names
+        token = fuzz.token_set_ratio(name1, name2) / 100
+        # catches when a single word name equals the initials of the other name
+        acronym = acronym_score(name1, name2)
+
+        highest = max(jaro, token, acronym)
+
+        results.append(
+            (
+                highest,
+                company1[1],
+                company2[1],
+                jaro,
+                token,
+                acronym,
+            )
+        )
+
+    results.sort(key=lambda result: result[0], reverse=True)
+
+    for (
+        highest,
+        name1,
+        name2,
+        jaro,
+        token,
+        acronym,
+    ) in results[:15]:
+        print(
+            f"{name1} <-> {name2}\n"
+            f"  Jaro-Winkler: {jaro:.3f} | "
+            f"Token-set: {token:.3f} | "
+            f"Acronym: {acronym:.1f}\n"
+        )
+
+    print(f"Companies: {len(companies)}")
+    print(f"Pairs scored: {len(results)}")
 
 
 if __name__ == "__main__":
