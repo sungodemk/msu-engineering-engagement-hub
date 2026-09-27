@@ -52,12 +52,8 @@ ACCOUNT_TYPES = {
 }
 
 #(Alvin)
-# Opportunity.StageName -> our activities.activity_type / status
-GIFT_STAGES = {"Closed Won", "Funded"}
+GIFT_RECORD_TYPES = {"Donation", "In-Kind Gift", "Pledge"}
 CLOSED_ASK_STAGES = {"Declined", "Closed - No Action"}
-# everything else (Cultivation, Identified, Proposal Submitted,
-# Proposal in Development, Company Review, On Hold, Pledged)
-# is treated as an open ask.
 
 
 def read_csv(path):
@@ -285,12 +281,14 @@ def load_affiliations(cur, rows, account_entities, contact_entities):
         )
 
 # Decides status of opportunity (Alvin)
-def opportunity_activity_type_and_status(stage):
-    if stage in GIFT_STAGES:
+def opportunity_activity_type_and_status(record_type, stage):
+    if record_type in GIFT_RECORD_TYPES:
         return "gift", None
-    if stage in CLOSED_ASK_STAGES:
-        return "ask", "closed"
-    return "ask", "open"
+    if record_type == "Proposal":
+        if stage in CLOSED_ASK_STAGES:
+            return "ask", "closed"
+        return "ask", "open"
+    raise ValueError(f"Unsupported Opportunity record type: {record_type}")
 
 # Loads opportunities into portfolio and temporal page (Alvin)
 def load_opportunities(cur, rows, account_entities, contact_entities,
@@ -310,7 +308,7 @@ def load_opportunities(cur, rows, account_entities, contact_entities,
             cur, "Opportunity", opp["External_ID__c"], opp,
         )
         activity_type, status = opportunity_activity_type_and_status(
-            opp["StageName"]
+            opp["RecordType.Name"], opp["StageName"]
         )
         person_entity_id = contact_entities.get(
             opp["npsp__Primary_Contact__r.External_ID__c"]
