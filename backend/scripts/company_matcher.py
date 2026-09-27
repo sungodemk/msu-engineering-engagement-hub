@@ -52,6 +52,7 @@ def acronym_score(name1, name2):
 
     return 0.0
 
+
 # skips parent or subsidiary company pairs since even though they are related they aren't duplicates
 def is_parent_child(company1, company2):
     return (
@@ -151,64 +152,158 @@ def band_result(result, score):
 
     return None, reasons
 
+# order-independent key so (A,B) and (B,A) are treated the same
+def pair_key(left_id, right_id):
+    # this ignores order and can be stored inside another set
+    return frozenset((left_id, right_id))
+
+def write_matches(cur, results):
+    cur.execute(
+        """
+        DELETE FROM entity_matches
+        WHERE status IN ('pending_review', 'auto_accepted')
+        """
+    )
+
+    cur.execute(
+        """
+        SELECT
+            left_source_record_id,
+            right_source_record_id
+        FROM entity_matches
+        WHERE status IN ('confirmed', 'rejected')
+        """
+    )
+
+    reviewed_pairs = {
+        pair_key(left_id, right_id)
+        for left_id, right_id in cur.fetchall()
+    }
+
+    for result in results:
+        score = combined_score(result, "lower")
+        status, reasons = band_result(result, score)
+
+        if status is None:
+            continue
+
+        left = result["left"]
+        right = result["right"]
+
+        current_pair = pair_key(
+            left["source_record_id"],
+            right["source_record_id"],
+        )
+
+        if current_pair in reviewed_pairs:
+            continue
+
+        entity_id = None
+
+        if status == "auto_accepted":
+            # keeps the account with lower Salesforce ID since the original account is usually older
+            survivor = min(
+                (left, right),
+                key=lambda company: company["source_pk"],
+            )
+            entity_id = survivor["entity_id"]
+
+        cur.execute(
+            """
+            INSERT INTO entity_matches (
+                left_source_record_id,
+                right_source_record_id,
+                score,
+                match_reasons,
+                status,
+                entity_id
+            )
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """,
+            (
+                left["source_record_id"],
+                right["source_record_id"],
+                round(score, 3),
+                reasons,
+                status,
+                entity_id,
+            ),
+        )
+
+    cur.execute(
+        """
+        SELECT status, count(*)
+        FROM entity_matches
+        GROUP BY status
+        ORDER BY status
+        """
+    )
+
+    print("\nStored matches:")
+
+    for status, count in cur.fetchall():
+        print(f"{status}: {count}")
+
 
 def main():
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
             companies = load_companies(cur)
 
-    results = score_pairs(companies)
+            results = score_pairs(companies)
 
-    for rule in ["highest", "average", "lower"]:
-        ranked = [
-            (combined_score(result, rule), result)
-            for result in results
-        ]
+            for rule in ["highest", "average", "lower"]:
+                ranked = [
+                    (combined_score(result, rule), result)
+                    for result in results
+                ]
 
-        ranked.sort(
-            key=lambda item: item[0],
-            reverse=True,
-        )
+                ranked.sort(
+                    key=lambda item: item[0],
+                    reverse=True,
+                )
 
-        auto_count = sum(
-            score >= AUTO_ACCEPT_THRESHOLD
-            for score, _ in ranked
-        )
+                auto_count = sum(
+                    score >= AUTO_ACCEPT_THRESHOLD
+                    for score, _ in ranked
+                )
 
-        review_count = sum(
-            REVIEW_THRESHOLD <= score < AUTO_ACCEPT_THRESHOLD
-            for score, _ in ranked
-        )
+                review_count = sum(
+                    REVIEW_THRESHOLD <= score < AUTO_ACCEPT_THRESHOLD
+                    for score, _ in ranked
+                )
 
-        print(
-            f"\n{rule}: "
-            f"auto={auto_count}, review={review_count}"
-        )
+                print(
+                    f"\n{rule}: "
+                    f"auto={auto_count}, review={review_count}"
+                )
 
-        for score, result in ranked[:5]:
-            print(
-                f"{result['left']['name']} <-> "
-                f"{result['right']['name']} | "
-                f"{score:.3f}"
-            )
+                for score, result in ranked[:5]:
+                    print(
+                        f"{result['left']['name']} <-> "
+                        f"{result['right']['name']} | "
+                        f"{score:.3f}"
+                    )
 
-    print("\nChosen rule: lower")
+            print("\nChosen rule: lower")
 
-    for result in results:
-        score = combined_score(result, "lower")
-        status, reasons = band_result(result, score)
+            for result in results:
+                score = combined_score(result, "lower")
+                status, reasons = band_result(result, score)
 
-        if status:
-            print(
-                f"{result['left']['name']} <-> "
-                f"{result['right']['name']} | "
-                f"{status} | "
-                f"score={score:.3f} | "
-                f"jaro={result['jaro']:.3f} | "
-                f"token={result['token']:.3f} | "
-                f"acronym={result['acronym']:.1f} | "
-                f"reasons={reasons}"
-            )
+                if status:
+                    print(
+                        f"{result['left']['name']} <-> "
+                        f"{result['right']['name']} | "
+                        f"{status} | "
+                        f"score={score:.3f} | "
+                        f"jaro={result['jaro']:.3f} | "
+                        f"token={result['token']:.3f} | "
+                        f"acronym={result['acronym']:.1f} | "
+                        f"reasons={reasons}"
+                    )
+
+            write_matches(cur, results)
 
 
 if __name__ == "__main__":
