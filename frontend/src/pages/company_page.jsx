@@ -15,6 +15,8 @@ function CompanyPage() {
 
     const [companies, setCompanies] = useState([]);
     const [selectedId, setSelectedId] = useState('');
+    const [portfolios, setPortfolios] = useState([]);
+    const [activities, setActivities] = useState([]);
 
     // Found the .find() method to get the corresponding company from the companies array based on its id
     // from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
@@ -28,6 +30,24 @@ function CompanyPage() {
             setSelectedId(data.length > 0 ? data[0].id : '');
         });
     }, []);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/portfolio")
+        .then(result => result.json())
+        .then(data => {
+            setPortfolios(data);
+        });
+    }, []);
+
+    const portfolio = portfolios.find((p) => p.id === selectedId);
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/companies/${selectedId}/temporal`)
+        .then(result => result.json())
+        .then(data => {
+            setActivities(data);
+        });
+    }, [selectedId]);
 
     function handleChange(e) {
         setSelectedId(e.target.value);
@@ -48,14 +68,21 @@ function CompanyPage() {
                     {company ? company.display_name : 'Company Name'}
                 </div>
                 <div className='location'>
-                    📍{company?.city && company?.state ? `${company.city}, ${company.state}` : 'Location'}
+                    📍{company?.city && company?.state ? `${company.city}, ${company.state}` : 'Not Available'}
                 </div>
-                <div className='tier_box'>
-                    <div className='tier_text'>
-                        Tier #
+                <div className='industry_box'>
+                    <div className='industry_text'>
+                        {company?.industry ? company.industry : 'Industry Not Available'}
                     </div>
                 </div>
-                <div className='owner'>Owner: </div>
+                <div className='industry_detail_box'>
+                    <div className='industry_detail_text'>
+                        {company?.industry_detail ? company.industry_detail : 'Detail Not Available'}
+                    </div>
+                </div>
+                <div className='owner'>
+                    Owner: {portfolio?.owner ? portfolio.owner : 'Not Available'}
+                </div>
                 <button className='log_ac_box' type='button' onClick={() => setIsDialogOpen(true)}>
                     <span>+ Log Activity</span>
                 </button>
@@ -67,7 +94,13 @@ function CompanyPage() {
                 <div className="total_giving_amount">
                     {company?.total_giving_amount ? `$${company.total_giving_amount}` : '$0'}
                 </div>
-                <div className='giving_message'>No giving recorded yet</div>
+                <div className='giving_message'>
+                    {/* Learned how to iterate key value pairs using Object.entries() 
+                    from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object*/}
+                    {company?.giving_counts ? Object.entries(company.giving_counts).map(([type, count]) => (
+                    `${type}: ${count}`)
+                    ).join(' & ') : 'No giving recorded yet'}
+                </div>
             </div>
             <div className='award_box'>
                 <div className='award_title'>ACTIVE RESEARCH AWARDS</div>
@@ -89,21 +122,52 @@ function CompanyPage() {
                     {company?.days_passed ? `${company.days_passed} days ago` : 'Not Available'}
                 </div>
             </div>
-            <div className='inbound_box'>
-                <div className='inbound_title_box'>
-                    <div className='inbound_title'>⬇ Inbound to MSU</div>
+            <div className='inbound_outbound_section'>
+                
+                <table className='inbound_box'>
+                    <div className='inbound_title_box'>
+                        <div className='inbound_title'>⬇ Inbound to MSU</div>
+                    </div>
+                    {activities.some(activity => activity.activity_type === 'gift') ? (
+                    <tbody>
+                        {activities.filter(activity => activity.activity_type === 'gift').map(activity => (
+                            <tr key={activity.id}>
+                                <td className='inbound_occurred_on'>{activity.occurred_on}</td>
+                                {/* Learned how to extract the element inside a parentheses using .match()
+                                from this link: https://blog.devgenius.io/regex-parentheses-examples-of-every-type-aba8441be761*/}
+                                <td className='inbound_notes'>{activity.notes?.match(/\(([^)]+)\)/g)}</td>
+                                <td className='inbound_amount'>{`$${activity.amount}`}</td>
+                            </tr>
+                        ))}
+                    </tbody>) : (<p>No inbound available</p>)}
+                </table>
+                <div className='outbound_box'>
+                    <div className='outbound_title_box'>
+                        <div className='outbound_title'>⬆ Outbound from MSU</div>
+                    </div>
+                    <p>No outbound available</p>
                 </div>
             </div>
-            <div className='outbound_box'>
-                <div className='outbound_title_box'>
-                    <div className='outbound_title'>⬆ Outbound from MSU</div>
-                </div>
-            </div>
-            <div className='activity_box'>
-                <div className='activity_title_box'>
-                    <div className='activity_title'>Activity Timeline</div>
-                </div>
-            </div>
+            <table className='activity_box'>
+                <thead>
+                    <tr>
+                        <th colSpan="5" className='activity_title_box'>
+                            <div className='activity_title'>Activity Timeline</div>
+                        </th>
+                    </tr>
+                </thead>
+                {company?.activity_timeline?.length > 0 ? (
+                    <tbody>
+                        {company.activity_timeline.map(activity => (
+                            <tr key={activity.opp_id}>
+                                <td className='activity_record_type'>{activity.record_type}</td>
+                                <td className='activity_stage'>{activity.stage}</td>
+                                <td className='activity_amount'>{`$${activity.amount}`}</td>
+                                <td className='activity_close_date'>{activity.close_date}</td>
+                            </tr>
+                        ))}
+                    </tbody>) : (<p>No activities available</p>)}
+            </table>
             <div className="msu_task_box">
                 <div className="msu_task_title_box">
                     <div className="msu_task_title">
@@ -137,10 +201,12 @@ function CompanyPage() {
                 </div>
             </div>
             <Dialog className='log_activity_dialog' open_dialog={isDialogOpen}>
-                <form className='log_form'> 
+                <form className='log_form'>
                     <div className='lg_act_dia_title_box'>
                         <div className='lg_act_dia_title'>Log Activity</div>
-                        <div className='lg_act_dia_company'>Company Name</div>
+                        <div className='lg_act_dia_company'>
+                            {company ? company.display_name : 'Company Name'}
+                        </div>
                     </div>
                     <div className='activity_type_title'>
                         <label htmlFor="activity_type">Activity Type</label>

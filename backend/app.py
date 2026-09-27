@@ -18,6 +18,7 @@ def get_db_connection():
 @app.route('/api/companies')
 def list_companies():
     with get_db_connection() as conn:
+        # Company attributes added by Zhixiang Miao
         with conn.cursor() as cur:
             cur.execute("""
                 SELECT id, display_name,
@@ -26,7 +27,10 @@ def list_companies():
                 attributes ->> 'state' AS state,
                 attributes ->> 'parent_external_id' AS parent,
                 attributes ->> 'latest_contact_date' AS latest_contact_date,
-                attributes ->> 'total_giving_amount' AS total_giving_amount
+                attributes ->> 'total_giving_amount' AS total_giving_amount,
+                attributes -> 'giving_counts' AS giving_counts,
+                attributes ->> 'industry_detail' AS industry_detail,
+                attributes -> 'activity_timeline' AS activity_timeline
                 FROM entities WHERE entity_type = 'organization'
                 ORDER BY display_name
             """)

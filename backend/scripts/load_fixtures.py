@@ -4,7 +4,7 @@ from pathlib import Path
 
 import psycopg
 from psycopg.types.json import Jsonb
-from company_page_fixtures import get_contact_dates, get_latest_contact_dates, get_giving_amount
+from company_page_fixtures import get_contact_dates, get_latest_contact_dates, get_giving_amount, count_givings, get_activity_timeline
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,6 +15,7 @@ ACCOUNT_COLUMNS = {
     "name": "Name",
     "record_type": "RecordType.Name",
     "industry": "Industry",
+    "industry_detail": "Industry_Detail__c", # Get the tier of the industry (Zhixiang Miao)
     "city": "BillingCity",
     "state": "BillingState",
     "unit_code": "Unit_Code__c",
@@ -153,7 +154,8 @@ def load_accounts(cur, rows):
         ROOT / "db" / "seeds" / "07_Opportunity.csv"
     )
     total_giving_amount = get_giving_amount(opportunity)
-
+    giving_counts = count_givings(opportunity)
+    activity_timeline = get_activity_timeline(opportunity)
 
     for account in rows:
         record_type = account[ACCOUNT_COLUMNS["record_type"]]
@@ -176,6 +178,9 @@ def load_accounts(cur, rows):
             "industry": account[ACCOUNT_COLUMNS["industry"]],
             "latest_contact_date": latest_contact_dates.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) Added contact date attributes for the company. 
             "total_giving_amount": total_giving_amount.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) Added giving amount attributes for the company. 
+            "giving_counts": giving_counts.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) List what type of givings from the company and how many times they gave from this type of giving. 
+            "industry_detail": account[ACCOUNT_COLUMNS["industry_detail"]], # (Zhixiang Miao) Get the detail, tier (if available) of the industry. 
+            "activity_timeline": activity_timeline.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) Get the activities for the company, (need the format that show in the company page). 
             "city": account[ACCOUNT_COLUMNS["city"]],
             "state": account[ACCOUNT_COLUMNS["state"]],
             "unit_code": account[ACCOUNT_COLUMNS["unit_code"]],

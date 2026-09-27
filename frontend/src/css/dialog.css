@@ -96,9 +96,9 @@
     font-weight: bold;
     color: rgba(34, 33, 33, 0.547);
     margin-bottom: 2vw;
-    position: relative;
-    left: -10.5vw;
-    top: -1vh;
+    position: absolute;
+    left: 1.5em;
+    top: 4em;
 }
 
 .category_title {

@@ -41,9 +41,28 @@
     left: 2.5em;
 }
 
-.tier_box {
-    width: 2.5vw;
-    height: 2.5vh;
+.industry_box {
+    width: auto;
+    height: auto;
+    padding: 2px 4px;
+    background-color: #f8fbfa;
+    position: relative;
+    top: -1vh;
+    border-radius: 0.2vw;
+    border: 0.01vw solid #18453B;
+}
+
+.industry_text {
+    font-size: 0.8em;
+    color: #474848;
+    position: relative;
+    text-align: center;
+}
+
+.industry_detail_box {
+    width: auto;
+    height: auto;
+    padding: 2px 4px;
     background-color: rgb(209, 247, 209);
     position: relative;
     top: -1vh;
@@ -51,11 +70,10 @@
     border: 0.01vw solid #18453B;
 }
 
-.tier_text {
+.industry_detail_text {
     font-size: 0.8em;
     color: #18453B;
     position: relative;
-    top: 0.5vh;
     text-align: center;
 }
 
@@ -64,7 +82,7 @@
     color: rgb(109, 108, 108);
     position: absolute;
     top: 5em;
-    left: 20em;
+    left: 15em;
 
 }
 
@@ -128,9 +146,10 @@
     font-size: 0.8em;
     color: #18453B;
     text-align: center;
+    display: flex;
     position: absolute;
     top: 6.5em;
-    left: 2em;
+    left: 1.7em;
 }
 
 .award_box {
@@ -253,13 +272,19 @@
     left: 2em;
 }
 
-.inbound_box {
-   background-color: white;
-    width: 34.2vw;
-    height: 50vh;
+.inbound_outbound_section {
+    display: flex;
+    align-items: stretch;
     position: relative;
     top: -30vh;
     left: 1vw;
+}
+
+.inbound_box {
+   background-color: white;
+    width: 34.2vw;
+    height: auto;
+    position: relative;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
 }
@@ -285,13 +310,39 @@
     left: -12.5vw;
 }
 
+.inbound_occurred_on {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: center;
+    position: absolute;
+    left: 1em;
+}
+
+.inbound_notes {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: center;
+    display: flex;
+    position: absolute;
+    left: 25em;
+}
+
+.inbound_amount {
+    font-size: 0.8em;
+    color: #18453B;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    position: relative;
+    left: 40em;
+}
+
 .outbound_box {
     background-color: white;
     width: 34.2vw;
-    height: 50vh;
+    height: auto;
     position: relative;
-    top: -80vh;
-    left: 39.6vw;
+    left: 4vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
 }
@@ -319,10 +370,10 @@
 
 .activity_box {
     width: 72.8vw;
-    height: 100vh;
+    height: auto + 10vh;
     background-color: white;
     position: relative;
-    top: -70vh;
+    top: -25vh;
     left: 1vw;
     border-radius: 0.5vw;
     border-bottom: 1px solid #e3e6e8;
@@ -344,8 +395,44 @@
     text-align: center;
     font-weight: bold;
     position: relative;
-    top: 2.5vh;
+    top: 0.5vh;
     left: -32vw;
+}
+
+.activity_record_type {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    display: flex;
+    text-align: center;
+    position: relative;
+    /* top: 1.5vh;
+    left: 1vw; */
+}
+
+.activity_stage {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    display: flex;
+    text-align: center;
+    position: relative;
+    /* top: 1vh;
+    left: 1vw; */
+}
+
+.activity_amount {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: center;
+}
+
+.activity_close_date {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    display: flex;
+    text-align: center;
+    position: relative;
+    top: 1vh;
+    left: -30vw;
 }
 
 .msu_task_box {
@@ -353,7 +440,7 @@
     height: 25vh;
     background-color: white;
     position: relative;
-    top: -60vh;
+    top: -20vh;
     left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
@@ -414,7 +501,7 @@
     height: 40vh;
     background-color: white;
     position: relative;
-    top: -50vh;
+    top: -15vh;
     left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
@@ -516,7 +603,7 @@
     height: 30vh;
     background-color: white;
     position: relative;
-    top: -40vh;
+    top: -10vh;
     left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
@@ -550,7 +637,7 @@
     height: 80vh;
     background-color: white;
     position: relative;
-    top: -30vh;
+    top: -5vh;
     left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
