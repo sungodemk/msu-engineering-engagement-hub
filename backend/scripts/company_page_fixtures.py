@@ -54,9 +54,46 @@ def get_giving_amount(rows):
     for opp in rows:
         org_id = opp[OPPORTUNITY_COLUMNS["org_id"]]
         temp = opp[OPPORTUNITY_COLUMNS["amount"]]
+        rec_type = opp[OPPORTUNITY_COLUMNS["record_type"]]
         amount = float(temp) if temp else 0
+        if rec_type == "Proposal":
+            continue
         if org_id not in giving_amount_each_company:
             giving_amount_each_company[org_id] = 0
         giving_amount_each_company[org_id] += amount
 
     return giving_amount_each_company
+
+def count_givings(rows):
+    count_givings_from_company = {}
+    for opp in rows:
+        rec_type = opp[OPPORTUNITY_COLUMNS["record_type"]]
+        comp_id = opp[OPPORTUNITY_COLUMNS["org_id"]]
+        if comp_id not in count_givings_from_company:
+            count_givings_from_company[comp_id] = {"Donation": 0, "In-Kind Gift": 0, "Pledge": 0}
+        if rec_type == "Donation":
+            count_givings_from_company[comp_id]["Donation"] += 1
+        elif rec_type == "In-Kind Gift":
+            count_givings_from_company[comp_id]["In-Kind Gift"] += 1
+        elif rec_type == "Pledge":
+            count_givings_from_company[comp_id]["Pledge"] += 1
+
+    return count_givings_from_company
+
+def get_activity_timeline(rows):
+    activity_timeline_each_company = {}
+    for activity in rows:
+        comp_id = activity[OPPORTUNITY_COLUMNS["org_id"]]
+
+        activity_timeline = {
+            "opp_id": activity[OPPORTUNITY_COLUMNS["opp_id"]],
+            "record_type": activity[OPPORTUNITY_COLUMNS["record_type"]],
+            "stage": activity[OPPORTUNITY_COLUMNS["stage"]],
+            "amount": activity[OPPORTUNITY_COLUMNS["amount"]] if activity[OPPORTUNITY_COLUMNS["amount"]] else 0,
+            "close_date": activity[OPPORTUNITY_COLUMNS["close_date"]],
+        }
+        if comp_id not in activity_timeline_each_company:
+            activity_timeline_each_company[comp_id] = []
+        activity_timeline_each_company[comp_id].append(activity_timeline)
+
+    return activity_timeline_each_company
