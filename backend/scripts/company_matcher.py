@@ -204,6 +204,9 @@ def main():
                 f"{result['right']['name']} | "
                 f"{status} | "
                 f"score={score:.3f} | "
+                f"jaro={result['jaro']:.3f} | "
+                f"token={result['token']:.3f} | "
+                f"acronym={result['acronym']:.1f} | "
                 f"reasons={reasons}"
             )
 
