@@ -207,5 +207,69 @@ def portfolio():
             rows = cur.fetchall()
     return jsonify(rows)
 
+# get pending and recent entity matches for the stewardship queue page (Aayush)
+@app.route('/api/stewardship-queue')
+def stewardship_queue():
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT
+                    m.id AS match_id,
+                    m.score::float AS score,
+                    m.match_reasons,
+
+                    l.source_system AS left_source_system,
+                    l.payload->>'External_ID__c' AS left_external_id,
+                    l.payload->>'Name' AS left_name,
+                    l.payload->>'BillingCity' AS left_city,
+                    l.payload->>'BillingState' AS left_state,
+                    l.payload->>'RecordType.Name' AS left_record_type,
+
+                    r.source_system AS right_source_system,
+                    r.payload->>'External_ID__c' AS right_external_id,
+                    r.payload->>'Name' AS right_name,
+                    r.payload->>'BillingCity' AS right_city,
+                    r.payload->>'BillingState' AS right_state,
+                    r.payload->>'RecordType.Name' AS right_record_type
+                FROM entity_matches m
+                JOIN source_records l
+                    ON l.id = m.left_source_record_id
+                JOIN source_records r
+                    ON r.id = m.right_source_record_id
+                WHERE m.status = 'pending_review'
+                ORDER BY m.score DESC
+            """)
+            pending = cur.fetchall()
+
+            cur.execute("""
+                SELECT
+                    m.id AS match_id,
+                    l.payload->>'Name' AS left_name,
+                    r.payload->>'Name' AS right_name,
+                    m.score::float AS score,
+                    m.status,
+                    COALESCE(reviewer.display_name, 'Auto') AS reviewer,
+                    COALESCE(m.reviewed_at, m.created_at)::date::text AS date
+                FROM entity_matches m
+                JOIN source_records l
+                    ON l.id = m.left_source_record_id
+                JOIN source_records r
+                    ON r.id = m.right_source_record_id
+                LEFT JOIN entities reviewer
+                    ON reviewer.id = m.reviewed_by_entity_id
+                WHERE m.status IN (
+                    'auto_accepted',
+                    'confirmed',
+                    'rejected'
+                )
+                ORDER BY COALESCE(m.reviewed_at, m.created_at) DESC
+            """)
+            recent = cur.fetchall()
+
+    return jsonify({
+        "pending": pending,
+        "recent": recent,
+    })
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), use_reloader=True)
