@@ -136,7 +136,7 @@ function PersonsPage(){
                                     {aff.title && <div className="pp-label">{aff.title}</div>}
                                 </div>
                                 <span className="pp-label">
-                                    {aff.valid_from.slice(0, 4)} to {aff.valid_to ? aff.valid_to.slice(0, 4) : 'present'}
+                                    {aff.valid_from.slice(0, 4)} to {aff.last_day ? aff.last_day.slice(0, 4) : 'present'}
                                 </span>
                             </div>
                         ))

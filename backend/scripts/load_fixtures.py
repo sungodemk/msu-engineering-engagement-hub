@@ -267,7 +267,7 @@ def load_affiliations(cur, rows, account_entities, contact_entities):
                 valid_to,
                 source_record_id
             )
-            VALUES (%s, %s, 'employed_by',%s, %s, %s, %s)
+            VALUES (%s, %s, 'employed_by',%s, %s, %s::date + 1, %s)
             """,
             (
                 contact_entities[affiliation[AFFILIATION_COLUMNS["contact_id"]]],

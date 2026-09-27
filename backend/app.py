@@ -124,7 +124,8 @@ def get_person(person_id):
             # dates as text
             cur.execute("""
                 SELECT c.id, c.display_name AS company, e.edge_role AS title,
-                        e.valid_from::text AS valid_from, e.valid_to::text AS valid_to
+                        e.valid_from::text AS valid_from, e.valid_to::text AS valid_to,
+                        (e.valid_to - 1)::text AS last_day
                 FROM edges e 
                 JOIN entities c ON c.id = e.to_entity_id
                 WHERE e.from_entity_id = %s AND e.edge_type = 'employed_by'
