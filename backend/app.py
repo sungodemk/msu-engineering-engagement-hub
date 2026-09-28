@@ -190,7 +190,7 @@ def portfolio():
                     WHERE owner_entity_id IS NOT NULL
                     ORDER BY company_entity_id, occurred_on DESC)
                 SELECT e.id, e.display_name AS name, e.attributes->>'industry' AS sector,
-                    owner.display_name AS owner, la.last_activity_date,
+                    owner.id AS owner_id, owner.display_name AS owner, la.last_activity_date,
                     COALESCE(g.total_giving, 0) AS total_giving,
                     COALESCE(r.active_research, 0) AS active_research,
                     COALESCE(rec.recruiting_volume, 0) AS recruiting_volume

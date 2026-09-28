@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../css/Portfolio.css';
+
+const NUMERIC_KEYS = ['total_giving', 'active_research', 'recruiting_volume'];
 
 function Portfolio() {
     const [companies, setCompanies] = useState([]);
@@ -26,20 +29,34 @@ function Portfolio() {
         }
     }
 
+    function getSortValue(company, key) {
+    const raw = company[key];
+    if (raw === null || raw === undefined || raw === '') return null;
+    if (NUMERIC_KEYS.includes(key)) return Number(raw);
+    if (key === "last_activity_date") return new Date(raw).getTime();
+    return String(raw).toLowerCase();
+    }
+
     const filtered = companies.filter(c => {
         if (sectorFilter !== 'all' && c.sector !== sectorFilter) return false;
         return !(ownerFilter !== 'all' && c.owner !== ownerFilter);
-
      });
 
     const sorted = [...filtered].sort((a, b) => {
-        const valA = a[sortKey] ?? '';
-        const valB = b[sortKey] ?? '';
+        const valA = getSortValue(a, sortKey);
+        const valB = getSortValue(b, sortKey);
+
+        // nulls always sort last
+        if (valA === null && valB === null) return 0;
+        if (valA === null) return 1;
+        if (valB === null) return -1;
+
         if (valA < valB) return sortDir === 'asc' ? -1 : 1;
         if (valA > valB) return sortDir === 'asc' ? 1 : -1;
         return 0;
     });
 
+    // helper function to display sort arrow in table header
     function arrow(key) {
         if (sortKey !== key) return '';
         return sortDir === 'asc' ? ' ↑' : ' ↓';
@@ -83,9 +100,11 @@ function Portfolio() {
             <tbody>
                 {sorted.map(c => (
                 <tr key={c.id}>
-                <td>{c.name}</td>
+                <td><Link className="portfolio-link" to="/company_page">{c.name}</Link></td>
                 <td>{c.sector || '—'}</td>
-                <td>{c.owner || '—'}</td>
+                <td>{c.owner_id ? (<Link className="portfolio-link" to={`/persons/${c.owner_id}`}>{c.owner}</Link>)
+                    : (c.owner || '—')}
+                </td>
                 <td>{c.last_activity_date ? new Date(c.last_activity_date).toLocaleDateString() : '—'}</td>
                 <td>{c.total_giving ? `$${Number(c.total_giving).toLocaleString()}` : '—'}</td>
                 <td>{c.active_research || '—'}</td>
