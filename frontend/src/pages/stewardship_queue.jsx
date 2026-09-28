@@ -1,5 +1,6 @@
 /* Aayush Jagtap */
 import {useEffect, useState} from 'react';
+import '../css/stewardship_queue.css';
 
 
 function StewardshipQueue() {
