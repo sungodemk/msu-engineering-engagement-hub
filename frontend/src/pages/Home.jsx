@@ -35,6 +35,14 @@ const cards = [
       body: 'Gain insights from your engineering data and performance metrics.',
       to: '/stewardship',
       link: 'View Stewardship'
+    },
+    // Added Temporal Graph card (Alvin)
+    {
+      icon: '📅',
+      title: 'Temporal Graph',
+      body: 'View the timeline of a company.',
+      to: '/temporal',
+      link: 'View Temporal Graph'
     }
   ];
 

@@ -23,10 +23,19 @@ function Temporal({activities}) {
 
     const categories = [...new Set(activities.map(a => a.activity_type))];
 
-    const dates = activities.map(a => new Date(a.occurred_on));
+    const dates = activities.flatMap(a => a.ended_on ? [new Date(a.occurred_on), new Date(a.ended_on)]
+        : [new Date(a.occurred_on)]);
     const rawMinDate = new Date(Math.min(...dates));
-    const minDate = new Date(rawMinDate.getFullYear(), 0, 1);
-    const maxDate = new Date();
+    const rawMaxDate = new Date(Math.max(...dates));
+    const today = new Date();
+
+    // edge case where today is earlier than the earliest activity, e.g. if all activities are in the future
+    const firstYear = Math.min(rawMinDate.getFullYear(), today.getFullYear());
+    const lastYear = Math.max(rawMaxDate.getFullYear(), today.getFullYear());
+
+    const minDate = new Date(firstYear, 0, 1);
+    // if the latest activity is in the future, extend the chart to the end of that year
+    const maxDate = new Date(lastYear, 11, 31);
 
     const chartLeft = 200;   // reserved for category labels
     const chartRight = 900;  // reserved for right margin
@@ -57,8 +66,8 @@ function Temporal({activities}) {
 
                 {/* today marker */}
                 <line
-                    x1={dateToX(maxDate, minDate, maxDate, chartLeft, chartRight)}
-                    x2={dateToX(maxDate, minDate, maxDate, chartLeft, chartRight)}
+                    x1={dateToX(today, minDate, maxDate, chartLeft, chartRight)}
+                    x2={dateToX(today, minDate, maxDate, chartLeft, chartRight)}
                     y1={30}
                     y2={chartHeight}
                     className="temporal-today-line"
