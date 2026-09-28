@@ -405,8 +405,6 @@
     display: flex;
     text-align: center;
     position: relative;
-    /* top: 1.5vh;
-    left: 1vw; */
 }
 
 .activity_stage {
@@ -415,8 +413,6 @@
     display: flex;
     text-align: center;
     position: relative;
-    /* top: 1vh;
-    left: 1vw; */
 }
 
 .activity_amount {
@@ -437,7 +433,7 @@
 
 .msu_task_box {
     width: 72.8vw;
-    height: 25vh;
+    height: auto;
     background-color: white;
     position: relative;
     top: -20vh;
@@ -494,6 +490,43 @@
     position: relative;
     top: -3.5vh;
     left: 30vw;
+}
+
+.msu_unit {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    display: flex;
+    text-align: center;
+    position: relative;
+    top: 1vh;
+    left: 1.5vw;
+}
+.comp_owner {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    display: flex;
+    text-align: center;
+    position: relative;
+    top: -1vh;
+    left: 16vw;
+}
+.subject {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    display: flex;
+    text-align: center;
+    position: relative;
+    left: 32.5vw;
+    top: -3vh;
+}
+.status {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    display: flex;
+    text-align: center;
+    position: relative;
+    top: -4.5vh;
+    left: 65vw;
 }
 
 .research_award_box {

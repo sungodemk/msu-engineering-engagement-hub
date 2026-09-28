@@ -30,7 +30,8 @@ def list_companies():
                 attributes ->> 'total_giving_amount' AS total_giving_amount,
                 attributes -> 'giving_counts' AS giving_counts,
                 attributes ->> 'industry_detail' AS industry_detail,
-                attributes -> 'activity_timeline' AS activity_timeline
+                attributes -> 'activity_timeline' AS activity_timeline,
+                attributes -> 'msu_tasks' AS msu_tasks
                 FROM entities WHERE entity_type = 'organization'
                 ORDER BY display_name
             """)

@@ -30,6 +30,17 @@ OPPORTUNITY_COLUMNS = {
     "type" : "Type",
 }
 
+ACTION_ITEM_COLUMNS = {
+    "act_id": "External_ID__c",
+    "subject": "Subject__c",
+    "act_type": "Type__c",
+    "due_date": "Due_Date__c",
+    "status": "Status__c",
+    "completed": "Completed_Date__c",
+    "org_id": "Account__r.External_ID__c",
+    "owner_id": "Assigned_To__r.External_ID__c",
+}
+
 def get_contact_dates(rows):
     contact_dates_each_company = {}
     for report in rows:
@@ -97,3 +108,53 @@ def get_activity_timeline(rows):
         activity_timeline_each_company[comp_id].append(activity_timeline)
 
     return activity_timeline_each_company
+
+def get_msu_tasks_info(rows, contact, account, affiliation):
+    contact_ids = {c["External_ID__c"]: c for c in contact}
+    account_ids = {a["External_ID__c"]: a for a in account}
+
+    units_per_contact = {}
+
+    msu_units = ("University Department", "Educational Institution", "Academic Program")
+
+    for aff in affiliation:
+        msu_unit_id = aff["npe5__Organization__r.External_ID__c"]
+        contact_id = aff["npe5__Contact__r.External_ID__c"]
+        msu_unit = account_ids[msu_unit_id]
+
+        if not msu_unit or msu_unit["RecordType.Name"] not in msu_units:
+            continue
+
+        if contact_id not in units_per_contact:
+            units_per_contact[contact_id] = []
+        units_per_contact[contact_id].append(msu_unit)
+        
+
+
+    msu_tasks_each_company = {}
+    for task in rows:
+        unit_id = task[ACTION_ITEM_COLUMNS["org_id"]]
+        owner_id = task[ACTION_ITEM_COLUMNS["owner_id"]]
+        task_owner = contact_ids[owner_id]
+        owner_name = ""
+        if task_owner:
+            for name in (task_owner["FirstName"], task_owner["LastName"]):
+                owner_name += name + " "
+        msu_unit = units_per_contact[owner_id]
+        if msu_unit:
+            msu_unit = msu_unit[0]
+        msu_task = {
+            "msu_unit": msu_unit["Name"],
+            "owner_name": owner_name,
+            "act_id": task[ACTION_ITEM_COLUMNS["act_id"]],
+            "subject": task[ACTION_ITEM_COLUMNS["subject"]],
+            "act_type": task[ACTION_ITEM_COLUMNS["act_type"]],
+            "due_date": task[ACTION_ITEM_COLUMNS["due_date"]],
+            "status": task[ACTION_ITEM_COLUMNS["status"]],
+            "completed": task[ACTION_ITEM_COLUMNS["completed"]],
+        }
+        if unit_id not in msu_tasks_each_company:
+            msu_tasks_each_company[unit_id] = []
+        msu_tasks_each_company[unit_id].append(msu_task)
+
+    return msu_tasks_each_company

@@ -177,6 +177,20 @@ function CompanyPage() {
                         <div className="status_title">STATUS</div>
                     </div>
                 </div>
+                <tbody>
+                        {company?.msu_tasks?.length > 0 ? (
+                            company.msu_tasks.map(task => (
+                                <tr key={task.task_id}>
+                                    <td className='msu_unit'>{task.msu_unit}</td>
+                                    <td className='comp_owner'>{task.owner_name}</td>
+                                    <td className='subject'>{task.subject}</td>
+                                    <td className='status'>{task.status}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <p>No tasks available</p>
+                        )}
+                    </tbody>
             </div>
             <div className="research_award_box">
                 <div className="research_award_title">🔬Research Awards</div>
