@@ -1,7 +1,7 @@
 # Zhixiang Miao
 """
 The file contains company page fixtures, 
-it's mainly the helper function for load_fixtures.py file to load company fixtures. 
+it's mainly helper functions for load_fixtures.py file to load company fixtures. 
 """
 
 CONTACT_REPORT_COLUMNS = {

@@ -48,15 +48,30 @@ def list_companies():
 @app.route('/api/companies/<company_id>')
 def get_company(company_id):
     with get_db_connection() as conn:
+        # Company attributes added by Zhixiang Miao
         with conn.cursor() as cur:
             cur.execute("""
-                SELECT id, display_name
+                SELECT id, display_name,
+                attributes ->> 'industry' AS industry,
+                attributes ->> 'city' AS city,
+                attributes ->> 'state' AS state,
+                attributes ->> 'parent_external_id' AS parent,
+                attributes ->> 'latest_contact_date' AS latest_contact_date,
+                attributes ->> 'total_giving_amount' AS total_giving_amount,
+                attributes -> 'giving_counts' AS giving_counts,
+                attributes ->> 'industry_detail' AS industry_detail,
+                attributes -> 'activity_timeline' AS activity_timeline,
+                attributes -> 'msu_tasks' AS msu_tasks
                 FROM entities
                 WHERE id = %s AND entity_type = 'organization'
             """, (company_id,))
             row = cur.fetchone()
     if row is None:
         return jsonify({"error": "Company not found"}), 404
+    if row['latest_contact_date']:
+        row['days_passed'] = days_passed_calc(row['latest_contact_date'])
+    else:
+        row['days_passed'] = None
     return jsonify(row)
 
 # Get temporal activities for a company (Alvin)

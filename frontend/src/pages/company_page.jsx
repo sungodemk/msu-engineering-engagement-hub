@@ -2,6 +2,7 @@
 /* Learning react from this link: https://react.dev/reference/react */
 
 import {useEffect, useState} from 'react';
+import { useParams } from "react-router-dom";
 import '../css/company_page.css';
 import Dialog from '../components/Dialog';
 // import { createPortal } from 'react-dom';
@@ -13,55 +14,60 @@ function CompanyPage() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    const [companies, setCompanies] = useState([]);
-    const [selectedId, setSelectedId] = useState('');
     const [portfolios, setPortfolios] = useState([]);
     const [activities, setActivities] = useState([]);
 
-    // Found the .find() method to get the corresponding company from the companies array based on its id
-    // from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
-    const company = companies.find((c) => c.id === selectedId);
+    const { id } = useParams();
+    const [company, setCompany] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/companies")
-        .then(result => result.json())
-        .then(data => {
-            setCompanies(data);
-            setSelectedId(data.length > 0 ? data[0].id : '');
-        });
-    }, []);
-
-    useEffect(() => {
-        fetch("http://localhost:8080/api/portfolio")
+        fetch(`http://localhost:8080/api/portfolio`)
         .then(result => result.json())
         .then(data => {
             setPortfolios(data);
         });
     }, []);
 
-    const portfolio = portfolios.find((p) => p.id === selectedId);
+    // Found the .find() method to get the corresponding company from the companies array based on its id
+    // from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
+    const portfolio = portfolios.find((p) => p.id === id);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/companies/${selectedId}/temporal`)
+        fetch(`http://localhost:8080/api/companies/${id}/temporal`)
         .then(result => result.json())
         .then(data => {
             setActivities(data);
         });
-    }, [selectedId]);
+    }, [id]);
 
-    function handleChange(e) {
-        setSelectedId(e.target.value);
+    useEffect(() => {
+        setCompany(null);
+        setError(null);
+
+        fetch(`http://localhost:8080/api/companies/${id}`)
+        .then(res => {
+                if (res.status === 404) throw new Error('Company not found');
+                if (!res.ok) throw new Error('Server has returned');
+                return res.json();
+            })
+        .then(data => {
+            setCompany(data);
+            document.title = data.display_name;
+        })
+        .catch((err) => setError(err.message));
+    }, [id]);
+
+    if (error) {
+        return <div className="company-page"><div className="comp_page">{error}</div></div>;
+    }
+    
+    if (!company){
+        return <div className="company-page"><div className="comp_page">Loading...</div></div>;
     }
 
     return (
         <div className="company-page">
-            <select className="company_select" value={selectedId} onChange={handleChange}>
-            {companies.map(c => (
-                <option key={c.id} value={c.id}>
-                {c.display_name}
-                </option>
-            ))}
-            </select>
 
             <div className='title_box'>
                 <div className='c_title_text'>
@@ -124,23 +130,25 @@ function CompanyPage() {
             </div>
             <div className='inbound_outbound_section'>
                 
-                <table className='inbound_box'>
+                <div className='inbound_box'>
                     <div className='inbound_title_box'>
                         <div className='inbound_title'>⬇ Inbound to MSU</div>
                     </div>
-                    {activities.some(activity => activity.activity_type === 'gift') ? (
-                    <tbody>
-                        {activities.filter(activity => activity.activity_type === 'gift').map(activity => (
-                            <tr key={activity.id}>
-                                <td className='inbound_occurred_on'>{activity.occurred_on}</td>
-                                {/* Learned how to extract the element inside a parentheses using .match()
-                                from this link: https://blog.devgenius.io/regex-parentheses-examples-of-every-type-aba8441be761*/}
-                                <td className='inbound_notes'>{activity.notes?.match(/\(([^)]+)\)/g)}</td>
-                                <td className='inbound_amount'>{`$${activity.amount}`}</td>
-                            </tr>
-                        ))}
-                    </tbody>) : (<p>No inbound available</p>)}
-                </table>
+                    <div className='company-table-wrap'>
+                        <table className='company-table'>
+                            {activities.some(activity => activity.activity_type === 'gift') ? (
+                            <tbody>
+                                {activities.filter(activity => activity.activity_type === 'gift').map(activity => (
+                                    <tr key={activity.id}>
+                                        <td className='inbound_notes'>{activity.notes}</td>
+                                        <td className='inbound_amount'>{`$${activity.amount}`}</td>
+                                        <td className='inbound_occurred_on'>{new Date(activity.occurred_on).toLocaleDateString()}</td>
+                                    </tr>
+                                ))}
+                            </tbody>) : (<p>No inbound available</p>)}
+                        </table>
+                    </div>
+                </div>
                 <div className='outbound_box'>
                     <div className='outbound_title_box'>
                         <div className='outbound_title'>⬆ Outbound from MSU</div>
@@ -148,26 +156,27 @@ function CompanyPage() {
                     <p>No outbound available</p>
                 </div>
             </div>
-            <table className='activity_box'>
-                <thead>
-                    <tr>
-                        <th colSpan="5" className='activity_title_box'>
-                            <div className='activity_title'>Activity Timeline</div>
-                        </th>
-                    </tr>
-                </thead>
-                {company?.activity_timeline?.length > 0 ? (
-                    <tbody>
-                        {company.activity_timeline.map(activity => (
-                            <tr key={activity.opp_id}>
-                                <td className='activity_record_type'>{activity.record_type}</td>
-                                <td className='activity_stage'>{activity.stage}</td>
-                                <td className='activity_amount'>{`$${activity.amount}`}</td>
-                                <td className='activity_close_date'>{activity.close_date}</td>
-                            </tr>
-                        ))}
-                    </tbody>) : (<p>No activities available</p>)}
-            </table>
+            <div className='activity_box'>
+                <div className='activity_title_box'>
+                    <div className='activity_title'>Activity Timeline</div>
+                </div>
+                <div className='activity-table-wrap'>
+                        <table className='activity-table'>
+                            {company?.activity_timeline?.length > 0 ? (
+                                <tbody>
+                                    {company.activity_timeline.map(activity => (
+                                        <tr key={activity.opp_id}>
+                                            <td className='activity_record_type'>{activity.record_type}</td>
+                                            <td className='activity_stage'>{activity.stage}</td>
+                                            <td className='activity_amount'>{`$${activity.amount}`}</td>
+                                            <td className='activity_close_date'>{activity.close_date}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>) : (<p>No activities available</p>
+                            )}
+                        </table>
+                </div>
+            </div>
             <div className="msu_task_box">
                 <div className="msu_task_title_box">
                     <div className="msu_task_title">
@@ -177,20 +186,28 @@ function CompanyPage() {
                         <div className="status_title">STATUS</div>
                     </div>
                 </div>
-                <tbody>
-                        {company?.msu_tasks?.length > 0 ? (
-                            company.msu_tasks.map(task => (
-                                <tr key={task.task_id}>
-                                    <td className='msu_unit'>{task.msu_unit}</td>
-                                    <td className='comp_owner'>{task.owner_name}</td>
-                                    <td className='subject'>{task.subject}</td>
-                                    <td className='status'>{task.status}</td>
-                                </tr>
-                            ))
-                        ) : (
-                            <p>No tasks available</p>
-                        )}
-                    </tbody>
+                <div className='company-table-wrap'>
+                    <table className='company-table'>
+                        <tbody>
+                            {company?.msu_tasks?.length > 0 ? (
+                                company.msu_tasks.map(task => (
+                                    <tr key={task.task_id}>
+                                        <td className='msu_unit'>{task.msu_unit}</td>
+                                        <td className='comp_owner'>{task.owner_name}</td>
+                                        <td className='subject'>{task.subject}</td>
+                                        <td className='status'>
+                                            <div className='status_box'>
+                                                {task.status}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <p>No tasks available</p>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div className="research_award_box">
                 <div className="research_award_title">🔬Research Awards</div>
