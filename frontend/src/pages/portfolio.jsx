@@ -100,7 +100,9 @@ function Portfolio() {
             <tbody>
                 {sorted.map(c => (
                 <tr key={c.id}>
-                <td><Link className="portfolio-link" to="/company_page">{c.name}</Link></td>
+                <td>{c.id ? (<Link className="portfolio-link" to={`/company_page/${c.id}`}>{c.name}</Link>)
+                    : (c.id || '—')}
+                </td>
                 <td>{c.sector || '—'}</td>
                 <td>{c.owner_id ? (<Link className="portfolio-link" to={`/persons/${c.owner_id}`}>{c.owner}</Link>)
                     : (c.owner || '—')}
