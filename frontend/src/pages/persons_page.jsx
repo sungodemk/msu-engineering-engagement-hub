@@ -1,6 +1,6 @@
 /*Author: Emmanuel Koshy*/
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";  
+import {Link,useParams } from "react-router-dom";  
 import '../css/persons_page.css';
 
 const API_BASE  = "http://localhost:8080";
@@ -62,6 +62,7 @@ function PersonsPage(){
     }
 
     const { person, current_affiliation: current, affiliations, activities } = data;
+    const { owner, degrees = [] } = data;
     const attrs = person.attributes ?? {};
     const title = current?.title ?? attrs.title;
     const location = [attrs.city, attrs.state].filter(Boolean).join(', ');
@@ -103,11 +104,32 @@ function PersonsPage(){
                         )}
                     </div>
                     <div className="pp-owner">
-                        <div className="pp-label"> MSU Owner</div>
-                        <div>Not assigned</div>
+                        <div className="pp-label">MSU Owner</div>
+                        {owner ? (
+                            <>
+                                <Link to={`/persons/${owner.id}`} className="pp-person-name">{owner.name}</Link>
+                                <div className="pp-label">
+                                    {owner.source ==='company' ? `via ${current.company}` : owner.role}
+                                </div>
+
+                            </>
+                        ) : (
+                            <div>Not assigned</div>
+                        )}
                     </div>
                 </div>
-                
+                {degrees.length > 0 && (
+                    <div className="pp-card pp-alumni">
+                        <div className="pp-section-title">Alumni Record</div>
+                        {degrees.map((d) => (
+                            <div className="pp-alumni-row" key={d.id}>
+                                <div><div className="pp-label">Degrees</div><div>{d.degree_type} {d.major}</div></div>
+                                <div><div className="pp-label">College</div><div>{d.college}</div></div>
+                                <div><div className="pp-label">Class Year</div><div>{d.class_year}</div></div>
+                            </div>
+                        ))}
+                    </div>
+                )}
                 <div className="pp-card">
                     <div className="pp-section-title">Engagement Summary</div>
                     {Object.keys(summary).length === 0 ? (

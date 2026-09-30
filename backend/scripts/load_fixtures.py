@@ -45,6 +45,28 @@ AFFILIATION_COLUMNS = {
     "end_date": "npe5__EndDate__c",
 }
 
+DEGREE_COLUMNS = {
+    "id": "External_ID__c",
+    "contact_id": "Contact__r.External_ID__c",
+    "degree_type": "Degree_Type__c",
+    "major": "Major__c",
+    "college": "College__c",
+    "class_year": "Class_Year__c",
+
+}
+
+ASSIGNMENT_COLUMNS = {
+    "id": "External_ID__c",
+    "staff_id": "Staff__r.External_ID__c",
+    "account_id": "Account__r.External_ID__c",
+    "contact_id": "Contact__r.External_ID__c",
+    "role": "Role__c",
+    "start_date": "Start_Date__c",
+    "end_date": "End_Date__c",
+
+
+}
+
 ACCOUNT_TYPES = {
     "Business Organization": "organization",
     "University Department": "msu_unit",
@@ -299,6 +321,79 @@ def load_affiliations(cur, rows, account_entities, contact_entities):
             ),
         )
 
+# Loads degree for alumni record (Emmanuel)
+def load_degrees(cur, rows, contact_entities):
+    for degree in rows:
+        source_id = insert_source_record(
+            cur,
+            "Degree__c",
+            degree[DEGREE_COLUMNS["id"]],
+            degree,
+        )
+
+        cur.execute(
+            """
+            INSERT INTO degrees (
+            person_entity_id,
+            degree_type,
+            major,
+            college,
+            class_year,
+            source_record_id
+            )
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """,
+        (
+            contact_entities[degree[DEGREE_COLUMNS["contact_id"]]],
+            degree[DEGREE_COLUMNS["degree_type"]],
+            degree[DEGREE_COLUMNS["major"]],
+            degree[DEGREE_COLUMNS["college"]],
+            degree[DEGREE_COLUMNS["class_year"]],
+            source_id,
+        ),
+    )
+
+# Loads MSU staff owners of companies (Emmanuel)
+def load_relationship_assignments(cur, rows, account_entities, contact_entities):
+    for assignment in rows:
+        source_id = insert_source_record(
+            cur,
+            "Relationship_Assignment__c",
+            assignment[ASSIGNMENT_COLUMNS["id"]],
+            assignment, 
+        )
+        # has to cover either a comapny or person cant be both
+        target_id = (
+            account_entities.get(assignment[ASSIGNMENT_COLUMNS["account_id"]])
+            or contact_entities.get((assignment[ASSIGNMENT_COLUMNS["contact_id"]]))
+        )
+
+        cur.execute(
+            """
+            INSERT INTO edges (
+            from_entity_id,
+            to_entity_id,
+            edge_type,
+            edge_role,
+            valid_from,
+            valid_to,
+            source_record_id
+        )
+        VALUES (%s, %s, 'relationship_owner', %s, %s, %s::date + 1, %s)
+        """,
+        (
+            contact_entities[assignment[ASSIGNMENT_COLUMNS["staff_id"]]],
+            target_id,
+            assignment[ASSIGNMENT_COLUMNS["role"]],
+            assignment[ASSIGNMENT_COLUMNS["start_date"]],
+            assignment[ASSIGNMENT_COLUMNS["end_date"]],
+            source_id,
+
+        ),
+
+    )
+
+
 # Decides status of opportunity (Alvin)
 def opportunity_activity_type_and_status(record_type, stage):
     if record_type in GIFT_RECORD_TYPES:
@@ -397,6 +492,13 @@ def main():
     opportunities = read_csv(
         ROOT / "db" / "seeds" / "07_Opportunity.csv"
     )
+    degrees = read_csv(
+        ROOT / "db" / "seeds" / "04_Degree__c.csv"
+    )
+    assignments = read_csv(
+        ROOT / "db" / "seeds" / "05_Relationship_Assignment__c.csv"
+    )
+    
 
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
@@ -410,12 +512,16 @@ def main():
             contact_entities = load_contacts(cur, contacts)
             load_affiliations(cur, affiliations, account_entities, contact_entities)
             load_opportunities(cur, opportunities, account_entities, contact_entities, units_by_code)
+            load_degrees(cur, degrees, contact_entities)
+            load_relationship_assignments(cur, assignments, account_entities, contact_entities)
+
             for table in [
                 "source_records",
                 "entities",
                 "entity_source_records",
                 "edges",
                 "activities",
+                "degrees",
             ]:
                 cur.execute(f"SELECT count(*) FROM {table}")
                 print(f"{table}: {cur.fetchone()[0]}")

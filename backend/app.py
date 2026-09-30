@@ -153,6 +153,36 @@ def get_person(person_id):
             """, (person_id,))
             affiliations = cur.fetchall()
 
+            current = next((a for a in affiliations if a ["valid_to"] is None), None)
+
+            cur.execute("""
+                SELECT id, degree_type, major, college, class_year
+                FROM degrees
+                WHERE person_entity_id = %s
+                ORDER BY class_year
+            """, (person_id,))
+            degrees = cur.fetchall()
+
+            cur.execute("""
+                SELECT * FROM(
+                SELECT s.id, s.display_name AS name, o.edge_role AS role, 'person' AS source
+                FROM edges o 
+                JOIN entities s ON s.id = o.from_entity_id
+                WHERE o.to_entity_id = %s
+                    AND o.edge_type = 'relationship_owner'
+                    AND o.valid_to IS NULL
+                UNION ALL
+                SELECT s.id, s.display_name, o.edge_role, 'company'
+                FROM edges o 
+                JOIN entities s ON s.id = o.from_entity_id
+                WHERE o.to_entity_id = %s
+                    AND o.edge_type = 'relationship_owner'
+                    AND o.valid_to IS NULL
+                ) owners
+                ORDER BY source = 'person' DESC, starts_with(role, 'Primary') DESC NULLS LAST LIMIT 1
+            """, (person_id, current["id"] if current else None))
+            owner = cur.fetchone()
+
             cur.execute("""
                 SELECT a.id, a.activity_type, a.occurred_on::text AS occurred_on,
                         a.amount::float AS amount, a.status, a.notes,
@@ -166,8 +196,10 @@ def get_person(person_id):
 
     return jsonify({
         "person":person,
-        "current_affiliation": next((a for a in affiliations if a["valid_to"] is None), None),
+        "current_affiliation": current,
         "affiliations": affiliations,
+        "degrees": degrees, 
+        "owner": owner, 
         "activities": activities,
 
     })
