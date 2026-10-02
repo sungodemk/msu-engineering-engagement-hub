@@ -152,26 +152,38 @@ def band_result(result, score):
 
     return None, reasons
 
+
 # order-independent key so (A,B) and (B,A) are treated the same
 def pair_key(left_id, right_id):
     # this ignores order and can be stored inside another set
     return frozenset((left_id, right_id))
 
+
 def write_matches(cur, results):
+    # only removes machine-generated organization matches so person matches stay untouched
     cur.execute(
         """
-        DELETE FROM entity_matches
-        WHERE status IN ('pending_review', 'auto_accepted')
+        DELETE FROM entity_matches m
+        USING entity_source_records esr, entities e
+        WHERE m.left_source_record_id = esr.source_record_id
+          AND esr.entity_id = e.id
+          AND e.entity_type = 'organization'
+          AND m.status IN ('pending_review', 'auto_accepted')
         """
     )
 
     cur.execute(
         """
         SELECT
-            left_source_record_id,
-            right_source_record_id
-        FROM entity_matches
-        WHERE status IN ('confirmed', 'rejected')
+            m.left_source_record_id,
+            m.right_source_record_id
+        FROM entity_matches m
+        JOIN entity_source_records esr
+            ON esr.source_record_id = m.left_source_record_id
+        JOIN entities e
+            ON e.id = esr.entity_id
+        WHERE e.entity_type = 'organization'
+          AND m.status IN ('confirmed', 'rejected')
         """
     )
 
@@ -201,7 +213,7 @@ def write_matches(cur, results):
         entity_id = None
 
         if status == "auto_accepted":
-            # keeps the account with lower Salesforce ID since the original account is usually older
+            # keeps the account with lower Salesforce ID since original account is usually older
             survivor = min(
                 (left, right),
                 key=lambda company: company["source_pk"],
@@ -232,14 +244,19 @@ def write_matches(cur, results):
 
     cur.execute(
         """
-        SELECT status, count(*)
-        FROM entity_matches
-        GROUP BY status
-        ORDER BY status
+        SELECT m.status, count(*)
+        FROM entity_matches m
+        JOIN entity_source_records esr
+            ON esr.source_record_id = m.left_source_record_id
+        JOIN entities e
+            ON e.id = esr.entity_id
+        WHERE e.entity_type = 'organization'
+        GROUP BY m.status
+        ORDER BY m.status
         """
     )
 
-    print("\nStored matches:")
+    print("\nStored company matches:")
 
     for status, count in cur.fetchall():
         print(f"{status}: {count}")
