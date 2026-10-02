@@ -10,6 +10,8 @@ app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
 
 DATABASE_URL = os.environ["DATABASE_URL"]
+DEMO_REVIEWER_PK = "STF-003"
+
 def get_db_connection():
     return psycopg.connect(DATABASE_URL, row_factory=dict_row)
 
@@ -340,6 +342,32 @@ def stewardship_queue():
         "pending": pending,
         "recent": recent,
     })
+
+# looks up demo reviewer bySalesforce ID until Firebase supplies the logged-in user (Aayush)
+def get_reviewer_id(cur):
+    cur.execute(
+        """
+        SELECT e.id
+        FROM entities e
+        JOIN entity_source_records esr
+            ON esr.entity_id = e.id
+        JOIN source_records sr
+            ON sr.id = esr.source_record_id
+        WHERE e.entity_type = 'person'
+          AND e.merged_into_id IS NULL
+          AND sr.source_system = 'salesforce'
+          AND sr.source_pk = %s
+        LIMIT 1
+        """,
+        (DEMO_REVIEWER_PK,),
+    )
+
+    reviewer = cur.fetchone()
+
+    if reviewer is None:
+        return None
+
+    return reviewer["id"]
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), use_reloader=True)
