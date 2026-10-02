@@ -76,6 +76,19 @@ def get_company(company_id):
         row['days_passed'] = None
     return jsonify(row)
 
+# Get the calculated days passed since the last contact date (Zhixiang Miao)
+@app.route('/api/days_passed')
+def days_passed():
+    last_date = request.args.get('last_date')
+    if last_date:
+        try: 
+            days_passed = days_passed_calc(last_date)
+        except ValueError:
+            days_passed = None
+    else:
+        days_passed = None
+    return jsonify({"days_passed": days_passed})
+
 # Get temporal activities for a company (Alvin)
 @app.route('/api/companies/<company_id>/temporal')
 def temporal(company_id):
@@ -496,5 +509,44 @@ def decide_match(match_id):
                 "status": "confirmed",
             })
         
+
+# Save and display logged activities for a specific company page (Zhixiang Miao)
+@app.route("/api/companies/<company_id>/log_activity", methods=["GET", "POST"])
+def log_activity(company_id):
+    if request.method == "POST":
+        data = request.get_json()
+        activity_record_type = data.get("activity_record_type")
+        stage_name = data.get("stage_name")
+        amount = data.get("amount")
+        close_date = data.get("close_date")
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            if request.method == "POST":
+                cur.execute("""
+                    INSERT INTO log_activity (company_id, activity_record_type, stage_name, amount, close_date)
+                    VALUES (%s, %s, %s, %s, %s)
+                """, (company_id, activity_record_type, stage_name, amount, close_date))
+            cur.execute("""
+                SELECT
+                    id,
+                    company_id,
+                    activity_record_type,
+                    stage_name,
+                    amount,
+                    close_date
+                FROM log_activity
+                WHERE company_id = %s
+            """, (company_id,))
+            activities = cur.fetchall()
+    for activity in activities:
+        if activity["close_date"]:
+            activity["close_date"] = activity["close_date"].isoformat()
+        else:
+            activity["close_date"] = None
+
+    return jsonify({
+        "activities": activities,
+    })
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), use_reloader=True)

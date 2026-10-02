@@ -2,10 +2,9 @@
 /* Learning react from this link: https://react.dev/reference/react */
 
 import {useEffect, useState} from 'react';
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import '../css/company_page.css';
 import Dialog from '../components/Dialog';
-// import { createPortal } from 'react-dom';
 
 function CompanyPage() {
     useEffect(() => {
@@ -14,12 +13,150 @@ function CompanyPage() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+    const [logActivities, setLogActivities] = useState([]);
+
     const [portfolios, setPortfolios] = useState([]);
     const [activities, setActivities] = useState([]);
 
     const { id } = useParams();
+    const navigate = useNavigate();
     const [company, setCompany] = useState(null);
     const [error, setError] = useState(null);
+
+    const [contacts, setContacts] = useState([]);
+
+    function isValidDate(date) {
+
+        if (!date) return false;
+        const today = new Date();
+        if (date > today) {
+            alert("Invalid date: cannot be in the future");
+            return false;
+        }
+        return true;
+    }
+
+    {/* Need to wait for the server to respond until a promise is resolved. 
+        Learned from this link: https://medium.com/@luwen900131/async-await-in-react-b10e36dac6f1*/}
+    async function logActivityEventHandler(event) {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const activity_record_type = formData.get('activity_type');
+        const stage_name = formData.get('status');
+        const amount = formData.get('amount');
+        const close_date = formData.get('date');
+        
+
+        if (!activity_record_type) {
+            alert("Activity type is missing");
+            return;
+        }
+        if (!stage_name) {
+            alert("Status is missing");
+            return;
+        }
+        if (!close_date) {
+            alert("Close date is missing");
+            return;
+        }
+
+        if (!isValidDate(new Date(close_date))) {
+            return;
+        }
+
+        if (!amount) {
+            alert("Amount is missing");
+            return;
+        }
+        const activity = {
+            company_id: id,
+            activity_record_type,
+            stage_name,
+            close_date,
+            amount,
+        };
+        try {
+            const response = await fetch(`http://localhost:8080/api/companies/${id}/log_activity`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(activity)
+            });
+
+            if (!response.ok) {
+                alert("Failed to log activity");
+                return;
+            }
+
+        setLogActivities(loggedActivity => [...loggedActivity, activity]);
+
+        setIsDialogOpen(false);
+        } 
+        
+        catch (error) {
+            console.error("Error logging activity:", error);
+            alert("An error occurred while logging activity");
+        }
+    }
+
+   
+
+    const [daysPassed, setDaysPassed] = useState(null);
+
+    const loggedActivities = logActivities.filter((activity) => activity.company_id === id);
+
+    const loggedGivings = loggedActivities.filter((activity) => activity.activity_record_type.toUpperCase() != "Proposal".toUpperCase());
+
+    const allGivingsCount = Object.fromEntries(company?.giving_counts ? (Object.keys(company.giving_counts).map((type) => [type, company.giving_counts[type]])) || [] : []);
+
+    for (const activity of loggedGivings) {
+        let giving_type = "";
+        if (activity.activity_record_type.toUpperCase() === "donation".toUpperCase() || activity.activity_record_type.toUpperCase() === "pledge".toUpperCase()) {
+            // Learned how to capitalize the first letter of string from this link: 
+            // https://coreui.io/blog/how-to-capitalize-the-first-letter-in-javascript/
+            giving_type = activity.activity_record_type.charAt(0).toUpperCase() + activity.activity_record_type.slice(1);
+        }
+        else if (activity.activity_record_type.toUpperCase() === "in-kind gift".toUpperCase()) {
+            giving_type = "In-Kind Gift";
+        }
+        else {
+            giving_type = "Other";
+        }
+        allGivingsCount[giving_type] = (allGivingsCount[giving_type] || 0) + 1;
+    }
+
+    const loggedGivingAmount = loggedGivings.reduce((total, activity) => total + parseFloat(activity.amount || 0), 0);
+    const totalGivingAmount = company ? parseFloat(company.total_giving_amount || 0) + loggedGivingAmount : loggedGivingAmount;
+
+    let latestDate = company?.latest_contact_date;
+
+    for (const activity of loggedActivities) {
+        if (!activity.close_date) continue;
+        if (!latestDate || new Date(activity.close_date) > new Date(latestDate)) {
+            latestDate = activity.close_date;
+        }
+    }
+
+    useEffect(() => {
+        if (latestDate) {
+            fetch(`http://localhost:8080/api/days_passed?last_date=${latestDate}`)
+            .then(result => result.json())
+            .then(data => {
+                setDaysPassed(data.days_passed);
+            });
+        }
+    }, [latestDate]);
+
+    
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/companies/${id}/log_activity`)
+        .then(result => result.json())
+        .then(data => {
+            setLogActivities(data.activities);
+        });
+    }, [id]);
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/portfolio`)
@@ -40,6 +177,18 @@ function CompanyPage() {
             setActivities(data);
         });
     }, [id]);
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/persons`)
+        .then((res) => {
+            if (!res.ok) throw new Error(`Server returned ${res.status}`);
+            return res.json();
+        })
+        .then(setContacts)
+        .catch((err) => setError(err.message));
+    }, []);
+
+    const contact_people = contacts.filter((c_p) => c_p.company_id === id);
 
     useEffect(() => {
         setCompany(null);
@@ -98,14 +247,14 @@ function CompanyPage() {
             <div className='total_giving_box'>
                 <div className="total_giving_title">TOTAL GIVING</div>
                 <div className="total_giving_amount">
-                    {company?.total_giving_amount ? `$${company.total_giving_amount}` : '$0'}
+                    {/* Found how to format the currency from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString */}
+                    {totalGivingAmount.toLocaleString("en-US", { style: "currency", currency: "USD" }) }
                 </div>
                 <div className='giving_message'>
                     {/* Learned how to iterate key value pairs using Object.entries() 
                     from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object*/}
-                    {company?.giving_counts ? Object.entries(company.giving_counts).map(([type, count]) => (
-                    `${type}: ${count}`)
-                    ).join(' & ') : 'No giving recorded yet'}
+                    {Object.entries(allGivingsCount).map(([type, count]) => `${type}: ${count}`).join(' & ')}
+                    
                 </div>
             </div>
             <div className='award_box'>
@@ -121,11 +270,11 @@ function CompanyPage() {
             <div className='last_contact_date_box'>
                 <div className='last_contact_date_title'>LAST CONTACT</div>
                 <div className='last_contact_date'>
-                    {company?.latest_contact_date ? company.latest_contact_date : 'Not Available'}
+                    {latestDate ? new Date(latestDate).toLocaleDateString('en-US', {timeZone: 'America/New_York'}) : 'Not Available'}
                 </div>
 
                 <div className='days_passed_from_lcd'>
-                    {company?.days_passed ? `${company.days_passed} days ago` : 'Not Available'}
+                    {daysPassed ? (daysPassed >= 0 ? `${daysPassed} days ago` : 'Not Available') : 'Not Available'}
                 </div>
             </div>
             <div className='inbound_outbound_section'>
@@ -142,7 +291,7 @@ function CompanyPage() {
                                     <tr key={activity.id}>
                                         <td className='inbound_notes'>{activity.notes}</td>
                                         <td className='inbound_amount'>{`$${activity.amount}`}</td>
-                                        <td className='inbound_occurred_on'>{new Date(activity.occurred_on).toLocaleDateString()}</td>
+                                        <td className='inbound_occurred_on'>{new Date(activity.occurred_on).toLocaleDateString('en-US')}</td>
                                     </tr>
                                 ))}
                             </tbody>) : (<p>No inbound available</p>)}
@@ -161,20 +310,53 @@ function CompanyPage() {
                     <div className='activity_title'>Activity Timeline</div>
                 </div>
                 <div className='activity-table-wrap'>
-                        <table className='activity-table'>
-                            {company?.activity_timeline?.length > 0 ? (
-                                <tbody>
-                                    {company.activity_timeline.map(activity => (
-                                        <tr key={activity.opp_id}>
-                                            <td className='activity_record_type'>{activity.record_type}</td>
-                                            <td className='activity_stage'>{activity.stage}</td>
-                                            <td className='activity_amount'>{`$${activity.amount}`}</td>
-                                            <td className='activity_close_date'>{activity.close_date}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>) : (<p>No activities available</p>
-                            )}
-                        </table>
+                    <table className='activity-table'> 
+                        {company?.activity_timeline?.length > 0 && (
+                            <tbody>
+                                {company.activity_timeline.map(activity => (
+                                    <tr key={activity.opp_id}>
+                                        <td className='activity_record_type'>{activity.record_type}</td>
+                                        <td className='activity_stage'>{activity.stage}</td>
+                                        <td className='activity_amount'>{`$${activity.amount}`}</td>
+                                        <td className='activity_close_date'>{new Date(activity.close_date).toLocaleDateString('en-US')}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        )}
+                        {loggedActivities.length > 0 && (
+                            <tbody>
+                                {loggedActivities.map(activity => (
+                                    <tr key={activity.id}>
+                                        <td className='activity_record_type'>
+                                            <div>
+                                                {activity.activity_record_type.charAt(0).toUpperCase() + activity.activity_record_type.slice(1)}
+                                            </div>
+                                        </td>
+                                        <td className='activity_stage'>
+                                            <div>
+                                                {activity.stage_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                                            </div>
+                                        </td>
+                                        <td className='activity_amount'>
+                                            <div>
+                                                {activity.amount ? `$${activity.amount}` : ''}
+                                            </div>
+                                        </td>
+                                        <td className='activity_close_date'>
+                                            <div>
+                                                {/* Learned how to convert string to date from this link: 
+                                                    https://www.geeksforgeeks.org/javascript/convert-string-into-date-using-javascript/ */}
+                                                {new Date(activity.close_date).toLocaleDateString('en-US', { timeZone: 'UTC' })}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        )}
+                        {(company?.activity_timeline?.length === 0 && loggedActivities?.length === 0) && (
+                            <p>No activities available</p>
+                        )}
+                    </table>
                 </div>
             </div>
             <div className="msu_task_box">
@@ -225,6 +407,35 @@ function CompanyPage() {
                 <div className="contacts_title_box">
                     <div className="contacts_title">𝌕Contacts at Company</div>
                 </div>
+                {contact_people.length > 0 ? (
+                    <div className='contact-table-wrap'>
+                        <table className='contact-table'>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Title</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {contact_people.map((p) =>(
+                                    <tr key={p.id} onClick={() => navigate(`/persons/${p.id}`)}>
+                                        <td>
+                                            <Link to={`/persons/${p.id}`} className="pp-person-name">
+                                                {p.display_name}
+                                            </Link>
+                                        </td>
+                                        <td>{p.title ?? ''}</td>
+                                        {!company && <td>{p.company ?? 'No current employer'}</td>}
+                                        <td>{p.email ?? ''}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                    <p>No contacts available</p>
+                )}
             </div>
             <div className="relationship_map_box">
                 <div className="relationship_map_title_box">
@@ -232,7 +443,7 @@ function CompanyPage() {
                 </div>
             </div>
             <Dialog className='log_activity_dialog' open_dialog={isDialogOpen}>
-                <form className='log_form'>
+                <form onSubmit={logActivityEventHandler} className='log_form'>
                     <div className='lg_act_dia_title_box'>
                         <div className='lg_act_dia_title'>Log Activity</div>
                         <div className='lg_act_dia_company'>
@@ -241,46 +452,21 @@ function CompanyPage() {
                     </div>
                     <div className='activity_type_title'>
                         <label htmlFor="activity_type">Activity Type</label>
-                        <select id="activity_type" name="activity_type" className='activity_type_box'>
-                            <option value="meeting">Meeting</option>
-                            <option value="call">Call</option>
-                            <option value="email">Email</option>
-                            <option value="presentation">Event</option>
-                            <option value="webinar">Site Visit</option>
-                            <option value="other">Other</option>
-                        </select>
-                        <button className='cancel_button' onClick={() => setIsDialogOpen(false)}>Cancel</button>
-                        <button className='save_act_button' onClick={() => setIsDialogOpen(false)}>Save Activity</button>
+                        <input type="text" id="activity_type" name="activity_type" className='activity_type_box' />
+                        <button type="button" className='cancel_button' onClick={() => setIsDialogOpen(false)}>Cancel</button>
+                        <button type="submit" className='save_act_button'>Save Activity</button>
                     </div>
-                    <div className='category_title'>
-                        <label htmlFor="category">Category</label>
-                        <select id="category" name="category" className='category_box'>
-                            <option value="touch_point">Touch Point</option>
-                            <option value="talent_recruiting">Talent Recruiting</option>
-                            <option value="student_experience">Student Experience</option>
-                            <option value="philanthropy">Philanthropy</option>
-                            <option value="research">Research</option>
-                            <option value="governance">Governance</option>
-                            <option value="other">Other</option>
-                        </select>
+                    <div className='dia_status_title'>
+                        <label htmlFor="status">Status</label>
+                        <input type="text" id="status" name="status" className='dia_status_box' />
+                    </div>
+                    <div className='amount_title'>
+                        <label htmlFor="amount">Amount</label>
+                        <input type="number" id="amount" name="amount" className='amount_box' />
                     </div>
                     <div className='date_title'>
                         <label htmlFor="date">Date</label>
                         <input type="date" id="date" name="date" className='date_box' />
-                    </div>
-                    <div className='contact_title'>
-                        <label htmlFor="contact">Contact (Optional)</label>
-                        <select id="contact" name="contact" className='contact_box' >
-                            <option value="none">-- None --</option>
-                        </select>
-                    </div>
-                    <div className='subject_title'>
-                        <label htmlFor="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" className='subject_box'/>
-                    </div>
-                    <div className='notes_title'>
-                        <label htmlFor="notes">Notes (optional)</label>
-                        <textarea id="notes" name="notes" className='notes_box'></textarea>
                     </div>
                 </form>
             </Dialog>

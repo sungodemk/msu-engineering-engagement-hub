@@ -4,3 +4,4 @@ Flask-Failsafe
 flask-cors
 psycopg[binary]
 rapidfuzz
+pytz
