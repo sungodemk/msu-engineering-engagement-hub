@@ -162,11 +162,6 @@ def first_name_match_type(first1, first2):
     return None
 
 
-# first names are compatible when they are either exact or an initial match
-def first_names_compatible(first1, first2):
-    return first_name_match_type(first1, first2) is not None
-
-
 # cities only count as matching evidence when both people have a city
 def same_city(person1, person2):
     attributes1 = person1["attributes"] or {}
@@ -207,14 +202,9 @@ def shared_current_employer(person1, person2, employers):
 
 
 # scores the match and assigns the pair to a review band
-def score_and_band(person1, person2, city_match, degree_match, employer_match):
+def score_and_band(name_match, city_match, degree_match, employer_match):
     score = 0.0
     reasons = []
-
-    name_match = first_name_match_type(
-        person1["first"],
-        person2["first"],
-    )
 
     if name_match == "exact":
         score += NAME_EXACT_WEIGHT
@@ -251,6 +241,111 @@ def score_and_band(person1, person2, city_match, degree_match, employer_match):
     return score, None, reasons
 
 
+# order-independent key so (A,B) and (B,A) are treated the same
+def pair_key(left_id, right_id):
+    return frozenset((left_id, right_id))
+
+
+def write_matches(cur, results):
+    # only removes machine-generated person matches so company matches don't get touched
+    cur.execute(
+        """
+        DELETE FROM entity_matches m
+        USING entity_source_records esr, entities e
+        WHERE m.left_source_record_id = esr.source_record_id
+          AND esr.entity_id = e.id
+          AND e.entity_type = 'person'
+          AND m.status IN ('pending_review', 'auto_accepted')
+        """
+    )
+
+    cur.execute(
+        """
+        SELECT
+            m.left_source_record_id,
+            m.right_source_record_id
+        FROM entity_matches m
+        JOIN entity_source_records esr
+            ON esr.source_record_id = m.left_source_record_id
+        JOIN entities e
+            ON e.id = esr.entity_id
+        WHERE e.entity_type = 'person'
+          AND m.status IN ('confirmed', 'rejected')
+        """
+    )
+
+    reviewed_pairs = {
+        pair_key(left_id, right_id)
+        for left_id, right_id in cur.fetchall()
+    }
+
+    for result in results:
+        if result["status"] is None:
+            continue
+
+        left = result["left"]
+        right = result["right"]
+
+        current_pair = pair_key(
+            left["source_record_id"],
+            right["source_record_id"],
+        )
+
+        if current_pair in reviewed_pairs:
+            continue
+
+        entity_id = None
+
+        if result["status"] == "auto_accepted":
+            # keeps person with lower source ID since original record is usually older
+            survivor = min(
+                (left, right),
+                key=lambda person: person["source_pk"],
+            )
+            entity_id = survivor["entity_id"]
+
+        cur.execute(
+            """
+            INSERT INTO entity_matches (
+                left_source_record_id,
+                right_source_record_id,
+                score,
+                match_reasons,
+                status,
+                entity_id
+            )
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """,
+            (
+                left["source_record_id"],
+                right["source_record_id"],
+                result["score"],
+                result["reasons"],
+                result["status"],
+                entity_id,
+            ),
+        )
+
+    cur.execute(
+        """
+        SELECT m.status, count(*)
+        FROM entity_matches m
+        JOIN entity_source_records esr
+            ON esr.source_record_id = m.left_source_record_id
+        JOIN entities e
+            ON e.id = esr.entity_id
+        WHERE e.entity_type = 'person'
+        GROUP BY m.status
+        ORDER BY m.status
+        """
+    )
+
+    print("\nStored person matches:")
+
+    for status, count in cur.fetchall():
+        print(f"{status}: {count}")
+
+
 def main():
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
@@ -258,50 +353,62 @@ def main():
             degrees = load_degrees(cur)
             employers = load_current_employers(cur)
 
-    blocks = block_by_last_name(people)
-    pair_count = 0
+            blocks = block_by_last_name(people)
+            pair_count = 0
+            results = []
 
-    for group in blocks.values():
-        for person1, person2 in combinations(group, 2):
-            if not first_names_compatible(
-                person1["first"],
-                person2["first"],
-            ):
-                continue
+            for group in blocks.values():
+                for person1, person2 in combinations(group, 2):
+                    name_match = first_name_match_type(
+                        person1["first"],
+                        person2["first"],
+                    )
 
-            pair_count += 1
+                    if name_match is None:
+                        continue
 
-            city_match = same_city(person1, person2)
-            degree_match = shared_degree(
-                person1,
-                person2,
-                degrees,
-            )
-            employer_match = shared_current_employer(
-                person1,
-                person2,
-                employers,
-            )
+                    pair_count += 1
 
-            score, status, reasons = score_and_band(
-                person1,
-                person2,
-                city_match,
-                degree_match,
-                employer_match,
-            )
+                    city_match = same_city(person1, person2)
+                    degree_match = shared_degree(
+                        person1,
+                        person2,
+                        degrees,
+                    )
+                    employer_match = shared_current_employer(
+                        person1,
+                        person2,
+                        employers,
+                    )
 
-            print(
-                f"{person1['source_pk']}: {person1['display_name']} "
-                f"<-> "
-                f"{person2['source_pk']}: {person2['display_name']}\n"
-                f"  score={score:.3f} | "
-                f"status={status or 'dropped'} | "
-                f"reasons={reasons}"
-            )
+                    score, status, reasons = score_and_band(
+                        name_match,
+                        city_match,
+                        degree_match,
+                        employer_match,
+                    )
 
-    print(f"\nLast-name blocks: {len(blocks)}")
-    print(f"Compatible pairs: {pair_count}")
+                    results.append({
+                        "left": person1,
+                        "right": person2,
+                        "score": score,
+                        "status": status,
+                        "reasons": reasons,
+                    })
+
+                    print(
+                        f"{person1['source_pk']}: {person1['display_name']} "
+                        f"<-> "
+                        f"{person2['source_pk']}: {person2['display_name']}\n"
+                        f"  score={score:.3f} | "
+                        f"status={status or 'dropped'} | "
+                        f"reasons={reasons}"
+                    )
+
+            print(f"\nLast-name blocks: {len(blocks)}")
+            print(f"Compatible pairs: {pair_count}")
+
+            write_matches(cur, results)
 
 
 if __name__ == "__main__":
