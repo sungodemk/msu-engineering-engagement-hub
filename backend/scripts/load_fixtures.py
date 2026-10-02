@@ -477,7 +477,66 @@ def load_opportunities(cur, rows, account_entities, contact_entities,
             f"matching Account (dangling Account.External_ID__c)"
         )
             
-            
+def load_action_items(cur, rows, account_entities, contact_entities):
+    skipped_no_account = 0
+
+    for act in rows:
+        company_entity_id = account_entities.get(act["Account__r.External_ID__c"])
+        person_entity_id = contact_entities.get(act["Contact__r.External_ID__c"])
+
+        if company_entity_id is None and person_entity_id is None:
+            skipped_no_account += 1
+            continue
+
+        source_id = insert_source_record(
+            cur, "Action_Item__c", act["External_ID__c"], act,
+        )
+        owner_entity_id = contact_entities.get(
+            act["Assigned_To__r.External_ID__c"]
+        )
+
+        occurred_on = act["Completed_Date__c"] or act["Due_Date__c"]
+
+        notes_parts = [act["Subject__c"]]
+        if act["Opportunity__r.External_ID__c"]:
+            notes_parts.append(f'({act["Opportunity__r.External_ID__c"]})')
+
+        if act["Notes__c"]:
+            notes_parts.append(act["Notes__c"])
+        notes = " ".join(notes_parts)
+
+        cur.execute("""
+            INSERT INTO activities (
+                company_entity_id,
+                person_entity_id,
+                msu_unit_entity_id,
+                activity_type,
+                occurred_on,
+                ended_on,
+                amount,
+                status,
+                owner_entity_id,
+                notes,
+                source_record_id
+            )
+            VALUES (%s, %s, %s, 'touchpoint', %s, %s, %s, %s, %s, %s, %s)
+            """,(
+                company_entity_id,
+                person_entity_id,
+                None,
+                occurred_on,
+                None,
+                None,
+                None,
+                owner_entity_id,
+                notes,
+                source_id,
+            ),)
+    if skipped_no_account:
+        print(
+            f"Skipped {skipped_no_account} action items with no "
+            f"matching Account or Contact"
+        )
             
 def main():
     accounts = read_csv(
@@ -498,6 +557,9 @@ def main():
     assignments = read_csv(
         ROOT / "db" / "seeds" / "05_Relationship_Assignment__c.csv"
     )
+    action_items = read_csv(
+        ROOT / "db" / "seeds" / "11_Action_Item__c.csv"
+    )
     
 
     with psycopg.connect(DATABASE_URL) as conn:
@@ -514,6 +576,7 @@ def main():
             load_opportunities(cur, opportunities, account_entities, contact_entities, units_by_code)
             load_degrees(cur, degrees, contact_entities)
             load_relationship_assignments(cur, assignments, account_entities, contact_entities)
+            load_action_items(cur, action_items, account_entities, contact_entities)
 
             for table in [
                 "source_records",
