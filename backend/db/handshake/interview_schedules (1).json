@@ -1,0 +1,485 @@
+[
+  {
+    "id": 612033,
+    "employer_id": 480107,
+    "contacts_ids": [
+      7100364,
+      7100403
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2021-10-20",
+      "2021-10-21"
+    ],
+    "job_ids": [
+      53052505,
+      53052658,
+      53052920
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2021-09-06T16:50:00Z",
+    "updated_at": "2021-10-23T18:00:00Z"
+  },
+  {
+    "id": 612089,
+    "employer_id": 480107,
+    "contacts_ids": [
+      7100377,
+      7100403
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2022-10-20",
+      "2022-10-21"
+    ],
+    "job_ids": [
+      53055267,
+      53055442,
+      53055570
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2022-09-08T17:50:00Z",
+    "updated_at": "2022-10-23T18:00:00Z"
+  },
+  {
+    "id": 612192,
+    "employer_id": 480107,
+    "contacts_ids": [
+      7100377,
+      7100403
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2023-10-20",
+      "2023-10-21"
+    ],
+    "job_ids": [
+      53057932,
+      53058172,
+      53058567
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2023-08-17T13:05:00Z",
+    "updated_at": "2023-10-23T18:00:00Z"
+  },
+  {
+    "id": 612249,
+    "employer_id": 480107,
+    "contacts_ids": [
+      7100377,
+      7100403
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2024-10-20",
+      "2024-10-21"
+    ],
+    "job_ids": [
+      53061283,
+      53061408,
+      53061492
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2024-08-09T14:45:00Z",
+    "updated_at": "2024-10-23T18:00:00Z"
+  },
+  {
+    "id": 612321,
+    "employer_id": 480107,
+    "contacts_ids": [
+      7100390,
+      7100403
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2025-10-20",
+      "2025-10-21"
+    ],
+    "job_ids": [
+      53064249,
+      53064335,
+      53064574
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2025-08-20T08:15:00Z",
+    "updated_at": "2025-10-23T18:00:00Z"
+  },
+  {
+    "id": 612411,
+    "employer_id": 480107,
+    "contacts_ids": [
+      7100390,
+      7100403
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2026-09-24",
+      "2026-09-25"
+    ],
+    "job_ids": [
+      53066614,
+      53066689,
+      53066936
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2026-08-19T09:10:00Z",
+    "updated_at": "2026-09-27T18:00:00Z"
+  },
+  {
+    "id": 612475,
+    "employer_id": 480101,
+    "contacts_ids": [
+      7100013,
+      7100039
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2022-10-13",
+      "2022-10-14"
+    ],
+    "job_ids": [
+      53003189,
+      53003448,
+      53003709
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2022-10-02T13:45:00Z",
+    "updated_at": "2022-10-16T18:00:00Z"
+  },
+  {
+    "id": 612573,
+    "employer_id": 480101,
+    "contacts_ids": [
+      7100026,
+      7100039
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2023-10-13",
+      "2023-10-14"
+    ],
+    "job_ids": [
+      53006872,
+      53006985,
+      53007086
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2023-08-21T12:10:00Z",
+    "updated_at": "2023-10-16T18:00:00Z"
+  },
+  {
+    "id": 612637,
+    "employer_id": 480101,
+    "contacts_ids": [
+      7100026,
+      7100039
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2024-10-13",
+      "2024-10-14"
+    ],
+    "job_ids": [
+      53008237,
+      53008474,
+      53008845
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2024-08-31T14:15:00Z",
+    "updated_at": "2024-10-16T18:00:00Z"
+  },
+  {
+    "id": 612686,
+    "employer_id": 480101,
+    "contacts_ids": [
+      7100026,
+      7100039
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2025-10-13",
+      "2025-10-14"
+    ],
+    "job_ids": [
+      53011667,
+      53012280,
+      53012651
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2025-08-28T14:40:00Z",
+    "updated_at": "2025-10-16T18:00:00Z"
+  },
+  {
+    "id": 612757,
+    "employer_id": 480102,
+    "contacts_ids": [
+      7100091,
+      7100078
+    ],
+    "status": "completed",
+    "type": "Open",
+    "schedule_dates": [
+      "2024-10-08",
+      "2024-10-09"
+    ],
+    "job_ids": [
+      53023238,
+      53023406,
+      53023479
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2024-08-17T12:50:00Z",
+    "updated_at": "2024-10-11T18:00:00Z"
+  },
+  {
+    "id": 612836,
+    "employer_id": 480103,
+    "contacts_ids": [
+      7100156,
+      7100182
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2024-10-22",
+      "2024-10-23"
+    ],
+    "job_ids": [
+      53034938,
+      53035276,
+      53035379
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2024-09-03T09:30:00Z",
+    "updated_at": "2024-10-25T18:00:00Z"
+  },
+  {
+    "id": 612930,
+    "employer_id": 480102,
+    "contacts_ids": [
+      7100091,
+      7100078
+    ],
+    "status": "completed",
+    "type": "Open",
+    "schedule_dates": [
+      "2025-10-08",
+      "2025-10-09"
+    ],
+    "job_ids": [
+      53026433,
+      53026657,
+      53026972
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2025-08-11T15:05:00Z",
+    "updated_at": "2025-10-11T18:00:00Z"
+  },
+  {
+    "id": 612993,
+    "employer_id": 480103,
+    "contacts_ids": [
+      7100143,
+      7100182
+    ],
+    "status": "completed",
+    "type": "Preselect",
+    "schedule_dates": [
+      "2025-10-22",
+      "2025-10-23"
+    ],
+    "job_ids": [
+      53038836,
+      53039079,
+      53039374
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2025-08-17T08:40:00Z",
+    "updated_at": "2025-10-25T18:00:00Z"
+  },
+  {
+    "id": 613049,
+    "employer_id": 480114,
+    "contacts_ids": [
+      7100663,
+      7100689
+    ],
+    "status": "completed",
+    "type": "Preselect Continuous",
+    "schedule_dates": [
+      "2022-02-15",
+      "2022-02-16",
+      "2022-02-17"
+    ],
+    "job_ids": [
+      53106439,
+      53106782,
+      53106855
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2021-08-20T11:20:00Z",
+    "updated_at": "2022-02-19T18:00:00Z"
+  },
+  {
+    "id": 613154,
+    "employer_id": 480114,
+    "contacts_ids": [
+      7100663,
+      7100689
+    ],
+    "status": "completed",
+    "type": "Preselect Continuous",
+    "schedule_dates": [
+      "2023-02-15",
+      "2023-02-16",
+      "2023-02-17"
+    ],
+    "job_ids": [
+      53108461,
+      53108658,
+      53108935
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2022-08-22T15:15:00Z",
+    "updated_at": "2023-02-19T18:00:00Z"
+  },
+  {
+    "id": 613232,
+    "employer_id": 480114,
+    "contacts_ids": [
+      7100663,
+      7100689
+    ],
+    "status": "completed",
+    "type": "Preselect Continuous",
+    "schedule_dates": [
+      "2024-02-15",
+      "2024-02-16",
+      "2024-02-17"
+    ],
+    "job_ids": [
+      53110458,
+      53110675,
+      53110971
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2023-08-22T15:45:00Z",
+    "updated_at": "2024-02-19T18:00:00Z"
+  },
+  {
+    "id": 613352,
+    "employer_id": 480114,
+    "contacts_ids": [
+      7100663,
+      7100689
+    ],
+    "status": "completed",
+    "type": "Preselect Continuous",
+    "schedule_dates": [
+      "2025-02-15",
+      "2025-02-16",
+      "2025-02-17"
+    ],
+    "job_ids": [
+      53112486,
+      53112607,
+      53112686
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2024-08-22T10:50:00Z",
+    "updated_at": "2025-02-19T18:00:00Z"
+  },
+  {
+    "id": 613438,
+    "employer_id": 480114,
+    "contacts_ids": [
+      7100663,
+      7100689
+    ],
+    "status": "completed",
+    "type": "Preselect Continuous",
+    "schedule_dates": [
+      "2026-02-15",
+      "2026-02-16",
+      "2026-02-17"
+    ],
+    "job_ids": [
+      53114553,
+      53114817,
+      53115029
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2025-08-16T09:20:00Z",
+    "updated_at": "2026-02-19T18:00:00Z"
+  },
+  {
+    "id": 613496,
+    "employer_id": 480113,
+    "contacts_ids": [
+      7100624,
+      7100650
+    ],
+    "status": "completed",
+    "type": "Room Only",
+    "schedule_dates": [
+      "2023-10-27",
+      "2023-10-28"
+    ],
+    "job_ids": [
+      53100043
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2023-08-25T16:20:00Z",
+    "updated_at": "2023-10-30T18:00:00Z"
+  },
+  {
+    "id": 613563,
+    "employer_id": 480113,
+    "contacts_ids": [
+      7100624,
+      7100650
+    ],
+    "status": "completed",
+    "type": "Room Only",
+    "schedule_dates": [
+      "2024-10-27",
+      "2024-10-28"
+    ],
+    "job_ids": [
+      53102312
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2024-10-22T16:30:00Z",
+    "updated_at": "2024-10-30T18:00:00Z"
+  },
+  {
+    "id": 613602,
+    "employer_id": 480113,
+    "contacts_ids": [
+      7100624,
+      7100650
+    ],
+    "status": "completed",
+    "type": "Room Only",
+    "schedule_dates": [
+      "2025-10-27",
+      "2025-10-28"
+    ],
+    "job_ids": [
+      53104289
+    ],
+    "career_center": "Center for Spartan Engineering",
+    "created_at": "2025-09-27T14:50:00Z",
+    "updated_at": "2025-10-30T18:00:00Z"
+  }
+]
