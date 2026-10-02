@@ -369,5 +369,68 @@ def get_reviewer_id(cur):
 
     return reviewer["id"]
 
+# records reviewer's decision on an entity match (Aayush)
+@app.route('/api/matches/<match_id>/decision', methods=['POST'])
+def decide_match(match_id):
+    try:
+        uuid.UUID(match_id)
+    except ValueError:
+        return jsonify({"error": "Match not found"}), 404
+
+    data = request.get_json(silent=True) or {}
+    decision = data.get("decision")
+
+    if decision not in {"accept", "reject"}:
+        return jsonify({"error": "Decision must be accept or reject"}), 400
+
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT id, status
+                FROM entity_matches
+                WHERE id = %s
+                FOR UPDATE
+                """,
+                (match_id,),
+            )
+
+            match = cur.fetchone()
+
+            if match is None:
+                return jsonify({"error": "Match not found"}), 404
+
+            if match["status"] not in {"pending_review", "auto_accepted"}:
+                return jsonify({"error": "Match has already been reviewed"}), 409
+
+            reviewer_id = get_reviewer_id(cur)
+
+            if reviewer_id is None:
+                return jsonify({"error": "Demo reviewer not found"}), 500
+
+            if decision == "reject":
+                cur.execute(
+                    """
+                    UPDATE entity_matches
+                    SET
+                        status = 'rejected',
+                        reviewed_by_entity_id = %s,
+                        reviewed_at = now(),
+                        entity_id = NULL
+                    WHERE id = %s
+                    """,
+                    (
+                        reviewer_id,
+                        match_id,
+                    ),
+                )
+
+                return jsonify({
+                    "match_id": match_id,
+                    "status": "rejected",
+                })
+
+            return jsonify({"error": "Accept decision not implemented yet"}), 501
+        
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), use_reloader=True)
