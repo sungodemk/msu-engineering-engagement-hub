@@ -385,9 +385,14 @@ def decide_match(match_id):
 
     with get_db_connection() as conn:
         with conn.cursor() as cur:
+            # locks row so two people can't decide the same match at once
             cur.execute(
                 """
-                SELECT id, status
+                SELECT
+                    id,
+                    status,
+                    left_source_record_id,
+                    right_source_record_id
                 FROM entity_matches
                 WHERE id = %s
                 FOR UPDATE
@@ -430,7 +435,66 @@ def decide_match(match_id):
                     "status": "rejected",
                 })
 
-            return jsonify({"error": "Accept decision not implemented yet"}), 501
+            # gets entity and stable source ID behind each side of the match
+            cur.execute(
+                """
+                SELECT
+                    e.id,
+                    sr.source_pk
+                FROM entity_source_records esr
+                JOIN entities e
+                    ON e.id = esr.entity_id
+                JOIN source_records sr
+                    ON sr.id = esr.source_record_id
+                WHERE esr.source_record_id IN (%s, %s)
+                """,
+                (
+                    match["left_source_record_id"],
+                    match["right_source_record_id"],
+                ),
+            )
+
+            entities = cur.fetchall()
+
+            if len(entities) != 2:
+                return jsonify({"error": "Match entities could not be resolved"}), 500
+
+            # sorts by source ID so the first entity survives and the second is merged into it
+            survivor, duplicate = sorted(entities, key=lambda entity: entity["source_pk"])
+
+            cur.execute(
+                """
+                UPDATE entities
+                SET merged_into_id = %s
+                WHERE id = %s
+                """,
+                (
+                    survivor["id"],
+                    duplicate["id"],
+                ),
+            )
+
+            cur.execute(
+                """
+                UPDATE entity_matches
+                SET
+                    status = 'confirmed',
+                    entity_id = %s,
+                    reviewed_by_entity_id = %s,
+                    reviewed_at = now()
+                WHERE id = %s
+                """,
+                (
+                    survivor["id"],
+                    reviewer_id,
+                    match_id,
+                ),
+            )
+
+            return jsonify({
+                "match_id": match_id,
+                "status": "confirmed",
+            })
         
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), use_reloader=True)
