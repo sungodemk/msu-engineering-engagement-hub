@@ -61,6 +61,50 @@ def load_people(cur):
     return people
 
 
+# loads all degrees for each person since a person can have more than one degree
+def load_degrees(cur):
+    cur.execute(
+        """
+        SELECT
+            person_entity_id,
+            degree_type,
+            major,
+            class_year
+        FROM degrees
+        """
+    )
+
+    degrees = defaultdict(set)
+
+    for person_id, degree_type, major, class_year in cur.fetchall():
+        degrees[person_id].add(
+            (degree_type, major, class_year)
+        )
+
+    return degrees
+
+
+# loads all current employers for each person from active employment edges
+def load_current_employers(cur):
+    cur.execute(
+        """
+        SELECT
+            from_entity_id,
+            to_entity_id
+        FROM edges
+        WHERE edge_type = 'employed_by'
+          AND valid_to IS NULL
+        """
+    )
+
+    employers = defaultdict(set)
+
+    for person_id, employer_id in cur.fetchall():
+        employers[person_id].add(employer_id)
+
+    return employers
+
+
 # normalizes person names without stripping suffixes like inc or co like we did in company matcher
 def normalize_person_name(name):
     if not name:
@@ -108,10 +152,52 @@ def first_names_compatible(first1, first2):
 
     return False
 
+
+# cities only count as matching evidence when both people have a city
+def same_city(person1, person2):
+    attributes1 = person1["attributes"] or {}
+    attributes2 = person2["attributes"] or {}
+
+    city1 = attributes1.get("city")
+    city2 = attributes2.get("city")
+
+    if not city1 or not city2:
+        return False
+
+    return (
+        normalize_person_name(city1)
+        == normalize_person_name(city2)
+    )
+
+
+# checks whether the two people share at least one degree
+def shared_degree(person1, person2, degrees):
+    degrees1 = degrees.get(person1["entity_id"], set())
+    degrees2 = degrees.get(person2["entity_id"], set())
+
+    if not degrees1 or not degrees2:
+        return False
+
+    return bool(degrees1 & degrees2)
+
+
+# checks whether the two people share at least one current employer
+def shared_current_employer(person1, person2, employers):
+    employers1 = employers.get(person1["entity_id"], set())
+    employers2 = employers.get(person2["entity_id"], set())
+
+    if not employers1 or not employers2:
+        return False
+
+    return bool(employers1 & employers2)
+
+
 def main():
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
             people = load_people(cur)
+            degrees = load_degrees(cur)
+            employers = load_current_employers(cur)
 
     blocks = block_by_last_name(people)
     pair_count = 0
@@ -126,10 +212,25 @@ def main():
 
             pair_count += 1
 
+            city_match = same_city(person1, person2)
+            degree_match = shared_degree(
+                person1,
+                person2,
+                degrees,
+            )
+            employer_match = shared_current_employer(
+                person1,
+                person2,
+                employers,
+            )
+
             print(
                 f"{person1['source_pk']}: {person1['display_name']} "
                 f"<-> "
-                f"{person2['source_pk']}: {person2['display_name']}"
+                f"{person2['source_pk']}: {person2['display_name']}\n"
+                f"  same_city={city_match} | "
+                f"shared_degree={degree_match} | "
+                f"shared_employer={employer_match}"
             )
 
     print(f"\nLast-name blocks: {len(blocks)}")
