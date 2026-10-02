@@ -1,0 +1,74 @@
+[
+  {
+    "proposalId": 30004,
+    "proposalNumber": "26100142",
+    "sequenceNumber": 1,
+    "proposalSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Pending",
+    "requestedStartDate": "2027-01-01",
+    "requestedEndDate": "2028-12-31",
+    "totalRequestedAmount": 280000,
+    "submissionDate": "2026-08-14",
+    "title": "Scenario-based validation of ADAS perception under adverse weather",
+    "sponsorCode": "010441",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4420",
+    "projectPersons": [
+      {
+        "personId": "100107",
+        "personName": "Anne Farrall",
+        "roleCode": "PI",
+        "unitNumber": "10-4420"
+      },
+      {
+        "personId": "100149",
+        "personName": "Kevin Erickson",
+        "roleCode": "COI",
+        "unitNumber": "10-4420"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Autonomous Systems",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Marcus Hagadorn",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2026-08-14T14:05:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "proposalId": 30007,
+    "proposalNumber": "26100173",
+    "sequenceNumber": 1,
+    "proposalSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Pending",
+    "requestedStartDate": "2027-01-01",
+    "requestedEndDate": "2028-12-31",
+    "totalRequestedAmount": 180000,
+    "submissionDate": "2026-07-22",
+    "title": "Early detection of thermal runaway in battery packs",
+    "sponsorCode": "010452",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4410",
+    "projectPersons": [
+      {
+        "personId": "100184",
+        "personName": "Susan Beal",
+        "roleCode": "PI",
+        "unitNumber": "10-4410"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Mobility",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Derek Wonders",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2026-07-22T14:05:00",
+    "updateUser": "osp-batch"
+  }
+]

@@ -1,0 +1,1050 @@
+[
+  {
+    "awardId": 20011,
+    "awardNumber": "001041-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "TDS-ENG-17-112",
+    "accountNumber": "GR100407",
+    "awardEffectiveDate": "2017-01-01",
+    "finalExpirationDate": "2019-12-31",
+    "anticipatedTotalAmount": 110000,
+    "obligatedTotalAmount": 110000,
+    "costShares": [],
+    "title": "Gear whine prediction in electric drive units",
+    "sponsorCode": "010512",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4410",
+    "projectPersons": [
+      {
+        "personId": "100170",
+        "personName": "Richard Chandler",
+        "roleCode": "PI",
+        "unitNumber": "10-4410"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Mobility",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Ravi Munn",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2020-03-15T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20022,
+    "awardNumber": "001058-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "GW-RD-2017-031",
+    "accountNumber": "GR100814",
+    "awardEffectiveDate": "2017-06-01",
+    "finalExpirationDate": "2020-05-31",
+    "anticipatedTotalAmount": 210000,
+    "obligatedTotalAmount": 210000,
+    "costShares": [],
+    "title": "Recyclable thermoset polymers",
+    "sponsorCode": "010388",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4440",
+    "projectPersons": [
+      {
+        "personId": "100100",
+        "personName": "Amy Creyts",
+        "roleCode": "PI",
+        "unitNumber": "10-4440"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Sustainability",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Rohan Campbell",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2020-08-14T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20012,
+    "awardNumber": "001075-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "LDT-UR-17-006",
+    "accountNumber": "GR100444",
+    "awardEffectiveDate": "2017-09-01",
+    "finalExpirationDate": "2019-08-31",
+    "anticipatedTotalAmount": 140000,
+    "obligatedTotalAmount": 140000,
+    "costShares": [],
+    "title": "Radar signal processing in cluttered environments",
+    "sponsorCode": "011204",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4420",
+    "projectPersons": [
+      {
+        "personId": "100107",
+        "personName": "Anne Farrall",
+        "roleCode": "PI",
+        "unitNumber": "10-4420"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Defense",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Janet Rather",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2019-11-14T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20001,
+    "awardNumber": "001092-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "RCMC-URA-2018-044",
+    "accountNumber": "GR100037",
+    "awardEffectiveDate": "2018-03-01",
+    "finalExpirationDate": "2021-02-28",
+    "anticipatedTotalAmount": 168000,
+    "obligatedTotalAmount": 168000,
+    "costShares": [],
+    "title": "Thermal management for high-density battery packs",
+    "sponsorCode": "010441",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4440",
+    "projectPersons": [
+      {
+        "personId": "100177",
+        "personName": "Robert Bessey",
+        "roleCode": "PI",
+        "unitNumber": "10-4440"
+      },
+      {
+        "personId": "100184",
+        "personName": "Susan Beal",
+        "roleCode": "COI",
+        "unitNumber": "10-4440"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Mobility",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Elena Chittenden",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2021-05-14T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20027,
+    "awardNumber": "001109-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "GGPL-RD-18-02",
+    "accountNumber": "GR100999",
+    "awardEffectiveDate": "2018-04-01",
+    "finalExpirationDate": "2020-03-31",
+    "anticipatedTotalAmount": 95000,
+    "obligatedTotalAmount": 95000,
+    "costShares": [],
+    "title": "Distribution feeder hosting capacity analysis",
+    "sponsorCode": "010619",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4420",
+    "projectPersons": [
+      {
+        "personId": "100198",
+        "personName": "Victor Moores",
+        "roleCode": "PI",
+        "unitNumber": "10-4420"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Energy",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Terrence Morrill",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2020-06-14T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20005,
+    "awardNumber": "001126-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "GRA-RSA-19-0213",
+    "accountNumber": "GR100185",
+    "awardEffectiveDate": "2019-05-01",
+    "finalExpirationDate": "2022-04-30",
+    "anticipatedTotalAmount": 140000,
+    "obligatedTotalAmount": 140000,
+    "costShares": [],
+    "title": "Electric motor thermal modeling for high-duty-cycle drive units",
+    "sponsorCode": "010452",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4420",
+    "projectPersons": [
+      {
+        "personId": "100149",
+        "personName": "Kevin Erickson",
+        "roleCode": "PI",
+        "unitNumber": "10-4420"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Mobility",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Derek Wonders",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2022-07-14T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20018,
+    "awardNumber": "001143-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "CDM-RA-2020-07",
+    "accountNumber": "GR100666",
+    "awardEffectiveDate": "2020-02-01",
+    "finalExpirationDate": "2022-11-30",
+    "anticipatedTotalAmount": 85000,
+    "obligatedTotalAmount": 85000,
+    "costShares": [],
+    "title": "Antithrombogenic coatings for blood-contacting devices",
+    "sponsorCode": "011530",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4460",
+    "projectPersons": [
+      {
+        "personId": "100142",
+        "personName": "Karen Willoughby",
+        "roleCode": "PI",
+        "unitNumber": "10-4460"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Materials",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Imani Bogue",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2023-02-13T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20031,
+    "awardNumber": "001160-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "SST-UR-2020-11",
+    "accountNumber": "GR101147",
+    "awardEffectiveDate": "2020-03-01",
+    "finalExpirationDate": "2022-06-30",
+    "anticipatedTotalAmount": 75000,
+    "obligatedTotalAmount": 75000,
+    "costShares": [],
+    "title": "Reliability of large-scale distributed systems",
+    "sponsorCode": "011745",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4430",
+    "projectPersons": [
+      {
+        "personId": "100191",
+        "personName": "Teresa Cavanaugh",
+        "roleCode": "PI",
+        "unitNumber": "10-4430"
+      }
+    ],
+    "customData": {
+      "researchTheme": "AI",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Rashad Mason",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2022-09-13T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20002,
+    "awardNumber": "001177-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "RCMC-URA-2020-017",
+    "accountNumber": "GR100074",
+    "awardEffectiveDate": "2020-06-01",
+    "finalExpirationDate": "2022-05-31",
+    "anticipatedTotalAmount": 114000,
+    "obligatedTotalAmount": 114000,
+    "costShares": [],
+    "title": "Lightweight composite structures for crash energy absorption",
+    "sponsorCode": "010441",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4410",
+    "projectPersons": [
+      {
+        "personId": "100114",
+        "personName": "David Snyder",
+        "roleCode": "PI",
+        "unitNumber": "10-4410"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Materials",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Andre Cowles",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2022-08-14T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20013,
+    "awardNumber": "001194-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "7",
+    "awardTypeDescription": "Subaward",
+    "sponsorAwardNumber": "LDT-SUB-20-0142",
+    "accountNumber": "GR100481",
+    "awardEffectiveDate": "2020-07-01",
+    "finalExpirationDate": "2023-06-30",
+    "anticipatedTotalAmount": 190000,
+    "obligatedTotalAmount": 190000,
+    "costShares": [],
+    "title": "Composite spall liner modeling for ground vehicle survivability",
+    "sponsorCode": "011204",
+    "primeSponsorCode": "000007",
+    "leadUnitNumber": "10-4440",
+    "projectPersons": [
+      {
+        "personId": "100156",
+        "personName": "Lucas Waverly",
+        "roleCode": "PI",
+        "unitNumber": "10-4440"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Defense",
+      "exportControl": "Export Controlled (ITAR)",
+      "sponsorTechnicalContact": "Robert Nisbet",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2023-09-13T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20023,
+    "awardNumber": "001211-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "GW-RD-2020-058",
+    "accountNumber": "GR100851",
+    "awardEffectiveDate": "2020-08-01",
+    "finalExpirationDate": "2023-07-31",
+    "anticipatedTotalAmount": 160000,
+    "obligatedTotalAmount": 160000,
+    "costShares": [],
+    "title": "Bio-based protective coatings",
+    "sponsorCode": "010388",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4440",
+    "projectPersons": [
+      {
+        "personId": "100163",
+        "personName": "Nathan Jolly",
+        "roleCode": "PI",
+        "unitNumber": "10-4440"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Materials",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Sun-Hee Williams",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2023-10-14T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20010,
+    "awardNumber": "001228-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "BPC-2021-003",
+    "accountNumber": "GR100370",
+    "awardEffectiveDate": "2021-04-01",
+    "finalExpirationDate": "2023-03-31",
+    "anticipatedTotalAmount": 60000,
+    "obligatedTotalAmount": 60000,
+    "costShares": [],
+    "title": "Tool wear prediction for high-volume machining",
+    "sponsorCode": "010967",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4410",
+    "projectPersons": [
+      {
+        "personId": "100135",
+        "personName": "James Anthony",
+        "roleCode": "PI",
+        "unitNumber": "10-4410"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Advanced Manufacturing",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Rick Campbell",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2023-06-14T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20028,
+    "awardNumber": "001245-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "1",
+    "awardTypeDescription": "Federal Grant",
+    "sponsorAwardNumber": "DE-EE-SYN0041",
+    "accountNumber": "GR101036",
+    "awardEffectiveDate": "2021-10-01",
+    "finalExpirationDate": "2024-09-30",
+    "anticipatedTotalAmount": 1200000,
+    "obligatedTotalAmount": 1200000,
+    "costShares": [
+      {
+        "sourceName": "Go Green Power & Light",
+        "commitmentAmount": 150000,
+        "costShareType": "In-kind"
+      }
+    ],
+    "title": "Grid-edge storage coordination for distribution systems",
+    "sponsorCode": "000019",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4420",
+    "projectPersons": [
+      {
+        "personId": "100198",
+        "personName": "Victor Moores",
+        "roleCode": "PI",
+        "unitNumber": "10-4420"
+      },
+      {
+        "personId": "100149",
+        "personName": "Kevin Erickson",
+        "roleCode": "COI",
+        "unitNumber": "10-4420"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Energy",
+      "exportControl": "None",
+      "sponsorTechnicalContact": null,
+      "industryPartners": "Go Green Power & Light (cost share: field test site, feeder data, engineer time)",
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2024-12-14T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20014,
+    "awardNumber": "001262-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "LDT-UR-21-044",
+    "accountNumber": "GR100518",
+    "awardEffectiveDate": "2022-01-01",
+    "finalExpirationDate": "2025-06-30",
+    "anticipatedTotalAmount": 230000,
+    "obligatedTotalAmount": 230000,
+    "costShares": [],
+    "title": "Multi-sensor fusion in degraded visual environments",
+    "sponsorCode": "011204",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4420",
+    "projectPersons": [
+      {
+        "personId": "100107",
+        "personName": "Anne Farrall",
+        "roleCode": "PI",
+        "unitNumber": "10-4420"
+      },
+      {
+        "personId": "100191",
+        "personName": "Teresa Cavanaugh",
+        "roleCode": "COI",
+        "unitNumber": "10-4420"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Autonomous Systems",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Janet Rather",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2025-09-13T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20019,
+    "awardNumber": "001279-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "UM-PKG-22-01",
+    "accountNumber": "GR100703",
+    "awardEffectiveDate": "2022-03-01",
+    "finalExpirationDate": "2024-02-29",
+    "anticipatedTotalAmount": 70000,
+    "obligatedTotalAmount": 70000,
+    "costShares": [],
+    "title": "Drop and vibration testing for e-commerce packaging",
+    "sponsorCode": "011689",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "20-3170",
+    "projectPersons": [
+      {
+        "personId": "100121",
+        "personName": "Eric Marfitt",
+        "roleCode": "PI",
+        "unitNumber": "20-3170"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Sustainability",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Nathaniel Hubbard",
+      "industryPartners": null,
+      "ospAdministrator": "Erin Glencairn"
+    },
+    "updateTimestamp": "2024-05-14T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20020,
+    "awardNumber": "001296-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "6",
+    "statusDescription": "Closed",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "WHE-NEV-22-005",
+    "accountNumber": "GR100740",
+    "awardEffectiveDate": "2022-09-01",
+    "finalExpirationDate": "2025-08-31",
+    "anticipatedTotalAmount": 180000,
+    "obligatedTotalAmount": 180000,
+    "costShares": [],
+    "title": "Solid sorbents for direct air capture",
+    "sponsorCode": "010733",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4440",
+    "projectPersons": [
+      {
+        "personId": "100177",
+        "personName": "Robert Bessey",
+        "roleCode": "PI",
+        "unitNumber": "10-4440"
+      },
+      {
+        "personId": "100163",
+        "personName": "Nathan Jolly",
+        "roleCode": "COI",
+        "unitNumber": "10-4440"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Sustainability",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Gloria Kedzie",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2025-11-14T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20003,
+    "awardNumber": "001313-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Active",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "RCMC-URA-2022-091",
+    "accountNumber": "GR100111",
+    "awardEffectiveDate": "2023-01-01",
+    "finalExpirationDate": "2026-12-31",
+    "anticipatedTotalAmount": 244000,
+    "obligatedTotalAmount": 183000,
+    "costShares": [],
+    "title": "Sensor fusion validation for advanced driver assistance systems",
+    "sponsorCode": "010441",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4420",
+    "projectPersons": [
+      {
+        "personId": "100107",
+        "personName": "Anne Farrall",
+        "roleCode": "PI",
+        "unitNumber": "10-4420"
+      },
+      {
+        "personId": "100149",
+        "personName": "Kevin Erickson",
+        "roleCode": "COI",
+        "unitNumber": "10-4420"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Autonomous Systems",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Marcus Hagadorn",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2026-01-01T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20024,
+    "awardNumber": "001330-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Active",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "GW-RD-2023-014",
+    "accountNumber": "GR100888",
+    "awardEffectiveDate": "2023-06-01",
+    "finalExpirationDate": "2026-12-31",
+    "anticipatedTotalAmount": 240000,
+    "obligatedTotalAmount": 240000,
+    "costShares": [],
+    "title": "Catalysts for polymer upcycling",
+    "sponsorCode": "010388",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4440",
+    "projectPersons": [
+      {
+        "personId": "100100",
+        "personName": "Amy Creyts",
+        "roleCode": "PI",
+        "unitNumber": "10-4440"
+      },
+      {
+        "personId": "100163",
+        "personName": "Nathan Jolly",
+        "roleCode": "COI",
+        "unitNumber": "10-4440"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Sustainability",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Rohan Campbell",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2026-06-01T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20015,
+    "awardNumber": "001347-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Active",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "LDT-UR-23-019",
+    "accountNumber": "GR100555",
+    "awardEffectiveDate": "2023-09-01",
+    "finalExpirationDate": "2026-12-31",
+    "anticipatedTotalAmount": 260000,
+    "obligatedTotalAmount": 260000,
+    "costShares": [],
+    "title": "Autonomous convoy path planning in contested environments",
+    "sponsorCode": "011204",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4410",
+    "projectPersons": [
+      {
+        "personId": "100128",
+        "personName": "Henry Clippert",
+        "roleCode": "PI",
+        "unitNumber": "10-4410"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Autonomous Systems",
+      "exportControl": "Controlled Unclassified Information (CUI)",
+      "sponsorTechnicalContact": "Keisha Cowles",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2026-09-01T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20006,
+    "awardNumber": "001364-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Active",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "GRA-RSA-23-0877",
+    "accountNumber": "GR100222",
+    "awardEffectiveDate": "2024-01-01",
+    "finalExpirationDate": "2027-06-30",
+    "anticipatedTotalAmount": 216000,
+    "obligatedTotalAmount": 144000,
+    "costShares": [],
+    "title": "Silicon carbide inverter reliability under thermal cycling",
+    "sponsorCode": "010452",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4420",
+    "projectPersons": [
+      {
+        "personId": "100149",
+        "personName": "Kevin Erickson",
+        "roleCode": "PI",
+        "unitNumber": "10-4420"
+      },
+      {
+        "personId": "100198",
+        "personName": "Victor Moores",
+        "roleCode": "COI",
+        "unitNumber": "10-4420"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Semiconductors",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Derek Wonders",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2026-01-01T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20029,
+    "awardNumber": "001381-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Active",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "GGPL-RD-23-09",
+    "accountNumber": "GR101073",
+    "awardEffectiveDate": "2024-01-15",
+    "finalExpirationDate": "2026-12-31",
+    "anticipatedTotalAmount": 120000,
+    "obligatedTotalAmount": 120000,
+    "costShares": [],
+    "title": "Load forecasting under rising EV adoption",
+    "sponsorCode": "010619",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4420",
+    "projectPersons": [
+      {
+        "personId": "100198",
+        "personName": "Victor Moores",
+        "roleCode": "PI",
+        "unitNumber": "10-4420"
+      }
+    ],
+    "customData": {
+      "researchTheme": "AI",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Ian Armstrong",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2026-01-15T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20008,
+    "awardNumber": "001398-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Active",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "GCM-SRA-0024",
+    "accountNumber": "GR100296",
+    "awardEffectiveDate": "2024-02-01",
+    "finalExpirationDate": "2026-12-31",
+    "anticipatedTotalAmount": 95000,
+    "obligatedTotalAmount": 95000,
+    "costShares": [],
+    "title": "Fast-charge thermal management for LFP cells",
+    "sponsorCode": "011873",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4410",
+    "projectPersons": [
+      {
+        "personId": "100184",
+        "personName": "Susan Beal",
+        "roleCode": "PI",
+        "unitNumber": "10-4410"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Energy",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Lena Wills",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2026-02-01T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20021,
+    "awardNumber": "001415-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Active",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "WHE-NEV-24-012",
+    "accountNumber": "GR100777",
+    "awardEffectiveDate": "2024-05-01",
+    "finalExpirationDate": "2027-04-30",
+    "anticipatedTotalAmount": 150000,
+    "obligatedTotalAmount": 100000,
+    "costShares": [],
+    "title": "Electrolyzer membrane durability under dynamic operation",
+    "sponsorCode": "010733",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4440",
+    "projectPersons": [
+      {
+        "personId": "100163",
+        "personName": "Nathan Jolly",
+        "roleCode": "PI",
+        "unitNumber": "10-4440"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Energy",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Gloria Kedzie",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2026-05-01T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20025,
+    "awardNumber": "001432-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Active",
+    "awardTypeCode": "9",
+    "awardTypeDescription": "Fellowship Agreement",
+    "sponsorAwardNumber": "GW-FEL-2024-001",
+    "accountNumber": "GR100925",
+    "awardEffectiveDate": "2024-09-01",
+    "finalExpirationDate": "2027-08-31",
+    "anticipatedTotalAmount": 90000,
+    "obligatedTotalAmount": 60000,
+    "costShares": [],
+    "title": "Graduate Fellowship in Sustainable Materials",
+    "sponsorCode": "010388",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4440",
+    "projectPersons": [
+      {
+        "personId": "100163",
+        "personName": "Nathan Jolly",
+        "roleCode": "PI",
+        "unitNumber": "10-4440"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Sustainability",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Sun-Hee Williams",
+      "industryPartners": null,
+      "ospAdministrator": "Mark Lathrop"
+    },
+    "updateTimestamp": "2026-09-01T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20016,
+    "awardNumber": "001449-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Active",
+    "awardTypeCode": "5",
+    "awardTypeDescription": "Sponsored Research Agreement",
+    "sponsorAwardNumber": "LDT-UR-24-071",
+    "accountNumber": "GR100592",
+    "awardEffectiveDate": "2025-02-01",
+    "finalExpirationDate": "2027-01-31",
+    "anticipatedTotalAmount": 175000,
+    "obligatedTotalAmount": 95000,
+    "costShares": [],
+    "title": "Low-power edge computing for distributed sensor networks",
+    "sponsorCode": "011204",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4430",
+    "projectPersons": [
+      {
+        "personId": "100191",
+        "personName": "Teresa Cavanaugh",
+        "roleCode": "PI",
+        "unitNumber": "10-4430"
+      },
+      {
+        "personId": "100107",
+        "personName": "Anne Farrall",
+        "roleCode": "COI",
+        "unitNumber": "10-4430"
+      }
+    ],
+    "customData": {
+      "researchTheme": "AI",
+      "exportControl": "None",
+      "sponsorTechnicalContact": "Janet Rather",
+      "industryPartners": null,
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2026-02-01T10:30:00",
+    "updateUser": "osp-batch"
+  },
+  {
+    "awardId": 20030,
+    "awardNumber": "001466-00001",
+    "sequenceNumber": 1,
+    "awardSequenceStatus": "ACTIVE",
+    "statusCode": "1",
+    "statusDescription": "Active",
+    "awardTypeCode": "1",
+    "awardTypeDescription": "Federal Grant",
+    "sponsorAwardNumber": "NSF-SYN-2518842",
+    "accountNumber": "GR101110",
+    "awardEffectiveDate": "2025-08-01",
+    "finalExpirationDate": "2028-07-31",
+    "anticipatedTotalAmount": 600000,
+    "obligatedTotalAmount": 400000,
+    "costShares": [],
+    "title": "Ice storm resilience forecasting for electric distribution networks",
+    "sponsorCode": "000012",
+    "primeSponsorCode": null,
+    "leadUnitNumber": "10-4420",
+    "projectPersons": [
+      {
+        "personId": "100198",
+        "personName": "Victor Moores",
+        "roleCode": "PI",
+        "unitNumber": "10-4420"
+      },
+      {
+        "personId": "100191",
+        "personName": "Teresa Cavanaugh",
+        "roleCode": "COI",
+        "unitNumber": "10-4420"
+      }
+    ],
+    "customData": {
+      "researchTheme": "Energy",
+      "exportControl": "None",
+      "sponsorTechnicalContact": null,
+      "industryPartners": "Go Green Power & Light (letter of support; Terrence Morrill on industry advisory board)",
+      "ospAdministrator": "Diane Stoddard"
+    },
+    "updateTimestamp": "2026-08-01T10:30:00",
+    "updateUser": "osp-batch"
+  }
+]

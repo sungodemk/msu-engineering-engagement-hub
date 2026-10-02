@@ -1,0 +1,92 @@
+[
+  {
+    "sponsorCode": "000007",
+    "sponsorName": "U.S. Army",
+    "sponsorTypeDescription": "Government",
+    "active": true
+  },
+  {
+    "sponsorCode": "000012",
+    "sponsorName": "National Science Foundation",
+    "sponsorTypeDescription": "Government",
+    "active": true
+  },
+  {
+    "sponsorCode": "000019",
+    "sponsorName": "U.S. Department of Energy",
+    "sponsorTypeDescription": "Government",
+    "active": true
+  },
+  {
+    "sponsorCode": "010388",
+    "sponsorName": "Greene & Whyte Materials",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  },
+  {
+    "sponsorCode": "010441",
+    "sponsorName": "Red Cedar Motor Company",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  },
+  {
+    "sponsorCode": "010452",
+    "sponsorName": "Grand River Automotive",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  },
+  {
+    "sponsorCode": "010512",
+    "sponsorName": "Tailgate Drive Systems",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  },
+  {
+    "sponsorCode": "010619",
+    "sponsorName": "Go Green Power & Light",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  },
+  {
+    "sponsorCode": "010733",
+    "sponsorName": "Wells Hall Energy",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  },
+  {
+    "sponsorCode": "010967",
+    "sponsorName": "Beaumont Precision Components",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  },
+  {
+    "sponsorCode": "011204",
+    "sponsorName": "Laconia Defense Technologies",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  },
+  {
+    "sponsorCode": "011530",
+    "sponsorName": "Circle Drive Medical",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  },
+  {
+    "sponsorCode": "011689",
+    "sponsorName": "Union Mercantile",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  },
+  {
+    "sponsorCode": "011745",
+    "sponsorName": "Spartan Stack Technologies",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  },
+  {
+    "sponsorCode": "011873",
+    "sponsorName": "Green Current Motors",
+    "sponsorTypeDescription": "Corporate",
+    "active": true
+  }
+]
