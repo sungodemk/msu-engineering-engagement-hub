@@ -8,6 +8,15 @@ import psycopg
 
 DATABASE_URL = os.environ["DATABASE_URL"]
 
+AUTO_ACCEPT_THRESHOLD = 0.90
+REVIEW_THRESHOLD = 0.60
+
+NAME_EXACT_WEIGHT = 0.30
+NAME_INITIAL_WEIGHT = 0.20
+CITY_WEIGHT = 0.20
+DEGREE_WEIGHT = 0.25
+EMPLOYER_WEIGHT = 0.25
+
 
 def load_people(cur):
     cur.execute(
@@ -133,24 +142,29 @@ def block_by_last_name(people):
     }
 
 
-# first names are compatible when they match or if one is an initial of the other
-def first_names_compatible(first1, first2):
+# identifies whether the first names are exact matches or an initial match
+def first_name_match_type(first1, first2):
     first1 = normalize_person_name(first1)
     first2 = normalize_person_name(first2)
 
     if not first1 or not first2:
-        return False
+        return None
 
     if first1 == first2:
-        return True
+        return "exact"
 
-    if len(first1) == 1:
-        return first2.startswith(first1)
+    if len(first1) == 1 and first2.startswith(first1):
+        return "initial"
 
-    if len(first2) == 1:
-        return first1.startswith(first2)
+    if len(first2) == 1 and first1.startswith(first2):
+        return "initial"
 
-    return False
+    return None
+
+
+# first names are compatible when they are either exact or an initial match
+def first_names_compatible(first1, first2):
+    return first_name_match_type(first1, first2) is not None
 
 
 # cities only count as matching evidence when both people have a city
@@ -192,6 +206,51 @@ def shared_current_employer(person1, person2, employers):
     return bool(employers1 & employers2)
 
 
+# scores the match and assigns the pair to a review band
+def score_and_band(person1, person2, city_match, degree_match, employer_match):
+    score = 0.0
+    reasons = []
+
+    name_match = first_name_match_type(
+        person1["first"],
+        person2["first"],
+    )
+
+    if name_match == "exact":
+        score += NAME_EXACT_WEIGHT
+        reasons.append("name_exact")
+
+    elif name_match == "initial":
+        score += NAME_INITIAL_WEIGHT
+        reasons.append("name_initial")
+
+    if city_match:
+        score += CITY_WEIGHT
+        reasons.append("same_city")
+
+    if degree_match:
+        score += DEGREE_WEIGHT
+        reasons.append("shared_degree")
+
+    if employer_match:
+        score += EMPLOYER_WEIGHT
+        reasons.append("same_employer")
+
+    score = round(score, 3)
+
+    # initial matches always need human review even if score is high enough to auto-accept
+    if name_match == "initial" and score >= REVIEW_THRESHOLD:
+        return score, "pending_review", reasons
+
+    if score >= AUTO_ACCEPT_THRESHOLD:
+        return score, "auto_accepted", reasons
+
+    if score >= REVIEW_THRESHOLD:
+        return score, "pending_review", reasons
+
+    return score, None, reasons
+
+
 def main():
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
@@ -224,13 +283,21 @@ def main():
                 employers,
             )
 
+            score, status, reasons = score_and_band(
+                person1,
+                person2,
+                city_match,
+                degree_match,
+                employer_match,
+            )
+
             print(
                 f"{person1['source_pk']}: {person1['display_name']} "
                 f"<-> "
                 f"{person2['source_pk']}: {person2['display_name']}\n"
-                f"  same_city={city_match} | "
-                f"shared_degree={degree_match} | "
-                f"shared_employer={employer_match}"
+                f"  score={score:.3f} | "
+                f"status={status or 'dropped'} | "
+                f"reasons={reasons}"
             )
 
     print(f"\nLast-name blocks: {len(blocks)}")
