@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import '../css/footer.css';
 import '../css/main.css';
 import '../css/navbar.css';
+import SidebarSearch from '../components/SidebarSearch';
 
 /* Emmanuel Koshy */
 const navItems = [
@@ -25,7 +26,7 @@ function Layout({ children }) {
                     </div>
                 </div>
 
-                <input className= "sidebar-search" placeholder="Search..." type="text" />
+               <SidebarSearch />
 
 
                 <div className="section-label">Navigation</div>

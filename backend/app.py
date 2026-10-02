@@ -204,6 +204,28 @@ def get_person(person_id):
 
     })
 
+
+# search for people and companies (Emmanuel)
+@app.route('/api/search')
+def search():
+    q = request.args.get('q', '').strip()
+    if len(q) < 2:
+        return jsonify([])
+
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT id, display_name AS name, entity_type AS type
+                FROM live_entities
+                WHERE entity_type IN ('person', 'organization')
+                  AND display_name ILIKE %s 
+                ORDER BY starts_with (lower(display_name), lower(%s)) DESC, display_name
+                LIMIT 10
+            """, (f'%{q}%', q,))
+            results = cur.fetchall()
+
+    return jsonify(results)
+
 # Queries everything needed for the Portfolio page in one response (Alvin)
 @app.route('/api/portfolio')
 def portfolio():
