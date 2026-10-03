@@ -9,6 +9,8 @@ function StewardshipQueue() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [decisionError, setDecisionError] = useState("");
+    const [activeTab, setActiveTab] = useState("all");
+
 
     function loadQueue() {
         // load company and person matcher results
@@ -102,6 +104,12 @@ function StewardshipQueue() {
         return value || "—";
     }
 
+
+    const filteredPending = activeTab === "all"
+        ? pending
+        : pending.filter(match => match.entity_type === activeTab);
+
+
     if (loading) {
         return (
             <div className="stewardship-page">
@@ -131,7 +139,7 @@ function StewardshipQueue() {
                 </div>
 
                 <div className="pending-count">
-                    {pending.length} pending
+                    {filteredPending.length} pending
                 </div>
             </div>
 
@@ -143,13 +151,25 @@ function StewardshipQueue() {
 
             <div className="queue-controls">
                 <div className="queue-tabs">
-                    <button className="queue-tab active" type="button">
+                    <button
+                        className={activeTab === "all" ? "queue-tab active" : "queue-tab"}
+                        type="button"
+                        onClick={() => setActiveTab("all")}
+                    >
                         All
                     </button>
-                    <button className="queue-tab" type="button">
+                    <button
+                        className={activeTab === "organization" ? "queue-tab active" : "queue-tab"}
+                        type="button"
+                        onClick={() => setActiveTab("organization")}
+                    >
                         Company
                     </button>
-                    <button className="queue-tab" type="button">
+                    <button
+                        className={activeTab === "person" ? "queue-tab active" : "queue-tab"}
+                        type="button"
+                        onClick={() => setActiveTab("person")}
+                    >
                         Person
                     </button>
                 </div>
@@ -164,13 +184,13 @@ function StewardshipQueue() {
             <section className="pending-section">
                 <h2>Pending Review</h2>
 
-                {pending.length === 0 ? (
+                {filteredPending.length === 0 ? (
                     <div className="empty-message">
                         No matches waiting for review
                     </div>
                 ) : (
                     <div className="match-list">
-                        {pending.map(match => {
+                        {filteredPending.map(match => {
                             // define fields compared side by side so that adding a another field only needs one new entry
                             const fields = [
                                 {
