@@ -8,11 +8,10 @@ function StewardshipQueue() {
     const [recent, setRecent] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [decisionError, setDecisionError] = useState("");
 
-    useEffect(() => {
-        document.title = "Stewardship Queue";
-
-        // load company matcher results
+    function loadQueue() {
+        // load company and person matcher results
         fetch("http://localhost:8080/api/stewardship-queue")
             .then(result => {
                 if (!result.ok) {
@@ -24,13 +23,48 @@ function StewardshipQueue() {
             .then(data => {
                 setPending(data.pending);
                 setRecent(data.recent);
+                setError(false);
                 setLoading(false);
             })
             .catch(() => {
                 setError(true);
                 setLoading(false);
             });
+    }
+
+
+    useEffect(() => {
+        document.title = "Stewardship Queue";
+
+        loadQueue();
     }, []);
+
+
+    // sends the decision then reloads so the card moves to recently reviewed
+    function handleDecision(matchId, decision) {
+        setDecisionError("");
+
+        fetch(`http://localhost:8080/api/matches/${matchId}/decision`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({decision}),
+        })
+            .then(result => {
+                if (!result.ok) {
+                    throw new Error("Failed to update match");
+                }
+
+                return result.json();
+            })
+            .then(() => {
+                loadQueue();
+            })
+            .catch(() => {
+                setDecisionError("Unable to update match decision.");
+            });
+    }
 
 
     function formatScore(score) {
@@ -68,12 +102,6 @@ function StewardshipQueue() {
         return value || "—";
     }
 
-
-    function valuesDiffer(left, right) {
-        return left !== right;
-    }
-
-
     if (loading) {
         return (
             <div className="stewardship-page">
@@ -106,6 +134,11 @@ function StewardshipQueue() {
                     {pending.length} pending
                 </div>
             </div>
+
+
+            {decisionError && (
+                <p>{decisionError}</p>
+            )}
 
 
             <div className="queue-controls">
@@ -184,6 +217,7 @@ function StewardshipQueue() {
                                             <button
                                                 className="reject-button"
                                                 type="button"
+                                                onClick={() => handleDecision(match.match_id, "reject")}
                                             >
                                                 Reject
                                             </button>
@@ -191,6 +225,7 @@ function StewardshipQueue() {
                                             <button
                                                 className="accept-button"
                                                 type="button"
+                                                onClick={() => handleDecision(match.match_id, "accept")}
                                             >
                                                 Accept
                                             </button>
@@ -218,10 +253,7 @@ function StewardshipQueue() {
                                         <tbody>
                                             {fields.map(field => {
                                                 // highlight mismatch fields so reviewers can see where the two records differ easily
-                                                const different = valuesDiffer(
-                                                    field.left,
-                                                    field.right
-                                                );
+                                                const different = field.left !== field.right;
 
                                                 return (
                                                     <tr key={field.label}>
