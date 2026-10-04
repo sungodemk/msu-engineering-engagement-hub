@@ -9,13 +9,6 @@ function Home() {
   }, []);
 const cards = [
     {
-      icon: '🏢',
-      title: 'Company',
-      body: 'Manage your company relationships and interactions.',
-      to: '/company_page',
-      link: 'View Companies'
-    },
-    {
       icon: '👤',
       title: 'Person',
       body: 'Connect with professionals and maintain your network.',

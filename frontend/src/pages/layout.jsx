@@ -7,10 +7,10 @@ import SidebarSearch from '../components/SidebarSearch';
 /* Emmanuel Koshy */
 const navItems = [
     {to: '/', label: 'Home'},
-    {to: '/company_page', label: 'Company',icon:"🏢"},
     {to: '/persons', label: 'Persons', icon:"👤"},
     {to: '/portfolio', label: 'Portfolio', icon:"📂"},
-    {to: '/stewardship', label: 'Stewardship Queue',icon:"📊"}
+    {to: '/stewardship', label: 'Stewardship Queue',icon:"📝"},
+    {to: '/temporal', label: 'Temporal Graph',icon:"📈"},
 ];
 
 function Layout({ children }) {
