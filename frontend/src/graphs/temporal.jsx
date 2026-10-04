@@ -1,3 +1,4 @@
+import { useState } from "react";
 import '../css/temporal.css';
 
 const CATEGORY_META = {
@@ -6,6 +7,7 @@ const CATEGORY_META = {
     recruiting: {label: 'Talent & Recruiting', color: '#e0722f'},
     ask: {label: 'Asks', color: '#a24fd6'},
     touchpoint: {label: 'Touchpoints', color: '#5b5f68'},
+    action_item: {label: 'Tasks', color: '#d6b23b'},
 };
 
 // maps a date to a position between chartStart and chartEnd
@@ -16,7 +18,22 @@ function dateToX(date, minDate, maxDate, chartLeft, chartRight) {
     return chartLeft + ratio * (chartRight - chartLeft);
 }
 
+function formatMonthYear(date) {
+    return new Date(date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
+function tooltipTitle(activity, meta) {
+    return activity.sub_type || meta.label;
+}
+
+// strips the parsed-out title portion, returns the remaining descriptive text
+function tooltipDescription(activity) {
+    return activity.notes || null;
+}
+
 function Temporal({activities}) {
+    const [hovered, setHovered] = useState(null);
+
     if (!activities || activities.length === 0) {
         return <p>No activity history yet.</p>;
     }
@@ -50,6 +67,16 @@ function Temporal({activities}) {
     for (let y = startYear; y <= endYear; y++) {
         years.push(y);
     }
+
+    function showTooltip(e, activity) {
+        const rect = e.target.closest('.temporal-wrapper').getBoundingClientRect();
+        setHovered({
+            activity,
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        });
+    }
+
 
     return (
         <div className="temporal-wrapper">
@@ -100,6 +127,9 @@ function Temporal({activities}) {
                                                 <rect x={x} y={y - 12} width={xEnd - x} height={24} rx={6}
                                                       className="temporal-bar"
                                                       style={{fill: meta.color + '33', stroke: meta.color}}
+                                                      onMouseEnter={(e) => showTooltip(e, a)}
+                                                      onMouseMove={e => showTooltip(e, a)}
+                                                      onMouseLeave={() => setHovered(null)}
                                                 />
                                                 {a.amount && (
                                                     <text x={x} y={y - 18} className="temporal-amount-label">
@@ -112,15 +142,40 @@ function Temporal({activities}) {
 
                                     return (
                                         <circle key={a.id} cx={x} cy={y} r={7} style={{fill: meta.color}}
-                                                className="temporal-dot">
-                                            <title>{a.notes || `${meta.label} — ${a.occurred_on}`}</title>
-                                        </circle>
+                                                className="temporal-dot"
+                                                onMouseEnter={e => showTooltip(e, a)}
+                                                onMouseMove={e => showTooltip(e, a)}
+                                                onMouseLeave={() => setHovered(null)}
+                                        />
                                     );
                                 })}
                         </g>
                     );
                 })}
             </svg>
+
+            {hovered && (() => {
+                const meta = CATEGORY_META[hovered.activity.activity_type] || {label: hovered.activity.activity_type, color: '#999'};
+                return (
+                    <div className="temporal-tooltip" style={{left: hovered.x + 20, top: hovered.y + 70}}>
+                        <div className="temporal-tooltip-header">
+                            <span className="temporal-tooltip-dot" style={{background: meta.color}} />
+                            <span className="temporal-tooltip-title">{tooltipTitle(hovered.activity, meta)}</span>
+                        </div>
+                        <div className="temporal-tooltip-desc">
+                            {tooltipDescription(hovered.activity) || meta.label}
+                        </div>
+                        {hovered.activity.amount && (
+                            <div className="temporal-tooltip-amount">
+                                ${Number(hovered.activity.amount).toLocaleString()}
+                            </div>
+                        )}
+                        <div className="temporal-tooltip-date">
+                            {formatMonthYear(hovered.activity.occurred_on)}
+                        </div>
+                    </div>
+                );
+            })()}
         </div>
     );
 }

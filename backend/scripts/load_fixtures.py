@@ -434,8 +434,6 @@ def load_opportunities(cur, rows, account_entities, contact_entities,
 
         amount = opp["Amount"]
         notes_parts = [opp["Name"]]
-        if opp["Type"]:
-            notes_parts.append(f'({opp["Type"]})')
         if opp["Gift_Memo__c"]:
             notes_parts.append(opp["Gift_Memo__c"])
         notes = " ".join(notes_parts)
@@ -446,6 +444,7 @@ def load_opportunities(cur, rows, account_entities, contact_entities,
                 person_entity_id,
                 msu_unit_entity_id,
                 activity_type,
+                sub_type,
                 occurred_on,
                 ended_on,
                 amount,
@@ -454,12 +453,13 @@ def load_opportunities(cur, rows, account_entities, contact_entities,
                 notes,
                 source_record_id
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,(
                 company_entity_id,
                 person_entity_id,
                 unit_entity_id,
                 activity_type,
+                opp["Type"],
                 opp["CloseDate"],
                 None,
                 amount,
@@ -476,7 +476,73 @@ def load_opportunities(cur, rows, account_entities, contact_entities,
             f"Skipped {skipped_no_account} opportunities with no "
             f"matching Account (dangling Account.External_ID__c)"
         )
-            
+# Loads contact reports as touchpoints (Alvin)
+def load_contact_reports(cur, rows, account_entities, contact_entities, units_by_code):
+    skipped_no_account = 0
+
+    for report in rows:
+        company_entity_id = account_entities.get(report["Account__r.External_ID__c"])
+
+        if company_entity_id is None:
+            skipped_no_account += 1
+            continue
+
+        source_id = insert_source_record(
+            cur, "Contact_Report__c", report["External_ID__c"], report,
+        )
+        person_entity_id = contact_entities.get(
+            report["Primary_Contact__r.External_ID__c"]
+        )
+        owner_entity_id = contact_entities.get(
+            report["Staff__r.External_ID__c"]
+        )
+        unit_entity_id = units_by_code.get(report["Unit__c"])
+
+        occurred_on = report["Contact_Date__c"]
+
+        notes_parts = [f'Purpose: {report["Purpose__c"]}']
+        if report["Summary__c"]:
+            notes_parts.append(report["Summary__c"])
+        if report["Additional_Attendees__c"]:
+            notes_parts.append(f'Also attended: {report["Additional_Attendees__c"]}')
+        notes = " - ".join(notes_parts)
+
+        cur.execute("""
+            INSERT INTO activities (
+                company_entity_id,
+                person_entity_id,
+                msu_unit_entity_id,
+                activity_type,
+                sub_type,
+                occurred_on,
+                ended_on,
+                amount,
+                status,
+                owner_entity_id,
+                notes,
+                source_record_id
+            )
+            VALUES (%s, %s, %s, 'touchpoint', %s, %s, %s, %s, %s, %s, %s, %s)
+            """,(
+                company_entity_id,
+                person_entity_id,
+                unit_entity_id,
+                report["Contact_Type__c"],
+                occurred_on,
+                None,
+                None,
+                None,
+                owner_entity_id,
+                notes,
+                source_id,
+            ),)
+    if skipped_no_account:
+        print(
+            f"Skipped {skipped_no_account} contact reports with no "
+            f"matching Account or Contact"
+        )
+
+# Loads action items as part of activities (Alvin)
 def load_action_items(cur, rows, account_entities, contact_entities):
     skipped_no_account = 0
 
@@ -497,13 +563,12 @@ def load_action_items(cur, rows, account_entities, contact_entities):
 
         occurred_on = act["Completed_Date__c"] or act["Due_Date__c"]
 
-        notes_parts = [act["Subject__c"]]
+        notes_parts = [f'{act["Subject__c"]} ({act["Status__c"]})']
         if act["Opportunity__r.External_ID__c"]:
-            notes_parts.append(f'({act["Opportunity__r.External_ID__c"]})')
-
+            notes_parts.append(f're: {act["Opportunity__r.External_ID__c"]}')
         if act["Notes__c"]:
             notes_parts.append(act["Notes__c"])
-        notes = " ".join(notes_parts)
+        notes = " — ".join(notes_parts)
 
         cur.execute("""
             INSERT INTO activities (
@@ -511,6 +576,7 @@ def load_action_items(cur, rows, account_entities, contact_entities):
                 person_entity_id,
                 msu_unit_entity_id,
                 activity_type,
+                sub_type,
                 occurred_on,
                 ended_on,
                 amount,
@@ -519,11 +585,12 @@ def load_action_items(cur, rows, account_entities, contact_entities):
                 notes,
                 source_record_id
             )
-            VALUES (%s, %s, %s, 'touchpoint', %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, 'action_item', %s, %s, %s, %s, %s, %s, %s, %s)
             """,(
                 company_entity_id,
                 person_entity_id,
                 None,
+                act["Type__c"],
                 occurred_on,
                 None,
                 None,
@@ -557,6 +624,9 @@ def main():
     assignments = read_csv(
         ROOT / "db" / "seeds" / "05_Relationship_Assignment__c.csv"
     )
+    reports = read_csv(
+        ROOT / "db" / "seeds" / "10_Contact_Report__c.csv"
+    )
     action_items = read_csv(
         ROOT / "db" / "seeds" / "11_Action_Item__c.csv"
     )
@@ -576,6 +646,7 @@ def main():
             load_opportunities(cur, opportunities, account_entities, contact_entities, units_by_code)
             load_degrees(cur, degrees, contact_entities)
             load_relationship_assignments(cur, assignments, account_entities, contact_entities)
+            load_contact_reports(cur, reports, account_entities, contact_entities, units_by_code)
             load_action_items(cur, action_items, account_entities, contact_entities)
 
             for table in [

@@ -8,7 +8,9 @@ Create Table activities (
     msu_unit_entity_id uuid REFERENCES entities(id),
 
     -- Restricted to activity types supported at the moment
-    activity_type text NOT NULL, 
+    activity_type text NOT NULL,
+    -- free-form text field for sub-types of activities, e.g. "Donation", "Follow-Up", "Meeting"
+    sub_type text,
 
     -- Tracking activities by day
     occurred_on date not NULL,
@@ -51,7 +53,8 @@ Create Table activities (
                 'touchpoint',
                 'ask',
                 'award',
-                'recruiting'
+                'recruiting',
+                'action_item'
             )
         ),
 

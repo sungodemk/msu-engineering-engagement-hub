@@ -95,7 +95,7 @@ def temporal(company_id):
     with get_db_connection() as conn:
         with conn.cursor() as cur:
             cur.execute("""
-            SELECT id, activity_type, occurred_on, ended_on, amount, status, notes
+            SELECT id, activity_type, sub_type, occurred_on, ended_on, amount, status, notes
             FROM activities WHERE company_entity_id = %s ORDER BY occurred_on """, (company_id,))
             rows = cur.fetchall()
     return jsonify(rows)

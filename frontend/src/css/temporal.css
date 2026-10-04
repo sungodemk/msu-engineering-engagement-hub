@@ -55,3 +55,52 @@
     fill: #3b6fd6;
     font-weight: bold;
 }
+
+.temporal-tooltip {
+    position: absolute;
+    background: #0f172a;
+    color: #fff;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    max-width: 280px;
+    pointer-events: none;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.temporal-tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.temporal-tooltip-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.temporal-tooltip-title {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.temporal-tooltip-desc {
+    color: #cbd5e1;
+    line-height: 1.4;
+    margin-bottom: 6px;
+}
+
+.temporal-tooltip-amount {
+    font-weight: bold;
+    color: #86efac;
+    margin-bottom: 6px;
+}
+
+.temporal-tooltip-date {
+    color: #94a3b8;
+    font-size: 12px;
+}
