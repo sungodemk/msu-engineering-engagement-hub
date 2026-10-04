@@ -150,7 +150,7 @@ def band_result(result, score):
     if score >= REVIEW_THRESHOLD:
         return "pending_review", reasons
 
-    return None, reasons
+    return "auto_rejected", reasons
 
 
 # order-independent key so (A,B) and (B,A) are treated the same
@@ -168,7 +168,7 @@ def write_matches(cur, results):
         WHERE m.left_source_record_id = esr.source_record_id
           AND esr.entity_id = e.id
           AND e.entity_type = 'organization'
-          AND m.status IN ('pending_review', 'auto_accepted')
+          AND m.status IN ('pending_review', 'auto_accepted', 'auto_rejected')
         """
     )
 
@@ -195,9 +195,6 @@ def write_matches(cur, results):
     for result in results:
         score = combined_score(result, "lower")
         status, reasons = band_result(result, score)
-
-        if status is None:
-            continue
 
         left = result["left"]
         right = result["right"]
@@ -304,21 +301,28 @@ def main():
 
             print("\nChosen rule: lower")
 
+            discarded_count = 0
+
             for result in results:
                 score = combined_score(result, "lower")
                 status, reasons = band_result(result, score)
 
-                if status:
-                    print(
-                        f"{result['left']['name']} <-> "
-                        f"{result['right']['name']} | "
-                        f"{status} | "
-                        f"score={score:.3f} | "
-                        f"jaro={result['jaro']:.3f} | "
-                        f"token={result['token']:.3f} | "
-                        f"acronym={result['acronym']:.1f} | "
-                        f"reasons={reasons}"
-                    )
+                if status == "auto_rejected":
+                    discarded_count += 1
+                    continue
+
+                print(
+                    f"{result['left']['name']} <-> "
+                    f"{result['right']['name']} | "
+                    f"{status} | "
+                    f"score={score:.3f} | "
+                    f"jaro={result['jaro']:.3f} | "
+                    f"token={result['token']:.3f} | "
+                    f"acronym={result['acronym']:.1f} | "
+                    f"reasons={reasons}"
+                )
+
+            print(f"Auto-rejected: {discarded_count}")
 
             write_matches(cur, results)
 
