@@ -74,6 +74,15 @@
     color: #666;
 }
 
+.stewardship-link {
+    color: #18453B;
+    text-decoration: none;
+}
+
+.stewardship-link:hover {
+    text-decoration: underline;
+}
+
 
 .pending-section,
 .recent-section {

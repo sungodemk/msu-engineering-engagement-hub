@@ -1,5 +1,6 @@
 /* Aayush Jagtap */
 import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import MatchCard from '../components/MatchCard.jsx';
 import '../css/stewardship_queue.css';
 
@@ -155,7 +156,9 @@ function StewardshipQueue() {
 
                 <div className="threshold-legend">
                     <span>≥ 90% auto-accept</span>
-                    <span>Below 60% not shown</span>
+                    <Link to="/stewardship/discarded">
+                        Below 60%: view discarded
+                    </Link>
                 </div>
             </div>
 

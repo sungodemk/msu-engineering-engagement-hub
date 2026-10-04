@@ -7,6 +7,7 @@ import CompanyPage from './pages/company_page';
 import TemporalPage from "./pages/graph_page.jsx";
 import Portfolio from "./pages/portfolio.jsx";
 import StewardshipQueue from "./pages/stewardship_queue.jsx";
+import DiscardedMatches from "./pages/discarded_matches.jsx";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/persons/:id" element={<PersonsPage />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/stewardship" element={<StewardshipQueue />} />
+          <Route path="/stewardship/discarded" element={<DiscardedMatches />} />
           <Route path="/temporal" element={<TemporalPage />} />
         </Routes>
       </Layout>
