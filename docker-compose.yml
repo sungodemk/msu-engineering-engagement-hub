@@ -26,7 +26,18 @@ services:
     volumes:
       - ./backend/db/migrations:/db/migrations
     command: --migrations-dir /db/migrations --no-dump-schema up
-
+  seed:
+    container_name: engagement-hub-seed
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: "postgresql://postgres:dev@db:5432/engagement"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    command: sh -c "python scripts/load_fixtures.py && python scripts/company_matcher.py"
   # A name for this container
   flask-app:
     container_name: engagement-hub
