@@ -292,54 +292,65 @@ def portfolio():
             rows = cur.fetchall()
     return jsonify(rows)
 
+# gets entity matches by status for the stewardship queue pages (Aayush)
+def get_matches(cur, status, limit=None):
+    query = """
+        SELECT
+            m.id AS match_id,
+            m.score::float AS score,
+            m.match_reasons,
+            le.entity_type,
+            l.source_system AS left_source_system,
+            l.source_pk AS left_external_id,
+            le.display_name AS left_name,
+            le.attributes->>'city' AS left_city,
+            le.attributes->>'state' AS left_state,
+            COALESCE(
+                le.attributes->>'record_type',
+                le.attributes->>'constituent_type'
+            ) AS left_record_type,
+
+            r.source_system AS right_source_system,
+            r.source_pk AS right_external_id,
+            re.display_name AS right_name,
+            re.attributes->>'city' AS right_city,
+            re.attributes->>'state' AS right_state,
+            COALESCE(
+                re.attributes->>'record_type',
+                re.attributes->>'constituent_type'
+            ) AS right_record_type
+        FROM entity_matches m
+        JOIN source_records l
+            ON l.id = m.left_source_record_id
+        JOIN entity_source_records lesr
+            ON lesr.source_record_id = l.id
+        JOIN entities le
+            ON le.id = lesr.entity_id
+        JOIN source_records r
+            ON r.id = m.right_source_record_id
+        JOIN entity_source_records resr
+            ON resr.source_record_id = r.id
+        JOIN entities re
+            ON re.id = resr.entity_id
+        WHERE m.status = %s
+        ORDER BY m.score DESC
+    """
+    params = [status]
+
+    if limit is not None:
+        query += " LIMIT %s"
+        params.append(limit)
+
+    cur.execute(query, params)
+    return cur.fetchall()
+
+
 # get pending and recent entity matches for the stewardship queue page (Aayush)
 @app.route('/api/stewardship-queue')
 def stewardship_queue():
     with get_db_connection() as conn:
         with conn.cursor() as cur:
-            cur.execute("""
-                SELECT
-                    m.id AS match_id,
-                    m.score::float AS score,
-                    m.match_reasons,
-                    le.entity_type,
-                    l.source_system AS left_source_system,
-                    l.source_pk AS left_external_id,
-                    le.display_name AS left_name,
-                    le.attributes->>'city' AS left_city,
-                    le.attributes->>'state' AS left_state,
-                    COALESCE(
-                        le.attributes->>'record_type',
-                        le.attributes->>'constituent_type'
-                    ) AS left_record_type,
-
-                    r.source_system AS right_source_system,
-                    r.source_pk AS right_external_id,
-                    re.display_name AS right_name,
-                    re.attributes->>'city' AS right_city,
-                    re.attributes->>'state' AS right_state,
-                    COALESCE(
-                        re.attributes->>'record_type',
-                        re.attributes->>'constituent_type'
-                    ) AS right_record_type
-                FROM entity_matches m
-                JOIN source_records l
-                    ON l.id = m.left_source_record_id
-                JOIN entity_source_records lesr
-                    ON lesr.source_record_id = l.id
-                JOIN entities le
-                    ON le.id = lesr.entity_id
-                JOIN source_records r
-                    ON r.id = m.right_source_record_id
-                JOIN entity_source_records resr
-                    ON resr.source_record_id = r.id
-                JOIN entities re
-                    ON re.id = resr.entity_id
-                WHERE m.status = 'pending_review'
-                ORDER BY m.score DESC
-            """)
-
-            pending = cur.fetchall()
+            pending = get_matches(cur, "pending_review")
 
             cur.execute("""
                 SELECT
@@ -379,6 +390,19 @@ def stewardship_queue():
         "pending": pending,
         "recent": recent,
     })
+
+
+# get highest scoring discarded matches for possible review (Aayush)
+@app.route('/api/stewardship-queue/discarded')
+def discarded_matches():
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            discarded = get_matches(cur, "auto_rejected", 25)
+
+    return jsonify({
+        "discarded": discarded,
+    })
+
 
 # looks up demo reviewer bySalesforce ID until Firebase supplies the logged-in user (Aayush)
 def get_reviewer_id(cur):
@@ -442,7 +466,7 @@ def decide_match(match_id):
             if match is None:
                 return jsonify({"error": "Match not found"}), 404
 
-            if match["status"] not in {"pending_review", "auto_accepted"}:
+            if match["status"] not in {"pending_review", "auto_accepted", "auto_rejected"}:
                 return jsonify({"error": "Match has already been reviewed"}), 409
 
             reviewer_id = get_reviewer_id(cur)
@@ -532,7 +556,6 @@ def decide_match(match_id):
                 "match_id": match_id,
                 "status": "confirmed",
             })
-        
 
 # Save and display logged activities for a specific company page (Zhixiang Miao)
 @app.route("/api/companies/<company_id>/log_activity", methods=["GET", "POST"])
