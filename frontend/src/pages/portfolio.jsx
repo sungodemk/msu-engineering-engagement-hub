@@ -3,6 +3,22 @@ import { Link } from 'react-router-dom';
 import '../css/Portfolio.css';
 
 const NUMERIC_KEYS = ['total_giving', 'active_research', 'recruiting_volume'];
+const DORMANT_DAYS = 365;
+
+function isDormant(lastActivityDate) {
+    if (!lastActivityDate) return true; // no activity = dormant
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - DORMANT_DAYS);
+    return new Date(lastActivityDate) < cutoff;
+}
+
+function getSortValue(company, key) {
+    const raw = company[key];
+    if (raw === null || raw === undefined || raw === '') return null;
+    if (NUMERIC_KEYS.includes(key)) return Number(raw);
+    if (key === "last_activity_date") return new Date(raw).getTime();
+    return String(raw).toLowerCase();
+}
 
 function Portfolio() {
     const [companies, setCompanies] = useState([]);
@@ -10,6 +26,8 @@ function Portfolio() {
     const [sortDir, setSortDir] = useState('desc');
     const [sectorFilter, setSectorFilter] = useState('all');
     const [ownerFilter, setOwnerFilter] = useState('all');
+    const [search, setSearch] = useState('');
+
 
     useEffect(() => {
         fetch('http://localhost:8080/api/portfolio')
@@ -23,23 +41,21 @@ function Portfolio() {
     function handleSort(key) {
         if (sortKey === key) {
          setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
-        } else {
+        }
+        else {
         setSortKey(key);
         setSortDir('asc');
         }
     }
 
-    function getSortValue(company, key) {
-    const raw = company[key];
-    if (raw === null || raw === undefined || raw === '') return null;
-    if (NUMERIC_KEYS.includes(key)) return Number(raw);
-    if (key === "last_activity_date") return new Date(raw).getTime();
-    return String(raw).toLowerCase();
-    }
-
+    const [dormantOnly, setDormantOnly] = useState(false);
+    const term = search.trim().toLowerCase();
     const filtered = companies.filter(c => {
         if (sectorFilter !== 'all' && c.sector !== sectorFilter) return false;
-        return !(ownerFilter !== 'all' && c.owner !== ownerFilter);
+        if (ownerFilter !== 'all' && c.owner !== ownerFilter) return false;
+        if (dormantOnly && !isDormant(c.last_activity_date)) return false;
+        if (!term) return true;
+        return [c.name, c.sector, c.owner].some(value => value?.toLowerCase().includes(term));
      });
 
     const sorted = [...filtered].sort((a, b) => {
@@ -69,51 +85,66 @@ function Portfolio() {
             <p>{filtered.length} of {companies.length} companies shown</p>
         </div>
 
-        <div className="portfolio-filters">
-            <label>Sector:
-            <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)}>
-                <option value="all">All Industries</option>
-                {sectors.map(s => <option key={s} value={s}>{s}</option>)}
-            </select>
-            </label>
+        <div className="portfolio-controls">
+        <input
+          type="search"
+          className="portfolio-search"
+          placeholder="Search by company, sector, or owner"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
 
-            <label>Owner:
-                <select value={ownerFilter} onChange={e => setOwnerFilter(e.target.value)}>
-                    <option value="all">All Owners</option>
-                    {owners.map(o => <option key={o} value={o}>{o}</option>)}
-                </select>
-            </label>
+        <select value={sectorFilter} onChange={e => setSectorFilter(e.target.value)}>
+          <option value="all">All Industries</option>
+          {sectors.map(s => <option key={s} value={s}>{s}</option>)}
+        </select>
+
+        <select value={ownerFilter} onChange={e => setOwnerFilter(e.target.value)}>
+          <option value="all">All Owners</option>
+          {owners.map(o => <option key={o} value={o}>{o}</option>)}
+        </select>
+
+        <label className={"dormant-toggle"}>
+            <input
+                type={"checkbox"}
+                checked={dormantOnly}
+                onChange={e => setDormantOnly(e.target.checked)}
+            />Show Dormant Only
+        </label>
+      </div>
+
+      <div className="dormant-banner">
+          <strong>Dormant</strong> — no recorded activity in the last {DORMANT_DAYS} days.
+          Represented by highlighted rows below.
+      </div>
+
+      <div className="portfolio-card">
+        <div className="portfolio-row portfolio-row-header">
+          <span onClick={() => handleSort('name')}>Company{arrow('name')}</span>
+          <span onClick={() => handleSort('sector')}>Sector{arrow('sector')}</span>
+          <span onClick={() => handleSort('owner')}>Owner{arrow('owner')}</span>
+          <span onClick={() => handleSort('last_activity_date')}>Last Activity{arrow('last_activity_date')}</span>
+          <span onClick={() => handleSort('total_giving')}>Total Giving{arrow('total_giving')}</span>
+          <span onClick={() => handleSort('active_research')}>Research (Active){arrow('active_research')}</span>
+          <span onClick={() => handleSort('recruiting_volume')}>Recruiting{arrow('recruiting_volume')}</span>
         </div>
 
-        <table className="portfolio-table">
-            <thead>
-            <tr>
-            <th onClick={() => handleSort('name')}>Company{arrow('name')}</th>
-            <th onClick={() => handleSort('sector')}>Sector{arrow('sector')}</th>
-            <th onClick={() => handleSort('owner')}>Owner{arrow('owner')}</th>
-            <th onClick={() => handleSort('last_activity_date')}>Last Activity{arrow('last_activity_date')}</th>
-            <th onClick={() => handleSort('total_giving')}>Total Giving{arrow('total_giving')}</th>
-            <th onClick={() => handleSort('active_research')}>Research (Active){arrow('active_research')}</th>
-            <th onClick={() => handleSort('recruiting_volume')}>Recruiting{arrow('recruiting_volume')}</th>
-            </tr>
-            </thead>
-            <tbody>
-                {sorted.map(c => (
-                <tr key={c.id}>
-                <td>{c.id ? (<Link className="portfolio-link" to={`/company_page/${c.id}`}>{c.name}</Link>)
-                    : (c.id || '—')}
-                </td>
-                <td>{c.sector || '—'}</td>
-                <td>{c.owner_id ? (<Link className="portfolio-link" to={`/persons/${c.owner_id}`}>{c.owner}</Link>)
-                    : (c.owner || '—')}
-                </td>
-                <td>{c.last_activity_date ? new Date(c.last_activity_date).toLocaleDateString() : '—'}</td>
-                <td>{c.total_giving ? `$${Number(c.total_giving).toLocaleString()}` : '—'}</td>
-                <td>{c.active_research || '—'}</td>
-                <td>{c.recruiting_volume || '—'}</td>
-                </tr> ))}
-            </tbody>
-        </table>
+        {sorted.map(c => (
+          <div key={c.id}
+               className={`portfolio-row ${isDormant(c.last_activity_date) ? 'portfolio-row-dormant' : ''}`}>
+            <span><Link className="portfolio-link" to={`/company_page/${c.id}`}>{c.name}</Link></span>
+            <span>{c.sector || '—'}</span>
+            <span>{c.owner_id ? (
+                <Link className="portfolio-link" to={`/persons/${c.owner_id}`}>{c.owner}</Link>
+              ) : (c.owner || '—')}
+            </span>
+            <span>{c.last_activity_date ? new Date(c.last_activity_date).toLocaleDateString() : '—'}</span>
+            <span>{c.total_giving ? `$${Number(c.total_giving).toLocaleString()}` : '—'}</span>
+            <span>{c.active_research || '—'}</span>
+            <span>{c.recruiting_volume || '—'}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
