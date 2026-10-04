@@ -238,7 +238,7 @@ def score_and_band(name_match, city_match, degree_match, employer_match):
     if score >= REVIEW_THRESHOLD:
         return score, "pending_review", reasons
 
-    return score, None, reasons
+    return score, "auto_rejected", reasons
 
 
 # order-independent key so (A,B) and (B,A) are treated the same
@@ -255,7 +255,7 @@ def write_matches(cur, results):
         WHERE m.left_source_record_id = esr.source_record_id
           AND esr.entity_id = e.id
           AND e.entity_type = 'person'
-          AND m.status IN ('pending_review', 'auto_accepted')
+          AND m.status IN ('pending_review', 'auto_accepted', 'auto_rejected')
         """
     )
 
@@ -280,9 +280,6 @@ def write_matches(cur, results):
     }
 
     for result in results:
-        if result["status"] is None:
-            continue
-
         left = result["left"]
         right = result["right"]
 
@@ -401,7 +398,7 @@ def main():
                         f"<-> "
                         f"{person2['source_pk']}: {person2['display_name']}\n"
                         f"  score={score:.3f} | "
-                        f"status={status or 'dropped'} | "
+                        f"status={status} | "
                         f"reasons={reasons}"
                     )
 
