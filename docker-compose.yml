@@ -37,7 +37,7 @@ services:
     depends_on:
       migrate:
         condition: service_completed_successfully
-    command: sh -c "python scripts/load_fixtures.py && python scripts/company_matcher.py"
+    command: sh -c "python scripts/load_fixtures.py && python scripts/company_matcher.py && python scripts/person_matcher.py"
   # A name for this container
   flask-app:
     container_name: engagement-hub
