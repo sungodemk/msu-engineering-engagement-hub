@@ -595,5 +595,29 @@ def log_activity(company_id):
         "activities": activities,
     })
 
+@app.route("/api/companies/<company_id>/log_activity", methods=["DELETE"])
+def delete_logged_activity(company_id):
+    activity_id = request.args.get("activity_id")
+    if not activity_id:
+        return jsonify({
+            "status": "error",
+            "message": "Activity ID is required",
+        }), 400
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                DELETE FROM log_activity
+                WHERE id = %s AND company_id = %s
+            """, (activity_id, company_id))
+            if cur.rowcount == 0:
+                return jsonify({
+                    "status": "error",
+                    "message": "Activity not found or already deleted",
+                }), 404
+    return jsonify({
+        "status": "deleted",
+        "activity_id": activity_id,
+    })
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), use_reloader=True)

@@ -89,14 +89,36 @@ function CompanyPage() {
                 return;
             }
 
-        setLogActivities(loggedActivity => [...loggedActivity, activity]);
+            const data = await response.json();
+            setLogActivities(data.activities)
 
-        setIsDialogOpen(false);
+            setIsDialogOpen(false);
         } 
         
         catch (error) {
             console.error("Error logging activity:", error);
             alert("An error occurred while logging activity");
+        }
+    }
+
+    async function deleteLoggedActivity(activity_id) {
+        try {
+            const response = await fetch(`http://localhost:8080/api/companies/${id}/log_activity?activity_id=${activity_id}`, {
+                method: "DELETE",
+            });
+
+            if (!response.ok) {
+                alert("Failed to delete activity");
+                return;
+            }
+
+            const data = await response.json();
+            setLogActivities(removeActivities => removeActivities.filter(activity => activity.id !== data.activity_id));
+        } 
+        
+        catch (error) {
+            console.error("Error deleting activity:", error);
+            alert("An error occurred while deleting activity");
         }
     }
 
@@ -112,12 +134,12 @@ function CompanyPage() {
 
     for (const activity of loggedGivings) {
         let giving_type = "";
-        if (activity.activity_record_type.toUpperCase() === "donation".toUpperCase() || activity.activity_record_type.toUpperCase() === "pledge".toUpperCase()) {
+        if (activity.activity_record_type.toLowerCase() === "donation" || activity.activity_record_type.toLowerCase() === "pledge") {
             // Learned how to capitalize the first letter of string from this link: 
             // https://coreui.io/blog/how-to-capitalize-the-first-letter-in-javascript/
             giving_type = activity.activity_record_type.charAt(0).toUpperCase() + activity.activity_record_type.slice(1);
         }
-        else if (activity.activity_record_type.toUpperCase() === "in-kind gift".toUpperCase()) {
+        else if (activity.activity_record_type.toLowerCase() === "in-kind gift") {
             giving_type = "In-Kind Gift";
         }
         else {
@@ -145,6 +167,9 @@ function CompanyPage() {
             .then(data => {
                 setDaysPassed(data.days_passed);
             });
+        }
+        else {
+            setDaysPassed(null);
         }
     }, [latestDate]);
 
@@ -331,6 +356,9 @@ function CompanyPage() {
                                             <div>
                                                 {activity.activity_record_type.charAt(0).toUpperCase() + activity.activity_record_type.slice(1)}
                                             </div>
+                                            <button className="delete_button" onClick={() => deleteLoggedActivity(activity.id)}>
+                                                Delete
+                                            </button>
                                         </td>
                                         <td className='activity_stage'>
                                             <div>
