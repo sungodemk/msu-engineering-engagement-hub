@@ -1,7 +1,6 @@
 # Zhixiang Miao
 
 from datetime import datetime as dt
-from pytz import timezone
 
 """
 The file contains company page fixtures, 
@@ -162,30 +161,3 @@ def get_msu_tasks_info(rows, contact, account, affiliation):
         msu_tasks_each_company[unit_id].append(msu_task)
 
     return msu_tasks_each_company
-
-'''
-For later use when we actually start to get awards. Just a template or even pseudocode function for now. 
-'''
-# def get_active_research_awards(awards, sponsor):
-#     active_research_awards_each_company = {}
-#     today = dt.now(timezone('America/New_York')).date()
-#     for award in awards:
-#         sponsor_code = award["sponsorCode"]
-#         status = award["statusDescription"]
-#         eff_date = award["awardEffectiveDate"]
-#         exp_date = award["finalExpirationDate"]
-
-#         if (eff_date and dt.strptime(eff_date, "%Y-%m-%d").date() > today) or (exp_date and dt.strptime(exp_date, "%Y-%m-%d").date() < today):
-#             continue
-#         if status != "Active":
-#             continue
-
-#         if sponsor_code not in active_research_awards_each_company:
-#             active_research_awards_each_company[sponsor_code] = []
-#         active_research_awards_each_company[sponsor_code].append({
-#             "award_id": award["awardId"],
-#             "amount": award["obligatedTotalAmount"],
-#             "sponsor": sponsor.get(award["sponsorCode"], {}).get("sponsorName", ""),
-#         })
-
-#     return active_research_awards_each_company

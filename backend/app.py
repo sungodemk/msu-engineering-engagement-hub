@@ -5,6 +5,9 @@ import uuid
 import psycopg
 from psycopg.rows import dict_row
 from days_calculator.days_calculator import days_passed_calc
+import json
+from datetime import datetime as at
+from pytz import timezone
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -618,6 +621,31 @@ def delete_logged_activity(company_id):
         "status": "deleted",
         "activity_id": activity_id,
     })
+
+@app.route("/api/companies/<company_id>/active_research_awards", methods=["GET"])
+def active_research_awards(company_id):
+    today = at.now(timezone('America/New_York')).date()
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT
+                    -- Learned how to convert to float in sql from this link: https://www.geeksforgeeks.org/sql-server/sql-server-cast-function/
+                    CAST(sr.payload ->> 'anticipatedTotalAmount' AS FLOAT) AS total_amount
+                FROM activities a
+                JOIN source_records sr ON a.source_record_id = sr.id
+                WHERE a.company_entity_id = %s
+                    AND a.activity_type = 'award'
+                    AND sr.source_system = 'kuali'
+                    AND sr.payload ->> 'statusDescription' = 'Active'
+                    AND a.occurred_on <= %s
+                    AND (a.ended_on IS NULL OR a.ended_on >= %s)
+            """, (company_id, today, today))
+            awards = cur.fetchall()
+        
+    return jsonify({
+        "active_research_awards": awards,
+    })
+    
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), use_reloader=True)

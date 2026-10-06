@@ -24,6 +24,7 @@ function CompanyPage() {
     const [error, setError] = useState(null);
 
     const [contacts, setContacts] = useState([]);
+    const [activeResearchAwards, setActiveResearchAwards] = useState([]);
 
     function isValidDate(date) {
 
@@ -173,7 +174,15 @@ function CompanyPage() {
         }
     }, [latestDate]);
 
-    
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/companies/${id}/active_research_awards`)
+        .then(result => result.json())
+        .then(data => {
+            setActiveResearchAwards(data.active_research_awards);
+        });
+    }, [id]);
+
+    const totalAward = activeResearchAwards.reduce((total, award) => total + parseFloat(award.total_amount || 0), 0);
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/companies/${id}/log_activity`)
@@ -278,14 +287,23 @@ function CompanyPage() {
                 <div className='giving_message'>
                     {/* Learned how to iterate key value pairs using Object.entries() 
                     from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object*/}
-                    {Object.entries(allGivingsCount).map(([type, count]) => `${type}: ${count}`).join(' & ')}
+                    {Object.values(allGivingsCount).some(value => value > 0) ? Object.entries(allGivingsCount).map(([type, count]) => `${type}: ${count}`).join(' & ') : 'No givings yet'}
                     
                 </div>
             </div>
             <div className='award_box'>
                 <div className='award_title'>ACTIVE RESEARCH AWARDS</div>
-                <div className='total_award_amount'>0</div>
-                <div className='award_message'>No awards yet</div>
+                <div className='total_award_amount'>
+                    {activeResearchAwards.length > 0 ? activeResearchAwards.length : '0'}
+                </div>
+                <div className='award_message'>
+                    {/* Learned Intl.NumberFormat from this link: 
+                        https://dev.to/josephciullo/simplify-currency-formatting-in-react-a-zero-dependency-solution-with-intl-api-3kok
+                        Learned compact notation from this link: 
+                        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#other_options
+                     */}
+                    {activeResearchAwards.length > 0 ? `${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", notation: "compact" }).format(totalAward)} via Kuali` : 'No awards yet'}
+                </div>
             </div>
             <div className='caps_team_box'>
                 <div className='caps_team_title'>CAPSTONE TEAMS</div>
