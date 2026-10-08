@@ -132,15 +132,6 @@ def load_awards(cur, awards, sponsors, companies, people, units):
             ),
         )
 
-
-
-
-
-
-
-
-
-
 def main():
     awards = read_json_file(AWARDS_FILE)
     sponsors = read_json_file(SPONSORS_FILE)
