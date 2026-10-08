@@ -29,7 +29,8 @@ def load_people(cur):
             esr.source_record_id,
             sr.source_pk,
             sr.payload->>'FirstName',
-            sr.payload->>'LastName'
+            sr.payload->>'LastName',
+            sr.source_system
         FROM entities e
         JOIN entity_source_records esr
             ON esr.entity_id = e.id
@@ -65,6 +66,7 @@ def load_people(cur):
             "source_pk": row[5],
             "first": first,
             "last": last,
+            "source_system": row[8],
         })
 
     return people
@@ -162,7 +164,6 @@ def first_name_match_type(first1, first2):
     return None
 
 
-# cities only count as matching evidence when both people have a city
 def same_city(person1, person2):
     attributes1 = person1["attributes"] or {}
     attributes2 = person2["attributes"] or {}
@@ -179,7 +180,6 @@ def same_city(person1, person2):
     )
 
 
-# checks whether the two people share at least one degree
 def shared_degree(person1, person2, degrees):
     degrees1 = degrees.get(person1["entity_id"], set())
     degrees2 = degrees.get(person2["entity_id"], set())
@@ -190,7 +190,6 @@ def shared_degree(person1, person2, degrees):
     return bool(degrees1 & degrees2)
 
 
-# checks whether the two people share at least one current employer
 def shared_current_employer(person1, person2, employers):
     employers1 = employers.get(person1["entity_id"], set())
     employers2 = employers.get(person2["entity_id"], set())
@@ -294,10 +293,13 @@ def write_matches(cur, results):
         entity_id = None
 
         if result["status"] == "auto_accepted":
-            # keeps person with lower source ID since original record is usually older
+            # merges to salesforce otherwise merges to lower id
             survivor = min(
                 (left, right),
-                key=lambda person: person["source_pk"],
+                key=lambda person: (
+                    person["source_system"] != "salesforce",
+                    person["source_pk"],
+                ),
             )
             entity_id = survivor["entity_id"]
 

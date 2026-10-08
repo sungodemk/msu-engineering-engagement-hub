@@ -69,7 +69,8 @@ def load_companies(cur):
             e.display_name,
             esr.source_record_id,
             e.attributes->>'parent_external_id',
-            sr.source_pk
+            sr.source_pk,
+            sr.source_system
         FROM entities e
         JOIN entity_source_records esr
             ON esr.entity_id = e.id
@@ -88,6 +89,7 @@ def load_companies(cur):
             "source_record_id": row[2],
             "parent_external_id": row[3],
             "source_pk": row[4],
+            "source_system": row[5],
         }
         for row in cur.fetchall()
     ]
@@ -210,10 +212,13 @@ def write_matches(cur, results):
         entity_id = None
 
         if status == "auto_accepted":
-            # keeps the account with lower Salesforce ID since original account is usually older
+            # merges to salesforce otherwise merges to lower id
             survivor = min(
                 (left, right),
-                key=lambda company: company["source_pk"],
+                key=lambda company: (
+                    company["source_system"] != "salesforce",
+                    company["source_pk"],
+                ),
             )
             entity_id = survivor["entity_id"]
 

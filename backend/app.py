@@ -158,7 +158,7 @@ def get_person(person_id):
             person = cur.fetchone()
             if person is None:
                 return jsonify({"ERROR": "Person not Found"}), 404
-            
+
             # dates as text
             cur.execute("""
                 SELECT c.id, c.display_name AS company, e.edge_role AS title,
@@ -407,7 +407,7 @@ def discarded_matches():
     })
 
 
-# looks up demo reviewer bySalesforce ID until Firebase supplies the logged-in user (Aayush)
+# looks up demo reviewer by Salesforce ID until Firebase supplies the logged-in user (Aayush)
 def get_reviewer_id(cur):
     cur.execute(
         """
@@ -504,7 +504,8 @@ def decide_match(match_id):
                 """
                 SELECT
                     e.id,
-                    sr.source_pk
+                    sr.source_pk,
+                    sr.source_system
                 FROM entity_source_records esr
                 JOIN entities e
                     ON e.id = esr.entity_id
@@ -523,8 +524,14 @@ def decide_match(match_id):
             if len(entities) != 2:
                 return jsonify({"error": "Match entities could not be resolved"}), 500
 
-            # sorts by source ID so the first entity survives and the second is merged into it
-            survivor, duplicate = sorted(entities, key=lambda entity: entity["source_pk"])
+            # Salesforce wins across systems; otherwise lower source ID wins
+            survivor, duplicate = sorted(
+                entities,
+                key=lambda entity: (
+                    entity["source_system"] != "salesforce",
+                    entity["source_pk"],
+                ),
+            )
 
             cur.execute(
                 """
@@ -641,11 +648,11 @@ def active_research_awards(company_id):
                     AND (a.ended_on IS NULL OR a.ended_on >= %s)
             """, (company_id, today, today))
             awards = cur.fetchall()
-        
+
     return jsonify({
         "active_research_awards": awards,
     })
-    
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), use_reloader=True)
