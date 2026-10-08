@@ -22,7 +22,7 @@ function Layout({ children }) {
                     <div className="brand-mark">M</div>
                     <div>
                         <div className="brand-name">MSU</div>
-                        <div className="brand-sub">Relationships</div>
+                        <div className="brand-sub">Engagement Hub</div>
                     </div>
                 </div>
 
@@ -49,7 +49,7 @@ function Layout({ children }) {
             <div className="pane">
                 <main> {children} </main>
             <footer>
-                <p>&copy; 2026 MSU Relationships. All rights reserved.</p>
+                <p>&copy; 2026 MSU Engagement Hub. All rights reserved.</p>
             </footer>
         </div>
 

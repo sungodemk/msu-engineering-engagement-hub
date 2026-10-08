@@ -7,73 +7,6 @@ from psycopg.types.json import Jsonb
 ROOT = Path(__file__).resolve().parents[1]
 DATABASE_URL = os.environ["DATABASE_URL"]
 
-ACCOUNT_COLUMNS = {
-    "id": "External_ID__c",
-    "name": "Name",
-    "record_type": "RecordType.Name",
-    "industry": "Industry",
-    "industry_detail": "Industry_Detail__c",
-    "city": "BillingCity",
-    "state": "BillingState",
-    "unit_code": "Unit_Code__c",
-    "parent_id": "Parent.External_ID__c",
-}
-
-CONTACT_COLUMNS = {
-    "id": "External_ID__c",
-    "first_name": "FirstName",
-    "last_name": "LastName",
-    "email": "Email",
-    "title": "Title",
-    "city": "MailingCity",
-    "state": "MailingState",
-    "constituent_type": "Constituent_Type__c",
-    "deceased": "npsp__Deceased__c",
-    "do_not_contact": "npsp__Do_Not_Contact__c",
-    "do_not_solicit": "Do_Not_Solicit__c",
-}
-# (Emmanuel)
-AFFILIATION_COLUMNS = {
-    "id": "External_ID__c",
-    "contact_id": "npe5__Contact__r.External_ID__c",
-    "organization_id": "npe5__Organization__r.External_ID__c",
-    "role": "npe5__Role__c",
-    "start_date": "npe5__StartDate__c",
-    "end_date": "npe5__EndDate__c",
-}
-
-DEGREE_COLUMNS = {
-    "id": "External_ID__c",
-    "contact_id": "Contact__r.External_ID__c",
-    "degree_type": "Degree_Type__c",
-    "major": "Major__c",
-    "college": "College__c",
-    "class_year": "Class_Year__c",
-
-}
-
-ASSIGNMENT_COLUMNS = {
-    "id": "External_ID__c",
-    "staff_id": "Staff__r.External_ID__c",
-    "account_id": "Account__r.External_ID__c",
-    "contact_id": "Contact__r.External_ID__c",
-    "role": "Role__c",
-    "start_date": "Start_Date__c",
-    "end_date": "End_Date__c",
-
-}
-
-ACCOUNT_TYPES = {
-    "Business Organization": "organization",
-    "University Department": "msu_unit",
-    "Educational Institution": "msu_unit",
-    "Academic Program": "msu_unit",
-}
-
-# (Alvin)
-GIFT_RECORD_TYPES = {"Donation", "In-Kind Gift", "Pledge"}
-CLOSED_ASK_STAGES = {"Declined", "Closed - No Action"}
-
 
 def read_json(path):
     with open(path, encoding="utf-8") as f:
@@ -177,8 +110,57 @@ def load_handshake_employers(cur, rows, industries):
 
     return employer_entities
 
+def load_handshake_contacts(cur, rows, employer_entities):
+    contact_entities = {}
+    # Stores email for career fair mapping
+    contact_emails = {}
+    skipped_no_employer = 0
 
-def load_recruiting_career_fairs(cur, rows, fairs, employer_entities):
+    for row in rows:
+        company_entity_id = employer_entities.get(row["employer_id"])
+        if company_entity_id is None:
+            skipped_no_employer += 1
+            continue
+
+        source_id = insert_source_record(
+            cur,
+            "Contact",
+            row["id"],
+            row,
+        )
+
+        display_name = (
+            f'{row["first_name"]} {row["last_name"]}'
+        ).strip()
+
+        attributes = remove_nulls({
+            "title": row["title"],
+            "cell_phone": row["cell_phone"],
+            "phone": row["phone"],
+            "alum_year": row["alum_year"],
+            "contact_source": row["contact_source"],
+            "created_at": row["created_at"],
+            "updated_at": row["updated_at"],
+        })
+
+        entity_id = insert_entity(
+            cur,
+            "person",
+            display_name,
+            row["email"],
+            attributes,
+        )
+
+        contact_entities[row["id"]] = entity_id
+        contact_emails[row["email"]] = entity_id
+        link_entity(cur, entity_id, source_id)
+
+    if skipped_no_employer:
+        print(f"Skipped {skipped_no_employer} contacts with no matching Employer")
+
+    return contact_entities, contact_emails
+
+def load_recruiting_career_fairs(cur, rows, fairs, employer_entities, contact_emails):
     fairs_by_id = {fair["id"]: fair for fair in fairs}
     skipped_no_employer = 0
 
@@ -195,9 +177,11 @@ def load_recruiting_career_fairs(cur, rows, fairs, employer_entities):
         source_id = insert_source_record(
             cur,
             "CareerFairEmployerEngagement",
-            f'{row["career_fair_id"]}:{row["employer_id"]}',
+            f'{row["career_fair_id"]}:{row["employer_id"]}', # Added as many companies share the same fair
             row,
         )
+        # Contact can only be found by email
+        contact_entity_id = contact_emails.get(row["responsible_contact_email"] or "")
 
         # Only date portion
         occurred_on = fair["start_date_time"][:10]
@@ -216,9 +200,9 @@ def load_recruiting_career_fairs(cur, rows, fairs, employer_entities):
                                             owner_entity_id,
                                             notes,
                                             source_record_id)
-                    VALUES (%s, NULL, NULL, 'recruiting', 'Career Fair', %s, NULL, NULL, NULL, NULL, %s, %s)
+                    VALUES (%s, %s, NULL, 'recruiting', 'Career Fair', %s, NULL, NULL, NULL, NULL, %s, %s)
                     """,
-                    (company_entity_id, occurred_on, notes, source_id),
+                    (company_entity_id, contact_entity_id, occurred_on, notes, source_id),
                     )
     if skipped_no_employer:
         print(f"Skipped {skipped_no_employer} career fair engagements with no matching Employer")
@@ -238,9 +222,13 @@ def load_recruiting_events(cur, rows, events, employer_entities):
         source_id = insert_source_record(
             cur,
             "EventEmployerEngagement",
-            f'{row["event_id"]}:{row["employer_id"]}',
+            f'{row["event_id"]}:{row["employer_id"]}', # Added as many companies share the same event
             row,
         )
+
+        # contacts are only stored by name in events
+        # solution could be to store by name, but issues
+        # could arise with duplicate names.
 
         # Only date portion
         occurred_on = event["start_date_time"][:10]
@@ -272,6 +260,9 @@ def main():
     employers = read_json(
         ROOT / "db" / "handshake" / "employers.json"
     )
+    contacts = read_json(
+        ROOT / "db" / "handshake" / "contacts.json"
+    )
     industries = read_json(
         ROOT / "db" / "handshake" / "industries.json"
     )
@@ -291,7 +282,8 @@ def main():
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
             employer_entities = load_handshake_employers(cur, employers, industries)
-            load_recruiting_career_fairs(cur, cfee, career_fairs, employer_entities)
+            contact_entities, contact_emails = load_handshake_contacts(cur, contacts, employer_entities)
+            load_recruiting_career_fairs(cur, cfee, career_fairs, employer_entities, contact_emails)
             load_recruiting_events(cur, eee, events, employer_entities)
 
             for table in [
