@@ -32,8 +32,8 @@ def list_companies():
                 attributes ->> 'state' AS state,
                 attributes ->> 'parent_external_id' AS parent,
                 attributes ->> 'latest_contact_date' AS latest_contact_date,
-                attributes ->> 'total_giving_amount' AS total_giving_amount,
-                attributes -> 'giving_counts' AS giving_counts,
+                attributes ->> 'inbound_giving_amount' AS inbound_giving_amount,
+                attributes -> 'inbound_giving_counts' AS inbound_giving_counts,
                 attributes ->> 'industry_detail' AS industry_detail,
                 attributes -> 'activity_timeline' AS activity_timeline,
                 attributes -> 'msu_tasks' AS msu_tasks
@@ -62,8 +62,10 @@ def get_company(company_id):
                 attributes ->> 'state' AS state,
                 attributes ->> 'parent_external_id' AS parent,
                 attributes ->> 'latest_contact_date' AS latest_contact_date,
-                attributes ->> 'total_giving_amount' AS total_giving_amount,
-                attributes -> 'giving_counts' AS giving_counts,
+                attributes ->> 'inbound_giving_amount' AS inbound_giving_amount,
+                attributes ->> 'outbound_giving_amount' AS outbound_giving_amount,
+                attributes -> 'inbound_giving_counts' AS inbound_giving_counts,
+                attributes -> 'outbound_giving_counts' AS outbound_giving_counts,
                 attributes ->> 'industry_detail' AS industry_detail,
                 attributes -> 'activity_timeline' AS activity_timeline,
                 attributes -> 'msu_tasks' AS msu_tasks
@@ -252,6 +254,7 @@ def portfolio():
             # Owner comes from most recent activity with a non-null owner_entity_id.
             cur.execute("""WITH giving AS (
                     SELECT company_entity_id, SUM(amount) AS total_giving
+
                     FROM activities
                     WHERE activity_type = 'gift'
                     GROUP BY company_entity_id ),
@@ -278,7 +281,10 @@ def portfolio():
                     ORDER BY company_entity_id, occurred_on DESC)
                 SELECT e.id, e.display_name AS name, e.attributes->>'industry' AS sector,
                     owner.id AS owner_id, owner.display_name AS owner, la.last_activity_date,
+
+                    -- Return total giving amount (Zhixiang Miao). 
                     COALESCE(g.total_giving, 0) AS total_giving,
+
                     COALESCE(r.active_research, 0) AS active_research,
                     COALESCE(rec.recruiting_volume, 0) AS recruiting_volume
                 FROM entities e
@@ -574,22 +580,24 @@ def log_activity(company_id):
         data = request.get_json()
         activity_record_type = data.get("activity_record_type")
         stage_name = data.get("stage_name")
-        amount = data.get("amount")
+        notes = data.get("notes")
         close_date = data.get("close_date")
+        if not activity_record_type or not stage_name or not notes or not close_date:
+            return jsonify({"error": "Missing required fields"}), 400
     with get_db_connection() as conn:
         with conn.cursor() as cur:
             if request.method == "POST":
                 cur.execute("""
-                    INSERT INTO log_activity (company_id, activity_record_type, stage_name, amount, close_date)
+                    INSERT INTO log_activity (company_id, activity_record_type, stage_name, notes, close_date)
                     VALUES (%s, %s, %s, %s, %s)
-                """, (company_id, activity_record_type, stage_name, amount, close_date))
+                """, (company_id, activity_record_type, stage_name, notes, close_date))
             cur.execute("""
                 SELECT
                     id,
                     company_id,
                     activity_record_type,
                     stage_name,
-                    amount,
+                    notes,
                     close_date
                 FROM log_activity
                 WHERE company_id = %s
@@ -605,6 +613,7 @@ def log_activity(company_id):
         "activities": activities,
     })
 
+# Delete user logged activity (Zhixiang Miao)
 @app.route("/api/companies/<company_id>/log_activity", methods=["DELETE"])
 def delete_logged_activity(company_id):
     activity_id = request.args.get("activity_id")
@@ -629,6 +638,7 @@ def delete_logged_activity(company_id):
         "activity_id": activity_id,
     })
 
+# Get active research awards for a company (Zhixiang Miao)
 @app.route("/api/companies/<company_id>/active_research_awards", methods=["GET"])
 def active_research_awards(company_id):
     today = at.now(timezone('America/New_York')).date()

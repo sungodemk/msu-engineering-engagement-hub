@@ -4,7 +4,7 @@ from pathlib import Path
 
 import psycopg
 from psycopg.types.json import Jsonb
-from company_page_fixtures import get_contact_dates, get_latest_contact_dates, get_giving_amount, count_givings, get_activity_timeline, get_msu_tasks_info
+from company_page_fixtures import get_latest_contact_dates, get_inbound_giving_amount, inbound_count_givings, get_activity_timeline, get_msu_tasks_info
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -180,8 +180,9 @@ def load_accounts(cur, rows):
     opportunity = read_csv(
         ROOT / "db" / "seeds" / "07_Opportunity.csv"
     )
-    total_giving_amount = get_giving_amount(opportunity)
-    giving_counts = count_givings(opportunity)
+    inbound_giving_amount = get_inbound_giving_amount(opportunity)
+    inbound_giving_counts = inbound_count_givings(opportunity)
+    # outbound_giving_counts = outbound_count_givings(opportunity)
     activity_timeline = get_activity_timeline(opportunity)
 
     # (Zhixiang Miao) Load MSU tasks data for the company.
@@ -212,8 +213,8 @@ def load_accounts(cur, rows):
             "record_type": record_type,
             "industry": account[ACCOUNT_COLUMNS["industry"]],
             "latest_contact_date": latest_contact_dates.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) Added contact date attributes for the company. 
-            "total_giving_amount": total_giving_amount.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) Added giving amount attributes for the company. 
-            "giving_counts": giving_counts.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) List what type of givings from the company and how many times they gave from this type of giving. 
+            "inbound_giving_amount": inbound_giving_amount.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) Added inbound giving amount attributes for the company. 
+            "inbound_giving_counts": inbound_giving_counts.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) List what type of inbound givings from the company and how many times they gave from this type of giving. 
             "industry_detail": account[ACCOUNT_COLUMNS["industry_detail"]], # (Zhixiang Miao) Get the detail, tier (if available) of the industry. 
             "activity_timeline": activity_timeline.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) Get the activities for the company, (need the format that show in the company page). 
             "msu_tasks": msu_tasks.get(account[ACCOUNT_COLUMNS["id"]]), # (Zhixiang Miao) Get the MSU tasks for the company. 

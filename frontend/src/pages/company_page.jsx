@@ -44,7 +44,7 @@ function CompanyPage() {
         const formData = new FormData(event.currentTarget);
         const activity_record_type = formData.get('activity_type');
         const stage_name = formData.get('status');
-        const amount = formData.get('amount');
+        const notes = formData.get('notes');
         const close_date = formData.get('date');
         
 
@@ -65,16 +65,17 @@ function CompanyPage() {
             return;
         }
 
-        if (!amount) {
-            alert("Amount is missing");
+        if (!notes) {
+            alert("Notes are missing");
             return;
         }
+
         const activity = {
             company_id: id,
             activity_record_type,
             stage_name,
             close_date,
-            amount,
+            notes,
         };
         try {
             const response = await fetch(`http://localhost:8080/api/companies/${id}/log_activity`, {
@@ -129,28 +130,22 @@ function CompanyPage() {
 
     const loggedActivities = logActivities.filter((activity) => activity.company_id === id);
 
-    const loggedGivings = loggedActivities.filter((activity) => activity.activity_record_type.toUpperCase() != "Proposal".toUpperCase());
+    const inboundGivingsCount = Object.fromEntries(company?.inbound_giving_counts ? (Object.keys(company.inbound_giving_counts).map((type) => [type, company.inbound_giving_counts[type]])) || [] : []);
 
-    const allGivingsCount = Object.fromEntries(company?.giving_counts ? (Object.keys(company.giving_counts).map((type) => [type, company.giving_counts[type]])) || [] : []);
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/portfolio`)
+        .then(result => result.json())
+        .then(data => {
+            setPortfolios(data);
+        });
+    }, []);
 
-    for (const activity of loggedGivings) {
-        let giving_type = "";
-        if (activity.activity_record_type.toLowerCase() === "donation" || activity.activity_record_type.toLowerCase() === "pledge") {
-            // Learned how to capitalize the first letter of string from this link: 
-            // https://coreui.io/blog/how-to-capitalize-the-first-letter-in-javascript/
-            giving_type = activity.activity_record_type.charAt(0).toUpperCase() + activity.activity_record_type.slice(1);
-        }
-        else if (activity.activity_record_type.toLowerCase() === "in-kind gift") {
-            giving_type = "In-Kind Gift";
-        }
-        else {
-            giving_type = "Other";
-        }
-        allGivingsCount[giving_type] = (allGivingsCount[giving_type] || 0) + 1;
-    }
+    // Found the .find() method to get the corresponding company from the companies array based on its id
+    // from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
+    const portfolio = portfolios.find((p) => p.id === id);
 
-    const loggedGivingAmount = loggedGivings.reduce((total, activity) => total + parseFloat(activity.amount || 0), 0);
-    const totalGivingAmount = company ? parseFloat(company.total_giving_amount || 0) + loggedGivingAmount : loggedGivingAmount;
+    const totalGivingAmount = portfolio ? parseFloat(portfolio.total_giving || 0)
+        : 0;
 
     let latestDate = company?.latest_contact_date;
 
@@ -191,18 +186,6 @@ function CompanyPage() {
             setLogActivities(data.activities);
         });
     }, [id]);
-
-    useEffect(() => {
-        fetch(`http://localhost:8080/api/portfolio`)
-        .then(result => result.json())
-        .then(data => {
-            setPortfolios(data);
-        });
-    }, []);
-
-    // Found the .find() method to get the corresponding company from the companies array based on its id
-    // from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
-    const portfolio = portfolios.find((p) => p.id === id);
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/companies/${id}/temporal`)
@@ -278,46 +261,52 @@ function CompanyPage() {
                 
             </div>
             
-            <div className='total_giving_box'>
-                <div className="total_giving_title">TOTAL GIVING</div>
-                <div className="total_giving_amount">
-                    {/* Found how to format the currency from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString */}
-                    {totalGivingAmount.toLocaleString("en-US", { style: "currency", currency: "USD" }) }
-                </div>
-                <div className='giving_message'>
-                    {/* Learned how to iterate key value pairs using Object.entries() 
-                    from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object*/}
-                    {Object.values(allGivingsCount).some(value => value > 0) ? Object.entries(allGivingsCount).map(([type, count]) => `${type}: ${count}`).join(' & ') : 'No givings yet'}
-                    
-                </div>
-            </div>
-            <div className='award_box'>
-                <div className='award_title'>ACTIVE RESEARCH AWARDS</div>
-                <div className='total_award_amount'>
-                    {activeResearchAwards.length > 0 ? activeResearchAwards.length : '0'}
-                </div>
-                <div className='award_message'>
-                    {/* Learned Intl.NumberFormat from this link: 
-                        https://dev.to/josephciullo/simplify-currency-formatting-in-react-a-zero-dependency-solution-with-intl-api-3kok
-                        Learned compact notation from this link: 
-                        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#other_options
-                     */}
-                    {activeResearchAwards.length > 0 ? `${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", notation: "compact" }).format(totalAward)} via Kuali` : 'No awards yet'}
-                </div>
-            </div>
-            <div className='caps_team_box'>
-                <div className='caps_team_title'>CAPSTONE TEAMS</div>
-                <div className='num_of_teams'>0</div>
-                <div className='caps_team_message'>No capstone teams yet</div>
-            </div>
-            <div className='last_contact_date_box'>
-                <div className='last_contact_date_title'>LAST CONTACT</div>
-                <div className='last_contact_date'>
-                    {latestDate ? new Date(latestDate).toLocaleDateString('en-US', {timeZone: 'America/New_York'}) : 'Not Available'}
-                </div>
+            <div className='four_boxes_section'>
+                <div className='total_giving_box'>
+                    <div className="total_giving_title">TOTAL GIVING</div>
+                    <div className="total_giving_amount">
+                        {/* Found how to format the currency from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString */}
+                        {totalGivingAmount.toLocaleString("en-US", { style: "currency", currency: "USD" }) }
+                    </div>
+                    <div className='inbound_giving_message'>
+                        {/* Learned how to iterate key value pairs using Object.entries() 
+                        from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object*/}
+                        {Object.values(inboundGivingsCount).some(value => value > 0) ? Object.entries(inboundGivingsCount).map(([type, count]) => (
+                            `${type}: ${count}`)
+                        ).join(' & ') : 'No giving recorded yet'}
 
-                <div className='days_passed_from_lcd'>
-                    {daysPassed ? (daysPassed >= 0 ? `${daysPassed} days ago` : 'Not Available') : 'Not Available'}
+                        
+                        
+                    </div>
+                </div>
+                <div className='award_box'>
+                    <div className='award_title'>ACTIVE RESEARCH AWARDS</div>
+                    <div className='total_award_amount'>
+                        {activeResearchAwards.length > 0 ? activeResearchAwards.length : '0'}
+                    </div>
+                    <div className='award_message'>
+                        {/* Learned Intl.NumberFormat from this link: 
+                            https://dev.to/josephciullo/simplify-currency-formatting-in-react-a-zero-dependency-solution-with-intl-api-3kok
+                            Learned compact notation from this link: 
+                            https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#other_options
+                        */}
+                        {activeResearchAwards.length > 0 ? `${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", notation: "compact" }).format(totalAward)} via Kuali` : 'No awards yet'}
+                    </div>
+                </div>
+                <div className='caps_team_box'>
+                    <div className='caps_team_title'>CAPSTONE TEAMS</div>
+                    <div className='num_of_teams'>0</div>
+                    <div className='caps_team_message'>No capstone teams yet</div>
+                </div>
+                <div className='last_contact_date_box'>
+                    <div className='last_contact_date_title'>LAST CONTACT</div>
+                    <div className='last_contact_date'>
+                        {latestDate ? new Date(latestDate).toLocaleDateString('en-US', {timeZone: 'America/New_York'}) : 'Not Available'}
+                    </div>
+
+                    <div className='days_passed_from_lcd'>
+                        {daysPassed ? (daysPassed >= 0 ? `${daysPassed} days ago` : 'Not Available') : 'Not Available'}
+                    </div>
                 </div>
             </div>
             <div className='inbound_outbound_section'>
@@ -343,9 +332,24 @@ function CompanyPage() {
                 </div>
                 <div className='outbound_box'>
                     <div className='outbound_title_box'>
-                        <div className='outbound_title'>⬆ Outbound from MSU</div>
+                            <div className='outbound_title'> ⬆Outbound from MSU</div>
                     </div>
-                    <p>No outbound available</p>
+                    {loggedActivities.length > 0 ? (
+                        <div className='company-table-wrap'>
+                            <table className='company-table'>
+                                <tbody>
+                                    {loggedActivities.map(activity => (
+                                        <tr key={activity.id}>
+                                            <td className='outbound_type'>{activity.activity_record_type}</td>
+                                            <td className='outbound_notes'>{activity.notes}</td>
+                                            <td className='outbound_status'>{activity.stage_name}</td>
+                                            <td className='outbound_occurred_on'>{new Date(activity.close_date).toLocaleDateString('en-US', { timeZone: 'UTC' })}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : ( <p>No outbound available</p>)}
                 </div>
             </div>
             <div className='activity_box'>
@@ -361,7 +365,7 @@ function CompanyPage() {
                                         <td className='activity_record_type'>{activity.record_type}</td>
                                         <td className='activity_stage'>{activity.stage}</td>
                                         <td className='activity_amount'>{`$${activity.amount}`}</td>
-                                        <td className='activity_close_date'>{new Date(activity.close_date).toLocaleDateString('en-US')}</td>
+                                        <td className='activity_close_date'>{new Date(activity.close_date).toLocaleDateString('en-US', { timeZone: 'UTC' })}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -378,17 +382,17 @@ function CompanyPage() {
                                                 Delete
                                             </button>
                                         </td>
-                                        <td className='activity_stage'>
+                                        <td className='logged_activity_notes'>
+                                            <div>
+                                                {activity.notes}
+                                            </div>
+                                        </td>
+                                        <td className='logged_activity_status'>
                                             <div>
                                                 {activity.stage_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
                                             </div>
                                         </td>
-                                        <td className='activity_amount'>
-                                            <div>
-                                                {activity.amount ? `$${activity.amount}` : ''}
-                                            </div>
-                                        </td>
-                                        <td className='activity_close_date'>
+                                        <td className='logged_activity_close_date'>
                                             <div>
                                                 {/* Learned how to convert string to date from this link: 
                                                     https://www.geeksforgeeks.org/javascript/convert-string-into-date-using-javascript/ */}
@@ -485,7 +489,7 @@ function CompanyPage() {
             </div>
             <div className="relationship_map_box">
                 <div className="relationship_map_title_box">
-                    <div className="relationship_map_title">📈Relationship Map</div>
+                    <div className="relationship_map_title">📈Temporal Graph</div>
                 </div>
             </div>
             <Dialog className='log_activity_dialog' open_dialog={isDialogOpen}>
@@ -496,23 +500,35 @@ function CompanyPage() {
                             {company ? company.display_name : 'Company Name'}
                         </div>
                     </div>
+                    <div className='form_row_one'>
                     <div className='activity_type_title'>
                         <label htmlFor="activity_type">Activity Type</label>
-                        <input type="text" id="activity_type" name="activity_type" className='activity_type_box' />
-                        <button type="button" className='cancel_button' onClick={() => setIsDialogOpen(false)}>Cancel</button>
-                        <button type="submit" className='save_act_button'>Save Activity</button>
+                        {/* <input type="text" id="activity_type" name="activity_type" className='activity_type_box' /> */}
+                        <select id="activity_type" name="activity_type" className='activity_type_box'>
+                            <option value="" disabled selected>Select activity type</option>
+                            <option value="touchpoint">Touchpoint</option>
+                            <option value="ask">Ask</option>
+                            <option value="recruiting">Recruiting</option>
+                            <option value="action_item">Action Item</option>
+                        </select>
+                        
                     </div>
                     <div className='dia_status_title'>
                         <label htmlFor="status">Status</label>
                         <input type="text" id="status" name="status" className='dia_status_box' />
                     </div>
-                    <div className='amount_title'>
-                        <label htmlFor="amount">Amount</label>
-                        <input type="number" id="amount" name="amount" className='amount_box' />
                     </div>
                     <div className='date_title'>
                         <label htmlFor="date">Date</label>
                         <input type="date" id="date" name="date" className='date_box' />
+                    </div>
+                    <div className='notes_title'>
+                        <label htmlFor="notes">Notes</label>
+                        <textarea id="notes" name="notes" className='notes_box' />
+                    </div>
+                    <div className='cancel_save_section'>
+                        <button type="button" className='cancel_button' onClick={() => setIsDialogOpen(false)}>Cancel</button>
+                        <button type="submit" className='save_act_button'>Save Activity</button>
                     </div>
                 </form>
             </Dialog>

@@ -1,14 +1,18 @@
 /* Zhixiang Miao */
+/* Learned CSS from this link: https://developer.mozilla.org/en-US/docs/Web/CSS */
 
 .company-page{
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
 }
 
 .title_box {
     width: 65vw;
     height: 12vh;
     position: relative;
-    top: 2vh;
+    top: 0vh;
     left: 1vw;
 
     background-color: white;
@@ -111,174 +115,201 @@
 
 }
 
+.four_boxes_section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4.25vw;
+    position: static;
+    /* top: 8vh;
+    left: 1vw; */
+    margin-left: 1vw;
+}
+
 .total_giving_box {
     width: 15vw;
-    height: 13vh;
+    min-height: 13vh;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 10px;
     background-color: white;
-    position: relative;
+    /* position: relative;
     top: 5vh;
-    left: 1vw;
+    left: 1vw; */
     border-radius: 0.5vw;
     border-bottom: 0.01vw solid #e3e6e8;
 }
 
 .total_giving_title {
     font-size: 0.8em;
-    text-align: center;
+    text-align: left;
     color: rgb(99, 99, 99);
-    position: relative;
-    top: 2.5vh;
-    left: -3.5vw;
+    position: static;
     font-weight: bold;
 }
 
 .total_giving_amount {
     font-size: 1.5em;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     color: black;
-    position: absolute;
-    top: 1.9em;
-    left: 1em;
+    position: static;
 }
 
-.giving_message {
+.inbound_giving_message {
     font-size: 0.8em;
     color: #18453B;
-    text-align: center;
-    display: flex;
-    position: absolute;
-    top: 6.5em;
-    left: 1.7em;
+    display: block;
+    position: static;
     text-align: left;
 }
 
 .award_box {
-   width: 15vw;
-    height: 13vh;
+    width: 15vw;
+    min-height: 13vh;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 10px;
     background-color: white;
-    position: relative;
+    /* position: relative;
     top: -8vh;
-    left: 20.3vw;
+    left: 20.3vw; */
     border-radius: 0.5vw;
     border-bottom: 0.01vw solid #e3e6e8;
 }
 
 .award_title {
     font-size: 0.8em;
-    text-align: center;
+    text-align: left;
     color: rgb(99, 99, 99);
-    position: relative;
-    top: 2.5vh;
-    left: -1vw;
+    position: static;
+    /* top: 2.5vh;
+    left: -1vw; */
     font-weight: bold;
 }
 
 .total_award_amount {
     font-size: 1.5em;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     color: black;
-    position: relative;
-    top: 3.5vh;
-    left: -6vw;
+    position: static;
+    /* top: 3.5vh;
+    left: -6vw; */
 }
 
 .award_message {
     font-size: 0.8em;
     color: #18453B;
-    text-align: center;
-    position: relative;
-    top: 4.5vh;
-    left: -4vw;
+    text-align: left;
+    position: static;
 }
 
 .caps_team_box {
     width: 15vw;
-    height: 13vh;
+    min-height: 13vh;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 10px;
     background-color: white;
-    position: relative;
+    /* position: relative;
     top: -21vh;
-    left: 39.5vw;
+    left: 39.5vw; */
     border-radius: 0.5vw;
     border-bottom: 0.01vw solid #e3e6e8;
 }
 
 .caps_team_title {
     font-size: 0.8em;
-    text-align: center;
+    text-align: left;
     color: rgb(99, 99, 99);
-    position: relative;
+    position: static;
+    /* position: relative;
     top: 2.5vh;
-    left: -2.8vw;
+    left: -2.8vw; */
     font-weight: bold;
 }
 
 .num_of_teams {
     font-size: 1.5em;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     color: black;
-    position: relative;
-    top: 3.5vh;
-    left: -6vw;
+    position: static;
 }
 
 .caps_team_message {
     font-size: 0.8em;
     color: #18453B;
-    text-align: center;
-    position: relative;
-    top: 4.5vh;
-    left: -2.5vw;
+    text-align: left;
+    position: static;
 }
 
 .last_contact_date_box {
     width: 15vw;
-    height: 13vh;
+    min-height: 13vh;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 10px;
     background-color: white;
-    position: relative;
+    /* position: relative;
     top: -34vh;
-    left: 58.8vw;
+    left: 58.8vw; */
     border-radius: 0.5vw;
     border-bottom: 0.01vw solid #e3e6e8;
 }
 
 .last_contact_date_title {
     font-size: 0.8em;
-    text-align: center;
+    text-align: left;
     color: rgb(99, 99, 99);
-    position: relative;
+    position: static;
+    /* position: relative;
     top: 2.5vh;
-    left: -3vw;
+    left: -3vw; */
     font-weight: bold;
 }
 
 .last_contact_date {
     font-size: 1.5em;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     color: black;
-    position: absolute;
-    top: 1.85em;
-    left: 1em;
+    position: static;
+    /* top: 1.85em;
+    left: 1em; */
 }
 
 .days_passed_from_lcd {
     font-size: 0.8em;
     color: #18453B;
-    text-align: center;
-    position: absolute;
-    top: 6.5em;
-    left: 2em;
+    text-align: left;
+    position: static;
+    /* top: 6.5em;
+    left: 2em; */
 }
 
 .inbound_outbound_section {
     display: flex;
     align-items: stretch;
-    position: relative;
-    top: -30vh;
-    left: 1vw;
+    position: static;
+    gap: 0.25vw;
+    margin-left: 1vw;
 }
 
 .inbound_box {
@@ -304,17 +335,11 @@
 .inbound_title {
     font-size: 0.9em;
     color: black;
-    text-align: center;
-    font-weight: bold;
-    position: relative;
-    top: 2vh;
-    left: -12.5vw;
-}
-
-.inbound_occurred_on {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
     text-align: left;
+    font-weight: bold;
+    position: static;
+    padding-top: 2vh;
+    margin-left: 1vw;
 }
 
 .inbound_notes {
@@ -328,6 +353,12 @@
     color: #18453B;
     text-align: left;
     font-weight: bold;
+}
+
+.inbound_occurred_on {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: left;
 }
 
 .company-table-wrap {
@@ -377,20 +408,43 @@
 .outbound_title {
     font-size: 0.9em;
     color: black;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
-    position: relative;
-    top: 2vh;
-    left: -11.5vw;
+    position: static;
+    padding-top: 2vh;
+    margin-left: 1vw;
+}
+
+.outbound_type {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: left;
+}
+
+.outbound_notes {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: left;
+}
+
+.outbound_status {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: left;
+}
+
+.outbound_occurred_on {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: left;
 }
 
 .activity_box {
     width: 72.8vw;
-    height: auto + 10vh;
+    height: auto;
     background-color: white;
-    position: relative;
-    top: -25vh;
-    left: 1vw;
+    position: static;
+    margin-left: 1vw;
     border-radius: 0.5vw;
     border-top: 1px solid #e3e6e8;
     border-left: 1px solid #e3e6e8;
@@ -410,14 +464,20 @@
 .activity_title {
     font-size: 0.9em;
     color: black;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
-    position: relative;
-    top: 2.5vh;
-    left: -32vw;
+    position: static;
+    padding-top: 2vh;
+    margin-left: 1vw;
 }
 
 .activity_record_type {
+    font-size: 1em;
+    color: rgb(99, 99, 99);
+    text-align: left;
+}
+
+.logged_activity_notes {
     font-size: 1em;
     color: rgb(99, 99, 99);
     text-align: left;
@@ -427,6 +487,22 @@
     font-size: 1em;
     color: rgb(99, 99, 99);
     text-align: left;
+}
+
+
+
+.logged_activity_status {
+    font-size: 1em;
+    color: #18453B;
+    text-align: left;
+    font-weight: bold;
+}
+
+.logged_activity_close_date {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: right;
+    margin-right: auto;
 }
 
 .activity_amount {
@@ -461,9 +537,8 @@
     width: 72.8vw;
     height: auto;
     background-color: white;
-    position: relative;
-    top: -20vh;
-    left: 1vw;
+    position: static;
+    margin-left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
 }
@@ -481,21 +556,21 @@
 .msu_unit_title {
     font-size: 0.8em;
     color: rgb(99, 99, 99);
-    text-align: center;
+    text-align: left;
     font-weight: bold;
-    position: relative;
-    top: 1.5vh;
-    left: -33vw;
+    position: static;
+    padding-top: 1.5vh;
+    margin-left: 1vw;
 }
 
 .owner_title {
     font-size: 0.8em;
     color: rgb(99, 99, 99);
-    text-align: center;
+    text-align: left;
     font-weight: bold;
-    position: relative;
-    top: -0.2vh;
-    left: -19vw;
+    position: static;
+    margin-top: -1.7vh;
+    margin-left: 15vw;
 }
 
 .subj_title {
@@ -503,19 +578,18 @@
     color: rgb(99, 99, 99);
     text-align: center;
     font-weight: bold;
-    position: relative;
-    top: -1.9vh;
-    left: -2vw;
+    position: static;
+    margin-top: -1.7vh;
 }
 
 .status_title {
     font-size: 0.8em;
     color: rgb(99, 99, 99);
-    text-align: center;
+    text-align: right;
     font-weight: bold;
-    position: relative;
-    top: -3.5vh;
-    left: 30vw;
+    position: static;
+    margin-top: -1.7vh;
+    margin-right: 3vw;
 }
 
 .msu_unit {
@@ -558,9 +632,8 @@
     width: 72.8vw;
     height: 40vh;
     background-color: white;
-    position: relative;
-    top: -15vh;
-    left: 1vw;
+    position: static;
+    margin-left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
 }
@@ -568,11 +641,11 @@
 .research_award_title {
     font-size: 0.9em;
     color: black;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     position: relative;
     top: 2vh;
-    left: -31.5vw;
+    left: 1vw;
 }
 
 .label_section {
@@ -589,21 +662,21 @@
 .award_id_label {
     font-size: 0.8em;
     color: rgb(99, 99, 99);
-    text-align: center;
+    text-align: left;
     font-weight: bold;
-    position: relative;
-    top: 1.5vh;
-    left: -33.5vw;
+    position: static;
+    margin-top: 1.5vh;
+    margin-left: 1vw;
 }
 
 .sponsor_name_label {
     font-size: 0.8em;
     color: rgb(99, 99, 99);
-    text-align: center;
+    text-align: left;
     font-weight: bold;
-    position: relative;
-    top: -0.2vh;
-    left: -22vw;
+    position: static;
+    margin-top: -1.7vh;
+    margin-left: 12vw;
 }
 
 .research_title_label {
@@ -611,9 +684,9 @@
     color: rgb(99, 99, 99);
     text-align: center;
     font-weight: bold;
-    position: relative;
-    top: -1.8vh;
-    left: -9vw;
+    position: static;
+    margin-top: -1.7vh;
+    margin-right: 15vw;
 }
 
 .PI_label {
@@ -621,9 +694,9 @@
     color: rgb(99, 99, 99);
     text-align: center;
     font-weight: bold;
-    position: relative;
-    top: -3.5vh;
-    left: 5vw;
+    position: static;
+    margin-top: -1.7vh;
+    margin-left: 10vw;
 }
 
 .lead_unit_label {
@@ -631,38 +704,37 @@
     color: rgb(99, 99, 99);
     text-align: center;
     font-weight: bold;
-    position: relative;
-    top: -5.1vh;
-    left: 15vw;
+    position: static;
+    margin-top: -1.7vh;
+    margin-left: 30vw;
 }
 
 .award_amount_label {
     font-size: 0.8em;
     color: rgb(99, 99, 99);
-    text-align: center;
+    text-align: right;
     font-weight: bold;
-    position: relative;
-    top: -6.78vh;
-    left: 26vw;
+    position: static;
+    margin-top: -1.5vh;
+    margin-right: 10vw;
 }
 
 .research_status_label {
     font-size: 0.8em;
     color: rgb(99, 99, 99);
-    text-align: center;
+    text-align: right;
     font-weight: bold;
-    position: relative;
-    top: -8.42vh;
-    left: 33vw;
+    position: static;
+    margin-top: -1.7vh;
+    margin-right: 2vw;
 }
 
 .contacts_box {
     width: 72.8vw;
     height: auto;
     background-color: white;
-    position: relative;
-    top: -10vh;
-    left: 1vw;
+    position: static;
+    margin-left: 1vw;
     border-radius: 0.5vw;
     border-top: 1px solid #e3e6e8;
     border-left: 1px solid #e3e6e8;
@@ -685,11 +757,11 @@
 .contacts_title {
     font-size: 0.9em;
     color: black;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
-    position: relative;
-    top: 1.8vh;
-    left: -30.5vw;
+    position: static;
+    margin-top: 2vh;
+    margin-left: 1vw;
 }
 
 .contact-table-wrap {
@@ -727,9 +799,8 @@
     width: 72.8vw;
     height: 80vh;
     background-color: white;
-    position: relative;
-    top: -5vh;
-    left: 1vw;
+    position: static;
+    margin-left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
 }
@@ -750,9 +821,9 @@
 .relationship_map_title {
     font-size: 0.9em;
     color: black;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
-    position: relative;
-    top: 1.8vh;
-    left: -31.2vw;
+    position: static;
+    margin-top: 2vh;
+    margin-left: 1vw;
 }

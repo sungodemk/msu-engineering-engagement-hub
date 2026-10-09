@@ -63,36 +63,38 @@ def get_latest_contact_dates(rows):
 
     return latest_contact_date_each_company
 
-def get_giving_amount(rows):
-    giving_amount_each_company = {}
+def get_inbound_giving_amount(rows):
+    inbound_amount_each_company = {}
     for opp in rows:
         org_id = opp[OPPORTUNITY_COLUMNS["org_id"]]
         temp = opp[OPPORTUNITY_COLUMNS["amount"]]
         rec_type = opp[OPPORTUNITY_COLUMNS["record_type"]]
+        type = opp[OPPORTUNITY_COLUMNS["type"]]
         amount = float(temp) if temp else 0
         if rec_type == "Proposal":
             continue
-        if org_id not in giving_amount_each_company:
-            giving_amount_each_company[org_id] = 0
-        giving_amount_each_company[org_id] += amount
+        if org_id not in inbound_amount_each_company:
+            inbound_amount_each_company[org_id] = 0
+        inbound_amount_each_company[org_id] += amount
 
-    return giving_amount_each_company
+    return inbound_amount_each_company
 
-def count_givings(rows):
-    count_givings_from_company = {}
+def inbound_count_givings(rows):
+    inbound_givings_from_company = {}
     for opp in rows:
         rec_type = opp[OPPORTUNITY_COLUMNS["record_type"]]
         comp_id = opp[OPPORTUNITY_COLUMNS["org_id"]]
-        if comp_id not in count_givings_from_company:
-            count_givings_from_company[comp_id] = {"Donation": 0, "In-Kind Gift": 0, "Pledge": 0}
+        type = opp[OPPORTUNITY_COLUMNS["type"]]
+        if comp_id not in inbound_givings_from_company:
+            inbound_givings_from_company[comp_id] = {"Donation": 0, "In-Kind Gift": 0, "Pledge": 0}
         if rec_type == "Donation":
-            count_givings_from_company[comp_id]["Donation"] += 1
+            inbound_givings_from_company[comp_id]["Donation"] += 1
         elif rec_type == "In-Kind Gift":
-            count_givings_from_company[comp_id]["In-Kind Gift"] += 1
+            inbound_givings_from_company[comp_id]["In-Kind Gift"] += 1
         elif rec_type == "Pledge":
-            count_givings_from_company[comp_id]["Pledge"] += 1
+            inbound_givings_from_company[comp_id]["Pledge"] += 1
 
-    return count_givings_from_company
+    return inbound_givings_from_company
 
 def get_activity_timeline(rows):
     activity_timeline_each_company = {}
