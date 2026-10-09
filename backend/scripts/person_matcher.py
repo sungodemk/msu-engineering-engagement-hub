@@ -16,6 +16,8 @@ NAME_INITIAL_WEIGHT = 0.20
 CITY_WEIGHT = 0.20
 DEGREE_WEIGHT = 0.25
 EMPLOYER_WEIGHT = 0.25
+EMAIL_WEIGHT = 0.60
+CLASS_YEAR_WEIGHT = 0.30
 
 
 def load_people(cur):
@@ -28,9 +30,16 @@ def load_people(cur):
             e.attributes,
             esr.source_record_id,
             sr.source_pk,
-            sr.payload->>'FirstName',
-            sr.payload->>'LastName',
-            sr.source_system
+            COALESCE(
+                sr.payload->>'FirstName',
+                sr.payload->>'first_name'
+            ),
+            COALESCE(
+                sr.payload->>'LastName',
+                sr.payload->>'last_name'
+            ),
+            sr.source_system,
+            sr.payload->>'alum_year'
         FROM entities e
         JOIN entity_source_records esr
             ON esr.entity_id = e.id
@@ -67,6 +76,7 @@ def load_people(cur):
             "first": first,
             "last": last,
             "source_system": row[8],
+            "alum_year": row[9],
         })
 
     return people
@@ -127,6 +137,13 @@ def normalize_person_name(name):
     return " ".join(name.split())
 
 
+def normalize_email(email):
+    if not email:
+        return ""
+
+    return email.strip().lower()
+
+
 # groups people by last name so people with the same last name are compared
 def block_by_last_name(people):
     blocks = defaultdict(list)
@@ -180,6 +197,16 @@ def same_city(person1, person2):
     )
 
 
+def same_email(person1, person2):
+    email1 = normalize_email(person1["email"])
+    email2 = normalize_email(person2["email"])
+
+    if not email1 or not email2:
+        return False
+
+    return email1 == email2
+
+
 def shared_degree(person1, person2, degrees):
     degrees1 = degrees.get(person1["entity_id"], set())
     degrees2 = degrees.get(person2["entity_id"], set())
@@ -188,6 +215,36 @@ def shared_degree(person1, person2, degrees):
         return False
 
     return bool(degrees1 & degrees2)
+
+
+def same_class_year(person1, person2, degrees):
+    if person1["source_system"] == "handshake":
+        handshake_person = person1
+        salesforce_person = person2
+    elif person2["source_system"] == "handshake":
+        handshake_person = person2
+        salesforce_person = person1
+    else:
+        return False
+
+    if salesforce_person["source_system"] != "salesforce":
+        return False
+
+    alum_year = handshake_person["alum_year"]
+
+    if not alum_year:
+        return False
+
+    salesforce_degrees = degrees.get(
+        salesforce_person["entity_id"],
+        set(),
+    )
+
+    for _, _, class_year in salesforce_degrees:
+        if class_year is not None and str(class_year) == str(alum_year):
+            return True
+
+    return False
 
 
 def shared_current_employer(person1, person2, employers):
@@ -201,7 +258,14 @@ def shared_current_employer(person1, person2, employers):
 
 
 # scores the match and assigns the pair to a review band
-def score_and_band(name_match, city_match, degree_match, employer_match):
+def score_and_band(
+    name_match,
+    city_match,
+    degree_match,
+    employer_match,
+    email_match,
+    class_year_match,
+):
     score = 0.0
     reasons = []
 
@@ -225,7 +289,15 @@ def score_and_band(name_match, city_match, degree_match, employer_match):
         score += EMPLOYER_WEIGHT
         reasons.append("same_employer")
 
-    score = round(score, 3)
+    if email_match:
+        score += EMAIL_WEIGHT
+        reasons.append("same_email")
+
+    if class_year_match:
+        score += CLASS_YEAR_WEIGHT
+        reasons.append("same_class_year")
+
+    score = round(min(score, 1.0), 3)
 
     # initial matches always need human review even if score is high enough to auto-accept
     if name_match == "initial" and score >= REVIEW_THRESHOLD:
@@ -379,12 +451,28 @@ def main():
                         person2,
                         employers,
                     )
+                    email_match = same_email(
+                        person1,
+                        person2,
+                    )
+
+                    # class year does not add points when shared degree already includes it
+                    class_year_match = (
+                        not degree_match
+                        and same_class_year(
+                            person1,
+                            person2,
+                            degrees,
+                        )
+                    )
 
                     score, status, reasons = score_and_band(
                         name_match,
                         city_match,
                         degree_match,
                         employer_match,
+                        email_match,
+                        class_year_match,
                     )
 
                     results.append({
