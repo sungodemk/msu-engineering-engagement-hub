@@ -286,3 +286,20 @@
     font-weight: 600;
     text-decoration: none ;
 }
+
+.pp-sort-btn {
+    all: unset;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pp-sort-btn:hover,
+.pp-sort-btn.active {
+    color: #18453b;
+}
+
+.pp-sort-arrow {
+    font-size: 0.7rem;
+}

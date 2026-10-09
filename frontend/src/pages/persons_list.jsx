@@ -1,8 +1,18 @@
-import { useEffect, useState  } from "react";
+import { useEffect, useMemo, useState  } from "react";
 import {Link, useNavigate } from 'react-router-dom';
 import '../css/persons_page.css';
 
 const API_BASE = "http://localhost:8080";
+
+const COLUMNS = [
+    { key: 'display_name', label: 'Name' },
+    { key: 'title', label: 'Title' },
+    { key: 'company', label: 'Company' },
+    { key: 'email', label: 'Email' },
+    { key: 'since', label: 'Since' },
+];
+
+const isEmpty = (value) => value == null|| value === '';
 
 function PersonsList(){
     const navigate = useNavigate();
@@ -10,6 +20,7 @@ function PersonsList(){
     const [search, setSearch] = useState('');
     const [companyId, setCompanyId] = useState('');
     const [error, setError] = useState(null);
+    const [sort, setSort] = useState({ key: 'display_name', direction: 'asc' });
 
     useEffect(() => {
         document.title = 'Persons';
@@ -39,6 +50,29 @@ function PersonsList(){
         if (!term) return true;
         return [p.display_name, p.title, p.company, p.email].some((value) => value?.toLowerCase().includes(term));
     });
+
+    // sort the visible people by the current sort key and direction
+    const toggleSort = (key) => 
+        setSort((s) =>
+            s.key === key
+                ? { key, direction: s.direction === 'asc' ? 'desc' : 'asc' }
+                : { key, direction: key === 'since' ? 'desc' : 'asc' }
+        );
+    
+    const rows = useMemo(() => {
+        return [...visible].sort((a, b) => {
+            const aValue = a[sort.key];
+            const bValue = b[sort.key];
+            if (isEmpty(aValue) && isEmpty(bValue)) return 0;
+            if (isEmpty(aValue)) return 1;
+            if (isEmpty(bValue)) return -1;
+            const cmp = String(aValue).localeCompare(String(bValue),undefined, {sensitivity: 'base'});
+            return sort.direction === 'asc' ? cmp : -cmp;
+        });
+    }, [visible, sort]);
+
+    const columns = companyId ? COLUMNS.filter((c) => c.key !== 'company') : COLUMNS;
+
 
     return (
         <div className="persons-list">  
@@ -80,15 +114,27 @@ function PersonsList(){
                         <table className="pp-table">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Title</th>
-                                    {!companyId && <th>Company</th>}
-                                    <th>Email</th>
-                                    <th>Since</th>
+                                    {columns.map((c) => {
+                                        const active = sort.key === c.key;
+                                        return (
+                                            <th key={c.key}>
+                                                <button
+                                                    type="button"
+                                                    className={`pp-sort-btn${active ? ' active' : ''}`}
+                                                    onClick={() => toggleSort(c.key)}
+                                                >
+                                                    {c.label}
+                                                    <span className='pp-sort-arrow'>
+                                                        {active ? (sort.direction === 'asc' ? '▲' : '▼') : ''}
+                                                    </span>
+                                                </button>
+                                            </th>
+                                        );
+                                    })}
                                 </tr>
                             </thead>
                             <tbody>
-                                {visible.map((p) =>(
+                                {rows.map((p) =>(
                                     <tr key={p.id} onClick={() => navigate(`/persons/${p.id}`)}>
                                         <td>
                                             <Link to={`/persons/${p.id}`} className="pp-person-name">
