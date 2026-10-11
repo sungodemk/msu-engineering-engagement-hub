@@ -797,7 +797,7 @@
 
 .relationship_map_box {
     width: 72.8vw;
-    height: 80vh;
+    height: auto;
     background-color: white;
     position: static;
     margin-left: 1vw;

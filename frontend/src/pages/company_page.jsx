@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react';
 import { Link, useParams, useNavigate } from "react-router-dom";
 import '../css/company_page.css';
 import Dialog from '../components/Dialog';
+import Temporal from '../graphs/temporal'
 
 function CompanyPage() {
     useEffect(() => {
@@ -491,6 +492,11 @@ function CompanyPage() {
                 <div className="relationship_map_title_box">
                     <div className="relationship_map_title">📈Temporal Graph</div>
                 </div>
+                {activities.length > 0 ? (
+                    <Temporal activities={activities} />
+                ) : (
+                    <p>No temporal data available</p>
+                )}
             </div>
             <Dialog className='log_activity_dialog' open_dialog={isDialogOpen}>
                 <form onSubmit={logActivityEventHandler} className='log_form'>
@@ -503,7 +509,6 @@ function CompanyPage() {
                     <div className='form_row_one'>
                     <div className='activity_type_title'>
                         <label htmlFor="activity_type">Activity Type</label>
-                        {/* <input type="text" id="activity_type" name="activity_type" className='activity_type_box' /> */}
                         <select id="activity_type" name="activity_type" className='activity_type_box'>
                             <option value="" disabled selected>Select activity type</option>
                             <option value="touchpoint">Touchpoint</option>
