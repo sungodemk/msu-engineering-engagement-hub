@@ -22,7 +22,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: "postgres://postgres:dev@db:5432/engagement?sslmode=disable"
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:dev@db:5432/engagement?sslmode=disable}
     volumes:
       - ./backend/db/migrations:/db/migrations
     command: --migrations-dir /db/migrations --no-dump-schema up
@@ -31,7 +31,8 @@ services:
     build:
       context: ./backend
     environment:
-      DATABASE_URL: "postgresql://postgres:dev@db:5432/engagement"
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:dev@db:5432/engagement?sslmode=disable}
+      PYTHONBUFFERED: '1'
     volumes:
       - ./backend:/app
     depends_on:
@@ -48,7 +49,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DATABASE_URL: "postgresql://postgres:dev@db:5432/engagement"
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:dev@db:5432/engagement?sslmode=disable}
     volumes:
       - ./backend:/app
     depends_on:
