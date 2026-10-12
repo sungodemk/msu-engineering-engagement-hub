@@ -37,6 +37,11 @@ function MatchCard({match, onDecision}) {
             right: match.right_name,
         },
         {
+            label: "Email",
+            left: match.left_email,
+            right: match.right_email,
+        },
+        {
             label: "City",
             left: match.left_city,
             right: match.right_city,

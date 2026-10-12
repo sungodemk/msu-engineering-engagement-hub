@@ -312,6 +312,7 @@ def get_matches(cur, status, limit=None):
             l.source_system AS left_source_system,
             l.source_pk AS left_external_id,
             le.display_name AS left_name,
+            le.email AS left_email,
             le.attributes->>'city' AS left_city,
             le.attributes->>'state' AS left_state,
             COALESCE(
@@ -322,6 +323,7 @@ def get_matches(cur, status, limit=None):
             r.source_system AS right_source_system,
             r.source_pk AS right_external_id,
             re.display_name AS right_name,
+            re.email AS right_email,
             re.attributes->>'city' AS right_city,
             re.attributes->>'state' AS right_state,
             COALESCE(
