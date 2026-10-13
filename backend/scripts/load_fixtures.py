@@ -61,6 +61,7 @@ ASSIGNMENT_COLUMNS = {
     "account_id": "Account__r.External_ID__c",
     "contact_id": "Contact__r.External_ID__c",
     "role": "Role__c",
+    "unit": "Unit__c",
     "start_date": "Start_Date__c",
     "end_date": "End_Date__c",
 
@@ -355,7 +356,7 @@ def load_degrees(cur, rows, contact_entities):
     )
 
 # Loads MSU staff owners of companies (Emmanuel)
-def load_relationship_assignments(cur, rows, account_entities, contact_entities):
+def load_relationship_assignments(cur, rows, account_entities, contact_entities, units_by_code):
     for assignment in rows:
         source_id = insert_source_record(
             cur,
@@ -393,6 +394,31 @@ def load_relationship_assignments(cur, rows, account_entities, contact_entities)
         ),
 
     )
+
+        unit_entity_id = units_by_code.get(assignment[ASSIGNMENT_COLUMNS["unit"]])
+        if assignment[ASSIGNMENT_COLUMNS["contact_id"]] and unit_entity_id:
+            cur.execute(
+                """
+                INSERT INTO edges (
+                    from_entity_id, 
+                    to_entity_id, 
+                    edge_type, 
+                    edge_role,
+                    valid_from, 
+                    valid_to, 
+                    source_record_id
+                )
+                VALUES (%s, %s, 'works_with', %s, %s, %s::date + 1, %s)
+                """,
+                (
+                    target_id,
+                    unit_entity_id,
+                    assignment[ASSIGNMENT_COLUMNS["role"]],
+                    assignment[ASSIGNMENT_COLUMNS["start_date"]],
+                    assignment[ASSIGNMENT_COLUMNS["end_date"]],
+                    source_id,
+                ),
+            )
 
 
 # Decides status of opportunity (Alvin)
@@ -605,6 +631,81 @@ def load_action_items(cur, rows, account_entities, contact_entities):
             f"Skipped {skipped_no_account} action items with no "
             f"matching Account or Contact"
         )
+
+# No start date exists for the hierarchy, so every part_of edge will use this
+# placeholder to keep as-of queries (valid_from <= date) possible.
+HIERARCHY_VALID_FROM = "1900-01-01"
+
+
+def source_record_for_entity(cur, entity_id):
+    cur.execute(
+        "SELECT source_record_id FROM entity_source_records WHERE entity_id = %s LIMIT 1",
+        (entity_id,),
+    )
+    return cur.fetchone()[0]
+
+
+def load_unit_hierarchy(cur, rows, account_entities):
+    unit_ids = set()
+
+    for account in rows:
+
+        if ACCOUNT_TYPES[account[ACCOUNT_COLUMNS["record_type"]]] == "msu_unit":
+            unit_ids.add(account[ACCOUNT_COLUMNS["id"]])
+
+        child_id = account[ACCOUNT_COLUMNS["id"]]
+        parent_id = account[ACCOUNT_COLUMNS["parent_id"]]
+
+        # Companies can have parents (UM Digital) but that shouldn't be in the hierarchy
+        if child_id not in unit_ids or parent_id not in unit_ids:
+            continue
+
+        child_entity = account_entities[child_id]
+        parent_entity = account_entities[parent_id]
+
+        cur.execute(
+            """
+            INSERT INTO edges (
+                from_entity_id, 
+                to_entity_id, 
+                edge_type, 
+                edge_role,
+                valid_from, 
+                valid_to, 
+                source_record_id)
+            VALUES (%s, %s, 'part_of', NULL, %s, NULL, %s)
+            """,
+            (child_entity, parent_entity, HIERARCHY_VALID_FROM,
+             source_record_for_entity(cur, child_entity)),
+        )
+
+def load_activity_unit_edges(cur):
+    # A company is tied to a unit if it has an activity with that unit.
+    # valid_from is taken from the first activity
+    cur.execute(
+        """
+        INSERT INTO edges (
+            from_entity_id, 
+            to_entity_id, 
+            edge_type, 
+            edge_role,
+            valid_from, 
+            valid_to, 
+            source_record_id
+        )
+        SELECT DISTINCT ON (company_entity_id, msu_unit_entity_id)
+            company_entity_id, 
+            msu_unit_entity_id, 
+            'partner_of', 
+            'partner',
+            occurred_on, 
+            NULL::date,
+            source_record_id
+        FROM activities
+        WHERE msu_unit_entity_id IS NOT NULL
+        ORDER BY company_entity_id, msu_unit_entity_id, occurred_on
+        """
+    )
             
 def main():
     accounts = read_csv(
@@ -644,11 +745,13 @@ def main():
             account_entities, units_by_code = load_accounts(cur, accounts)
             contact_entities = load_contacts(cur, contacts)
             load_affiliations(cur, affiliations, account_entities, contact_entities)
+            load_unit_hierarchy(cur, accounts, account_entities)
+            load_relationship_assignments(cur, assignments, account_entities, contact_entities, units_by_code)
             load_opportunities(cur, opportunities, account_entities, contact_entities, units_by_code)
             load_degrees(cur, degrees, contact_entities)
-            load_relationship_assignments(cur, assignments, account_entities, contact_entities)
             load_contact_reports(cur, reports, account_entities, contact_entities, units_by_code)
             load_action_items(cur, action_items, account_entities, contact_entities)
+            load_activity_unit_edges(cur)
 
             for table in [
                 "source_records",
@@ -683,6 +786,10 @@ def main():
             )
             for activity_type, count in cur.fetchall():
                 print(f"{activity_type}: {count}")
+
+            cur.execute("SELECT edge_type, count(*) FROM edges GROUP BY edge_type ORDER BY edge_type")
+            for edge_type, count in cur.fetchall():
+                print(f"{edge_type}: {count}")
 
 
 if __name__ == "__main__":

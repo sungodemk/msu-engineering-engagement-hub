@@ -13,16 +13,5 @@ CREATE TABLE degrees (
 
 CREATE INDEX idx_degrees_person ON degrees (person_entity_id);
 
--- staff assigned to manage company or person 
-ALTER TABLE edges DROP CONSTRAINT chk_edge_type;
-ALTER TABLE edges ADD CONSTRAINT chk_edge_type
-    CHECK (edge_type IN ('employed_by', 'relationship_owner'));
-
-
-
 -- migrate:down
-DELETE FROM edges WHERE edge_type = 'relationship_owner';
-ALTER TABLE edges DROP CONSTRAINT chk_edge_type;
-ALTER TABLE edges ADD CONSTRAINT chk_edge_type
-    CHECK(edge_typeIN ('employed_by'));
 DROP TABLE degrees;

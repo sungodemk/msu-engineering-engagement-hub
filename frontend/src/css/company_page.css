@@ -777,10 +777,11 @@
     width: 72.8vw;
     height: auto;
     background-color: white;
-    position: static;
+    position: relative;
     margin-left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
+    margin-bottom: 10vh;
 }
 
 .relationship_map_title_box {

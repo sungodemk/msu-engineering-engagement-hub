@@ -275,12 +275,14 @@ def portfolio():
                     SELECT company_entity_id, MAX(occurred_on) AS last_activity_date
                     FROM activities
                     GROUP BY company_entity_id ),
+                -- Get latest owner from edges table that hold primary relationship owner
                 latest_owner AS (
-                    SELECT DISTINCT ON (company_entity_id)
-                        company_entity_id, owner_entity_id
-                    FROM activities
-                    WHERE owner_entity_id IS NOT NULL
-                    ORDER BY company_entity_id, occurred_on DESC)
+                    SELECT DISTINCT ON (to_entity_id)
+                        to_entity_id AS company_entity_id,
+                        from_entity_id AS owner_entity_id
+                    FROM edges
+                    WHERE edge_type = 'relationship_owner' AND valid_to IS NULL
+                    ORDER BY to_entity_id, valid_from DESC)
                 SELECT e.id, e.display_name AS name, e.attributes->>'industry' AS sector,
                     owner.id AS owner_id, owner.display_name AS owner, la.last_activity_date,
 

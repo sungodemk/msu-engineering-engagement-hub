@@ -20,7 +20,7 @@ CREATE TABLE edges (
         CHECK (valid_to IS NULL OR valid_to > valid_from),
 
     CONSTRAINT chk_edge_type
-        CHECK (edge_type IN ('employed_by'))
+        CHECK (edge_type IN ('employed_by', 'partner_of', 'part_of', 'works_with', 'relationship_owner'))
 
 );
 

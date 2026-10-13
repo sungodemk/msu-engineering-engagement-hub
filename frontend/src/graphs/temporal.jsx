@@ -157,7 +157,7 @@ function Temporal({activities}) {
             {hovered && (() => {
                 const meta = CATEGORY_META[hovered.activity.activity_type] || {label: hovered.activity.activity_type, color: '#999'};
                 return (
-                    <div className="temporal-tooltip" style={{left: hovered.x + 20, top: hovered.y + 20}}>
+                    <div className="temporal-tooltip" style={{left: hovered.x + 20, top: hovered.y + 70}}>
                         <div className="temporal-tooltip-header">
                             <span className="temporal-tooltip-dot" style={{background: meta.color}} />
                             <span className="temporal-tooltip-title">{tooltipTitle(hovered.activity, meta)}</span>
