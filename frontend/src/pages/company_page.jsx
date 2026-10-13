@@ -26,6 +26,7 @@ function CompanyPage() {
 
     const [contacts, setContacts] = useState([]);
     const [activeResearchAwards, setActiveResearchAwards] = useState([]);
+    const [allResearchAwards, setAllResearchAwards] = useState([]);
 
     function isValidDate(date) {
 
@@ -178,6 +179,14 @@ function CompanyPage() {
         });
     }, [id]);
 
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/companies/${id}/all_research_awards`)
+        .then(result => result.json())
+        .then(data => {
+            setAllResearchAwards(data.research_awards);
+        });
+    }, [id]);
+
     const totalAward = activeResearchAwards.reduce((total, award) => total + parseFloat(award.total_amount || 0), 0);
 
     useEffect(() => {
@@ -267,7 +276,7 @@ function CompanyPage() {
                     <div className="total_giving_title">TOTAL GIVING</div>
                     <div className="total_giving_amount">
                         {/* Found how to format the currency from this link: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString */}
-                        {totalGivingAmount.toLocaleString("en-US", { style: "currency", currency: "USD" }) }
+                        {totalGivingAmount.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 }) }
                     </div>
                     <div className='inbound_giving_message'>
                         {/* Learned how to iterate key value pairs using Object.entries() 
@@ -323,7 +332,7 @@ function CompanyPage() {
                                 {activities.filter(activity => activity.activity_type === 'gift').map(activity => (
                                     <tr key={activity.id}>
                                         <td className='inbound_notes'>{activity.notes}</td>
-                                        <td className='inbound_amount'>{`$${activity.amount}`}</td>
+                                        <td className='inbound_amount'>{`${parseFloat(activity.amount).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 })}`}</td>
                                         <td className='inbound_occurred_on'>{new Date(activity.occurred_on).toLocaleDateString('en-US')}</td>
                                     </tr>
                                 ))}
@@ -365,7 +374,7 @@ function CompanyPage() {
                                     <tr key={activity.opp_id}>
                                         <td className='activity_record_type'>{activity.record_type}</td>
                                         <td className='activity_stage'>{activity.stage}</td>
-                                        <td className='activity_amount'>{`$${activity.amount}`}</td>
+                                        <td className='activity_amount'>{`$${activity.amount.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 })}`}</td>
                                         <td className='activity_close_date'>{new Date(activity.close_date).toLocaleDateString('en-US', { timeZone: 'UTC' })}</td>
                                     </tr>
                                 ))}
@@ -443,16 +452,44 @@ function CompanyPage() {
                 </div>
             </div>
             <div className="research_award_box">
-                <div className="research_award_title">🔬Research Awards</div>
-                <div className="label_section">
-                    <div className="award_id_label">AWARD ID</div>
-                    <div className="sponsor_name_label">SPONSOR NAME</div>
-                    <div className="research_title_label">TITLE</div>
-                    <div className="PI_label">PI</div>
-                    <div className="lead_unit_label">LEAD UNIT</div>
-                    <div className="award_amount_label">AMOUNT</div>
-                    <div className="research_status_label">STATUS</div>
+                <div className="research_award_title_box">
+                    <div className="research_award_title">🔬Research Awards</div>
                 </div>
+                {allResearchAwards.length === 0 && (
+                    <p>No research awards available</p>
+                )}
+                    <div className='company-table-wrap'>
+                        <table className='company-table'>
+                            <thead>
+                                <tr>
+                                    <th className="award_id_title">AWARD ID</th>
+                                    <th className="sponsor_name_title">SPONSOR NAME</th>
+                                    <th className="research_title_label">TITLE</th>
+                                    <th className="PI_title">PI</th>
+                                    <th className="lead_unit_title">LEAD UNIT</th>
+                                    <th className="award_amount_title">AMOUNT</th>
+                                    <th className="research_status_title">STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {allResearchAwards.map(award => (
+                                    <tr key={award.id}>
+                                        <td className="award_id">{award.award_id}</td>
+                                        <td className="sponsor_name">{award.sponsor_name}</td>
+                                        <td className="research_title">{award.title}</td>
+                                        <td className="PI" onClick={() => navigate(`/persons/${award.pi_entity_id}`)}>
+                                            <Link to={`/persons/${award.pi_entity_id}`} className="pp-person-name">
+                                                {award.pi}
+                                            </Link>
+                                        </td>
+                                        <td className="lead_unit">{award.lead_unit}</td>
+                                        <td className="award_amount">{award.total_amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
+                                        <td className="research_status">{award.status}</td>
+                                    </tr>
+                                ))} 
+                            </tbody>
+                        </table>
+                    </div>
             </div>
             <div className="contacts_box">
                 <div className="contacts_title_box">

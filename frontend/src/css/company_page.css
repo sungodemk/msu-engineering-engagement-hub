@@ -8,6 +8,17 @@
     gap: 5vh;
 }
 
+.pp-person-name {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.pp-person-name:hover {
+    text-decoration: underline;
+    color: #18453B;
+}
+
 .title_box {
     width: 65vw;
     height: 12vh;
@@ -103,7 +114,7 @@
     border: 0.05vw solid #18453B;
     text-align: center;
     cursor: pointer;
-        margin-left: auto;
+    margin-left: auto;
 }
 
 .company_select {
@@ -120,8 +131,6 @@
     flex-wrap: wrap;
     gap: 4.25vw;
     position: static;
-    /* top: 8vh;
-    left: 1vw; */
     margin-left: 1vw;
 }
 
@@ -136,9 +145,6 @@
     padding: 16px;
     gap: 10px;
     background-color: white;
-    /* position: relative;
-    top: 5vh;
-    left: 1vw; */
     border-radius: 0.5vw;
     border-bottom: 0.01vw solid #e3e6e8;
 }
@@ -178,9 +184,6 @@
     padding: 16px;
     gap: 10px;
     background-color: white;
-    /* position: relative;
-    top: -8vh;
-    left: 20.3vw; */
     border-radius: 0.5vw;
     border-bottom: 0.01vw solid #e3e6e8;
 }
@@ -190,8 +193,6 @@
     text-align: left;
     color: rgb(99, 99, 99);
     position: static;
-    /* top: 2.5vh;
-    left: -1vw; */
     font-weight: bold;
 }
 
@@ -201,8 +202,6 @@
     font-weight: bold;
     color: black;
     position: static;
-    /* top: 3.5vh;
-    left: -6vw; */
 }
 
 .award_message {
@@ -223,9 +222,6 @@
     padding: 16px;
     gap: 10px;
     background-color: white;
-    /* position: relative;
-    top: -21vh;
-    left: 39.5vw; */
     border-radius: 0.5vw;
     border-bottom: 0.01vw solid #e3e6e8;
 }
@@ -235,9 +231,6 @@
     text-align: left;
     color: rgb(99, 99, 99);
     position: static;
-    /* position: relative;
-    top: 2.5vh;
-    left: -2.8vw; */
     font-weight: bold;
 }
 
@@ -267,9 +260,6 @@
     padding: 16px;
     gap: 10px;
     background-color: white;
-    /* position: relative;
-    top: -34vh;
-    left: 58.8vw; */
     border-radius: 0.5vw;
     border-bottom: 0.01vw solid #e3e6e8;
 }
@@ -279,9 +269,6 @@
     text-align: left;
     color: rgb(99, 99, 99);
     position: static;
-    /* position: relative;
-    top: 2.5vh;
-    left: -3vw; */
     font-weight: bold;
 }
 
@@ -291,8 +278,6 @@
     font-weight: bold;
     color: black;
     position: static;
-    /* top: 1.85em;
-    left: 1em; */
 }
 
 .days_passed_from_lcd {
@@ -300,8 +285,6 @@
     color: #18453B;
     text-align: left;
     position: static;
-    /* top: 6.5em;
-    left: 2em; */
 }
 
 .inbound_outbound_section {
@@ -371,12 +354,12 @@
 }
 
 .company-table th {
-    padding: 12px;
+    padding: 12px 8px;
     border-bottom: 1px solid #e3e6e8;
     color: #6b7378;
     font-size: 0.8rem;
     font-weight: 600;
-    text-align: left;
+    /* text-align: left; */
 }
 
 .company-table td {
@@ -630,12 +613,22 @@
 
 .research_award_box {
     width: 72.8vw;
-    height: 40vh;
+    height: auto;
     background-color: white;
     position: static;
     margin-left: 1vw;
     border-radius: 0.5vw;
     border: 1px solid #e3e6e8;
+}
+
+.research_award_title_box {
+    width: 72.8vw;
+    height: 5vh;
+    background-color: #f8fbfa;
+    position: relative;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
+    border-bottom: 1px solid #e3e6e8;
 }
 
 .research_award_title {
@@ -648,85 +641,70 @@
     left: 1vw;
 }
 
-.label_section {
-    width: 72.8vw;
-    height: 4vh;
-    background-color: #f8fbfa;
-    position: relative;
-    top: 4vh;
-    left: 0vw;
-    border-top: 1px solid #e3e6e8;
-    border-bottom: 1px solid #e3e6e8;
+.award_id_title {
+    text-align: left;
 }
 
-.award_id_label {
+.award_id {
     font-size: 0.8em;
     color: rgb(99, 99, 99);
     text-align: left;
-    font-weight: bold;
-    position: static;
-    margin-top: 1.5vh;
-    margin-left: 1vw;
 }
 
-.sponsor_name_label {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
+.sponsor_name_title {
+    text-align: left;
+}
+
+.sponsor_name {
+    font-size: 1.0em;
+    color: black;
     text-align: left;
     font-weight: bold;
-    position: static;
-    margin-top: -1.7vh;
-    margin-left: 12vw;
 }
 
 .research_title_label {
+    text-align: left;
+}
+
+.research_title {
+    font-size: 0.8em;
+    color: rgb(99, 99, 99);
+    text-align: left;
+}
+
+.PI_title {
+    text-align: center;
+}
+
+.lead_unit_title {
+    text-align: center;
+}
+
+.lead_unit {
     font-size: 0.8em;
     color: rgb(99, 99, 99);
     text-align: center;
-    font-weight: bold;
-    position: static;
-    margin-top: -1.7vh;
-    margin-right: 15vw;
 }
 
-.PI_label {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
-    text-align: center;
-    font-weight: bold;
-    position: static;
-    margin-top: -1.7vh;
-    margin-left: 10vw;
+.award_amount_title {
+    text-align: right;
 }
 
-.lead_unit_label {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
-    text-align: center;
+.award_amount {
+    font-size: 0.9em;
+    color: #18453B;
+    text-align: right;
     font-weight: bold;
-    position: static;
-    margin-top: -1.7vh;
-    margin-left: 30vw;
 }
 
-.award_amount_label {
+.research_status_title {
+    text-align: right;
+}
+
+.research_status {
     font-size: 0.8em;
     color: rgb(99, 99, 99);
     text-align: right;
-    font-weight: bold;
-    position: static;
-    margin-top: -1.5vh;
-    margin-right: 10vw;
-}
-
-.research_status_label {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
-    text-align: right;
-    font-weight: bold;
-    position: static;
-    margin-top: -1.7vh;
-    margin-right: 2vw;
 }
 
 .contacts_box {

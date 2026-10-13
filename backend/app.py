@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session, flash
 from flask_cors import CORS
 import uuid
@@ -8,6 +9,7 @@ from days_calculator.days_calculator import days_passed_calc
 import json
 from datetime import datetime as at
 from pytz import timezone
+from scripts.load_kuali import read_json_file
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -663,6 +665,45 @@ def active_research_awards(company_id):
 
     return jsonify({
         "active_research_awards": awards,
+    })
+
+
+
+@app.route("/api/companies/<company_id>/all_research_awards", methods=["GET"])
+def all_research_awards(company_id):
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT
+                    a.id,
+                    sr.payload ->> 'awardId' AS award_id,
+                    sr.payload ->> 'sponsorCode' AS sponsor_code,
+                    sr.payload ->> 'title' AS title,
+                    sr.payload ->> 'statusDescription' AS status,
+                    CAST(sr.payload ->> 'anticipatedTotalAmount' AS FLOAT) AS total_amount,
+                    pei.display_name AS pi,
+                    pei.id AS pi_entity_id,
+                    msu_unit.display_name AS lead_unit
+                FROM activities a
+                JOIN source_records sr ON a.source_record_id = sr.id
+                LEFT JOIN entities pei ON a.person_entity_id = pei.id
+                LEFT JOIN entities msu_unit ON a.msu_unit_entity_id = msu_unit.id
+                WHERE a.company_entity_id = %s
+                    AND a.activity_type = 'award'
+                    AND sr.source_system = 'kuali'
+                ORDER BY a.occurred_on DESC
+            """, (company_id,))
+            awards = cur.fetchall()
+    Root = Path(__file__).parent
+    SPONSORS_FILE = Root / "db" / "awards" / "sponsors.json"
+    sponsors = read_json_file(SPONSORS_FILE)
+    for sponsor in sponsors:
+        for award in awards:
+            if award['sponsor_code'] == sponsor['sponsorCode']:
+                award['sponsor_name'] = sponsor['sponsorName']
+
+    return jsonify({
+        "research_awards": awards,
     })
 
 
