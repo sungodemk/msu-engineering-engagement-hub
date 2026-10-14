@@ -746,7 +746,7 @@ def active_research_awards(company_id):
     })
 
 
-
+# Loaded all research awards for a company (Zhixiang Miao)
 @app.route("/api/companies/<company_id>/all_research_awards", methods=["GET"])
 def all_research_awards(company_id):
     with get_db_connection() as conn:
@@ -758,6 +758,7 @@ def all_research_awards(company_id):
                     sr.payload ->> 'sponsorCode' AS sponsor_code,
                     sr.payload ->> 'title' AS title,
                     sr.payload ->> 'statusDescription' AS status,
+                    sr.payload ->> 'awardEffectiveDate' as date,
                     CAST(sr.payload ->> 'anticipatedTotalAmount' AS FLOAT) AS total_amount,
                     pei.display_name AS pi,
                     pei.id AS pi_entity_id,

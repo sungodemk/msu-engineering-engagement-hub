@@ -16,6 +16,24 @@ function CompanyPage() {
 
     const [logActivities, setLogActivities] = useState([]);
 
+    const [sortKey, setSortKey] = useState('activity_occurred_on');
+    const [sortDir, setSortDir] = useState('desc');
+
+    function handleSort(key) {
+        if (sortKey === key) {
+         setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
+        }
+        else {
+        setSortKey(key);
+        setSortDir('asc');
+        }
+    }
+
+    function arrow(key) {
+        if (sortKey !== key) return '';
+        return sortDir === 'asc' ? ' ↑' : ' ↓';
+    }
+
     const [portfolios, setPortfolios] = useState([]);
     const [activities, setActivities] = useState([]);
 
@@ -126,11 +144,61 @@ function CompanyPage() {
         }
     }
 
-   
+    
 
     const [daysPassed, setDaysPassed] = useState(null);
 
+    const NUMERIC_KEYS = ['activity_amount'];
+
     const loggedActivities = logActivities.filter((activity) => activity.company_id === id);
+
+    const reshapeOriginalActivities = activities.map(activity => ({
+        act_data: 'original',
+        id: activity.id, 
+        activity_type: activity.activity_type,
+        activity_sub_type: activity.sub_type,
+        activity_notes: activity.notes, 
+        activity_amount: activity.amount, 
+        activity_status: activity.status,
+        activity_occurred_on: activity.occurred_on,
+    }));
+
+    const reshapeLoggedActivities = loggedActivities.map(activity => ({
+        act_data: 'logged',
+        id: activity.id, 
+        activity_type: activity.activity_record_type,
+        activity_sub_type: '',
+        activity_notes: activity.notes, 
+        activity_amount: null,
+        activity_status: activity.stage_name,
+        activity_occurred_on: activity.close_date,
+    }));
+
+    function getSortValue(company, key) {
+        const raw = company[key];
+        if (raw === null || raw === undefined || raw === '') return null;
+        if (NUMERIC_KEYS.includes(key)) return Number(raw);
+        if (key === "activity_occurred_on") return new Date(raw).getTime();
+        return String(raw).toLowerCase();
+    }
+
+    const combinedActivities = [...reshapeOriginalActivities, ...reshapeLoggedActivities];
+
+    const filteredActivities = combinedActivities.filter(activity => activity.activity_type !== 'award' && activity.activity_type !== 'action_item');
+
+    const sortedActivities = [...filteredActivities].sort((a, b) => {
+        const valA = getSortValue(a, sortKey);
+        const valB = getSortValue(b, sortKey);
+
+        // nulls always sort last
+        if (valA === null && valB === null) return 0;
+        if (valA === null) return 1;
+        if (valB === null) return -1;
+
+        if (valA < valB) return sortDir === 'asc' ? -1 : 1;
+        if (valA > valB) return sortDir === 'asc' ? 1 : -1;
+        return 0;
+    });
 
     const inboundGivingsCount = Object.fromEntries(company?.inbound_giving_counts ? (Object.keys(company.inbound_giving_counts).map((type) => [type, company.inbound_giving_counts[type]])) || [] : []);
 
@@ -368,53 +436,68 @@ function CompanyPage() {
                 </div>
                 <div className='activity-table-wrap'>
                     <table className='activity-table'> 
-                        {company?.activity_timeline?.length > 0 && (
+                        <thead>
+                            <tr>
+                                <th onClick={() => handleSort('activity_type')}>Type{arrow('activity_type')}</th>
+                                <th onClick={() => handleSort('activity_sub_type')}>Sub Type{arrow('activity_sub_type')}</th>
+                                <th onClick={() => handleSort('activity_notes')}>Notes{arrow('activity_notes')}</th>
+                                <th onClick={() => handleSort('activity_amount')}>Amount{arrow('activity_amount')}</th>
+                                <th onClick={() => handleSort('activity_status')}>Stage{arrow('activity_status')}</th>
+                                <th onClick={() => handleSort('activity_occurred_on')}>Date{arrow('activity_occurred_on')}</th>
+                            </tr>
+                        </thead>
+                        {sortedActivities?.length > 0 && (
                             <tbody>
-                                {company.activity_timeline.map(activity => (
-                                    <tr key={activity.opp_id}>
-                                        <td className='activity_record_type'>{activity.record_type}</td>
-                                        <td className='activity_stage'>{activity.stage}</td>
-                                        <td className='activity_amount'>{`$${activity.amount.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 })}`}</td>
-                                        <td className='activity_close_date'>{new Date(activity.close_date).toLocaleDateString('en-US', { timeZone: 'UTC' })}</td>
+                                {sortedActivities.map(activity => (
+                                    <tr key={activity.act_data + activity.id}>
+                                        {activity.activity_type !== 'award' && activity.activity_type !== 'action_item' && (
+                                            <>
+                                                {activity.act_data === 'original' && (
+                                                    <td className='activity_type'>{activity.activity_type.charAt(0).toUpperCase() + activity.activity_type.slice(1)}</td>
+                                                )}
+                                                
+                                                {activity.act_data === 'logged' && (
+                                                        <td className='activity_type'>{
+                                                            activity.activity_type.charAt(0).toUpperCase() + activity.activity_type.slice(1)}
+                                                            <button className="delete_button" onClick={() => deleteLoggedActivity(activity.id)}>
+                                                                Delete
+                                                            </button>
+                                                        </td>
+                                                )}
+                                                <td className='activity_sub_type'>{activity.activity_sub_type}</td>
+                                                <td className='activity_notes'>{activity.activity_notes}</td>
+
+                                                {activity.activity_type === 'gift' ? (
+                                                    <td className='activity_amount'>{parseFloat(activity.activity_amount).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
+                                                ) : <td className='activity_amount'> </td>}
+                                                {activity.activity_type === 'ask' || activity.act_data === 'logged' ? (
+                                                    activity.activity_status === 'open' ? (
+                                                        <td className='activity_stage'>
+                                                            <div className='open_act_box'>
+                                                                <div className='open_act_status'>{activity.activity_status}</div>
+                                                            </div>
+                                                        </td>
+                                                    ) : (
+                                                        <td className='activity_stage'>
+                                                            <div className='close_act_box'>
+                                                                <div className='close_act_status'>{activity.activity_status}</div>
+                                                            </div>
+                                                        </td>
+                                                    )
+                                                ) : <td className='activity_stage'> </td>}
+                                                <td className='activity_close_date'>{new Date(activity.activity_occurred_on).toLocaleDateString('en-US', { timeZone: 'UTC' })}</td>
+                                            </> 
+                                        )}
                                     </tr>
                                 ))}
                             </tbody>
                         )}
-                        {loggedActivities.length > 0 && (
+                        {(sortedActivities?.length === 0) && (
                             <tbody>
-                                {loggedActivities.map(activity => (
-                                    <tr key={activity.id}>
-                                        <td className='activity_record_type'>
-                                            <div>
-                                                {activity.activity_record_type.charAt(0).toUpperCase() + activity.activity_record_type.slice(1)}
-                                            </div>
-                                            <button className="delete_button" onClick={() => deleteLoggedActivity(activity.id)}>
-                                                Delete
-                                            </button>
-                                        </td>
-                                        <td className='logged_activity_notes'>
-                                            <div>
-                                                {activity.notes}
-                                            </div>
-                                        </td>
-                                        <td className='logged_activity_status'>
-                                            <div>
-                                                {activity.stage_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                                            </div>
-                                        </td>
-                                        <td className='logged_activity_close_date'>
-                                            <div>
-                                                {/* Learned how to convert string to date from this link: 
-                                                    https://www.geeksforgeeks.org/javascript/convert-string-into-date-using-javascript/ */}
-                                                {new Date(activity.close_date).toLocaleDateString('en-US', { timeZone: 'UTC' })}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
+                                <tr>
+                                    <td colSpan="6">No activities available</td>
+                                </tr>
                             </tbody>
-                        )}
-                        {(company?.activity_timeline?.length === 0 && loggedActivities?.length === 0) && (
-                            <p>No activities available</p>
                         )}
                     </table>
                 </div>
@@ -422,14 +505,19 @@ function CompanyPage() {
             <div className="msu_task_box">
                 <div className="msu_task_title_box">
                     <div className="msu_task_title">
-                        <div className="msu_unit_title">MSU UNIT</div>
-                        <div className="owner_title">OWNER</div>
-                        <div className="subj_title">SUBJECT</div>
-                        <div className="status_title">STATUS</div>
+                        <div className="msu_task_title">MSU Tasks (Action Items)</div>
                     </div>
                 </div>
                 <div className='company-table-wrap'>
                     <table className='company-table'>
+                        <thead>
+                            <tr>
+                                <th>MSU Unit</th>
+                                <th>Owner</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             {company?.msu_tasks?.length > 0 ? (
                                 company.msu_tasks.map(task => (
@@ -455,41 +543,41 @@ function CompanyPage() {
                 <div className="research_award_title_box">
                     <div className="research_award_title">🔬Research Awards</div>
                 </div>
+                <div className='company-table-wrap'>
+                    <table className='company-table'>
+                        <thead>
+                            <tr>
+                                <th className="award_id_title">Award ID</th>
+                                <th className="research_title_label">Title</th>
+                                <th className="PI_title">PI</th>
+                                <th className="lead_unit_title">Lead Unit</th>
+                                <th className="award_amount_title">Amount</th>
+                                <th className="research_status_title">Status</th>
+                                <th className="research_date_title">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {allResearchAwards.map(award => (
+                                <tr key={award.id}>
+                                    <td className="award_id">{award.award_id}</td>
+                                    <td className="research_title">{award.title}</td>
+                                    <td className="PI" onClick={() => navigate(`/persons/${award.pi_entity_id}`)}>
+                                        <Link to={`/persons/${award.pi_entity_id}`} className="pp-person-name">
+                                            {award.pi}
+                                        </Link>
+                                    </td>
+                                    <td className="lead_unit">{award.lead_unit}</td>
+                                    <td className="award_amount">{award.total_amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
+                                    <td className="research_status">{award.status}</td>
+                                    <td className="research_date">{award.date ? new Date(award.date).toLocaleDateString('en-US', {timeZone: 'America/New_York'}) : 'N/A'}</td>
+                                </tr>
+                            ))} 
+                        </tbody>
+                    </table>
+                </div>
                 {allResearchAwards.length === 0 && (
                     <p>No research awards available</p>
                 )}
-                    <div className='company-table-wrap'>
-                        <table className='company-table'>
-                            <thead>
-                                <tr>
-                                    <th className="award_id_title">AWARD ID</th>
-                                    <th className="sponsor_name_title">SPONSOR NAME</th>
-                                    <th className="research_title_label">TITLE</th>
-                                    <th className="PI_title">PI</th>
-                                    <th className="lead_unit_title">LEAD UNIT</th>
-                                    <th className="award_amount_title">AMOUNT</th>
-                                    <th className="research_status_title">STATUS</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {allResearchAwards.map(award => (
-                                    <tr key={award.id}>
-                                        <td className="award_id">{award.award_id}</td>
-                                        <td className="sponsor_name">{award.sponsor_name}</td>
-                                        <td className="research_title">{award.title}</td>
-                                        <td className="PI" onClick={() => navigate(`/persons/${award.pi_entity_id}`)}>
-                                            <Link to={`/persons/${award.pi_entity_id}`} className="pp-person-name">
-                                                {award.pi}
-                                            </Link>
-                                        </td>
-                                        <td className="lead_unit">{award.lead_unit}</td>
-                                        <td className="award_amount">{award.total_amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
-                                        <td className="research_status">{award.status}</td>
-                                    </tr>
-                                ))} 
-                            </tbody>
-                        </table>
-                    </div>
             </div>
             <div className="contacts_box">
                 <div className="contacts_title_box">
@@ -551,13 +639,16 @@ function CompanyPage() {
                             <option value="touchpoint">Touchpoint</option>
                             <option value="ask">Ask</option>
                             <option value="recruiting">Recruiting</option>
-                            <option value="action_item">Action Item</option>
                         </select>
                         
                     </div>
                     <div className='dia_status_title'>
                         <label htmlFor="status">Status</label>
-                        <input type="text" id="status" name="status" className='dia_status_box' />
+                        <select id="status" name="status" className='dia_status_box'>
+                            <option value="" disabled selected>Select status</option>
+                            <option value="open">open</option>
+                            <option value="closed">closed</option>
+                        </select>
                     </div>
                     </div>
                     <div className='date_title'>

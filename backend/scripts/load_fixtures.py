@@ -1,4 +1,5 @@
 import csv
+import json
 import os
 from pathlib import Path
 
@@ -744,6 +745,7 @@ def main():
             # keep mappings for affiliations and other files added later.
             account_entities, units_by_code = load_accounts(cur, accounts)
             contact_entities = load_contacts(cur, contacts)
+            
             load_affiliations(cur, affiliations, account_entities, contact_entities)
             load_unit_hierarchy(cur, accounts, account_entities)
             load_relationship_assignments(cur, assignments, account_entities, contact_entities, units_by_code)
