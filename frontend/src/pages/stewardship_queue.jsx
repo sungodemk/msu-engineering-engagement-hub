@@ -71,6 +71,28 @@ function StewardshipQueue() {
     }
 
 
+    function handleUndo(matchId) {
+        setDecisionError("");
+
+        fetch(`http://localhost:8080/api/matches/${matchId}/undo`, {
+            method: "POST",
+        })
+            .then(result => {
+                if (!result.ok) {
+                    throw new Error("Failed to undo match");
+                }
+
+                return result.json();
+            })
+            .then(() => {
+                loadQueue();
+            })
+            .catch(() => {
+                setDecisionError("Unable to update match decision.");
+            });
+    }
+
+
     function formatScore(score) {
         return `${Math.round(score * 100)}%`;
     }
@@ -196,6 +218,7 @@ function StewardshipQueue() {
                                 <th>Decision</th>
                                 <th>Reviewer</th>
                                 <th>Date</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
 
@@ -215,12 +238,29 @@ function StewardshipQueue() {
                                     </td>
                                     <td>{match.reviewer}</td>
                                     <td>{match.date}</td>
+                                    <td>
+                                        {match.status === "auto_accepted" ? (
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDecision(match.match_id, "reject")}
+                                            >
+                                                Reject
+                                            </button>
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                onClick={() => handleUndo(match.match_id)}
+                                            >
+                                                Undo
+                                            </button>
+                                        )}
+                                    </td>
                                 </tr>
                             ))}
 
                             {recent.length === 0 && (
                                 <tr>
-                                    <td colSpan="5" className="recent-empty">
+                                    <td colSpan="6" className="recent-empty">
                                         No recently reviewed matches
                                     </td>
                                 </tr>

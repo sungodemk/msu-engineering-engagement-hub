@@ -445,6 +445,82 @@ def get_reviewer_id(cur):
 
     return reviewer["id"]
 
+# clears duplicate merged mark only if this match merged it (Aayush)
+def unmerge_match(cur, match):
+    if match["entity_id"] is None:
+        return
+
+    cur.execute(
+        """
+        UPDATE entities e
+        SET merged_into_id = NULL
+        FROM entity_source_records esr
+        WHERE esr.entity_id = e.id
+          AND esr.source_record_id IN (%s, %s)
+          AND e.merged_into_id = %s
+        """,
+        (
+            match["left_source_record_id"],
+            match["right_source_record_id"],
+            match["entity_id"],
+        ),
+    )
+
+
+# sends a human-reviewed match back to the pending queue (Aayush)
+@app.route('/api/matches/<match_id>/undo', methods=['POST'])
+def undo_match(match_id):
+    try:
+        uuid.UUID(match_id)
+    except ValueError:
+        return jsonify({"error": "Match not found"}), 404
+
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            # locks row so two people can't undo the same match at once
+            cur.execute(
+                """
+                SELECT
+                    id,
+                    status,
+                    entity_id,
+                    left_source_record_id,
+                    right_source_record_id
+                FROM entity_matches
+                WHERE id = %s
+                FOR UPDATE
+                """,
+                (match_id,),
+            )
+
+            match = cur.fetchone()
+
+            if match is None:
+                return jsonify({"error": "Match not found"}), 404
+
+            if match["status"] not in {"confirmed", "rejected"}:
+                return jsonify({"error": "Match cannot be undone"}), 409
+
+            unmerge_match(cur, match)
+
+            cur.execute(
+                """
+                UPDATE entity_matches
+                SET
+                    status = 'pending_review',
+                    entity_id = NULL,
+                    reviewed_by_entity_id = NULL,
+                    reviewed_at = NULL
+                WHERE id = %s
+                """,
+                (match_id,),
+            )
+
+            return jsonify({
+                "match_id": match_id,
+                "status": "pending_review",
+            })
+        
 # records reviewer's decision on an entity match (Aayush)
 @app.route('/api/matches/<match_id>/decision', methods=['POST'])
 def decide_match(match_id):
