@@ -160,6 +160,42 @@ def pair_key(left_id, right_id):
     # this ignores order and can be stored inside another set
     return frozenset((left_id, right_id))
 
+def merge_companies(cur, survivor_id, duplicate_id):
+    # Makes sure there are no connecting edges (there shouldn't be)
+    cur.execute(
+        """
+        DELETE FROM edges
+        WHERE (from_entity_id = %(s)s AND to_entity_id = %(d)s)
+           OR (from_entity_id = %(d)s AND to_entity_id = %(s)s)
+        """,
+        {"s": survivor_id, "d": duplicate_id},
+    )
+    # Moves all activities from the duplicate company to the survivor company
+    cur.execute("UPDATE activities SET company_entity_id = %s WHERE company_entity_id = %s",
+        (survivor_id, duplicate_id),
+    )
+    activities_moved = cur.rowcount
+
+    # Moves edges pointing to the duplicate to the survivor
+    cur.execute(
+        "UPDATE edges SET to_entity_id = %s WHERE to_entity_id = %s",
+        (survivor_id, duplicate_id),
+    )
+    edges_moved = cur.rowcount
+
+    # Moves edges pointing from the company to the duplicate to the survivor
+    cur.execute(
+        "UPDATE edges SET from_entity_id = %s WHERE from_entity_id = %s",
+        (survivor_id, duplicate_id),
+    )
+    edges_moved += cur.rowcount
+
+    cur.execute(
+        "UPDATE entities SET merged_into_id = %s WHERE id = %s",
+        (survivor_id, duplicate_id),
+    )
+
+    return activities_moved, edges_moved
 
 def write_matches(cur, results):
     # only removes machine-generated organization matches so person matches stay untouched
@@ -213,14 +249,16 @@ def write_matches(cur, results):
 
         if status == "auto_accepted":
             # merges to salesforce otherwise merges to lower id
-            survivor = min(
+            survivor, duplicate = sorted(
                 (left, right),
-                key=lambda company: (
-                    company["source_system"] != "salesforce",
-                    company["source_pk"],
+                key=lambda entity: (
+                    entity["source_system"] != "salesforce",
+                    entity["source_pk"],
                 ),
             )
             entity_id = survivor["entity_id"]
+            merge_companies(cur, survivor["entity_id"], duplicate["entity_id"])
+
 
         cur.execute(
             """

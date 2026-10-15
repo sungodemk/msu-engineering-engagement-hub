@@ -39,7 +39,7 @@ def list_companies():
                 attributes ->> 'industry_detail' AS industry_detail,
                 attributes -> 'activity_timeline' AS activity_timeline,
                 attributes -> 'msu_tasks' AS msu_tasks
-                FROM entities WHERE entity_type = 'organization'
+                FROM live_entities WHERE entity_type = 'organization'
                 ORDER BY display_name
             """)
             rows = cur.fetchall()
@@ -71,7 +71,7 @@ def get_company(company_id):
                 attributes ->> 'industry_detail' AS industry_detail,
                 attributes -> 'activity_timeline' AS activity_timeline,
                 attributes -> 'msu_tasks' AS msu_tasks
-                FROM entities
+                FROM live_entities
                 WHERE id = %s AND entity_type = 'organization'
             """, (company_id,))
             row = cur.fetchone()
@@ -253,10 +253,8 @@ def search():
 def portfolio():
     with get_db_connection() as conn:
         with conn.cursor() as cur:
-            # Owner comes from most recent activity with a non-null owner_entity_id.
             cur.execute("""WITH giving AS (
                     SELECT company_entity_id, SUM(amount) AS total_giving
-
                     FROM activities
                     WHERE activity_type = 'gift'
                     GROUP BY company_entity_id ),
@@ -291,7 +289,7 @@ def portfolio():
 
                     COALESCE(r.active_research, 0) AS active_research,
                     COALESCE(rec.recruiting_volume, 0) AS recruiting_volume
-                FROM entities e
+                FROM live_entities e
                 LEFT JOIN giving g ON g.company_entity_id = e.id
                 LEFT JOIN research r ON r.company_entity_id = e.id
                 LEFT JOIN recruiting rec ON rec.company_entity_id = e.id
@@ -633,6 +631,8 @@ def decide_match(match_id):
                 ),
             )
 
+            merge_companies(cur, survivor["id"], duplicate["id"])
+
             cur.execute(
                 """
                 UPDATE entity_matches
@@ -654,6 +654,43 @@ def decide_match(match_id):
                 "match_id": match_id,
                 "status": "confirmed",
             })
+
+def merge_companies(cur, survivor_id, duplicate_id):
+    # Makes sure there are no connecting edges (there shouldn't be)
+    cur.execute(
+        """
+        DELETE FROM edges
+        WHERE (from_entity_id = %(s)s AND to_entity_id = %(d)s)
+           OR (from_entity_id = %(d)s AND to_entity_id = %(s)s)
+        """,
+        {"s": survivor_id, "d": duplicate_id},
+    )
+    # Moves all activities from the duplicate company to the survivor company
+    cur.execute("UPDATE activities SET company_entity_id = %s WHERE company_entity_id = %s",
+        (survivor_id, duplicate_id),
+    )
+    activities_moved = cur.rowcount
+
+    # Moves edges pointing to the duplicate to the survivor
+    cur.execute(
+        "UPDATE edges SET to_entity_id = %s WHERE to_entity_id = %s",
+        (survivor_id, duplicate_id),
+    )
+    edges_moved = cur.rowcount
+
+    # Moves edges pointing from the company to the duplicate to the survivor
+    cur.execute(
+        "UPDATE edges SET from_entity_id = %s WHERE from_entity_id = %s",
+        (survivor_id, duplicate_id),
+    )
+    edges_moved += cur.rowcount
+
+    cur.execute(
+        "UPDATE entities SET merged_into_id = %s WHERE id = %s",
+        (survivor_id, duplicate_id),
+    )
+
+    return activities_moved, edges_moved
 
 # Save and display logged activities for a specific company page (Zhixiang Miao)
 @app.route("/api/companies/<company_id>/log_activity", methods=["GET", "POST"])
