@@ -40,6 +40,7 @@ def list_companies():
                 attributes -> 'activity_timeline' AS activity_timeline,
                 attributes -> 'msu_tasks' AS msu_tasks
                 FROM live_entities WHERE entity_type = 'organization'
+                    AND attributes->>'sponsor_type' IS DISTINCT FROM 'Government'
                 ORDER BY display_name
             """)
             rows = cur.fetchall()
@@ -241,6 +242,7 @@ def search():
                 FROM live_entities
                 WHERE entity_type IN ('person', 'organization')
                   AND display_name ILIKE %s 
+                  AND attributes->>'sponsor_type' IS DISTINCT FROM 'Government'
                 ORDER BY starts_with (lower(display_name), lower(%s)) DESC, display_name
                 LIMIT 10
             """, (f'%{q}%', q,))
@@ -298,6 +300,7 @@ def portfolio():
                 LEFT JOIN entities owner ON owner.id = lo.owner_entity_id
                 WHERE e.entity_type = 'organization'
                   AND e.merged_into_id IS NULL
+                  AND e.attributes->>'sponsor_type' IS DISTINCT FROM 'Government'
                 ORDER BY la.last_activity_date DESC NULLS LAST
             """)
             rows = cur.fetchall()
