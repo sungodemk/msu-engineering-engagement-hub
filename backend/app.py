@@ -122,7 +122,14 @@ def list_persons():
                     emp.company_id,
                     emp.company,
                     emp.employer_type,
-                    emp.since
+                    emp.since,
+                    ARRAY(
+                        SELECT DISTINCT s.payload->>'awardTypeDescription'
+                        FROM activities a 
+                        JOIN source_records s ON s.id = a.source_record_id
+                        WHERE a.person_entity_id = p.id
+                            AND a.activity_type = 'award'
+                        ) AS award_types
                 FROM live_entities p
                 LEFT JOIN LATERAL (
                     SELECT 

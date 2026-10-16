@@ -21,6 +21,7 @@ function PersonsList(){
     const [companyId, setCompanyId] = useState('');
     const [error, setError] = useState(null);
     const [sort, setSort] = useState({ key: 'display_name', direction: 'asc' });
+    const [awardType, setAwardType] = useState('');
 
     useEffect(() => {
         document.title = 'Persons';
@@ -42,10 +43,12 @@ function PersonsList(){
 
     const sorted = [...employers.entries()].sort((a,b) => a[1].name.localeCompare(b[1].name));
     const companies = sorted.filter(([, e]) => e.type === 'organization');
+    const awardTypes = [...new Set(people.flatMap((p)=> p.award_types ?? []))].sort();
     const units = sorted.filter(([, e]) => e.type === 'msu_unit');
 
     const term = search.trim().toLowerCase();
     const visible = people.filter((p) => {
+        if (awardType && !p.award_types?.includes(awardType)) return false; 
         if (companyId && p.company_id !== companyId) return false;
         if (!term) return true;
         return [p.display_name, p.title, p.company, p.email].some((value) => value?.toLowerCase().includes(term));
@@ -98,6 +101,14 @@ function PersonsList(){
                             {units.map(([id, e]) => <option key={id} value ={id} >{e.name}</option>)}
                         </optgroup>
 
+                    </select>
+                    <select
+                        className="pp-select"
+                        value={awardType}
+                        onChange={(e) => setAwardType(e.target.value)}
+                    >
+                        <option value="">All award types</option>
+                        {awardTypes.map((t) => <option key={t}>{t}</option>)}
                     </select>
                 </div>
                 {companyId && (
