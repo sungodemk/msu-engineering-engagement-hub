@@ -28,6 +28,8 @@ def read_json_file(path):
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 
+def normalize_name(name):
+    return name.strip().lower()
 
 def insert_kuali_source_record(cur, source_table, source_pk, payload):
     cur.execute(
@@ -64,16 +66,53 @@ def units_by_code(cur):
     return dict(cur.fetchall())
 
 def clear_kuali(cur):
-    cur.execute(
-        """
-        DELETE FROM activities WHERE source_record_id IN (
-        
-            SELECT id FROM source_records WHERE source_system = 'kuali'
+    kuali_records = "SELECT id FROM source_records WHERE source_system = 'kuali'"
+    cur.execute(f"""
+        DELETE FROM entity_matches
+        WHERE left_source_record_id IN ({kuali_records})
+            OR right_source_record_id IN ({kuali_records})
+    """)
+    cur.execute(f"DELETE FROM activities WHERE source_record_id IN ({kuali_records})")
+    cur.execute(f"""
+        DELETE FROM entities 
+        WHERE id IN (
+            SELECT entity_id FROM entity_source_records
+            WHERE source_record_id IN ({kuali_records})
         )
-        """
-    
-    )
+    """)
     cur.execute("DELETE FROM source_records WHERE source_system = 'kuali'")
+
+def load_sponsors(cur, sponsors):
+    sponsor_entities = {}
+
+    for sponsor in sponsors:
+        source_id = insert_kuali_source_record(cur,"sponsor", sponsor["sponsorCode"], sponsor)
+        name = sponsor["sponsorName"]
+
+        cur.execute(
+            """
+            INSERT INTO entities (entity_type, display_name, normalized_name, attributes)
+            VALUES ('organization', %s, %s, %s)
+            RETURNING id
+            """,
+            (
+                name,
+                normalize_name(name),
+                Jsonb({
+                    "sponsor_code": sponsor["sponsorCode"],
+                    "sponsor_type": sponsor["sponsorTypeDescription"],
+                }),
+            ),
+        )
+        entity_id = cur.fetchone()[0]
+
+        cur.execute(
+            "INSERT INTO entity_source_records (entity_id, source_record_id) VALUES (%s,%s)",
+            (entity_id, source_id),
+        )
+        sponsor_entities[sponsor["sponsorCode"]] = entity_id
+    
+    return sponsor_entities
 
 def award_company(award, sponsor_names, companies):
     sponsor = sponsor_names[award["sponsorCode"]]
@@ -144,6 +183,7 @@ def main():
             people = entities_by_name(cur, "person")
             units = units_by_code(cur)
 
+            sponsor_entities = load_sponsors(cur, sponsors)
             load_awards(cur, awards, sponsors, companies, people, units)
 
             cur.execute(
@@ -155,6 +195,7 @@ def main():
                 """
             )
             print(f"kuali awards: {cur.fetchone()[0]}")
+            print(f"kuali sponsors: {len(sponsor_entities)}")
 
 
 if __name__ == "__main__":
