@@ -402,27 +402,29 @@
 }
 
 .outbound_type {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
+    font-size: 1.0em;
+    color: black;
     text-align: left;
+    font-weight: bold;
 }
 
 .outbound_notes {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
+    font-size: 1.0em;
+    color: black;
     text-align: left;
 }
 
 .outbound_status {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
+    font-size: 1.0em;
+    color: black;
     text-align: left;
 }
 
 .outbound_occurred_on {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
-    text-align: left;
+    font-size: 1.0em;
+    color: black;
+    text-align: right;
+    font-weight: bold;
 }
 
 .activity_box {

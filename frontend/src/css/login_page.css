@@ -1,0 +1,93 @@
+/* Zhixiang Miao */
+
+.login_page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login_form {
+    width: 35vw;
+    height: 100dvh;
+
+    background-color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 200px;
+
+    padding: 20px;
+    border-radius: 0.5vw;
+    border: 0.01vw solid #e3e6e8;
+}
+
+.titles {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 30vw;
+}
+
+.web_title {
+    font-size: 0.9em;
+    color: #18453B;
+    white-space: nowrap;
+}
+
+.login_title {
+    font-size: 2em;
+    font-weight: bold;
+    color: black;
+}
+
+.account_login_section {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    width: 30vw;
+    margin-bottom: auto;
+}
+
+.netid_title {
+    font-size: 1em;
+    font-weight: bold;
+    color: black;
+}
+
+.netid_dialog_box {
+    display: block;
+    height: 2.5vw;
+    width: inherit; 
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+.password_title {
+    font-size: 1em;
+    font-weight: bold;
+    color: black;
+}
+
+.password_dialog_box {
+    display: block;
+    height: 2.5vw;
+    width: inherit; 
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+.login_button {
+    margin-top: 8px;
+    display: block;
+    height: 3vw;
+    width: 30.3vw; 
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+    background-color: #18453B;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+}
