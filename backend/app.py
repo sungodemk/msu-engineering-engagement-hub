@@ -10,6 +10,7 @@ import json
 from datetime import datetime as at
 from pytz import timezone
 from scripts.load_kuali import read_json_file
+from scripts.merge_entities import merge_persons
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -528,7 +529,7 @@ def undo_match(match_id):
                 "match_id": match_id,
                 "status": "pending_review",
             })
-        
+
 # records reviewer's decision on an entity match (Aayush)
 @app.route('/api/matches/<match_id>/decision', methods=['POST'])
 def decide_match(match_id):
@@ -600,6 +601,7 @@ def decide_match(match_id):
                 """
                 SELECT
                     e.id,
+                    e.entity_type,
                     sr.source_pk,
                     sr.source_system
                 FROM entity_source_records esr
@@ -629,19 +631,24 @@ def decide_match(match_id):
                 ),
             )
 
-            cur.execute(
-                """
-                UPDATE entities
-                SET merged_into_id = %s
-                WHERE id = %s
-                """,
-                (
+            if survivor["entity_type"] != duplicate["entity_type"]:
+                return jsonify({"error": "Match entities have different types"}), 409
+
+            if survivor["entity_type"] == "person":
+                merge_persons(
+                    cur,
                     survivor["id"],
                     duplicate["id"],
-                ),
-            )
-
-            merge_companies(cur, survivor["id"], duplicate["id"])
+                    match_id,
+                )
+            elif survivor["entity_type"] == "organization":
+                merge_companies(
+                    cur,
+                    survivor["id"],
+                    duplicate["id"],
+                )
+            else:
+                return jsonify({"error": "Unsupported entity type"}), 409
 
             cur.execute(
                 """
