@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import '../css/footer.css';
 import '../css/main.css';
 import '../css/navbar.css';
