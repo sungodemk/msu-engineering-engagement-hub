@@ -1,6 +1,6 @@
 # Entity Resolution Answer Key
 
-This file records the known duplicate and non-duplicate entities in the synthetic Salesforce and Handshake data. It is intended to be used to evaluate the company/person matcher and later measure precision and recall.
+This file records the known duplicate and non-duplicate entities in the synthetic Salesforce, Handshake and Kuali data. It is intended to be used to evaluate the company/person matcher and later measure precision and recall.
 
 ## 1. Companies
 
@@ -42,7 +42,7 @@ These are different organizations. Their names have the similar `Green` and `Gre
 
 #### PER-0161 — Sean Gilchrist / PER-0169 — S. Gilchrist
 
-These are the same people. Both records are in Grand Rapids, have a BS in Electrical Engineering from 2011, and are affiliated with Circle Drive Medical (`ORG-009`). `S. Gilchrist` also uses a personal email (`sgilchrist11@mail.example.com`), which is consistent with the record coming from the company and the other from the alumni update.
+These are the same person. Both records are in Grand Rapids, have a BS in Electrical Engineering from 2011, and are affiliated with Circle Drive Medical (`ORG-009`). `S. Gilchrist` also uses a personal email (`sgilchrist11@mail.example.com`), which is consistent with the record coming from the company and the other from the alumni update.
 
 ### Should not match
 
@@ -99,6 +99,7 @@ These are related but separate organizations as New Energy Ventures is a divisio
 #### 480118 — Ostwald Mobility - Tailgate / ORG-016 — Ostwald Mobility Group
 
 These may be related, but the data does not give enough information to merge them automatically. This will go to the queue.
+
 #### ORG-017 — UM Digital LLC / ORG-010 — Union Mercantile
 
 These are a parent and subsidiary, not duplicates so the matcher skips this comparison using the parent/child rule.
@@ -179,9 +180,153 @@ All three records are the same person. Handshake contains the same recruiter twi
 
 #### 7100013 — Tom Berkey / 7100091 — Tom Berkey
 
-These are probably the same person who moved companies. Their names match but their email addresses differ,so the matcher currently rejects the pair. A planned improvement is to compare the part of the email before the `@`.
+These are probably the same person who moved companies. Their names match but their email addresses differ, so the matcher currently rejects the pair. A planned improvement is to compare the part of the email before the `@`.
 
-## 4. Open items
+## 4. Kuali Sponsors
+
+There are 26 Kuali pairs that should match, 7 that should be rejected, and 1 that is open for review. There are also 3 government sponsors with no match in another system.
+
+### Should match
+
+The following Kuali sponsors are the same companies as their Handshake and Salesforce records. Every duplicate should point directly to the Salesforce survivor.
+
+#### Greene & Whyte Materials
+
+- Kuali — Greene & Whyte Materials / 480113 — Greene & Whyte Materials
+- Kuali — Greene & Whyte Materials / ORG-013 — Greene & Whyte Materials
+
+Both pairs are the same company and should merge into `ORG-013`.
+
+#### Red Cedar Motor Company
+
+- Kuali — Red Cedar Motor Company / 480101 — Red Cedar Motor Company
+- Kuali — Red Cedar Motor Company / 480119 — Red Cedar Motor Co.
+- Kuali — Red Cedar Motor Company / ORG-001 — Red Cedar Motor Company
+- Kuali — Red Cedar Motor Company / ORG-018 — Red Cedar Motors
+
+All five records are the same company: one Kuali sponsor two Handshake records and two Salesforce records. Every duplicate should point directly to `ORG-001`.
+
+#### Laconia Defense Technologies
+
+- Kuali — Laconia Defense Technologies / 480106 — Laconia Defense Technologies
+- Kuali — Laconia Defense Technologies / ORG-006 — Laconia Defense Technologies
+
+Both pairs are the same company and should merge into `ORG-006`.
+
+#### Circle Drive Medical
+
+- Kuali — Circle Drive Medical / 480109 — Circle Drive Medical
+- Kuali — Circle Drive Medical / ORG-009 — Circle Drive Medical
+
+Both pairs are the same company and should merge into `ORG-009`.
+
+#### Union Mercantile
+
+- Kuali — Union Mercantile / 480110 — Union Mercantile
+- Kuali — Union Mercantile / ORG-010 — Union Mercantile
+
+Both pairs are the same company and should merge into `ORG-010`.
+
+#### Spartan Stack Technologies
+
+- Kuali — Spartan Stack Technologies / 480115 — Spartan Stack Technologies
+- Kuali — Spartan Stack Technologies / ORG-015 — Spartan Stack Technologies
+
+Both pairs are the same company and should merge into `ORG-015`.
+
+#### Green Current Motors
+
+- Kuali — Green Current Motors / 480103 — Green Current Motors
+- Kuali — Green Current Motors / ORG-003 — Green Current Motors
+
+Both pairs are the same company and should merge into `ORG-003`.
+
+#### Grand River Automotive
+
+- Kuali — Grand River Automotive / 480102 — Grand River Automotive
+- Kuali — Grand River Automotive / ORG-002 — Grand River Automotive
+
+Both pairs are the same company and should merge into `ORG-002`.
+
+#### Tailgate Drive Systems
+
+- Kuali — Tailgate Drive Systems / 480105 — Tailgate Drive Systems
+- Kuali — Tailgate Drive Systems / ORG-005 — Tailgate Drive Systems
+
+Both pairs are the same company and should merge into `ORG-005`.
+
+#### Go Green Power & Light
+
+- Kuali — Go Green Power & Light / 480114 — Go Green Power & Light
+- Kuali — Go Green Power & Light / ORG-014 — Go Green Power & Light
+
+Both pairs are the same company and should merge into `ORG-014`.
+
+#### Wells Hall Energy
+
+- Kuali — Wells Hall Energy / 480111 — Wells Hall Energy
+- Kuali — Wells Hall Energy / ORG-011 — Wells Hall Energy
+
+Both pairs are the same company and should merge into `ORG-011`.
+
+#### Beaumont Precision Components
+
+- Kuali — Beaumont Precision Components / 480104 — Beaumont Precision Components
+- Kuali — Beaumont Precision Components / ORG-004 — Beaumont Precision Components
+
+Both pairs are the same company and should merge into `ORG-004`.
+
+### Should not match
+
+#### Kuali — Wells Hall Energy / 480117 — Wells Hall Energy - New Energy Ventures
+
+These are related but separate organizations. New Energy Ventures is a division so staff should reject this pair.
+
+#### Kuali — Green Current Motors / ORG-018 — Red Cedar Motors
+
+These are separate companies. Their similar names do not make them duplicates so staff should reject this pair.
+
+#### Laconia Defense Technologies / Spartan Stack Technologies
+
+The following Kuali pairs are not matches:
+
+- Kuali — Laconia Defense Technologies / 480115 — Spartan Stack Technologies
+- Kuali — Laconia Defense Technologies / ORG-015 — Spartan Stack Technologies
+- Kuali — Spartan Stack Technologies / 480106 — Laconia Defense Technologies
+- Kuali — Spartan Stack Technologies / ORG-006 — Laconia Defense Technologies
+- Kuali — Laconia Defense Technologies / Kuali — Spartan Stack Technologies
+
+These are different companies. All five pairs should be rejected, including the Kuali-to-Kuali pair.
+
+### Open
+
+#### Kuali — Grand River Automotive / ORG-019 — GRA Inc.
+
+These are the same company. `GRA` is an acronym for `Grand River Automotive` so the matcher leaves the pair in review for a person to accept. `ORG-002` should be the final survivor and not an intermediate record.
+
+### Known issue
+
+#### Red Cedar survivor chain
+
+All Red Cedar duplicates should point directly to the Salesforce record `ORG-001`. Currently some records chain through `ORG-018 — Red Cedar Motors` instead.
+
+The matcher identified the correct duplicates but the merge order creates a chain instead of pointing every record directly to the same survivor. This needs to be handled by the merge logic.
+
+### Sponsors with no match
+
+#### National Science Foundation
+
+This is a government sponsor. There is no matching company record in the other systems so it should remain separate.
+
+#### U.S. Army
+
+This is a government sponsor. There is no matching company record in the other systems so it should remain separate.
+
+#### U.S. Department of Energy
+
+This is a government sponsor. There is no matching company record in the other systems so it should remain separate.
+
+## 5. Open items
 
 ### Stale employer
 
@@ -191,8 +336,12 @@ These are the same person and the matcher correctly matches them. Alyssa's TDS e
 
 ### GRA Inc. / Grand River Automotive
 
-#### 480102 — Grand River Automotive / ORG-002 — Grand River Automotive / ORG-019 — GRA Inc.
+The following three pairs are the same company and are waiting for review:
 
-These records represent the same company. `GRA` is an acronym for `Grand River Automotive`, but the acronym match is intentionally left in the queue for a person to review. Both `480102 / ORG-019` and `ORG-002 / ORG-019` are waiting for that decision.
+- 480102 — Grand River Automotive / ORG-019 — GRA Inc.
+- ORG-002 — Grand River Automotive / ORG-019 — GRA Inc.
+- Kuali — Grand River Automotive / ORG-019 — GRA Inc.
+
+`GRA` is an acronym for `Grand River Automotive` so the matcher sends these pairs to review instead of automatically accepting them. All three should eventually resolve to the Salesforce survivor `ORG-002`.
 
 Source: Bob's `README.md`, **Known data issues**.
