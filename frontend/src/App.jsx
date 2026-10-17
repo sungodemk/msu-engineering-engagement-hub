@@ -9,24 +9,27 @@ import Portfolio from "./pages/portfolio.jsx";
 import StewardshipQueue from "./pages/stewardship_queue.jsx";
 import DiscardedMatches from "./pages/discarded_matches.jsx";
 import LoginPage from './pages/login_page.jsx';
+import RequireAuth from './components/RequireAuth.jsx';
 
 
 function App() {
   return (
     <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route element={<RequireAuth />}>
+          <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/company_page/:id" element={<CompanyPage />} />
-            <Route path="/persons" element={< PersonsList />} />
+            <Route path="/persons" element={<PersonsList />} />
             <Route path="/persons/:id" element={<PersonsPage />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/stewardship" element={<StewardshipQueue />} />
             <Route path="/stewardship/discarded" element={<DiscardedMatches />} />
             <Route path="/temporal" element={<TemporalPage />} />
-          </Routes>
-        </Layout>
+          </Route>
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }

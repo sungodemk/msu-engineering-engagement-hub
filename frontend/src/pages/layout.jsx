@@ -3,6 +3,7 @@ import '../css/footer.css';
 import '../css/main.css';
 import '../css/navbar.css';
 import SidebarSearch from '../components/SidebarSearch';
+import { NavLink, Outlet } from 'react-router-dom';
 
 /* Emmanuel Koshy */
 const navItems = [
@@ -13,7 +14,7 @@ const navItems = [
     {to: '/temporal', label: 'Temporal Graph',icon:"📈"},
 ];
 
-function Layout({ children }) {
+function Layout() {
     return (
         <div className="shell">
            {/* Sidebar nav */}
@@ -47,7 +48,7 @@ function Layout({ children }) {
             </aside>
 
             <div className="pane">
-                <main> {children} </main>
+                <main> <Outlet /></main>
             <footer>
                 <p>&copy; 2026 MSU Engagement Hub. All rights reserved.</p>
             </footer>
