@@ -326,6 +326,10 @@ This is a government sponsor. There is no matching company record in the other s
 
 This is a government sponsor. There is no matching company record in the other systems so it should remain separate.
 
+### Survivor Issue
+
+Accepting a pair where one record is already merged re-points it to the new survivor instead of the group’s existing one. Tested with Handshake Grand River Automotive ↔ GRA Inc.: the Grand River group ended up split between ORG-002 and ORG-019.
+
 ## 5. Open items
 
 ### Stale employer
