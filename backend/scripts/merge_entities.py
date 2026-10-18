@@ -61,6 +61,7 @@ def merge_persons(cur, survivor_id, duplicate_id, match_id):
         ("edges", "edge", "from_entity_id"),
         ("edges", "edge", "to_entity_id"),
         ("degrees", "degree", "person_entity_id"),
+        ("capstone", "capstone", "person_entity_id"),
     ]:
         moves += move_column(
             cur,
@@ -78,6 +79,7 @@ def merge_persons(cur, survivor_id, duplicate_id, match_id):
     )
 
     return moves
+
 
 # reverses logged moves before unmerging an entity (Aayush)
 def reverse_merge(cur, match_id, survivor_id, merged_entity_id):
@@ -115,6 +117,8 @@ def reverse_merge(cur, match_id, survivor_id, merged_entity_id):
         ("edge", "from_entity_id"): ("edges", "from_entity_id"),
         ("edge", "to_entity_id"): ("edges", "to_entity_id"),
         ("degree", "person_entity_id"): ("degrees", "person_entity_id"),
+        ("capstone", "person_entity_id"): ("capstone", "person_entity_id"),
+        ("capstone", "company_entity_id"): ("capstone", "company_entity_id"),
     }
 
     for move in moves:
