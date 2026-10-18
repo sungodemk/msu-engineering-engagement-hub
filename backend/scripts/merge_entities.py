@@ -78,3 +78,77 @@ def merge_persons(cur, survivor_id, duplicate_id, match_id):
     )
 
     return moves
+
+# reverses logged moves before unmerging an entity (Aayush)
+def reverse_merge(cur, match_id, survivor_id, merged_entity_id):
+    if merged_entity_id is None:
+        return True
+
+    # later merges must be undone before this one
+    cur.execute(
+        """
+        SELECT merged_into_id
+        FROM entities
+        WHERE id = %s
+        """,
+        (survivor_id,),
+    )
+    if cur.fetchone()["merged_into_id"] is not None:
+        return False
+
+    cur.execute(
+        """
+        SELECT row_type, row_id, changed_column, old_entity_id, new_entity_id
+        FROM entity_merge_moves
+        WHERE match_id = %s
+        ORDER BY move_order DESC
+        """,
+        (match_id,),
+    )
+    moves = cur.fetchall()
+
+    # only these fixed table and column pairs may be updated
+    targets = {
+        ("activity", "company_entity_id"): ("activities", "company_entity_id"),
+        ("activity", "person_entity_id"): ("activities", "person_entity_id"),
+        ("activity", "owner_entity_id"): ("activities", "owner_entity_id"),
+        ("edge", "from_entity_id"): ("edges", "from_entity_id"),
+        ("edge", "to_entity_id"): ("edges", "to_entity_id"),
+        ("degree", "person_entity_id"): ("degrees", "person_entity_id"),
+    }
+
+    for move in moves:
+        target = targets.get((move["row_type"], move["changed_column"]))
+        if target is None:
+            raise ValueError("Unexpected merge move target")
+
+        table, column = target
+        cur.execute(
+            f"""
+            UPDATE {table}
+            SET {column} = %s
+            WHERE id = %s AND {column} = %s
+            """,
+            (
+                move["old_entity_id"],
+                move["row_id"],
+                move["new_entity_id"],
+            ),
+        )
+
+    cur.execute(
+        """
+        UPDATE entities
+        SET merged_into_id = NULL
+        WHERE id = %s
+        """,
+        (merged_entity_id,),
+    )
+    cur.execute(
+        """
+        DELETE FROM entity_merge_moves
+        WHERE match_id = %s
+        """,
+        (match_id,),
+    )
+    return True
