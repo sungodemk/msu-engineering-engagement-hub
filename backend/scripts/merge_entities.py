@@ -1,3 +1,32 @@
+# follows existing merge links to the final entity (Aayush)
+def get_final_entity(cur, entity_id):
+    while True:
+        cur.execute(
+            """
+            SELECT
+                e.id,
+                e.entity_type,
+                e.merged_into_id,
+                sr.source_system,
+                sr.source_pk
+            FROM entities e
+            JOIN entity_source_records esr
+                ON esr.entity_id = e.id
+            JOIN source_records sr
+                ON sr.id = esr.source_record_id
+            WHERE e.id = %s
+            """,
+            (entity_id,),
+        )
+
+        entity = cur.fetchone()
+
+        if entity["merged_into_id"] is None:
+            return entity
+
+        entity_id = entity["merged_into_id"]
+
+
 # moves one entity column and logs each changed row (Aayush)
 def move_column(cur, survivor_id, duplicate_id, table, row_type, column, match_id):
     edge_filter = ""

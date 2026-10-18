@@ -10,7 +10,7 @@ import json
 from datetime import datetime as at
 from pytz import timezone
 from scripts.load_kuali import read_json_file
-from scripts.merge_entities import merge_persons, reverse_merge
+from scripts.merge_entities import get_final_entity, merge_persons, reverse_merge
 
 import firebase_admin
 from firebase_admin import credentials 
@@ -467,35 +467,6 @@ def get_reviewer_id(cur):
         return None
 
     return reviewer["id"]
-
-# follows existing merge links to the final entity (Aayush)
-def get_final_entity(cur, entity_id):
-    while True:
-        cur.execute(
-            """
-            SELECT
-                e.id,
-                e.entity_type,
-                e.merged_into_id,
-                sr.source_system,
-                sr.source_pk
-            FROM entities e
-            JOIN entity_source_records esr
-                ON esr.entity_id = e.id
-            JOIN source_records sr
-                ON sr.id = esr.source_record_id
-            WHERE e.id = %s
-            """,
-            (entity_id,),
-        )
-
-        entity = cur.fetchone()
-
-        if entity["merged_into_id"] is None:
-            return entity
-
-        entity_id = entity["merged_into_id"]
-
 
 # sends a human-reviewed match back to the pending queue (Aayush)
 @app.route('/api/matches/<match_id>/undo', methods=['POST'])
