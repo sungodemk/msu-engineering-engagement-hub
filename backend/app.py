@@ -13,6 +13,7 @@ from scripts.load_kuali import read_json_file
 from scripts.merge_entities import merge_persons
 
 import firebase_admin
+from firebase_admin import credentials 
 from firebase_admin import auth as fb_auth
 from functools import wraps
 from flask import g, request
@@ -23,7 +24,13 @@ CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
 DATABASE_URL = os.environ["DATABASE_URL"]
 DEMO_REVIEWER_PK = "STF-003"
 
-firebase_admin.initialize_app(options={"projectId": "msu-capstone-384e5"})
+FIREBASE_KEY = os.environ.get("FIREBASE_CREDENTIALS", "/app/firebase-key.json")
+if not firebase_admin._apps:
+    if os.path.exists(FIREBASE_KEY):
+        firebase_admin.initialize_app(credentials.Certificate(FIREBASE_KEY))
+    else:
+        app.logger.warning("Firebase key not found at %s, login will not work")
+        firebase_admin.initialize_app(credentials.Certificate(FIREBASE_KEY))
 
 def get_db_connection():
     return psycopg.connect(DATABASE_URL, row_factory=dict_row)
@@ -461,46 +468,25 @@ def get_reviewer_id(cur):
 
     return reviewer["id"]
 
-# follows existing merge links to the final entity (Aayush)
-def get_final_entity(cur, entity_id):
-    while True:
-        cur.execute(
-            """
-            SELECT
-                e.id,
-                e.entity_type,
-                e.merged_into_id,
-                sr.source_system,
-                sr.source_pk
-            FROM entities e
-            JOIN entity_source_records esr
-                ON esr.entity_id = e.id
-            JOIN source_records sr
-                ON sr.id = esr.source_record_id
-            WHERE e.id = %s
-            """,
-            (entity_id,),
-        )
-
-        entity = cur.fetchone()
-
-        if entity["merged_into_id"] is None:
-            return entity
-
-        entity_id = entity["merged_into_id"]
-
-# clears only the entity this match merged (Aayush)
+# clears duplicate merged mark only if this match merged it (Aayush)
 def unmerge_match(cur, match):
-    if match["merged_entity_id"] is None:
+    if match["entity_id"] is None:
         return
 
     cur.execute(
         """
-        UPDATE entities
+        UPDATE entities e
         SET merged_into_id = NULL
-        WHERE id = %s
+        FROM entity_source_records esr
+        WHERE esr.entity_id = e.id
+          AND esr.source_record_id IN (%s, %s)
+          AND e.merged_into_id = %s
         """,
-        (match["merged_entity_id"],),
+        (
+            match["left_source_record_id"],
+            match["right_source_record_id"],
+            match["entity_id"],
+        ),
     )
 
 
@@ -518,8 +504,11 @@ def undo_match(match_id):
             cur.execute(
                 """
                 SELECT
+                    id,
                     status,
-                    merged_entity_id
+                    entity_id,
+                    left_source_record_id,
+                    right_source_record_id
                 FROM entity_matches
                 WHERE id = %s
                 FOR UPDATE
@@ -543,7 +532,6 @@ def undo_match(match_id):
                 SET
                     status = 'pending_review',
                     entity_id = NULL,
-                    merged_entity_id = NULL,
                     reviewed_by_entity_id = NULL,
                     reviewed_at = NULL
                 WHERE id = %s
@@ -608,8 +596,7 @@ def decide_match(match_id):
                         status = 'rejected',
                         reviewed_by_entity_id = %s,
                         reviewed_at = now(),
-                        entity_id = NULL,
-                        merged_entity_id = NULL
+                        entity_id = NULL
                     WHERE id = %s
                     """,
                     (
@@ -623,13 +610,19 @@ def decide_match(match_id):
                     "status": "rejected",
                 })
 
-            # resolves the original pair before following existing merges
+            # gets entity and stable source ID behind each side of the match
             cur.execute(
                 """
-                SELECT e.id
+                SELECT
+                    e.id,
+                    e.entity_type,
+                    sr.source_pk,
+                    sr.source_system
                 FROM entity_source_records esr
                 JOIN entities e
                     ON e.id = esr.entity_id
+                JOIN source_records sr
+                    ON sr.id = esr.source_record_id
                 WHERE esr.source_record_id IN (%s, %s)
                 """,
                 (
@@ -643,47 +636,33 @@ def decide_match(match_id):
             if len(entities) != 2:
                 return jsonify({"error": "Match entities could not be resolved"}), 500
 
-            final_entities = [
-                get_final_entity(cur, entity["id"])
-                for entity in entities
-            ]
+            # Salesforce wins across systems; otherwise lower source ID wins
+            survivor, duplicate = sorted(
+                entities,
+                key=lambda entity: (
+                    entity["source_system"] != "salesforce",
+                    entity["source_pk"],
+                ),
+            )
 
-            left, right = final_entities
-
-            if left["entity_type"] != right["entity_type"]:
+            if survivor["entity_type"] != duplicate["entity_type"]:
                 return jsonify({"error": "Match entities have different types"}), 409
 
-            merged_entity_id = None
-
-            if left["id"] == right["id"]:
-                survivor = left
-            else:
-                # uses final records instead of the original pair
-                survivor, duplicate = sorted(
-                    final_entities,
-                    key=lambda entity: (
-                        entity["source_system"] != "salesforce",
-                        entity["source_pk"],
-                    ),
+            if survivor["entity_type"] == "person":
+                merge_persons(
+                    cur,
+                    survivor["id"],
+                    duplicate["id"],
+                    match_id,
                 )
-
-                if survivor["entity_type"] == "person":
-                    merge_persons(
-                        cur,
-                        survivor["id"],
-                        duplicate["id"],
-                        match_id,
-                    )
-                elif survivor["entity_type"] == "organization":
-                    merge_companies(
-                        cur,
-                        survivor["id"],
-                        duplicate["id"],
-                    )
-                else:
-                    return jsonify({"error": "Unsupported entity type"}), 409
-
-                merged_entity_id = duplicate["id"]
+            elif survivor["entity_type"] == "organization":
+                merge_companies(
+                    cur,
+                    survivor["id"],
+                    duplicate["id"],
+                )
+            else:
+                return jsonify({"error": "Unsupported entity type"}), 409
 
             cur.execute(
                 """
@@ -691,14 +670,12 @@ def decide_match(match_id):
                 SET
                     status = 'confirmed',
                     entity_id = %s,
-                    merged_entity_id = %s,
                     reviewed_by_entity_id = %s,
                     reviewed_at = now()
                 WHERE id = %s
                 """,
                 (
                     survivor["id"],
-                    merged_entity_id,
                     reviewer_id,
                     match_id,
                 ),
