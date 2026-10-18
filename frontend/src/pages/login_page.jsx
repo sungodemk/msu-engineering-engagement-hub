@@ -1,18 +1,41 @@
 // Zhixiang Miao
 
-import {useEffect, useState} from 'react';
-import { Link, useParams, useNavigate } from "react-router-dom";
+// Learned about firebase from these links: 
+// https://firebase.google.com/docs/reference/js
+// https://www.youtube.com/watch?v=n-kUZw97-lA
+
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
+import { apiFetch } from '../api';
 import '../css/login_page.css';
 
 function LoginPage() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Default login handler, will add more algorithm later. 
     async function loginHandler(e) {
         e.preventDefault();
-        navigate('/');
+        setError('');
+        setLoading(true);
+        const formattedEmail = email.includes('@') ? email.trim() : `${email.trim()}@msu.edu`;
+        try {
+            await signInWithEmailAndPassword(auth, formattedEmail, password);
+            const res = await apiFetch('/api/me');
+            if (!res.ok) {
+                await auth.signOut();
+                throw new Error('Your account does not have access to the hub.');
+            }
+            navigate('/');
+        } catch (err) {
+            setError(err.code === 'auth/invalid-credential' ? 'Incorrect MSU email or password.' : err.message);
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -23,11 +46,17 @@ function LoginPage() {
                     <h1 className="login_title">Welcome</h1>
                 </div>
                 <div className="account_login_section">
-                    <label className="netid_title">MSU NetID</label>
-                    <input className="netid_dialog_box" type="netid" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <label className="netid_title">MSU Email:</label>
+                    <input className="netid_dialog_box" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <label className="password_title">Password:</label>
                     <input className="password_dialog_box" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <button className="login_button" type="submit">Sign in</button>
+                    {error && <p className="login_error">{error}</p>}
+                    <button className="login_button" type="submit" disabled={loading}>
+                        {loading ? 'Signing in...' : 'Sign in'}
+                    </button>
+                    <div className="sign_up_text_prompt" type="button" onClick={() => navigate('/sign_up')}>
+                        Sign Up
+                    </div>
                 </div>
             </form>
         </div>

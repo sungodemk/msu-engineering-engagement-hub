@@ -46,17 +46,6 @@ function CompanyPage() {
     const [activeResearchAwards, setActiveResearchAwards] = useState([]);
     const [allResearchAwards, setAllResearchAwards] = useState([]);
 
-    function isValidDate(date) {
-
-        if (!date) return false;
-        const today = new Date();
-        if (date > today) {
-            alert("Invalid date: cannot be in the future");
-            return false;
-        }
-        return true;
-    }
-
     {/* Need to wait for the server to respond until a promise is resolved. 
         Learned from this link: https://medium.com/@luwen900131/async-await-in-react-b10e36dac6f1*/}
     async function logActivityEventHandler(event) {
@@ -77,11 +66,7 @@ function CompanyPage() {
             return;
         }
         if (!close_date) {
-            alert("Close date is missing");
-            return;
-        }
-
-        if (!isValidDate(new Date(close_date))) {
+            alert("Date is missing");
             return;
         }
 
@@ -653,6 +638,7 @@ function CompanyPage() {
                             <option value="touchpoint">Touchpoint</option>
                             <option value="ask">Ask</option>
                             <option value="recruiting">Recruiting</option>
+                            <option value="schedule">Schedule</option>
                         </select>
                         
                     </div>

@@ -9,7 +9,9 @@ import Portfolio from "./pages/portfolio.jsx";
 import StewardshipQueue from "./pages/stewardship_queue.jsx";
 import DiscardedMatches from "./pages/discarded_matches.jsx";
 import LoginPage from './pages/login_page.jsx';
+import SignUpPage from './pages/sign_up_page.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
+import AdminAccountApprovalPage from './pages/admin_account_approval_page.jsx';
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/sign_up" element={<SignUpPage />} />
         <Route element={<RequireAuth />}>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
@@ -27,6 +30,7 @@ function App() {
             <Route path="/stewardship" element={<StewardshipQueue />} />
             <Route path="/stewardship/discarded" element={<DiscardedMatches />} />
             <Route path="/temporal" element={<TemporalPage />} />
+            <Route path="/admin_account_approval" element={<AdminAccountApprovalPage />} />
           </Route>
         </Route>
       </Routes>

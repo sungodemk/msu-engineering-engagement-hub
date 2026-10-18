@@ -1,12 +1,25 @@
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import '../css/home.css';
+import { apiFetch } from '../api';
 
 function Home() {
   useEffect(() => {
 
   document.title = 'MSU Engineering Hub';
   }, []);
+
+  const [userType, setUserType] = useState(null);
+
+  useEffect(() => {
+    apiFetch('/api/me')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setUserType(data.role);
+      });
+  }, []);
+
 const cards = [
     {
       icon: '👤',
@@ -36,7 +49,15 @@ const cards = [
       body: 'View the timeline of a company.',
       to: '/temporal',
       link: 'View Temporal Graph'
-    }
+    },
+    // Added Admin's Account Approval card (Zhixiang Miao)
+    ...(userType === 'admin' ? [{
+      icon: '🛠️',
+      title: 'Admin Account Approval',
+      body: 'Manage and approve registered user accounts.',
+      to: '/admin_account_approval',
+      link: 'View Admin Approval'
+    }] : [])
   ];
 
   return (

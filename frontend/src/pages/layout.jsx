@@ -11,6 +11,8 @@ const navItems = [
     {to: '/portfolio', label: 'Portfolio', icon:"📂"},
     {to: '/stewardship', label: 'Stewardship Queue',icon:"📝"},
     {to: '/temporal', label: 'Temporal Graph',icon:"📈"},
+    {to: '/admin_account_approval', label: 'Admin Account Approval', icon:"🛠️"},
+    {to: '/login', label: 'Logout'}
 ];
 
 function Layout() {

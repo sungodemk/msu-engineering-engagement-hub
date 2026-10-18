@@ -1,0 +1,111 @@
+/* Zhixiang Miao */
+
+.sign_up_page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #18453B;
+}
+
+.sign_up_form {
+    width: 35vw;
+    min-height: 100dvh;
+    height: auto;
+
+    background-color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 150px;
+
+    padding: 20px;
+    border-radius: 0.5vw;
+    border: 0.01vw solid #e3e6e8;
+}
+
+.sign_up_titles {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 30vw;
+    margin-top: 20px;
+}
+
+.sign_up_web_title {
+    font-size: 0.9em;
+    color: #18453B;
+    white-space: nowrap;
+}
+
+.sign_up_title {
+    font-size: 2em;
+    font-weight: bold;
+    color: black;
+}
+
+.account_sign_up_section {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    width: 30vw;
+    margin-bottom: 90px;
+}
+
+.sign_up_netid_title {
+    font-size: 1em;
+    font-weight: bold;
+    color: black;
+}
+
+.sign_up_netid_dialog_box {
+    font-size: 1.2em;
+    display: block;
+    height: 2.5vw;
+    width: inherit; 
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+.sign_up_password_title {
+    font-size: 1em;
+    font-weight: bold;
+    color: black;
+}
+
+.sign_up_password_dialog_box {
+    font-size: 1.2em;
+    display: block;
+    height: 2.5vw;
+    width: inherit; 
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+}
+
+
+
+.sign_up_button {
+    margin-top: 8px;
+    display: block;
+    height: 3vw;
+    width: 30.3vw; 
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+    background-color: #18453B;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.back_to_login_text_prompt {
+    font-size: 1em;
+    color: #18453B;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.back_to_login_text_prompt:hover {
+    text-decoration: underline;
+}
