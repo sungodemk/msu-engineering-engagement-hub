@@ -4,6 +4,9 @@ from collections import defaultdict
 from itertools import combinations
 
 import psycopg
+from psycopg.rows import dict_row
+
+from merge_entities import get_final_entity, merge_persons
 
 
 DATABASE_URL = os.environ["DATABASE_URL"]
@@ -318,7 +321,7 @@ def pair_key(left_id, right_id):
 
 
 def write_matches(cur, results):
-    # only removes machine-generated person matches so company matches don't get touched
+    # only removes unreviewed person matches so past merges and logs survive
     cur.execute(
         """
         DELETE FROM entity_matches m
@@ -326,7 +329,7 @@ def write_matches(cur, results):
         WHERE m.left_source_record_id = esr.source_record_id
           AND esr.entity_id = e.id
           AND e.entity_type = 'person'
-          AND m.status IN ('pending_review', 'auto_accepted', 'auto_rejected')
+          AND m.status IN ('pending_review', 'auto_rejected')
         """
     )
 
@@ -341,7 +344,7 @@ def write_matches(cur, results):
         JOIN entities e
             ON e.id = esr.entity_id
         WHERE e.entity_type = 'person'
-          AND m.status IN ('confirmed', 'rejected')
+          AND m.status IN ('confirmed', 'rejected', 'auto_accepted')
         """
     )
 
@@ -350,52 +353,76 @@ def write_matches(cur, results):
         for left_id, right_id in cur.fetchall()
     }
 
-    for result in results:
-        left = result["left"]
-        right = result["right"]
+    # separate dict cursor keeps original tuple queries unchanged 
+    with cur.connection.cursor(row_factory=dict_row) as merge_cur:
+        for result in results:
+            left = result["left"]
+            right = result["right"]
 
-        current_pair = pair_key(
-            left["source_record_id"],
-            right["source_record_id"],
-        )
-
-        if current_pair in reviewed_pairs:
-            continue
-
-        entity_id = None
-
-        if result["status"] == "auto_accepted":
-            # merges to salesforce otherwise merges to lower id
-            survivor = min(
-                (left, right),
-                key=lambda person: (
-                    person["source_system"] != "salesforce",
-                    person["source_pk"],
-                ),
-            )
-            entity_id = survivor["entity_id"]
-
-        cur.execute(
-            """
-            INSERT INTO entity_matches (
-                left_source_record_id,
-                right_source_record_id,
-                score,
-                match_reasons,
-                status,
-                entity_id
-            )
-            VALUES (%s, %s, %s, %s, %s, %s)
-            """,
-            (
+            current_pair = pair_key(
                 left["source_record_id"],
                 right["source_record_id"],
-                result["score"],
-                result["reasons"],
-                result["status"],
-                entity_id,
-            ),
-        )
+            )
+
+            if current_pair in reviewed_pairs:
+                continue
+
+            entity_id = None
+            merged_entity_id = None
+
+            if result["status"] == "auto_accepted":
+                # later pairs see earlier merges in the same transaction 
+                final_entities = [
+                    get_final_entity(merge_cur, person["entity_id"])
+                    for person in (left, right)
+                ]
+
+                survivor, duplicate = sorted(
+                    final_entities,
+                    key=lambda entity: (
+                        entity["source_system"] != "salesforce",
+                        entity["source_pk"],
+                    ),
+                )
+
+                entity_id = survivor["id"]
+                if survivor["id"] != duplicate["id"]:
+                    merged_entity_id = duplicate["id"]
+
+            # insert first so every moved row has a match ID 
+            cur.execute(
+                """
+                INSERT INTO entity_matches (
+                    left_source_record_id,
+                    right_source_record_id,
+                    score,
+                    match_reasons,
+                    status,
+                    entity_id,
+                    merged_entity_id
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                RETURNING id
+                """,
+                (
+                    left["source_record_id"],
+                    right["source_record_id"],
+                    result["score"],
+                    result["reasons"],
+                    result["status"],
+                    entity_id,
+                    merged_entity_id,
+                ),
+            )
+            match_id = cur.fetchone()[0]
+
+            if merged_entity_id is not None:
+                merge_persons(
+                    merge_cur,
+                    entity_id,
+                    merged_entity_id,
+                    match_id,
+                )
 
     cur.execute(
         """
