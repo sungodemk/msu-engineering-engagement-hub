@@ -109,6 +109,32 @@ def merge_persons(cur, survivor_id, duplicate_id, match_id):
 
     return moves
 
+def merge_companies(cur, survivor_id, duplicate_id, match_id):
+    moves = 0
+
+    for table, row_type, column in [
+        ("activities", "activity", "company_entity_id"),
+        ("edges", "edge", "from_entity_id"),
+        ("edges", "edge", "to_entity_id"),
+        ("capstone", "capstone", "company_entity_id"),
+    ]:
+        moves += move_column(
+            cur,
+            survivor_id,
+            duplicate_id,
+            table,
+            row_type,
+            column,
+            match_id,
+        )
+
+    cur.execute(
+        "UPDATE entities SET merged_into_id = %s WHERE id = %s",
+        (survivor_id, duplicate_id),
+    )
+
+    return moves
+
 
 # reverses logged moves before unmerging an entity (Aayush)
 def reverse_merge(cur, match_id, survivor_id, merged_entity_id):

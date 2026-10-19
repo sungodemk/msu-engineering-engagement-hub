@@ -10,10 +10,9 @@ import json
 from datetime import datetime as at
 from pytz import timezone
 from scripts.load_kuali import read_json_file
-from scripts.merge_entities import get_final_entity, merge_persons, reverse_merge
-
+from scripts.merge_entities import get_final_entity, merge_persons, reverse_merge, merge_companies
 import firebase_admin
-from firebase_admin import credentials 
+from firebase_admin import credentials
 from firebase_admin import auth as fb_auth
 from functools import wraps
 from flask import g, request
@@ -661,6 +660,7 @@ def decide_match(match_id):
                         cur,
                         survivor["id"],
                         duplicate["id"],
+                        match_id,
                     )
                 else:
                     return jsonify({"error": "Unsupported entity type"}), 409
@@ -691,42 +691,42 @@ def decide_match(match_id):
                 "status": "confirmed",
             })
 
-def merge_companies(cur, survivor_id, duplicate_id):
-    # Makes sure there are no connecting edges (there shouldn't be)
-    cur.execute(
-        """
-        DELETE FROM edges
-        WHERE (from_entity_id = %(s)s AND to_entity_id = %(d)s)
-           OR (from_entity_id = %(d)s AND to_entity_id = %(s)s)
-        """,
-        {"s": survivor_id, "d": duplicate_id},
-    )
-    # Moves all activities from the duplicate company to the survivor company
-    cur.execute("UPDATE activities SET company_entity_id = %s WHERE company_entity_id = %s",
-        (survivor_id, duplicate_id),
-    )
-    activities_moved = cur.rowcount
-
-    # Moves edges pointing to the duplicate to the survivor
-    cur.execute(
-        "UPDATE edges SET to_entity_id = %s WHERE to_entity_id = %s",
-        (survivor_id, duplicate_id),
-    )
-    edges_moved = cur.rowcount
-
-    # Moves edges pointing from the company to the duplicate to the survivor
-    cur.execute(
-        "UPDATE edges SET from_entity_id = %s WHERE from_entity_id = %s",
-        (survivor_id, duplicate_id),
-    )
-    edges_moved += cur.rowcount
-
-    cur.execute(
-        "UPDATE entities SET merged_into_id = %s WHERE id = %s",
-        (survivor_id, duplicate_id),
-    )
-
-    return activities_moved, edges_moved
+# def merge_companies(cur, survivor_id, duplicate_id):
+#     # Makes sure there are no connecting edges (there shouldn't be)
+#     cur.execute(
+#         """
+#         DELETE FROM edges
+#         WHERE (from_entity_id = %(s)s AND to_entity_id = %(d)s)
+#            OR (from_entity_id = %(d)s AND to_entity_id = %(s)s)
+#         """,
+#         {"s": survivor_id, "d": duplicate_id},
+#     )
+#     # Moves all activities from the duplicate company to the survivor company
+#     cur.execute("UPDATE activities SET company_entity_id = %s WHERE company_entity_id = %s",
+#         (survivor_id, duplicate_id),
+#     )
+#     activities_moved = cur.rowcount
+#
+#     # Moves edges pointing to the duplicate to the survivor
+#     cur.execute(
+#         "UPDATE edges SET to_entity_id = %s WHERE to_entity_id = %s",
+#         (survivor_id, duplicate_id),
+#     )
+#     edges_moved = cur.rowcount
+#
+#     # Moves edges pointing from the company to the duplicate to the survivor
+#     cur.execute(
+#         "UPDATE edges SET from_entity_id = %s WHERE from_entity_id = %s",
+#         (survivor_id, duplicate_id),
+#     )
+#     edges_moved += cur.rowcount
+#
+#     cur.execute(
+#         "UPDATE entities SET merged_into_id = %s WHERE id = %s",
+#         (survivor_id, duplicate_id),
+#     )
+#
+#     return activities_moved, edges_moved
 
 # Save and display logged activities for a specific company page (Zhixiang Miao)
 @app.route("/api/companies/<company_id>/log_activity", methods=["GET", "POST"])
@@ -857,6 +857,25 @@ def all_research_awards(company_id):
     return jsonify({
         "research_awards": awards,
     })
+
+@app.route("/api/companies/<company_id>/capstone_sponsorships", methods=["GET"])
+def get_capstone(company_id):
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT
+                    c.id,
+                    c.title,
+                    c.semester,
+                    c.amount,
+                    c.status,
+                    c.notes
+                FROM capstone c
+                WHERE c.company_entity_id = %s
+                ORDER BY c.semester DESC
+            """, (company_id,))
+            capstone_sponsorships = cur.fetchall()
+    return jsonify(capstone_sponsorships)
 
 # Authorize the login of a user (Zhixiang Miao)
 def require_login(f):

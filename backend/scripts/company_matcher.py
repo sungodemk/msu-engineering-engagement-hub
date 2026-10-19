@@ -161,20 +161,16 @@ def pair_key(left_id, right_id):
     return frozenset((left_id, right_id))
 
 def merge_companies(cur, survivor_id, duplicate_id):
-    # Makes sure there are no connecting edges (there shouldn't be)
-    cur.execute(
-        """
-        DELETE FROM edges
-        WHERE (from_entity_id = %(s)s AND to_entity_id = %(d)s)
-           OR (from_entity_id = %(d)s AND to_entity_id = %(s)s)
-        """,
-        {"s": survivor_id, "d": duplicate_id},
-    )
     # Moves all activities from the duplicate company to the survivor company
     cur.execute("UPDATE activities SET company_entity_id = %s WHERE company_entity_id = %s",
         (survivor_id, duplicate_id),
     )
     activities_moved = cur.rowcount
+
+    cur.execute(
+        "UPDATE capstone SET company_entity_id = %s WHERE company_entity_id = %s",
+        (survivor_id, duplicate_id)
+    )
 
     # Moves edges pointing to the duplicate to the survivor
     cur.execute(
