@@ -15,6 +15,7 @@ from routes.company import bp as company_bp
 from routes.person import bp as person_bp
 from routes.matching import bp as matching_bp
 from routes.portfolio import bp as portfolio_bp
+from auth import require_login
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -34,32 +35,7 @@ if not firebase_admin._apps:
         firebase_admin.initialize_app(credentials.Certificate(FIREBASE_KEY))
 
 
-# Authorize the login of a user (Zhixiang Miao)
-def require_login(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        header = request.headers.get("Authorization", "")
-        if not header.startswith("Bearer "):
-            return jsonify({"error": "not logged in"}), 401
-        try:
-            decoded = fb_auth.verify_id_token(header.split(" ", 1)[1])
-        except Exception:
-            return jsonify({"error": "invalid token"}), 401
 
-        with get_db_connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute("""
-                    UPDATE users SET last_login_at = now()
-                    WHERE firebase_uid = %s AND is_active
-                    RETURNING id, email, display_name, role, staff_external_id
-                """, (decoded["uid"],))
-                user = cur.fetchone()
-
-        if not user:
-            return jsonify({"error": "no hub account"}), 403
-        g.user = user
-        return f(*args, **kwargs)
-    return wrapper
 
 # Validate the login of a user (Zhixiang Miao)
 @app.route("/api/me")
