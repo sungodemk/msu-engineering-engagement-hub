@@ -108,6 +108,29 @@ def load_handshake_employers(cur, rows, industries):
         employer_entities[employer["id"]] = entity_id
         link_entity(cur, entity_id, source_id)
 
+        if employer["affiliation_parent_employer_ids"]:
+            for parent_id in employer["affiliation_parent_employer_ids"]:
+                parent_entity_id = employer_entities.get(parent_id)
+                if parent_entity_id:
+                    cur.execute(
+                        """
+                        INSERT INTO edges (from_entity_id,
+                                           to_entity_id,
+                                           edge_type,
+                                           edge_role,
+                                           valid_from,
+                                           valid_to,
+                                           source_record_id)
+                        VALUES (%s, %s, 'part_of', NULL, %s, NULL, %s)
+                        """,
+                        (
+                            parent_entity_id,
+                            entity_id,
+                            employer["created_at"],
+                            source_id,
+                        ),
+                    )
+
     return employer_entities
 
 def load_handshake_contacts(cur, rows, employer_entities):
@@ -137,7 +160,6 @@ def load_handshake_contacts(cur, rows, employer_entities):
             "title": row["title"],
             "cell_phone": row["cell_phone"],
             "phone": row["phone"],
-            "alum_year": row["alum_year"],
             "contact_source": row["contact_source"],
             "created_at": row["created_at"],
             "updated_at": row["updated_at"],
@@ -154,6 +176,41 @@ def load_handshake_contacts(cur, rows, employer_entities):
         contact_entities[row["id"]] = entity_id
         contact_emails[row["email"]] = entity_id
         link_entity(cur, entity_id, source_id)
+
+        if row["alum_year"]:
+            cur.execute(
+                """
+                INSERT INTO degrees (
+                    person_entity_id, 
+                    class_year,
+                    source_record_id
+                )
+                VALUES (%s, %s, %s)
+                """,
+                (entity_id, row["alum_year"], source_id),
+            )
+
+        cur.execute(
+            """
+            INSERT INTO edges (
+                from_entity_id,
+                to_entity_id,
+                edge_type,
+                edge_role,
+                valid_from,
+                valid_to,
+                source_record_id
+            )
+            VALUES (%s, %s, 'employed_by', %s, %s, NULL, %s)
+            """,
+            (
+                entity_id,
+                company_entity_id,
+                row["title"],
+                row["created_at"],
+                source_id,
+            )
+        )
 
     if skipped_no_employer:
         print(f"Skipped {skipped_no_employer} contacts with no matching Employer")

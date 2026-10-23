@@ -357,7 +357,7 @@ def load_degrees(cur, rows, contact_entities):
     )
 
 # Loads MSU staff owners of companies (Emmanuel)
-def load_relationship_assignments(cur, rows, account_entities, contact_entities, units_by_code):
+def load_relationship_assignments(cur, rows, account_entities, contact_entities):
     for assignment in rows:
         source_id = insert_source_record(
             cur,
@@ -396,30 +396,6 @@ def load_relationship_assignments(cur, rows, account_entities, contact_entities,
 
     )
 
-        unit_entity_id = units_by_code.get(assignment[ASSIGNMENT_COLUMNS["unit"]])
-        if assignment[ASSIGNMENT_COLUMNS["contact_id"]] and unit_entity_id:
-            cur.execute(
-                """
-                INSERT INTO edges (
-                    from_entity_id, 
-                    to_entity_id, 
-                    edge_type, 
-                    edge_role,
-                    valid_from, 
-                    valid_to, 
-                    source_record_id
-                )
-                VALUES (%s, %s, 'works_with', %s, %s, %s::date + 1, %s)
-                """,
-                (
-                    target_id,
-                    unit_entity_id,
-                    assignment[ASSIGNMENT_COLUMNS["role"]],
-                    assignment[ASSIGNMENT_COLUMNS["start_date"]],
-                    assignment[ASSIGNMENT_COLUMNS["end_date"]],
-                    source_id,
-                ),
-            )
 
 
 # Decides status of opportunity (Alvin)
@@ -748,7 +724,7 @@ def main():
             
             load_affiliations(cur, affiliations, account_entities, contact_entities)
             load_unit_hierarchy(cur, accounts, account_entities)
-            load_relationship_assignments(cur, assignments, account_entities, contact_entities, units_by_code)
+            load_relationship_assignments(cur, assignments, account_entities, contact_entities)
             load_opportunities(cur, opportunities, account_entities, contact_entities, units_by_code)
             load_degrees(cur, degrees, contact_entities)
             load_contact_reports(cur, reports, account_entities, contact_entities, units_by_code)

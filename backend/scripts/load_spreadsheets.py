@@ -20,6 +20,8 @@ def read_csv(path):
             for row in reader
         ]
 
+HIERARCHY_VALID_FROM = "1900-01-01"
+
 def normalize_name(name):
     return name.strip().lower()
 
@@ -137,10 +139,25 @@ def load_sponsorships(cur, rows):
                     {},
                 )
 
-                contacts[email] = entity_id
+                contacts[email] = (entity_id, source_id)
                 link_entity(cur, entity_id, source_id)
 
-            contact_ids.append(contacts[email])
+                cur.execute(
+                    """
+                    INSERT INTO edges (
+                        from_entity_id,
+                        to_entity_id,
+                        edge_type,
+                        edge_role,
+                        valid_from,
+                        valid_to,
+                        source_record_id)
+                    VALUES (%s, %s, 'employed_by', %s, %s, NULL, %s)
+                    """,
+                    (contacts[email][0], sponsor_entity_id, "Capstone Sponsor Contact", HIERARCHY_VALID_FROM, contacts[email][1])
+                )
+
+            contact_ids.append(contacts[email][0])
 
         source_id = insert_source_record(
             cur,
