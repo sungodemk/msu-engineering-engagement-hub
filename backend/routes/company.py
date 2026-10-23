@@ -219,7 +219,7 @@ def all_research_awards(company_id):
                 ORDER BY a.occurred_on DESC
             """, (company_id,))
             awards = cur.fetchall()
-    Root = Path(__file__).parent
+    Root = Path(__file__).resolve().parent.parent
     SPONSORS_FILE = Root / "db" / "awards" / "sponsors.json"
     sponsors = read_json_file(SPONSORS_FILE)
     for sponsor in sponsors:

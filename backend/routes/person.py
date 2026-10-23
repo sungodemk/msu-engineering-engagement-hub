@@ -9,6 +9,7 @@ from datetime import datetime as at
 from pytz import timezone
 from flask import g, request
 from database import get_db_connection
+from auth import require_login
 
 bp = Blueprint('person', __name__)
 
@@ -131,6 +132,19 @@ def get_person(person_id):
             """,(person_id,))
             activities = cur.fetchall()
 
+            cur.execute("""
+                SELECT cp.id, cp.title, cp.semester, cp.amount::float AS amount, cp.status, cp.notes,
+                    co.id AS company_id, co.display_name AS company,
+                    u.display_name AS msu_unit
+                FROM capstone cp
+                LEFT JOIN entities co ON co.id = cp.company_entity_id
+                LEFT JOIN entities u ON u.id = cp.msu_unit_entity_id
+                WHERE cp.person_entity_id IN (
+                    SELECT id FROM entities WHERE id = %s OR merged_into_id = %s)
+                ORDER BY cp.semester DESC
+            """,(person_id, person_id))
+            capstones = cur.fetchall()
+
     return jsonify({
         "person":person,
         "current_affiliation": current,
@@ -138,6 +152,7 @@ def get_person(person_id):
         "degrees": degrees,
         "owner": owner,
         "activities": activities,
+        "capstones": capstones, 
 
     })
 
@@ -163,3 +178,70 @@ def search():
             results = cur.fetchall()
 
     return jsonify(results)
+
+# Source the records behind a person and include merged records (Emmanuel)
+
+PERSON_SOURCES_SQL = """
+    SELECT sr.source_system, sr.source_pk
+    FROM entities e 
+    JOIN entity_source_records esr ON esr.entity_id = e.id 
+    JOIN source_records sr ON sr.id = esr.source_record_id
+    WHERE (e.id = %s OR e.merged_into_id = %s) AND e.entity_type = 'person'
+    ORDER BY (sr.source_system = 'salesforce') DESC, sr.source_pk
+"""
+@bp.route('/api/persons/<person_id>/notes', methods=['GET','POST'])
+@require_login
+def person_notes(person_id):
+    try:
+        uuid.UUID(person_id)
+    except ValueError:
+        return jsonify({"error": "Person not found"}), 404
+
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(PERSON_SOURCES_SQL, (person_id, person_id))
+            sources = cur.fetchall()
+            if not sources:
+                return jsonify({"error": "Person not found"}), 404
+
+            if request.method =='POST':
+                data = request.get_json(silent=True) or {}
+                title = (data.get("title") or "").strip()
+                body = (data.get("body") or "").strip()
+                note_date = data.get("note_date") or None
+                if not title:
+                    return jsonify({"error": "Title is required"}), 400 #throws error if no title is input 
+                primary = sources[0] #salesforce first
+                cur.execute("""
+                    INSERT INTO person_notes (source_system, source_pk, note_date, title, body, created_by)
+                    VALUES (%s, %s, COALESCE(%s::date, CURRENT_DATE), %s, %s, %s)
+                """, (primary["source_system"], primary["source_pk"], note_date, title, body, g.user["id"]))
+            keys = [f'{s["source_system"]}:{s["source_pk"]}' for s in sources]
+            cur.execute("""
+                SELECT n.id,n.note_date::text AS note_date, n.title, n.body,
+                    u.display_name AS author
+                FROM person_notes n
+                LEFT JOIN users u ON u.id = n.created_by
+                WHERE n.source_system || ':' || n.source_pk = ANY(%s)
+                ORDER BY n.note_date DESC, n.created_at DESC
+            """, (keys,))
+            notes = cur.fetchall()
+
+    return jsonify(notes), (201 if request.method =='POST' else 200)
+
+@bp.route('/api/notes/<note_id>', methods =['DELETE'])
+@require_login
+def delete_note(note_id):
+    try:
+        uuid.UUID(note_id)
+    except ValueError:
+        return jsonify({"error": "Note not found"}), 404
+
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM person_notes WHERE id = %s", (note_id,))
+            if cur.rowcount == 0:
+                return jsonify({"error": "Note not found"}), 404 
+
+    return jsonify({"status": "deleted"})
+

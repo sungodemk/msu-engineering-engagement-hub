@@ -303,3 +303,50 @@
 .pp-sort-arrow {
     font-size: 0.7rem;
 }
+
+/*notes section*/
+.pp-note-form { 
+    display: grid;
+    gap: 8px; 
+    margin-top: 12px; 
+    margin-bottom: 25px;
+}
+.pp-note-form-row {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 8px; 
+} 
+.pp-note-form input,
+.pp-note-form textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #e3e6e8;
+    border-radius: 6px;
+    font: inherit;
+}
+.pp-note-save {
+    justify-self: start;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px ;
+    background: #18453b;
+    color: #ffffff;
+    font-weight: 600;
+    cursor:pointer;
+}
+.pp-note-body {white-space: pre-wrap; }
+.pp-note-delete {
+    margin-top: 4px;
+    padding: 0px;
+    border: none;
+    background: none;
+    color: #b42318;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.pp-note-error {
+    color: #b42318;
+    font-size: 0.9rem;
+}

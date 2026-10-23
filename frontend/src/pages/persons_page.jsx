@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import {Link,useParams } from "react-router-dom";  
 import '../css/persons_page.css';
+import { apiFetch } from'../api';
 
 const API_BASE  = "http://localhost:8080";
 
@@ -53,6 +54,46 @@ function PersonsPage(){
             .catch((err) => setError(err.message));
     }, [id]);
 
+    const today = new Date().toISOString().slice(0, 10);
+    const [notes, setNotes] = useState([]);
+    const [noteDate, setNoteDate] = useState(today);
+    const [noteTitle, setNoteTitle] = useState('');
+    const [noteBody, setNoteBody] = useState('');
+    const [noteError, setNoteError] = useState('');
+
+    useEffect(() => {
+        apiFetch(`/api/persons/${id}/notes`)
+            .then((r) => (r.ok ? r.json() : []))
+            .then(setNotes)
+            .catch(() => setNotes([]));
+    }, [id]);
+
+    async function addNote(e) {
+        e.preventDefault();
+        setNoteError('');
+        const res = await apiFetch(`/api/persons/${id}/notes`, {
+            method: 'POST',
+            body: JSON.stringify({ note_date: noteDate, title: noteTitle, body: noteBody }),
+        });
+
+        if (!res.ok) {
+            const body = await res.json().catch(() => ({}));
+            return setNoteError(body.error || 'Could not save note.');
+        }
+
+        setNotes(await res.json());
+        setNoteTitle('');
+        setNoteBody('');
+        setNoteDate(today);
+
+    }
+
+    async function deleteNote(noteId) {
+        const res = await apiFetch(`/api/notes/${noteId}`, { method: 'DELETE' });
+        if (res.ok) setNotes((prev) => prev.filter((n) => n.id !== noteId));
+    }
+
+
     if (error) {
         return <div className="persons-page"><div className="pp-card">{error}</div></div>;
 
@@ -62,7 +103,7 @@ function PersonsPage(){
     }
 
     const { person, current_affiliation: current, affiliations, activities } = data;
-    const { owner, degrees = [] } = data;
+    const { owner, degrees = [], capstones = [] } = data;
     const attrs = person.attributes ?? {};
     const title = current?.title ?? attrs.title;
     const location = [attrs.city, attrs.state].filter(Boolean).join(', ');
@@ -130,6 +171,31 @@ function PersonsPage(){
                         ))}
                     </div>
                 )}
+
+                {capstones.length > 0 && (
+                    <div className="pp-card">
+                        <div className= "pp-section-title">Capstone Projects</div>
+                        {capstones.map((cp) => (
+                            <div className="pp-activity" key={cp.id}>
+                                <div className="pp-activity-meta">
+                                    <span className="pp-activity-type">
+                                        {cp.title}
+                                        {cp.status && `. ${humanize(cp.status)}`}
+                                    </span>
+                                    <span>{cp.semester}</span>
+                                </div>
+                                <div className="pp-label">
+                                    {cp.company_id 
+                                        ? <Link to={`/company_page/${cp.company_id}`} className="pp-person-name">{cp.company}</Link>
+                                        : 'No sponsor'}
+                                    {cp.msu_unit && ` · ${cp.msu_unit}`}
+                                    {cp.amount != null && ` · ${formatMoney(cp.amount)}`}
+                                </div>
+                                {cp.notes && <p className="pp-activity-notes">{cp.notes}</p>}
+                            </div>
+                        ))}
+                    </div>
+                )}
                 <div className="pp-card">
                     <div className="pp-section-title">Engagement Summary</div>
                     {Object.keys(summary).length === 0 ? (
@@ -146,10 +212,11 @@ function PersonsPage(){
                     )}
 
                 </div>
+
                 <div className="pp-card">
                     <div className="pp-section-title">Affiliation History</div>
-                    {affiliations.length ===0 ? (
-                        <div className="pp-empty">No employment history on record.</div>
+                    {affiliations.length ===0?(
+                        <div className="pp-empty">No employment history.</div>
                     ) : (
                         affiliations.map((aff) => (
                             <div className="pp-row" key={`${aff.id}-${aff.valid_from}`}>
@@ -158,13 +225,13 @@ function PersonsPage(){
                                     {aff.title && <div className="pp-label">{aff.title}</div>}
                                 </div>
                                 <span className="pp-label">
-                                    {aff.valid_from.slice(0, 4)} to {aff.last_day ? aff.last_day.slice(0, 4) : 'present'}
+                                    {aff.valid_from.slice(0, 4)} to {aff.last_day ? aff.last_day.slice(0, 4) : 'present'} 
                                 </span>
                             </div>
                         ))
                     )}
-                </div>
 
+                </div>
                 <div className="pp-card">
                     <div className="pp-section-title">Activity History</div>
                     {activities.length ===0 ? (
@@ -200,6 +267,36 @@ function PersonsPage(){
                     <div className="pp-stat-row"><span>Touchpoints</span><span>{touchpoints}</span></div>
                     <div className="pp-stat-row"><span>Lifetime giving</span><span>{formatMoney(giving)}</span></div>
                 </div>
+                <div className="pp-card">
+                    <div className="pp-section-title">Notes</div>
+                    <form className="pp-note-form" onSubmit={addNote}>
+                        <div className="pp-note-form-row">
+                            <input type="date" value={noteDate} onChange={(e) => setNoteDate(e.target.value)} required />
+                            <input type="text" placeholder="Title" value={noteTitle}
+                                   onChange={(e) => setNoteTitle(e.target.value)} required />
+                        </div>
+                        <textarea rows={4} placeholder="Notes" value={noteBody}
+                                  onChange={(e) => setNoteBody(e.target.value)} />
+                        {noteError && <div className="pp-note-error">{noteError}</div>}
+                        <button type="submit" className="pp-note-save">Add note</button>
+                    </form>
+
+                    {notes.length === 0 ? (
+                        <div className="pp-empty">No notes yet.</div>
+                    ) : ( 
+                        notes.map((n) => (
+                            <div className="pp-activity" key={n.id}>
+                                <div className="pp-activity-meta">
+                                    <span className="pp-activity-type">{n.title}</span>
+                                    <span>{formatDate(n.note_date)}{n.author && ` · ${n.author}`}</span>
+                                </div> 
+                                {n.body && <p className="pp-activity-notes pp-note-body">{n.body}</p>}
+                                <button type="button" className="pp-note-delete" onClick={() =>deleteNote(n.id)}>Delete</button>
+                            </div>
+                        ))
+                    )}
+                </div>
+
             </div>
         </div>
 
