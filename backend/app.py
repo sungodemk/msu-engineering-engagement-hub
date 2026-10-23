@@ -86,7 +86,7 @@ def sign_up():
                     VALUES (%s, %s, %s, %s, %s)
                     RETURNING id
                 """, (user_record.uid, formattedEmail, formattedEmail.split("@")[0], "viewer", False)) # Get the net id for display_name for now, default to viewer role and inactive account
-                user_id = cur.fetchone()[0]
+                user_id = cur.fetchone()['id']
         return jsonify({"message": "Account created successfully, but need the approval of the admin to activate the account", "uid": user_record.uid, "user_id": user_id}), 201
 
     except psycopg.Error as e:
