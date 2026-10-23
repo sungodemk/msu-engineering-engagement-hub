@@ -234,6 +234,13 @@ def all_research_awards(company_id):
 @bp.route("/api/companies/<company_id>/capstone_sponsorships", methods=["GET"])
 def get_capstone(company_id):
     with get_db_connection() as conn:
+        # Split year and seasons to sort separately in descending order (sort years first then sort seasons) so semester will display in this order: 
+        # For example, Fall 2026 -> Spring 2026 -> Fall 2025 and so on. 
+        # Found split_part method to split between season and year from this link: 
+        # https://www.postgresql.org/docs/current/functions-string.html#FUNCTIONS-STRING-OTHER
+        # Found how to order season use CASE from this link: 
+        # https://www.postgresql.org/docs/current/functions-conditional.html#FUNCTIONS-CASE
+        # (Zhixiang Miao)
         with conn.cursor() as cur:
             cur.execute("""
                 SELECT
@@ -242,10 +249,18 @@ def get_capstone(company_id):
                     c.semester,
                     c.amount,
                     c.status,
-                    c.notes
+                    c.notes,
+                    split_part(c.semester, ' ', 2)::integer AS year,
+                    CASE 
+                        WHEN split_part(c.semester, ' ', 1)='Winter' THEN 'one'
+                        WHEN split_part(c.semester, ' ', 1)='Fall' THEN 'two'
+                        WHEN split_part(c.semester, ' ', 1)='Summer' THEN 'three'
+                        WHEN split_part(c.semester, ' ', 1)='Spring' THEN 'four'
+                    END AS sort_seasons
                 FROM capstone c
                 WHERE c.company_entity_id = %s
-                ORDER BY c.semester DESC
+                ORDER BY year DESC, sort_seasons DESC
+                    
             """, (company_id,))
             capstone_sponsorships = cur.fetchall()
     return jsonify(capstone_sponsorships)

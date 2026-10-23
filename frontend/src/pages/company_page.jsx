@@ -19,6 +19,11 @@ function CompanyPage() {
     const [sortKey, setSortKey] = useState('activity_occurred_on');
     const [sortDir, setSortDir] = useState('desc');
 
+    const [capsTeams, setCapsTeams] = useState([]);
+    const [totalCapsTeams, setTotalCapsTeams] = useState(0);
+
+    const [selectActivityType, setSelectActivityType] = useState('all')
+
     function handleSort(key) {
         if (sortKey === key) {
          setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
@@ -169,7 +174,15 @@ function CompanyPage() {
 
     const combinedActivities = [...reshapeOriginalActivities, ...reshapeLoggedActivities];
 
-    const filteredActivities = combinedActivities.filter(activity => activity.activity_type !== 'award' && activity.activity_type !== 'action_item');
+    const filteredActivities = combinedActivities.filter(activity =>  activity.activity_type !== 'award' && 
+                                    activity.activity_type !== 'action_item' && 
+                                    (selectActivityType === 'all' ? selectActivityType : activity.activity_type === selectActivityType));
+
+    const filteredActivitiesSet = new Set(combinedActivities.filter(activity =>  activity.activity_type !== 'award' && 
+                                activity.activity_type !== 'action_item').map(activity => activity.activity_type));
+
+    const filterActivitiesArray = [...filteredActivitiesSet];
+    filterActivitiesArray.sort()
 
     const sortedActivities = [...filteredActivities].sort((a, b) => {
         const valA = getSortValue(a, sortKey);
@@ -212,6 +225,15 @@ function CompanyPage() {
     }
 
     useEffect(() => {
+        fetch(`http://localhost:8080/api/companies/${id}/capstone_sponsorships`)
+        .then(result => result.json())
+        .then(data => {
+            setTotalCapsTeams(data.length);
+            setCapsTeams(data);
+        });
+    }, [id]);
+
+    useEffect(() => {
         if (latestDate) {
             fetch(`http://localhost:8080/api/days_passed?last_date=${latestDate}`)
             .then(result => result.json())
@@ -241,6 +263,7 @@ function CompanyPage() {
     }, [id]);
 
     const totalAward = activeResearchAwards.reduce((total, award) => total + parseFloat(award.total_amount || 0), 0);
+    const capsTotalAmount = capsTeams.reduce((total, team) => total + parseFloat(team.amount || 0), 0);
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/companies/${id}/log_activity`)
@@ -358,8 +381,12 @@ function CompanyPage() {
                 </div>
                 <div className='caps_team_box'>
                     <div className='caps_team_title'>CAPSTONE TEAMS</div>
-                    <div className='num_of_teams'>0</div>
-                    <div className='caps_team_message'>No capstone teams yet</div>
+                    <div className='num_of_teams'>
+                        {totalCapsTeams}
+                    </div>
+                    <div className='caps_team_message'>
+                        {capsTeams.length > 0 ? `Total Amount: ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", notation: "compact" }).format(capsTotalAmount)}` : 'No capstone teams yet'}
+                    </div>
                 </div>
                 <div className='last_contact_date_box'>
                     <div className='last_contact_date_title'>LAST CONTACT</div>
@@ -378,20 +405,23 @@ function CompanyPage() {
                     <div className='inbound_title_box'>
                         <div className='inbound_title'>⬇ Inbound to MSU</div>
                     </div>
-                    <div className='company-table-wrap'>
-                        <table className='company-table'>
-                            {activities.some(activity => activity.activity_type === 'gift') ? (
-                            <tbody>
-                                {activities.filter(activity => activity.activity_type === 'gift').map(activity => (
-                                    <tr key={activity.id}>
-                                        <td className='inbound_notes'>{activity.notes}</td>
-                                        <td className='inbound_amount'>{`${parseFloat(activity.amount).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 })}`}</td>
-                                        <td className='inbound_occurred_on'>{new Date(activity.occurred_on).toLocaleDateString('en-US')}</td>
-                                    </tr>
-                                ))}
-                            </tbody>) : (<p>No inbound available</p>)}
-                        </table>
-                    </div>
+                    {activities.length > 0 ? (
+                        <div className='company-table-wrap'>
+                            <table className='company-table'>
+                                {activities.some(activity => activity.activity_type === 'gift') && (
+                                <tbody>
+                                    {activities.filter(activity => activity.activity_type === 'gift').map(activity => (
+                                        <tr key={activity.id}>
+                                            <td className='inbound_notes'>{activity.notes}</td>
+                                            <td className='inbound_amount'>{`${parseFloat(activity.amount).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 })}`}</td>
+                                            <td className='inbound_occurred_on'>{new Date(activity.occurred_on).toLocaleDateString('en-US')}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>)}
+                            </table>
+                        </div>) : (
+                        <div className='not_available_message'>No inbound available</div>
+                    )}
                 </div>
                 <div className='outbound_box'>
                     <div className='outbound_title_box'>
@@ -419,19 +449,41 @@ function CompanyPage() {
                                                 </div>
                                             </td>
                                             )}
-                                            {/* <td className='outbound_status'>{activity.stage_name}</td> */}
                                             <td className='outbound_occurred_on'>{new Date(activity.close_date).toLocaleDateString('en-US', { timeZone: 'UTC' })}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-                    ) : ( <p>No outbound available</p>)}
+                    ) : ( 
+                            <div className='not_available_message'>
+                                No outbound available
+                            </div>
+                        )}
                 </div>
             </div>
             <div className='activity_box'>
                 <div className='activity_title_box'>
                     <div className='activity_title'>Activity Timeline</div>
+                    <div className='activity_type_buttons'>
+                        <button
+                        className={selectActivityType === "all" ? "activity_type_button active" : "activity_type_button"}
+                        type="button"
+                        onClick={() => setSelectActivityType("all")}>
+                            All
+                        </button>
+                        {filterActivitiesArray.length > 0 && (
+                            filterActivitiesArray.map(act_type => (
+                                <button
+                                key={act_type}
+                                className={selectActivityType === act_type ? "activity_type_button active" : "activity_type_button"}
+                                type="button"
+                                onClick={() => setSelectActivityType(act_type)}>
+                                    {act_type.charAt(0).toUpperCase() + act_type.slice(1)}
+                                </button>
+                            ))
+                        )}
+                    </div>
                 </div>
                 <div className='activity-table-wrap'>
                     <table className='activity-table'> 
@@ -494,7 +546,7 @@ function CompanyPage() {
                         {(sortedActivities?.length === 0) && (
                             <tbody>
                                 <tr>
-                                    <td colSpan="6">No activities available</td>
+                                    <td className='not_available_message' colSpan="6">No activities available</td>
                                 </tr>
                             </tbody>
                         )}
@@ -532,7 +584,9 @@ function CompanyPage() {
                                     </tr>
                                 ))
                             ) : (
-                                <p>No tasks available</p>
+                                <tr>
+                                    <td className='not_available_message' colSpan="4">No tasks available</td>
+                                </tr>
                             )}
                         </tbody>
                     </table>
@@ -558,16 +612,29 @@ function CompanyPage() {
                         <tbody>
                             {allResearchAwards.map(award => (
                                 <tr key={award.id}>
-                                    <td className="award_id">{award.award_id}</td>
-                                    <td className="research_title">{award.title}</td>
+                                    <td>{award.award_id}</td>
+                                    <td>{award.title}</td>
                                     <td className="PI" onClick={() => navigate(`/persons/${award.pi_entity_id}`)}>
-                                        <Link to={`/persons/${award.pi_entity_id}`} className="pp-person-name">
+                                        <Link to={`/persons/${award.pi_entity_id}`} className="cp-person-name">
                                             {award.pi}
                                         </Link>
                                     </td>
-                                    <td className="lead_unit">{award.lead_unit}</td>
+                                    <td>{award.lead_unit}</td>
                                     <td className="award_amount">{award.total_amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
-                                    <td className="research_status">{award.status}</td>
+                                    {award.status === 'Active' ? (
+                                            <td className='research_status'>
+                                                <div className='research_active_box'>
+                                                    <div className='research_active_status'>{award.status}</div>
+                                                </div>
+                                            </td>
+                                        ) : (
+                                            <td className='research_status'>
+                                                <div className='research_closed_box'>
+                                                    <div className='research_closed_status'>{award.status}</div>
+                                                </div>
+                                            </td>
+                                    )}
+                                    {/* <td className="research_status">{award.status}</td> */}
                                     <td className="research_date">{award.date ? new Date(award.date).toLocaleDateString('en-US', {timeZone: 'America/New_York'}) : 'N/A'}</td>
                                 </tr>
                             ))} 
@@ -575,7 +642,51 @@ function CompanyPage() {
                     </table>
                 </div>
                 {allResearchAwards.length === 0 && (
-                    <p>No research awards available</p>
+                    <div className='not_available_message'>No research awards available</div>
+                )}
+            </div>
+            <div className="caps_box">
+                <div className="caps_title_box">
+                    <div className="caps_title">Capstone Teams</div>
+                </div>
+                <div className='company-table-wrap'>
+                    <table className='company-table'>
+                        <thead>
+                            <tr>
+                                <th className="caps_title_label">Title</th>
+                                <th className="semester_title">Semester</th>
+                                <th className="caps_amount_title">Amount</th>
+                                <th className="caps_notes_title">Notes</th>
+                                <th className="caps_status_title">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {capsTeams.map(capstone => (
+                                <tr key={capstone.id}>
+                                    <td className="capstone_title">{capstone.title}</td>
+                                    <td className="semester">{capstone.semester}</td>
+                                    <td className="capstone_amount">{parseFloat(capstone.amount).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
+                                    <td classname="capstone_notes">{capstone.notes}</td>
+                                    {capstone.status === 'Completed' ? (
+                                        <td className='capstone_status'>
+                                                <div className='completed_box'>
+                                                    <div className='completed_status'>{capstone.status}</div>
+                                                </div>
+                                            </td>
+                                        ) : (
+                                            <td className='capstone_status'>
+                                                <div className='in_progress_box'>
+                                                    <div className='in_progress_status'>{capstone.status}</div>
+                                                </div>
+                                            </td>
+                                    )}
+                                </tr>
+                            ))} 
+                        </tbody>
+                    </table>
+                </div>
+                {totalCapsTeams === 0 && (
+                    <div className='not_available_message' colSpan="5">No Capstone Team Available</div>
                 )}
             </div>
             <div className="contacts_box">
@@ -596,7 +707,7 @@ function CompanyPage() {
                                 {contact_people.map((p) =>(
                                     <tr key={p.id} onClick={() => navigate(`/persons/${p.id}`)}>
                                         <td>
-                                            <Link to={`/persons/${p.id}`} className="pp-person-name">
+                                            <Link to={`/persons/${p.id}`} className="cp-person-name">
                                                 {p.display_name}
                                             </Link>
                                         </td>
@@ -609,7 +720,7 @@ function CompanyPage() {
                         </table>
                     </div>
                 ) : (
-                    <p>No contacts available</p>
+                    <div className='not_available_message'>No contacts available</div>
                 )}
             </div>
             <div className="relationship_map_box">
@@ -619,7 +730,7 @@ function CompanyPage() {
                 {activities.length > 0 ? (
                     <Temporal activities={activities} />
                 ) : (
-                    <p>No temporal data available</p>
+                    <div className='not_available_message'>No temporal data available</div>
                 )}
             </div>
             <Dialog className='log_activity_dialog' open_dialog={isDialogOpen}>

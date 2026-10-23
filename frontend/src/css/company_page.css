@@ -8,15 +8,22 @@
     gap: 5vh;
 }
 
-.pp-person-name {
+.cp-person-name {
     color: inherit;
     font-weight: 600;
     text-decoration: none;
 }
 
-.pp-person-name:hover {
+.cp-person-name:hover {
     text-decoration: underline;
     color: #18453B;
+}
+
+.not_available_message {
+    padding: 12px 8px;
+    font-size: 1.0rem;
+    color: black;
+    text-align: center;
 }
 
 .title_box {
@@ -442,6 +449,9 @@
 .activity_title_box {
     width: 72.8vw;
     height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: #f8fbfa;
     border-radius: 0.5vw;
     border-bottom-left-radius: 0vw;
@@ -455,8 +465,29 @@
     text-align: left;
     font-weight: bold;
     position: static;
-    padding-top: 2vh;
     margin-left: 1vw;
+}
+
+.activity_type_buttons {
+    margin-right: 1vw;
+    display: flex;
+    gap: 8px;
+}
+
+.activity_type_button {
+    padding: 6px 12px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #444;
+    cursor: pointer;
+}
+
+.activity_type_button.active {
+    background-color: #18453B;
+    border-color: #18453B;
+    color: white;
 }
 
 .activity_type {
@@ -482,14 +513,14 @@
     text-align: left;
 }
 
-.open_act_status {
+.open_act_status, .research_active_status, .completed_status {
     font-size: 1em;
     color: #18453B;
     text-align: center;
     font-weight: bold;
 }
 
-.open_act_box {
+.open_act_box, .research_active_box, .completed_box {
     width: auto;
     height: auto;
     padding: 2px 4px;
@@ -498,14 +529,14 @@
     border: 1px solid #18453B;
 }
 
-.close_act_status {
+.close_act_status, .research_closed_status {
     font-size: 1em;
     color: red;
     text-align: center;
     font-weight: bold;
 }
 
-.close_act_box {
+.close_act_box, .research_closed_box {
     width: auto;
     height: auto;
     padding: 2px 4px;
@@ -514,6 +545,21 @@
     border: 1px solid red;
 }
 
+.in_progress_status {
+    font-size: 1em;
+    color: #746607;
+    text-align: center;
+    font-weight: bold;
+}
+
+.in_progress_box {
+    width: auto;
+    height: auto;
+    padding: 2px 4px;
+    background-color: rgb(236, 231, 153);
+    border-radius: 0.2vw;
+    border: 1px solid #746607;
+}
 
 
 .logged_activity_status {
@@ -634,7 +680,7 @@
     text-align: center;
 }
 
-.research_award_box {
+.research_award_box, .caps_box {
     width: 72.8vw;
     height: auto;
     background-color: white;
@@ -644,7 +690,7 @@
     border: 1px solid #e3e6e8;
 }
 
-.research_award_title_box {
+.research_award_title_box, .caps_title_box {
     width: 72.8vw;
     height: 5vh;
     background-color: #f8fbfa;
@@ -654,7 +700,7 @@
     border-bottom: 1px solid #e3e6e8;
 }
 
-.research_award_title {
+.research_award_title, .caps_title {
     font-size: 0.9em;
     color: black;
     text-align: left;
@@ -686,7 +732,7 @@
 }
 
 .research_title_label {
-    text-align: left;
+    text-align: center;
 }
 
 .research_title {
@@ -721,27 +767,20 @@
 }
 
 .research_status_title {
-    text-align: right;
+    text-align: center;
 }
 
 .research_status {
-    font-size: 0.8em;
+    font-size: 0.9em;
     color: rgb(99, 99, 99);
-    text-align: right;
 }
 
 .research_date {
-    font-size: 1.5em;
+    font-size: 1.0em;
     text-align: left;
     font-weight: bold;
     color: black;
     position: static;
-}
-
-.research_date {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
-    text-align: center;
 }
 
 .contacts_box {

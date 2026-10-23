@@ -15,7 +15,6 @@ function Home() {
     apiFetch('/api/me')
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         setUserType(data.role);
       });
   }, []);
