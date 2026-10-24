@@ -264,3 +264,169 @@ def get_capstone(company_id):
             """, (company_id,))
             capstone_sponsorships = cur.fetchall()
     return jsonify(capstone_sponsorships)
+
+# Adds an edge to the edges list if it hasn't been added before (relationship graph)
+def add_edge(source, target, label, edges, seen_edges):
+    if edges is None:
+        edges = []
+    key = (str(source), str(target), label)
+    if key not in seen_edges:
+        seen_edges.add(key)
+        edges.append({"source": str(source), "target": str(target), "label": label})
+
+# Get the relationship graph for a company (Alvin)
+@bp.route('/api/companies/<company_id>/relationship')
+def relationship(company_id):
+    try:
+        uuid.UUID(company_id)
+    except ValueError:
+        return jsonify({"error": "Company not found"}), 404
+
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT id, display_name FROM live_entities
+                WHERE id = %s AND entity_type = 'organization'
+            """, (company_id,))
+            company = cur.fetchone()
+            if company is None:
+                return jsonify({"error": "Company not found"}), 404
+
+            cur.execute("""
+                SELECT p.id, p.display_name, ed.edge_role AS title
+                FROM edges ed
+                JOIN live_entities p ON p.id = ed.from_entity_id
+                WHERE ed.edge_type = 'employed_by'
+                  AND ed.to_entity_id = %s
+                  AND ed.valid_to IS NULL
+            """, (company_id,))
+            employees = cur.fetchall()
+
+            # company and employees that may be managed by staff
+            targets = [str(company["id"])]
+            for employee in employees:
+                targets.append(str(employee["id"]))
+
+            # staff who currently own the relationship with the company or one of the employees
+            cur.execute("""
+                SELECT ed.from_entity_id AS staff_id, s.display_name AS staff_name,
+                       ed.to_entity_id AS target_id, ed.edge_role AS label
+                FROM edges ed
+                JOIN live_entities s ON s.id = ed.from_entity_id
+                WHERE ed.edge_type = 'relationship_owner'
+                  AND ed.valid_to IS NULL
+                  AND ed.to_entity_id = ANY(%s::uuid[])
+            """, (targets,))
+            owners = cur.fetchall()
+
+            staff_ids = set()
+            for owner in owners:
+                staff_ids.add(str(owner["staff_id"]))
+
+            # the units each of those staff members currently works under
+            cur.execute("""
+                SELECT ed.from_entity_id AS staff_id, ed.to_entity_id AS unit_id,
+                       ed.edge_role AS title
+                FROM edges ed
+                JOIN entities u ON u.id = ed.to_entity_id AND u.entity_type = 'msu_unit'
+                WHERE ed.edge_type = 'employed_by'
+                  AND ed.valid_to IS NULL
+                  AND ed.from_entity_id = ANY(%s::uuid[])
+            """, (list(staff_ids),))
+            staff_units = cur.fetchall()
+
+            # units the company partners with (derived from activities)
+            cur.execute("""
+                SELECT to_entity_id AS id FROM edges
+                WHERE edge_type = 'partner_of'
+                  AND from_entity_id = %s
+                  AND valid_to IS NULL
+            """, (company_id,))
+            partner_rows = cur.fetchall()
+
+            # starting point of the unit tree
+            seed_unit_ids = set()
+            for row in partner_rows:
+                seed_unit_ids.add(str(row["id"]))
+            for row in staff_units:
+                seed_unit_ids.add(str(row["unit_id"]))
+
+            # starting from the seed units get all parent units recursively till the top
+            cur.execute("""
+                WITH RECURSIVE unit_tree AS (
+                    SELECT unnest(%s::uuid[]) AS id
+                    UNION
+                    SELECT ed.to_entity_id FROM edges ed
+                    JOIN unit_tree t ON ed.from_entity_id = t.id
+                    WHERE ed.edge_type = 'part_of' AND ed.valid_to IS NULL
+                )
+                SELECT u.id, u.display_name
+                FROM unit_tree t
+                JOIN live_entities u ON u.id = t.id
+            """, (list(seed_unit_ids),))
+            units = cur.fetchall()
+            unit_ids = []
+            for u in units:
+                unit_ids.append(str(u["id"]))
+
+            # get the edges between the units, and between the company and its partner units
+            cur.execute("""
+                SELECT from_entity_id AS source, to_entity_id AS target,
+                       edge_type, edge_role
+                FROM edges
+                WHERE valid_to IS NULL
+                  AND ((edge_type = 'partner_of' AND from_entity_id = %(company)s)
+                      OR (edge_type = 'part_of'
+                          AND from_entity_id = ANY(%(units)s::uuid[])
+                          AND to_entity_id = ANY(%(units)s::uuid[]))
+                  )
+            """, {"company": company_id, "units": unit_ids})
+            unit_edges = cur.fetchall()
+
+        nodes = [{"id": str(company["id"]), "label": company["display_name"], "type": "company"}]
+        for unit in units:
+            nodes.append({"id": str(unit["id"]), "label": unit["display_name"], "type": "msu_unit"})
+
+        staff_names = {}
+        for owner in owners:
+            staff_names[str(owner["staff_id"])] = owner["staff_name"]
+        for staff_id, name in staff_names.items():
+            nodes.append({"id": staff_id, "label": name, "type": "staff"})
+
+        # ids of everything that has a manager
+        managed_ids = set()
+        for owner in owners:
+            managed_ids.add(str(owner["target_id"]))
+
+        # employees can appear twice
+        added_contact_ids = set()
+        for employee in employees:
+            employee_id = str(employee["id"])
+            if employee_id in managed_ids and employee_id not in added_contact_ids:
+                added_contact_ids.add(employee_id)
+                nodes.append({"id": employee_id, "label": employee["display_name"], "type": "contact"})
+
+
+        edges = []
+        seen_edges = set()
+
+        # unit to parent unit lines and company to unit partner lines
+        for edge in unit_edges:
+            label = edge["edge_role"] or edge["edge_type"].replace("_", " ")
+            add_edge(edge["source"], edge["target"], label, edges, seen_edges)
+
+        # staff to the unit they work under if that unit is in the graph
+        for row in staff_units:
+            if str(row["unit_id"]) in unit_ids:
+                add_edge(row["staff_id"], row["unit_id"], row["title"] or "employed by", edges, seen_edges)
+
+        # staff to the company or employee they manage
+        for owner in owners:
+            add_edge(owner["staff_id"], owner["target_id"], owner["label"] or "relationship owner", edges, seen_edges)
+
+        # employee to the company if that employee is in the graph
+        for employee in employees:
+            if str(employee["id"]) in added_contact_ids:
+                add_edge(employee["id"], company["id"], employee["title"] or "employed by", edges, seen_edges)
+
+    return jsonify({"nodes": nodes, "edges": edges})

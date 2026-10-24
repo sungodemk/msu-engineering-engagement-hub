@@ -49,6 +49,13 @@ const cards = [
       to: '/temporal',
       link: 'View Temporal Graph'
     },
+    {
+        icon: '🔗',
+        title: 'Relationship Graph',
+        body: 'Visualize the relationships between companies, MSU units, and contacts.',
+        to: '/relationship',
+        link: 'View Relationship Graph'
+    },
     // Added Admin's Account Approval card (Zhixiang Miao)
     ...(userType === 'admin' ? [{
       icon: '🛠️',

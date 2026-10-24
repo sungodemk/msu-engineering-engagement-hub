@@ -13,6 +13,7 @@ const navItems = [
     {to: '/portfolio', label: 'Portfolio', icon:"📂"},
     {to: '/stewardship', label: 'Stewardship Queue',icon:"📝"},
     {to: '/temporal', label: 'Temporal Graph',icon:"📈"},
+    {to: '/relationship', label: 'Relationship Graph',icon:"🔗"},
     // Added Admin's Account Approval page (Zhixiang Miao)
     {to: '/admin_account_approval', label: 'Admin Account Approval', icon:"🛠️"},
     // Added logout button (Zhixiang Miao)

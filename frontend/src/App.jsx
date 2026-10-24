@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import PersonsList from './pages/persons_list.jsx';
 import PersonsPage from './pages/persons_page';
 import CompanyPage from './pages/company_page';
-import TemporalPage from "./pages/graph_page.jsx";
+import TemporalPage from "./pages/temporal_page.jsx";
 import Portfolio from "./pages/portfolio.jsx";
 import StewardshipQueue from "./pages/stewardship_queue.jsx";
 import DiscardedMatches from "./pages/discarded_matches.jsx";
@@ -12,6 +12,7 @@ import LoginPage from './pages/login_page.jsx';
 import SignUpPage from './pages/sign_up_page.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
 import AdminAccountApprovalPage from './pages/admin_account_approval_page.jsx';
+import RelationshipPage from './pages/relationship_page.jsx';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path="/stewardship/discarded" element={<DiscardedMatches />} />
             <Route path="/temporal" element={<TemporalPage />} />
             <Route path="/admin_account_approval" element={<AdminAccountApprovalPage />} />
+            <Route path="/relationship" element={<RelationshipPage />} />
           </Route>
         </Route>
       </Routes>
