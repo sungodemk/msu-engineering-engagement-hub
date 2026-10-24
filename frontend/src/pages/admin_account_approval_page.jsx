@@ -5,17 +5,22 @@ import '../css/admin_account_approval_page.css';
 import { apiFetch } from '../api';
 
 function AdminAccountApprovalPage() {
-    const [inactiveAccounts, setInactiveAccounts] = useState([]);
+    const [inactiveAccounts, setInactiveAccounts] = useState(null);
+    const [error, setError] = useState(null);
     async function fetchInactiveAccounts() {
+        setInactiveAccounts(null);
+        setError(null);
         try {
             const response = await apiFetch('/api/inactive_accounts');
             if (!response.ok) {
+                setError('Failed to fetch inactive accounts');
                 console.error('Failed to fetch inactive accounts');
                 return;
             }
             const data = await response.json();
             setInactiveAccounts(data);
         } catch (error) {
+            setError(error.message);
             console.error('Error fetching inactive accounts:', error);
         }
     }
@@ -23,6 +28,8 @@ function AdminAccountApprovalPage() {
     useEffect(() => {
         fetchInactiveAccounts();
     }, []);
+
+    
 
     async function approveAccount(userId, role) {
         try {
@@ -34,11 +41,13 @@ function AdminAccountApprovalPage() {
                 body: JSON.stringify({ user_id: userId, role: role })
             });
             if (!response.ok) {
+                setError('Failed to approve account');
                 console.error('Failed to approve account');
                 return;
             }
             fetchInactiveAccounts();
         } catch (error) {
+            setError(error.message);
             console.error('Error approving account:', error);
         }
     }
@@ -53,14 +62,25 @@ function AdminAccountApprovalPage() {
                 body: JSON.stringify({ user_id: userId })
             });
             if (!response.ok) {
+                setError('Failed to deny account');
                 console.error('Failed to deny account');
                 return;
             }
             fetchInactiveAccounts();
         } catch (error) {
+            setError(error.message);
             console.error('Error denying account:', error);
         }
     }
+
+    if (error) {
+        return <div className="acc_approval_page"><div className="acc_app_page">{error}</div></div>;
+    }
+
+    if (!inactiveAccounts) {
+        return <div className="acc_approval_page"><div className="acc_app_page">Loading Accounts...</div></div>;
+    }
+
     return (
         <div className="authentication_page"> 
             <div className="accounts_box">
@@ -92,13 +112,22 @@ function AdminAccountApprovalPage() {
                                         </td>
                                         <td>
                                             <div className="app_deni_buttons">
-                                                <button className="approval_button" onClick={() => { approveAccount(account.id, account.role) }}>Approve</button>
+                                                {(account.role === 'admin' || account.role === 'staff') && (
+                                                    <button className="approval_button" onClick={() => { approveAccount(account.id, account.role) }}>Approve</button>
+                                                )}
                                                 <button className="denial_button" onClick={() => denyAccount(account.id)}>Deny</button>
                                             </div>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
+                            {inactiveAccounts.length === 0 && (
+                                <tbody> 
+                                    <tr>
+                                        <td colSpan='3'>No inactive account available</td>
+                                    </tr>
+                                </tbody>
+                            )}
                         </table>
                     </div>
             </div>

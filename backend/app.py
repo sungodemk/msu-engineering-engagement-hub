@@ -88,7 +88,7 @@ def sign_up():
                     VALUES (%s, %s, %s, %s, %s)
                     RETURNING id
                 """, (user_record.uid, formattedEmail, formattedEmail.split("@")[0], "viewer", False)) # Get the net id for display_name for now, default to viewer role and inactive account
-                user_id = cur.fetchone()['id']
+                user_id = cur.fetchone()["id"]
         return jsonify({"message": "Account created successfully, but need the approval of the admin to activate the account", "uid": user_record.uid, "user_id": user_id}), 201
 
     except psycopg.Error as e:
@@ -114,16 +114,16 @@ def inactive_accounts():
                     FROM users
                     WHERE is_active = FALSE
                 """)
-            users = cur.fetchall()
+                users = cur.fetchall()
         users_info = []
         for user in users:
             users_info.append({
-                "id": user[0],
-                "firebase_uid": user[1],
-                "email": user[2],
-                "display_name": user[3],
-                "role": user[4],
-                "is_active": user[5]
+                "id": user["id"],
+                "firebase_uid": user["firebase_uid"],
+                "email": user['email'],
+                "display_name": user["display_name"],
+                "role": user["role"],
+                "is_active": user["is_active"]
             })
         return jsonify(users_info)
     except psycopg.Error as e:
@@ -187,8 +187,8 @@ def deny_account():
                 user_record = cur.fetchone()
                 if not user_record:
                     return jsonify({"error": "User not found"}), 404
-                firebase_uid = user_record[1]
-                if user_record[2]:
+                firebase_uid = user_record["firebase_uid"]
+                if user_record["is_active"]:
                     return jsonify({"error": "User is active"}), 409
                 cur.execute("""
                     DELETE FROM users
