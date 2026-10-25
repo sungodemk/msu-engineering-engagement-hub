@@ -1,0 +1,70 @@
+/* Zhixiang Miao */
+
+.account_management_page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 40px;
+    align-items: center;
+}
+
+.account_management_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.account_management_header h1 {
+    margin-bottom: 4px;
+}
+
+.account_management_header p {
+    color: #666;
+    margin-top: 0;
+}
+
+.management_tabs {
+    display: flex;
+    gap: 8px;
+}
+
+.management_tab {
+    padding: 6px 12px;
+    background-color: inherit;
+    border: None;
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
+}
+
+.management_tab.active {
+    color: black;
+    text-decoration: underline;
+}
+
+.management_tab:hover {
+    background-color: gray;
+}
+
+.acc_management_box {
+    width: 60vw;
+    height: auto;
+    background-color: white;
+    position: relative;
+    border-radius: 0.5vw;
+    border: 1px solid #e3e6e8;
+    border-bottom: none;
+    margin-bottom: 10vh;
+}
+
+.acc_management_header_box {
+    width: 60vw;
+    height: auto;
+    background-color: #f8fbfa;
+    position: relative;
+    top: 0vh;
+    left: 0vw;
+    border-bottom: 1px solid #e3e6e8;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
+}

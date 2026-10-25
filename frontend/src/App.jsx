@@ -11,7 +11,10 @@ import DiscardedMatches from "./pages/discarded_matches.jsx";
 import LoginPage from './pages/login_page.jsx';
 import SignUpPage from './pages/sign_up_page.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
+import AccountManagementPage from './pages/account_management_page.jsx';
 import AdminAccountApprovalPage from './pages/admin_account_approval_page.jsx';
+import AdminAccountDeletionPage from './pages/admin_account_deletion_page.jsx'
+
 import RelationshipPage from './pages/relationship_page.jsx';
 
 
@@ -31,7 +34,9 @@ function App() {
             <Route path="/stewardship" element={<StewardshipQueue />} />
             <Route path="/stewardship/discarded" element={<DiscardedMatches />} />
             <Route path="/temporal" element={<TemporalPage />} />
+            <Route path="/account_management" element={<AccountManagementPage />} />
             <Route path="/admin_account_approval" element={<AdminAccountApprovalPage />} />
+            <Route path="/admin_account_deletion" element={<AdminAccountDeletionPage />} />
             <Route path="/relationship" element={<RelationshipPage />} />
           </Route>
         </Route>

@@ -74,21 +74,16 @@ function AdminAccountApprovalPage() {
     }
 
     if (error) {
-        return <div className="acc_approval_page"><div className="acc_app_page">{error}</div></div>;
+        return <div className="admin_account_approval_page">{error}</div>;
     }
 
     if (!inactiveAccounts) {
-        return <div className="acc_approval_page"><div className="acc_app_page">Loading Accounts...</div></div>;
+        return <div className="admin_account_approval_page">Loading Accounts...</div>;
     }
 
     return (
-        <div className="authentication_page"> 
+        <div className="admin_account_approval_page"> 
             <div className="accounts_box">
-                <div className="account_title_box">
-                    <div className="account_box_title">
-                        Accounts Pending Approval
-                    </div>
-                </div>
                 <div className="accounts-table-wrap">
                         <table className="accounts-table">
                             <thead>

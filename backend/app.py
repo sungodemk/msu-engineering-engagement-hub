@@ -130,6 +130,35 @@ def inactive_accounts():
         app.logger.error("Fetching inactive accounts failed: %s", str(e))
         return jsonify({"error": "Failed to fetch inactive accounts"}), 500
 
+@app.route("/api/active_accounts", methods=["GET"])
+@require_login
+def active_accounts():
+    if g.user["role"] != "admin":
+        return jsonify({"error": "Unauthorized"}), 403
+    try:
+        with get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    SELECT id, firebase_uid, email, display_name, role, is_active
+                    FROM users
+                    WHERE is_active = TRUE
+                """)
+                users = cur.fetchall()
+        users_info = []
+        for user in users:
+            users_info.append({
+                "id": user["id"],
+                "firebase_uid": user["firebase_uid"],
+                "email": user['email'],
+                "display_name": user["display_name"],
+                "role": user["role"],
+                "is_active": user["is_active"]
+            })
+        return jsonify(users_info)
+    except psycopg.Error as e:
+        app.logger.error("Fetching active accounts failed: %s", str(e))
+        return jsonify({"error": "Failed to fetch active accounts"}), 500
+
 # Approve the registered but inactive account (Zhixiang Miao)
 @app.route("/api/approve_account", methods=["POST"])
 @require_login
@@ -202,6 +231,59 @@ def deny_account():
     except psycopg.Error as e:
         app.logger.error("Denying account failed: %s", str(e))
         return jsonify({"error": "Failed to deny account"}), 500
+    except firebase_admin.exceptions.FirebaseError as e:
+        app.logger.error("Deleting Firebase user failed: %s", str(e))
+        return jsonify({"error": "Failed to delete Firebase user"}), 500
+
+
+@app.route("/api/delete_active_account", methods=["POST"])
+@require_login
+def delete_active_account():
+    if g.user["role"] != "admin":
+        return jsonify({"error": "Unauthorized"}), 403
+    data = request.get_json()
+    if not isinstance(data, dict):
+        return jsonify({"error": "Invalid data"}), 400
+    user_id = data.get("user_id")
+    if not user_id:
+        return jsonify({"error": "User ID is required"}), 400
+    if not isinstance(user_id, str):
+        return jsonify({"error": "Invalid User ID type"}), 400
+    user_id = user_id.strip()
+    try:
+        user_uuid = uuid.UUID(user_id)
+    except ValueError:
+        return jsonify({"error": "Invalid User ID"}), 400
+
+    if g.user["id"] == user_uuid:
+        return jsonify({"error": "You cannot delete yourself"}), 403
+    
+    try:
+        with get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    SELECT id, firebase_uid, is_active FROM users
+                    WHERE id = %s
+                    FOR UPDATE
+                """, (user_uuid,))
+                user_record = cur.fetchone()
+                if not user_record:
+                    return jsonify({"error": "User not found"}), 404
+                firebase_uid = user_record["firebase_uid"]
+                if not user_record["is_active"]:
+                    return jsonify({"error": "User is inactive"}), 409
+                cur.execute("""
+                    DELETE FROM users
+                    WHERE id = %s
+                """, (user_uuid,))
+                try:
+                    firebase_admin.auth.delete_user(firebase_uid)
+                except firebase_admin.auth.UserNotFoundError:
+                    app.logger.warning("Firebase user not found: %s", firebase_uid)
+        return jsonify({"message": "Account deleted successfully"})
+    except psycopg.Error as e:
+        app.logger.error("Deleting account failed: %s", str(e))
+        return jsonify({"error": "Failed to delete account"}), 500
     except firebase_admin.exceptions.FirebaseError as e:
         app.logger.error("Deleting Firebase user failed: %s", str(e))
         return jsonify({"error": "Failed to delete Firebase user"}), 500

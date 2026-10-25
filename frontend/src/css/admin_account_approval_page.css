@@ -1,6 +1,6 @@
 /* Zhixiang Miao */
 
-.authentication_page {
+.admin_account_approval_page {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,14 +13,14 @@
 .accounts-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem;
+    font-size: 1.0rem;
 }
 
 .accounts-table th {
     padding: 12px 16px;
     border-bottom: 1px solid #e3e6e8;
     color: #6b7378;
-    font-size: 0.9rem;
+    font-size: 1.0rem;
     font-weight: 600;
     text-align: left;
 }
@@ -38,39 +38,12 @@
 
 
 .accounts_box {
-    width: 45vw;
-    /* max-width: 50vw; */
+    width: 100%;
     min-height: 12vh;
     height: auto;
     background-color: white;
     position: static;
-    margin-left: 1vw;
     border-radius: 0.5vw;
-    border-left: 1px solid #e3e6e8;
-    border-right: 1px solid #e3e6e8;
-    border-bottom: 1px solid #e3e6e8;
-}
-
-.account_title_box {
-    width: 45vw;
-    /* max-width: 50vw; */
-    height: 6vh;
-    background-color: #f8fbfa;
-    border-radius: 0.5vw;
-    border-bottom-left-radius: 0vw;
-    border-bottom-right-radius: 0vw;
-    border-top: 1px solid #e3e6e8;
-    border-bottom: 1px solid #e3e6e8;
-}
-
-.account_box_title {
-    font-size: 0.9em;
-    color: black;
-    text-align: left;
-    font-weight: bold;
-    position: static;
-    padding-top: 2vh;
-    margin-left: 1vw;
 }
 
 .role_dropdown {
@@ -94,7 +67,6 @@
     text-align: center;
     font-weight: bold;
     color: #18453B;
-    border: none;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
@@ -107,7 +79,6 @@
     text-align: center;
     font-weight: bold;
     color: red;
-    border: none;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;

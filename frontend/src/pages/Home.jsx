@@ -56,13 +56,13 @@ const cards = [
         to: '/relationship',
         link: 'View Relationship Graph'
     },
-    // Added Admin's Account Approval card (Zhixiang Miao)
+    // Added Admin's Account Management card (Zhixiang Miao)
     ...(userType === 'admin' ? [{
       icon: '🛠️',
-      title: 'Admin Account Approval',
-      body: 'Manage and approve registered user accounts.',
-      to: '/admin_account_approval',
-      link: 'View Admin Approval'
+      title: 'Account Management',
+      body: 'Manage active and inactive accounts (Administrators only)',
+      to: '/account_management',
+      link: 'Manage Accounts'
     }] : [])
   ];
 

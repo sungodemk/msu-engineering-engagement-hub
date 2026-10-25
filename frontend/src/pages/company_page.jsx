@@ -311,11 +311,11 @@ function CompanyPage() {
     }, [id]);
 
     if (error) {
-        return <div className="company-page"><div className="comp_page">{error}</div></div>;
+        return <div className="company-page">{error}</div>;
     }
     
     if (!company){
-        return <div className="company-page"><div className="comp_page">Loading...</div></div>;
+        return <div className="company-page">Loading...</div>;
     }
 
     return (
