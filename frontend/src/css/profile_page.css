@@ -27,11 +27,6 @@
 }
 
 /* keeps the signed-in user's card at the bottom of the sidebar (Aayush) */
-.sidebar {
-    display: flex;
-    flex-direction: column;
-}
-
 .sidebar-profile {
     display: flex;
     align-items: center;
