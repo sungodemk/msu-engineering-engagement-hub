@@ -5,14 +5,13 @@ import { useEffect, useState } from 'react';
 import SidebarSearch from '../components/SidebarSearch';
 import { NavLink, Outlet } from 'react-router-dom';
 import { apiFetch } from '../api';
+import SidebarProfile from '../components/SidebarProfile';
 
 /* Emmanuel Koshy */
 const navItems = [
     {to: '/', label: 'Home'},
     {to: '/persons', label: 'Persons', icon:"👤"},
     {to: '/portfolio', label: 'Portfolio', icon:"📂"},
-    // opens the signed-in user's profile (Aayush)
-    {to: '/profile', label: 'My Profile', icon:"👤"},
     {to: '/stewardship', label: 'Stewardship Queue',icon:"📝"},
     {to: '/temporal', label: 'Temporal Graph',icon:"📈"},
     {to: '/relationship', label: 'Relationship Graph',icon:"🔗"},
@@ -66,6 +65,8 @@ function Layout() {
                     <li className="recent-empty">No recent companies</li>
                    
                 </ul>
+                {/* shows the signed-in user's profile at the bottom (Aayush) */}
+                <SidebarProfile />
             </aside>
 
             <div className="pane">

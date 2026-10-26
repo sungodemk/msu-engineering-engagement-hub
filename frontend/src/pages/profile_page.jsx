@@ -83,6 +83,7 @@ function ProfilePage() {
             .catch((err) => setError(err.message));
     }
 
+    const followedIds = new Set(follows.map((company) => company.id));
     const person = personData?.person;
     const current = personData?.current_affiliation;
     const attrs = person?.attributes ?? {};
@@ -161,8 +162,13 @@ function ProfilePage() {
                                 <Link className="pp-person-name" to={`/company_page/${company.id}`}>
                                     {company.name}
                                 </Link>
-                                <button type="button" className="pp-note-save" onClick={() => changeFollow(company.id, 'POST')}>
-                                    Follow
+                                <button
+                                    type="button"
+                                    className="pp-note-save"
+                                    disabled={followedIds.has(company.id)}
+                                    onClick={() => changeFollow(company.id, 'POST')}
+                                >
+                                    {followedIds.has(company.id) ? 'Following' : 'Follow'}
                                 </button>
                             </div>
                         ))}
