@@ -10,42 +10,61 @@ from scripts.merge_entities import get_final_entity
 bp = Blueprint("profile", __name__, url_prefix="/api/me")
 
 
-# links the signed-in account to its current Salesforce person (Aayush)
+# resolves a staff source record to the final person (Aayush)
+def get_staff_person_id(cur, staff_external_id):
+    if not staff_external_id:
+        return None
+
+    cur.execute(
+        """
+        SELECT e.id
+        FROM source_records sr
+        JOIN entity_source_records esr
+            ON esr.source_record_id = sr.id
+        JOIN entities e
+            ON e.id = esr.entity_id
+        WHERE sr.source_system = 'salesforce'
+          AND sr.source_pk = %s
+          AND e.entity_type = 'person'
+        LIMIT 1
+        """,
+        (staff_external_id,),
+    )
+    person = cur.fetchone()
+    if person is None:
+        return None
+
+    return get_final_entity(cur, person["id"])["id"]
+
+
+# returns account details and the linked person's name (Aayush)
 @bp.route("/profile", methods=["GET"])
 @require_login
 def get_profile():
     person_id = None
-    staff_external_id = g.user["staff_external_id"]
+    person_name = None
 
-    if staff_external_id:
+    if g.user["staff_external_id"]:
         with get_db_connection() as conn:
             with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    SELECT e.id
-                    FROM source_records sr
-                    JOIN entity_source_records esr
-                        ON esr.source_record_id = sr.id
-                    JOIN entities e
-                        ON e.id = esr.entity_id
-                    WHERE sr.source_system = 'salesforce'
-                      AND sr.source_pk = %s
-                      AND e.entity_type = 'person'
-                    LIMIT 1
-                    """,
-                    (staff_external_id,),
-                )
-                person = cur.fetchone()
-
-                if person is not None:
-                    final = get_final_entity(cur, person["id"])
-                    person_id = str(final["id"])
+                person_id = get_staff_person_id(cur, g.user["staff_external_id"])
+                if person_id is not None:
+                    cur.execute(
+                        """
+                        SELECT display_name
+                        FROM entities
+                        WHERE id = %s
+                        """,
+                        (person_id,),
+                    )
+                    person_name = cur.fetchone()["display_name"]
 
     return jsonify({
         "email": g.user["email"],
         "display_name": g.user["display_name"],
         "role": g.user["role"],
-        "person_id": person_id,
+        "person_id": str(person_id) if person_id is not None else None,
+        "person_name": person_name,
     })
 
 
@@ -94,7 +113,7 @@ def list_follows():
     return jsonify(companies)
 
 
-# follows the requested company without duplicating an existing follow (Aayush)
+# follows the requested company without creating duplicates (Aayush)
 @bp.route("/follows", methods=["POST"])
 @require_login
 def follow_company():
@@ -136,7 +155,7 @@ def follow_company():
     return jsonify({"company_id": str(company_id), "status": "followed"})
 
 
-# removes every follow that resolves to the same company (Aayush)
+# removes follows pointing to the same final company (Aayush)
 @bp.route("/follows/<company_id>", methods=["DELETE"])
 @require_login
 def unfollow_company(company_id):

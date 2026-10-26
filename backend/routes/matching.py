@@ -9,10 +9,10 @@ from scripts.merge_entities import get_final_entity, merge_persons, reverse_merg
 from functools import wraps
 from flask import g, request
 from database import get_db_connection
+from auth import require_login
+from routes.profile import get_staff_person_id
 
 bp = Blueprint('matching', __name__)
-
-DEMO_REVIEWER_PK = "STF-003"
 
 # gets entity matches by status for the stewardship queue pages (Aayush)
 def get_matches(cur, status, limit=None):
@@ -128,42 +128,27 @@ def discarded_matches():
     })
 
 
-# looks up demo reviewer by Salesforce ID until Firebase supplies the logged-in user (Aayush)
+# identifies the signed-in staff person who reviewed a match (Aayush)
 def get_reviewer_id(cur):
-    cur.execute(
-        """
-        SELECT e.id
-        FROM entities e
-        JOIN entity_source_records esr
-            ON esr.entity_id = e.id
-        JOIN source_records sr
-            ON sr.id = esr.source_record_id
-        WHERE e.entity_type = 'person'
-          AND e.merged_into_id IS NULL
-          AND sr.source_system = 'salesforce'
-          AND sr.source_pk = %s
-        LIMIT 1
-        """,
-        (DEMO_REVIEWER_PK,),
-    )
-
-    reviewer = cur.fetchone()
-
-    if reviewer is None:
-        return None
-
-    return reviewer["id"]
+    return get_staff_person_id(cur, g.user["staff_external_id"])
 
 # sends a human-reviewed match back to the pending queue (Aayush)
 @bp.route('/api/matches/<match_id>/undo', methods=['POST'])
+@require_login
 def undo_match(match_id):
     try:
         uuid.UUID(match_id)
     except ValueError:
         return jsonify({"error": "Match not found"}), 404
 
+    if g.user["role"] == "viewer":
+        return jsonify({"error": "Viewer accounts cannot review matches"}), 403
+
     with get_db_connection() as conn:
         with conn.cursor() as cur:
+            if get_reviewer_id(cur) is None:
+                return jsonify({"error": "Account isn't linked to a staff record"}), 403
+
             # locks row so two people can't undo the same match at once
             cur.execute(
                 """
@@ -215,6 +200,7 @@ def undo_match(match_id):
 
 # records reviewer's decision on an entity match (Aayush)
 @bp.route('/api/matches/<match_id>/decision', methods=['POST'])
+@require_login
 def decide_match(match_id):
     try:
         uuid.UUID(match_id)
@@ -226,6 +212,9 @@ def decide_match(match_id):
 
     if decision not in {"accept", "reject"}:
         return jsonify({"error": "Decision must be accept or reject"}), 400
+
+    if g.user["role"] == "viewer":
+        return jsonify({"error": "Viewer accounts cannot review matches"}), 403
 
     with get_db_connection() as conn:
         with conn.cursor() as cur:
@@ -257,7 +246,7 @@ def decide_match(match_id):
             reviewer_id = get_reviewer_id(cur)
 
             if reviewer_id is None:
-                return jsonify({"error": "Demo reviewer not found"}), 500
+                return jsonify({"error": "Account isn't linked to a staff record"}), 403
 
             if decision == "reject":
                 if match["status"] == "auto_accepted":

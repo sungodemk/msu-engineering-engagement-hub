@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import MatchCard from '../components/MatchCard.jsx';
 import '../css/stewardship_queue.css';
+import { apiFetch } from '../api';
 
 
 function DiscardedMatches() {
@@ -44,25 +45,23 @@ function DiscardedMatches() {
     function handleDecision(matchId, decision) {
         setDecisionError("");
 
-        fetch(`http://localhost:8080/api/matches/${matchId}/decision`, {
+        apiFetch(`/api/matches/${matchId}/decision`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
             body: JSON.stringify({decision}),
         })
             .then(result => {
                 if (!result.ok) {
-                    throw new Error("Failed to update match");
+                    return result.json().then(data => {
+                        throw new Error(data.error || "Failed to update match");
+                    });
                 }
-
                 return result.json();
             })
             .then(() => {
                 loadDiscarded();
             })
-            .catch(() => {
-                setDecisionError("Unable to update match decision.");
+            .catch(err => {
+                setDecisionError(err.message);
             });
     }
 
