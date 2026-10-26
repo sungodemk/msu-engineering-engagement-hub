@@ -68,13 +68,13 @@
     border: 0.05vw solid #18453B;
 }
 
-.sign_up_password_title {
+.sign_up_password_title, .password_retype_title {
     font-size: 1em;
     font-weight: bold;
     color: black;
 }
 
-.sign_up_password_dialog_box {
+.sign_up_password_dialog_box, .password_retype_dialog_box {
     font-size: 1.2em;
     display: block;
     height: 2.5vw;

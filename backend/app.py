@@ -130,6 +130,7 @@ def inactive_accounts():
         app.logger.error("Fetching inactive accounts failed: %s", str(e))
         return jsonify({"error": "Failed to fetch inactive accounts"}), 500
 
+# Retrieve active accounts (Zhixiang Miao)
 @app.route("/api/active_accounts", methods=["GET"])
 @require_login
 def active_accounts():
@@ -235,7 +236,7 @@ def deny_account():
         app.logger.error("Deleting Firebase user failed: %s", str(e))
         return jsonify({"error": "Failed to delete Firebase user"}), 500
 
-
+# Delete active account (Zhixiang Miao)
 @app.route("/api/delete_active_account", methods=["POST"])
 @require_login
 def delete_active_account():

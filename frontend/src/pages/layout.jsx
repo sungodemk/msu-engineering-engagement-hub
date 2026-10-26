@@ -52,7 +52,7 @@ function Layout() {
                 <div className="section-label">Navigation</div>
                 <nav className="side-nav">
                     {/* Filter the navigation items based on user's type, so account approval page can be only visible to admins (Zhixiang Miao) */}
-                    {(userType === 'admin' ? navItems : navItems.filter(item => item.to !== '/admin_account_approval')).map((item) => (
+                    {(userType === 'admin' ? navItems : navItems.filter(item => item.to !== '/account_management')).map((item) => (
                         <NavLink key={item.to} to={item.to} className={({isActive}) => isActive ? 'active' : ''}>
                             
                             <span>{item.icon}</span>

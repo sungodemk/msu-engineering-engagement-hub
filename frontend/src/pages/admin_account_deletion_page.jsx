@@ -1,5 +1,5 @@
+// Zhixiang Miao
 import {useEffect, useState} from 'react';
-import { Link, useParams, useNavigate } from "react-router-dom";
 import "../css/admin_account_deletion_page.css"
 import { apiFetch } from '../api';
 

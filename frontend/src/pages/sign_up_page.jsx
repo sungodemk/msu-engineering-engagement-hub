@@ -9,6 +9,7 @@ import { apiFetch } from '../api';
 function SignUpPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordRetype, setPasswordRetype] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -37,14 +38,38 @@ function SignUpPage() {
             return;
         }
 
+        if (passwordRetype !== password) {
+            setError('Password re-typed does not match');
+            setLoading(false);
+            return;
+        }
+
         setLoading(true);
 
         try {
             const checkPassword = await validatePassword(auth, password);
+            
             if (!checkPassword.isValid) {
-                throw new Error('Password does not meet the required criteria');
+                if (!checkPassword.meetsMinPasswordLength) {
+                    throw new Error('Password does not meet the minimum required length');
+                }
+                else if (!checkPassword.meetsMaxPasswordLength) {
+                    throw new Error('Password exceeds the length');
+                }
+                else if (!checkPassword.containsLowercaseLetter) {
+                    throw new Error('Password does not contain the lowercase letter');
+                }
+                else if (!checkPassword.containsUppercaseLetter) {
+                    throw new Error('Password does not contain the uppercase letter');
+                }
+                else if (!checkPassword.containsNumericCharacter) {
+                    throw new Error('Password does not contain the numeric character');
+                }
+                else if (!checkPassword.containsNonAlphanumericCharacter) {
+                    throw new Error("Password does not contain the non-alpha-numeric character such as '@'");
+                }
+                throw new Error('Password set up failed');
             }
-            // await createUserWithEmailAndPassword(auth, email, password);
             const response = await apiFetch('/api/sign_up', {
                 method: 'POST',
                 headers: {
@@ -85,6 +110,8 @@ function SignUpPage() {
                     <input className="sign_up_netid_dialog_box" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <label className="sign_up_password_title">Password:</label>
                     <input className="sign_up_password_dialog_box" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <label className="password_retype_title">Re-type Password:</label>
+                    <input className="password_retype_dialog_box" type="password" value={passwordRetype} onChange={(e) => setPasswordRetype(e.target.value)} />
                     {error && <p className="sign_up_error_message">{error}</p>}
                     <button className="sign_up_button" type="submit" disabled={loading}>
                         {loading ? 'Signing up...' : 'Sign up'}
