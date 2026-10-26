@@ -1,0 +1,27 @@
+/* keeps profile-only layout out of the shared person styles (Aayush) */
+.profile-page {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.profile-page .pp-header {
+    flex-wrap: wrap;
+}
+
+.profile-page .pp-owner {
+    margin-left: auto;
+    overflow-wrap: anywhere;
+}
+
+.profile-page .pp-owner .pp-label:not(:first-child) {
+    margin-top: 8px;
+}
+
+.profile-search {
+    margin-top: 24px;
+}
+
+.profile-search .pp-search {
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 12px;
+}

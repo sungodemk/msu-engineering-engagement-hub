@@ -16,6 +16,7 @@ import AdminAccountApprovalPage from './pages/admin_account_approval_page.jsx';
 import AdminAccountDeletionPage from './pages/admin_account_deletion_page.jsx'
 
 import RelationshipPage from './pages/relationship_page.jsx';
+import ProfilePage from './pages/profile_page.jsx';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/company_page/:id" element={<CompanyPage />} />
             <Route path="/persons" element={<PersonsList />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/persons/:id" element={<PersonsPage />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/stewardship" element={<StewardshipQueue />} />

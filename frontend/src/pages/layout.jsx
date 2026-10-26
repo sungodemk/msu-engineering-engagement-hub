@@ -11,6 +11,8 @@ const navItems = [
     {to: '/', label: 'Home'},
     {to: '/persons', label: 'Persons', icon:"👤"},
     {to: '/portfolio', label: 'Portfolio', icon:"📂"},
+    // opens the signed-in user's profile (Aayush)
+    {to: '/profile', label: 'My Profile', icon:"👤"},
     {to: '/stewardship', label: 'Stewardship Queue',icon:"📝"},
     {to: '/temporal', label: 'Temporal Graph',icon:"📈"},
     {to: '/relationship', label: 'Relationship Graph',icon:"🔗"},
