@@ -83,7 +83,10 @@ def stewardship_queue():
                     re.display_name AS right_name,
                     m.score::float AS score,
                     m.status,
-                    COALESCE(reviewer.display_name, 'Auto') AS reviewer,
+                    CASE
+                        WHEN m.status = 'auto_accepted' THEN 'Auto'
+                        ELSE COALESCE(reviewer.display_name, account.display_name, 'Deleted account')
+                    END AS reviewer,
                     COALESCE(m.reviewed_at, m.created_at)::date::text AS date
                 FROM entity_matches m
                 JOIN source_records l
@@ -100,6 +103,8 @@ def stewardship_queue():
                     ON re.id = resr.entity_id
                 LEFT JOIN entities reviewer
                     ON reviewer.id = m.reviewed_by_entity_id
+                LEFT JOIN users account
+                    ON account.id = m.reviewed_by_user_id
                 WHERE m.status IN (
                     'auto_accepted',
                     'confirmed',
@@ -146,9 +151,6 @@ def undo_match(match_id):
 
     with get_db_connection() as conn:
         with conn.cursor() as cur:
-            if get_reviewer_id(cur) is None:
-                return jsonify({"error": "Account isn't linked to a staff record"}), 403
-
             # locks row so two people can't undo the same match at once
             cur.execute(
                 """
@@ -187,6 +189,7 @@ def undo_match(match_id):
                     entity_id = NULL,
                     merged_entity_id = NULL,
                     reviewed_by_entity_id = NULL,
+                    reviewed_by_user_id = NULL,
                     reviewed_at = NULL
                 WHERE id = %s
                 """,
@@ -245,9 +248,6 @@ def decide_match(match_id):
 
             reviewer_id = get_reviewer_id(cur)
 
-            if reviewer_id is None:
-                return jsonify({"error": "Account isn't linked to a staff record"}), 403
-
             if decision == "reject":
                 if match["status"] == "auto_accepted":
                     if not reverse_merge(
@@ -264,6 +264,7 @@ def decide_match(match_id):
                     SET
                         status = 'rejected',
                         reviewed_by_entity_id = %s,
+                        reviewed_by_user_id = %s,
                         reviewed_at = now(),
                         entity_id = NULL,
                         merged_entity_id = NULL
@@ -271,6 +272,7 @@ def decide_match(match_id):
                     """,
                     (
                         reviewer_id,
+                        g.user["id"],
                         match_id,
                     ),
                 )
@@ -351,6 +353,7 @@ def decide_match(match_id):
                     entity_id = %s,
                     merged_entity_id = %s,
                     reviewed_by_entity_id = %s,
+                    reviewed_by_user_id = %s,
                     reviewed_at = now()
                 WHERE id = %s
                 """,
@@ -358,6 +361,7 @@ def decide_match(match_id):
                     survivor["id"],
                     merged_entity_id,
                     reviewer_id,
+                    g.user["id"],
                     match_id,
                 ),
             )
