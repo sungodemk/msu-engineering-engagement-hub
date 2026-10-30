@@ -111,7 +111,7 @@ function ProfilePage() {
                             <div className="pp-label">Account Email</div>
                             <div>{profile.email}</div>
                             <div className="pp-label">Role</div>
-                            <div>{profile.role}</div>
+                            <div className="profile-role">{profile.role}</div>
                             {profile.person_id && (
                                 <Link to={`/persons/${profile.person_id}`} className="pp-person-name">
                                     View full record

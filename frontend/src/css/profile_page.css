@@ -16,6 +16,10 @@
     margin-top: 8px;
 }
 
+.profile-role {
+    text-transform: capitalize;
+}
+
 .profile-search {
     margin-top: 24px;
 }
@@ -63,6 +67,7 @@
 .sidebar-profile-role {
     font-size: 0.8rem;
     opacity: 0.8;
+    text-transform: capitalize;
 }
 
 .profile-search .pp-note-save:disabled {
