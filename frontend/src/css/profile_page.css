@@ -115,3 +115,177 @@
     overflow-wrap: anywhere;
     z-index: 1;
 }
+
+/* styles the edit icon without changing team CSS (Aayush) */
+.entity-edit {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 0.5vw;
+    position: relative;
+    top: -1vh;
+}
+
+.entity-edit-button {
+    height: 2vw;
+    width: 7vw;
+    padding: 0;
+    border: 0.05vw solid #18453B;
+    border-radius: 0.5vw;
+    background-color: white;
+    color: #18453B;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.entity-edit-button:hover:not(:disabled) {
+    background-color: #eef6f1;
+}
+
+.entity-edit-button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.entity-edit-load-error {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 180px;
+    color: #b42318;
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+    text-align: left;
+    z-index: 1;
+}
+
+/* keeps the company edit icon outside the header row (Aayush) */
+.title_box .entity-edit {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    margin-left: 0;
+}
+
+.title_box .entity-edit-button {
+    width: 2vw;
+    height: 2vw;
+    font-size: 1.2vw;
+}
+
+/* places the person edit icon in its header corner (Aayush) */
+.persons-page:not(.profile-page) .pp-header {
+    position: relative;
+    padding-right: 56px;
+}
+
+.persons-page .pp-header .entity-edit {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    margin-left: 0;
+}
+
+.persons-page .pp-header .entity-edit-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+/* keeps the edit form above the rest of the page (Aayush) */
+.entity-edit .dialog {
+    z-index: 10000;
+}
+
+/* styles the edit form inside the existing dialog (Aayush) */
+.entity-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-sizing: border-box;
+    width: min(420px, 85vw);
+    max-height: 80vh;
+    overflow-y: auto;
+    margin: auto;
+    padding: 24px;
+    border-radius: 8px;
+    background: white;
+    color: #222;
+    text-align: left;
+}
+
+.entity-edit-form h2 {
+    margin: 0 0 8px;
+    color: #18453B;
+    font-size: 1.3rem;
+}
+
+.entity-edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.entity-edit-field span {
+    text-transform: capitalize;
+}
+
+.entity-edit-field input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: white;
+    color: #222;
+    font: inherit;
+    font-weight: 400;
+}
+
+.entity-edit-field input:focus {
+    outline: 2px solid #18453B;
+    outline-offset: 1px;
+}
+
+.entity-edit-form-error {
+    color: #b42318;
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+}
+
+.entity-edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.entity-edit-cancel,
+.entity-edit-save {
+    padding: 9px 16px;
+    border-radius: 6px;
+    border: 1px solid #18453B;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.entity-edit-cancel {
+    background: white;
+    color: #18453B;
+}
+
+.entity-edit-save {
+    background: #18453B;
+    color: white;
+}
+
+.entity-edit-cancel:disabled,
+.entity-edit-save:disabled {
+    opacity: 0.6;
+    cursor: default;
+}

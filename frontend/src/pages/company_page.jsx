@@ -7,6 +7,7 @@ import '../css/company_page.css';
 import Dialog from '../components/Dialog';
 import Temporal from '../graphs/temporal'
 import FollowButton from '../components/FollowButton.jsx';
+import EditEntityButton from '../components/EditEntityButton.jsx';
 
 function CompanyPage() {
     useEffect(() => {
@@ -347,6 +348,8 @@ function CompanyPage() {
                 </button>
                 {/* allows following this company from its page (Aayush) */}
                 <FollowButton key={id} companyId={id} />
+                {/* edits this company's fields (Aayush) */}
+                <EditEntityButton key={id} entityId={id} />
                 
             </div>
             

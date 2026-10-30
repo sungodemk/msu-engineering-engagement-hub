@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {Link,useParams } from "react-router-dom";  
 import '../css/persons_page.css';
 import { apiFetch } from'../api';
+import EditEntityButton from '../components/EditEntityButton.jsx';
 
 const API_BASE  = "http://localhost:8080";
 
@@ -158,6 +159,8 @@ function PersonsPage(){
                             <div>Not assigned</div>
                         )}
                     </div>
+                    {/* edits this person's fields (Aayush) */}
+                    <EditEntityButton key={id} entityId={id} />
                 </div>
                 {degrees.length > 0 && (
                     <div className="pp-card pp-alumni">
