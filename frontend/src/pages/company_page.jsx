@@ -6,6 +6,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import '../css/company_page.css';
 import Dialog from '../components/Dialog';
 import Temporal from '../graphs/temporal'
+import FollowButton from '../components/FollowButton.jsx';
 
 function CompanyPage() {
     useEffect(() => {
@@ -344,6 +345,8 @@ function CompanyPage() {
                 <button className='log_ac_box' type='button' onClick={() => setIsDialogOpen(true)}>
                     <span>+ Log Activity</span>
                 </button>
+                {/* allows following this company from its page (Aayush) */}
+                <FollowButton key={id} companyId={id} />
                 
             </div>
             

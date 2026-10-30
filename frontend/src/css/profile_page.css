@@ -69,3 +69,49 @@
     opacity: 0.6;
     cursor: default;
 }
+
+/* styles the company follow button without changing the company page CSS (Aayush) */
+.company-follow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 0.5vw;
+    position: relative;
+    top: -1vh;
+    flex-shrink: 0;
+}
+
+.company-follow-button {
+    height: 2vw;
+    width: 7vw;
+    padding: 0;
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+    background-color: white;
+    color: #18453B;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.company-follow-button:hover:not(:disabled) {
+    background-color: #eef6f1;
+}
+
+.company-follow-button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.company-follow-error {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 180px;
+    color: #b42318;
+    font-size: 0.8rem;
+    text-align: left;
+    overflow-wrap: anywhere;
+    z-index: 1;
+}
