@@ -16,6 +16,7 @@ from routes.person import bp as person_bp
 from routes.matching import bp as matching_bp
 from routes.portfolio import bp as portfolio_bp
 from routes.profile import bp as profile_bp
+from routes.edits import bp as edits_bp
 from auth import require_login
 
 app = Flask(__name__)
@@ -27,6 +28,7 @@ app.register_blueprint(person_bp)
 app.register_blueprint(matching_bp)
 app.register_blueprint(portfolio_bp)
 app.register_blueprint(profile_bp)
+app.register_blueprint(edits_bp)
 
 FIREBASE_KEY = os.environ.get("FIREBASE_CREDENTIALS", "/app/firebase-key.json")
 if not firebase_admin._apps:
