@@ -54,9 +54,17 @@ function LoginPage() {
                     <button className="login_button" type="submit" disabled={loading}>
                         {loading ? 'Signing in...' : 'Sign in'}
                     </button>
-                    <div className="sign_up_text_prompt" type="button" onClick={() => navigate('/sign_up')}>
-                        Sign Up
+                    {/* <div className="modify_pw_section"> */}
+                    <div className="forgot_pw_redirect" type="button" onClick={() => navigate('/forgot_password')}>
+                        Forgot Password?
                     </div>
+                        {/* <div className="change_pw_redirect" type="button" onClick={() => navigate('/change_password')}>
+                            Change Password
+                        </div> */}
+                    {/* </div> */}
+                    <button className="redirect_sign_up_button" type="button" onClick={() => navigate('/sign_up')}>
+                        Sign Up
+                    </button>
                 </div>
             </form>
         </div>

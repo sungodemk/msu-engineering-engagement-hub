@@ -10,6 +10,8 @@ import StewardshipQueue from "./pages/stewardship_queue.jsx";
 import DiscardedMatches from "./pages/discarded_matches.jsx";
 import LoginPage from './pages/login_page.jsx';
 import SignUpPage from './pages/sign_up_page.jsx';
+import ChangePasswordPage from './pages/change_password_page.jsx';
+import ForgotPasswordPage from './pages/forgot_password_page.jsx'
 import RequireAuth from './components/RequireAuth.jsx';
 import AccountManagementPage from './pages/account_management_page.jsx';
 import AdminAccountApprovalPage from './pages/admin_account_approval_page.jsx';
@@ -25,12 +27,14 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign_up" element={<SignUpPage />} />
+        <Route path="/forgot_password" element={<ForgotPasswordPage />} />
         <Route element={<RequireAuth />}>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/company_page/:id" element={<CompanyPage />} />
             <Route path="/persons" element={<PersonsList />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/change_password" element={<ChangePasswordPage />} />
             <Route path="/persons/:id" element={<PersonsPage />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/stewardship" element={<StewardshipQueue />} />

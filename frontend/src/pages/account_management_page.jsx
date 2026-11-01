@@ -1,6 +1,5 @@
 // Zhixiang Miao
 import { useState, useEffect } from 'react';
-import { apiFetch } from '../api';
 import '../css/account_management_page.css'
 import AccountApprovalPage from './admin_account_approval_page'
 import AccountDeletionPage from './admin_account_deletion_page'

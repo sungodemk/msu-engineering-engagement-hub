@@ -16,6 +16,17 @@
     margin-top: 8px;
 }
 
+.profile-change-pw-label {
+    color: #6b7378;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.profile-change-pw-label:hover {
+    text-decoration: underline;
+}
+
 .profile-role {
     text-transform: capitalize;
 }

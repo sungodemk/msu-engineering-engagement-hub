@@ -66,6 +66,7 @@ function AccountDeletionPage() {
                             <thead>
                                 <tr>
                                     <th>Email</th>
+                                    <th>Name</th>
                                     <th>Role</th>
                                     <th>Action</th>
                                 </tr>
@@ -75,6 +76,7 @@ function AccountDeletionPage() {
                                 {activeAccounts.map(account => (
                                     <tr key={account.id}>
                                         <td>{account.email}</td>
+                                        <td>{account.display_name}</td>
                                         <td>{account.role}</td>
                                         <td>
                                             <button className="deletion_button" onClick={() => deleteAccount(account.id)}>Delete</button>
@@ -85,7 +87,7 @@ function AccountDeletionPage() {
                             {activeAccounts.length === 0 && (
                                 <tbody> 
                                     <tr>
-                                        <td colSpan='3'>No active account available</td>
+                                        <td colSpan='4'>No active account available</td>
                                     </tr>
                                 </tbody>
                             )}

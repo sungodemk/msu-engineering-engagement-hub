@@ -1,5 +1,5 @@
 from functools import wraps 
-from flask import g, request, jsonify 
+from flask import g, request, jsonify, Blueprint
 from firebase_admin import auth as fb_auth
 from database import get_db_connection 
 

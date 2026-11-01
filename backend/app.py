@@ -18,6 +18,7 @@ from routes.portfolio import bp as portfolio_bp
 from routes.profile import bp as profile_bp
 from routes.edits import bp as edits_bp
 from auth import require_login
+from email_sender import send_email
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -57,20 +58,42 @@ def sign_up():
     if not isinstance(data, dict):
         return jsonify({"error": "Invalid data"}), 400
     email = data.get("email", "")
+    first_name = data.get("firstName", "")
+    last_name = data.get("lastName", "")
     password = data.get("password", "")
 
-    if not isinstance(email, str) or not isinstance(password, str):
-        return jsonify({"error": "Invalid email or password"}), 400
+    if not isinstance(email, str):
+        return jsonify({"error": "Invalid email"}), 400
+
+    if not isinstance(first_name, str):
+            return jsonify({"error": "Invalid first name"}), 400
+    
+    if not isinstance(last_name, str):
+        return jsonify({"error": "Invalid last name"}), 400
+
+    if not isinstance(password, str):
+        return jsonify({"error": "Invalid password"}), 400
+
+    
     
     formattedEmail = email.strip()
 
     if not formattedEmail:
-        return jsonify({"error": "email cannot be empty"}), 400
+        return jsonify({"error": "Email cannot be empty"}), 400
+
+    if not first_name:
+        return jsonify({"error": "First name cannot be empty"}), 400
+
+    if not last_name:
+        return jsonify({"error": "Last name cannot be empty"}), 400
+    
     if not password:
         return jsonify({"error": "Password cannot be empty"}), 400
 
     if not (formattedEmail.endswith("@msu.edu") and "@" in formattedEmail):
         return jsonify({"error": "Invalid email format"}), 400
+
+    display_name = first_name + " " + last_name
 
     try:
         user_record = fb_auth.create_user(email=formattedEmail, password=password)
@@ -89,7 +112,7 @@ def sign_up():
                     INSERT INTO users (firebase_uid, email, display_name, role, is_active)
                     VALUES (%s, %s, %s, %s, %s)
                     RETURNING id
-                """, (user_record.uid, formattedEmail, formattedEmail.split("@")[0], "viewer", False)) # Get the net id for display_name for now, default to viewer role and inactive account
+                """, (user_record.uid, formattedEmail, display_name, "viewer", False)) # Get the net id for display_name for now, default to viewer role and inactive account
                 user_id = cur.fetchone()["id"]
         return jsonify({"message": "Account created successfully, but need the approval of the admin to activate the account", "uid": user_record.uid, "user_id": user_id}), 201
 
@@ -169,12 +192,25 @@ def approve_account():
     if g.user["role"] != "admin":
         return jsonify({"error": "Unauthorized"}), 403
     data = request.get_json()
+    if not isinstance(data, dict):
+        return jsonify({"error": "Invalid data"}), 400
     user_id = data.get("user_id")
     role = data.get("role")
     if not user_id:
         return jsonify({"error": "User ID is required"}), 400
+    if not isinstance(user_id, str):
+        return jsonify({"error": "Invalid User ID type"}), 400
+    user_id = user_id.strip()
+
     if not role:
         return jsonify({"error": "Role is required"}), 400
+    if role != "staff" and role != "admin":
+        return jsonify({"error": "Invalid role to assign"}), 400
+    
+    try:
+        user_uuid = uuid.UUID(user_id)
+    except ValueError:
+        return jsonify({"error": "Invalid User ID"}), 400
     try:
         with get_db_connection() as conn:
             with conn.cursor() as cur:
@@ -182,9 +218,20 @@ def approve_account():
                     UPDATE users
                     SET is_active = TRUE,
                         role = %s
-                    WHERE id = %s
-                """, (role, user_id))
-        return jsonify({"message": "Account approved successfully"})
+                    WHERE id = %s AND
+                        is_active = FALSE
+                    RETURNING email
+                """, (role, user_uuid))
+                row = cur.fetchone()
+        if row is None:
+            return jsonify({"error": "account not found or it is already active"}), 404
+
+        if row["email"]:
+            if_sent = send_email(row["email"], "Account Approval Status", "Your account has been successfully approved, you can sign in here: http://localhost:5173/login")
+            if if_sent:
+                return jsonify({"message": "Account approved successfully, email sent successfully"})
+            else:
+                return jsonify({"message": "Account approved successfully, email sent failed"}), 200
     except psycopg.Error as e:
         app.logger.error("Approving account failed: %s", str(e))
         return jsonify({"error": "Failed to approve account"}), 500
@@ -291,5 +338,40 @@ def delete_active_account():
         app.logger.error("Deleting Firebase user failed: %s", str(e))
         return jsonify({"error": "Failed to delete Firebase user"}), 500
 
+# Send email with a link for the user to reset password if forgot password (Zhixiang Miao)
+@app.route("/api/reset_password", methods=["POST"])
+def reset_password():
+    try: 
+        data = request.get_json()
+    except Exception:
+        return jsonify({"error": "Invalid data"}), 400
+    if not isinstance(data, dict):
+        return jsonify({"error": "Invalid data"}), 400
+    email = data.get("email", "")
+
+    if not isinstance(email, str):
+        return jsonify({"error": "Invalid email"}), 400
+
+    formattedEmail = email.strip()
+    if not formattedEmail:
+        return jsonify({"error": "email cannot be empty"}), 400
+
+    if not (formattedEmail.endswith("@msu.edu") and "@" in formattedEmail):
+        return jsonify({"error": "Invalid email format"}), 400
+
+    try:
+        get_user = fb_auth.get_user_by_email(formattedEmail)
+    except fb_auth.UserNotFoundError:
+        return jsonify({"error": "Email does not exist"}), 400
+
+    reset_link = fb_auth.generate_password_reset_link(formattedEmail)
+
+    if_sent = send_email(formattedEmail, "Link to Reset Your Password", ("This is the link to reset your password: " + reset_link))
+
+    if if_sent:
+        return jsonify({"message": "Password reset link sent successfully"})
+    else:
+        return jsonify({"error": "Failed to send password reset link"}), 400
+    
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), use_reloader=True)

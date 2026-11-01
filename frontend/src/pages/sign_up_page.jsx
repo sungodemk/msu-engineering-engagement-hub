@@ -8,7 +8,14 @@ import { apiFetch } from '../api';
 
 function SignUpPage() {
     const [email, setEmail] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordReqs] = useState(["Your password should be in between 6-20 characters",
+                        "It should contain uppercase character",
+                        "and lower case character",
+                        "It should contain numerical character",
+                        "and special case character (!@#$%^, etc.)"])
     const [passwordRetype, setPasswordRetype] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -23,13 +30,26 @@ function SignUpPage() {
             setLoading(false);
             return;
         }
+        
+        if (!firstName.trim()) {
+            setError('First name cannot be empty');
+            setLoading(false);
+            return;
+        }
+
+        if (!lastName.trim()) {
+            setError('Last name cannot be empty');
+            setLoading(false);
+            return;
+        }
+
         if (!password.trim()) {
             setError('Password cannot be empty');
             setLoading(false);
             return;
         }
 
-        const formattedEmail = email.trim()
+        const formattedEmail = email.trim();
 
         const validateEmail = formattedEmail.includes('@') && formattedEmail.endsWith('@msu.edu');
         if (!validateEmail) {
@@ -39,7 +59,7 @@ function SignUpPage() {
         }
 
         if (passwordRetype !== password) {
-            setError('Password re-typed does not match');
+            setError('Confirm password does not match');
             setLoading(false);
             return;
         }
@@ -75,7 +95,7 @@ function SignUpPage() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email: formattedEmail, password })
+                body: JSON.stringify({ email: formattedEmail, firstName, lastName, password })
             });
             const data = await response.json();
             if (!response.ok) {
@@ -108,9 +128,18 @@ function SignUpPage() {
                 <div className="account_sign_up_section">
                     <label className="sign_up_netid_title">MSU Email:</label>
                     <input className="sign_up_netid_dialog_box" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label className="first_name">First Name:</label>
+                    <input className="first_name_dialog_box" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                    <label className="last_name">Last Name:</label>
+                    <input className="last_name_dialog_box" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                    {passwordReqs.map(req => (
+                        <div className="password_requirement">
+                            {req}
+                        </div>
+                    ))}
                     <label className="sign_up_password_title">Password:</label>
                     <input className="sign_up_password_dialog_box" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <label className="password_retype_title">Re-type Password:</label>
+                    <label className="password_retype_title">Confirm Password:</label>
                     <input className="password_retype_dialog_box" type="password" value={passwordRetype} onChange={(e) => setPasswordRetype(e.target.value)} />
                     {error && <p className="sign_up_error_message">{error}</p>}
                     <button className="sign_up_button" type="submit" disabled={loading}>

@@ -6,3 +6,4 @@ psycopg[binary]
 rapidfuzz
 pytz
 firebase-admin
+resend

@@ -1,6 +1,7 @@
 // shows the signed-in user's profile and followed companies (Aayush)
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { apiFetch } from '../api';
 import '../css/persons_page.css';
 import '../css/profile_page.css';
@@ -26,6 +27,7 @@ function ProfilePage() {
     const [search, setSearch] = useState('');
     const [results, setResults] = useState([]);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     function loadFollows() {
         return apiFetch('/api/me/follows')
@@ -112,6 +114,10 @@ function ProfilePage() {
                             <div>{profile.email}</div>
                             <div className="pp-label">Role</div>
                             <div className="profile-role">{profile.role}</div>
+                            {/* Be able to change the password inside the profile page (Zhixiang Miao) */}
+                            <div className="profile-change-pw-label" type="button" onClick={() => navigate('/change_password')}>
+                                Change Password
+                            </div>
                             {profile.person_id && (
                                 <Link to={`/persons/${profile.person_id}`} className="pp-person-name">
                                     View full record

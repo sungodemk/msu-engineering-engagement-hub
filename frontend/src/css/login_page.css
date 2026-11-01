@@ -1,17 +1,16 @@
 /* Zhixiang Miao */
 
 .login_page {
+    min-height: 100dvh;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #18453B;
+    padding: 20px 30px;
 }
 
 .login_form {
-    width: 35vw;
-    min-height: 100dvh;
-    height: auto;
-
     background-color: white;
 
     display: flex;
@@ -20,7 +19,7 @@
     flex-direction: column;
     gap: 150px;
 
-    padding: 20px;
+    padding: 30px;
     border-radius: 0.5vw;
     border: 0.01vw solid #e3e6e8;
 }
@@ -50,7 +49,7 @@
     flex-direction: column;
     gap: 9px;
     width: 30vw;
-    margin-bottom: 90px;
+    margin-bottom: 10px;
 }
 
 .netid_title {
@@ -97,13 +96,48 @@
     cursor: pointer;
 }
 
-.sign_up_text_prompt {
+.modify_pw_section {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.forgot_pw_redirect {
     font-size: 1em;
     color: #18453B;
     cursor: pointer;
     align-self: flex-start;
 }
 
-.sign_up_text_prompt:hover {
+.forgot_pw_redirect:hover {
     text-decoration: underline;
 }
+
+.change_pw_redirect {
+    font-size: 1em;
+    color: #18453B;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+.change_pw_redirect:hover {
+    text-decoration: underline;
+}
+
+.redirect_sign_up_button {
+    margin-top: 20px;
+    display: block;
+    height: 3vw;
+    width: 30.3vw; 
+    border-radius: 0.5vw;
+    border: 0.05vw solid #18453B;
+    background-color: white;
+    color: #18453B;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* .sign_up_text_prompt:hover {
+    text-decoration: underline;
+} */

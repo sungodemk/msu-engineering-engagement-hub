@@ -25,21 +25,23 @@
 
 .management_tabs {
     display: flex;
-    gap: 8px;
 }
 
 .management_tab {
     padding: 6px 12px;
     background-color: inherit;
-    border: None;
-    font-size: 20px;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
+    border: 1px solid #18453B;
+    font-size: 1.0em;
     color: black;
     cursor: pointer;
 }
 
 .management_tab.active {
-    color: black;
-    text-decoration: underline;
+    background-color: #18453B;
+    color: white;
+    font-size: bold;
 }
 
 .management_tab:hover {

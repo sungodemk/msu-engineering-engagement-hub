@@ -73,6 +73,15 @@
     border: 1px solid #18453B;
 }
 
+.email_send_status_message {
+    background-color: rgb(209, 247, 209);
+    font-size: 0.9em;
+    color: #18453B;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid #18453B;
+}
+
 .denial_button {
     background-color: rgb(247, 212, 212);
     font-size: 1em;

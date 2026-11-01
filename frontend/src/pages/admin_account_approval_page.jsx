@@ -7,6 +7,7 @@ import { apiFetch } from '../api';
 function AdminAccountApprovalPage() {
     const [inactiveAccounts, setInactiveAccounts] = useState(null);
     const [error, setError] = useState(null);
+    const [sendEmailStatus, setSendEmailStatus] = useState(null);
     async function fetchInactiveAccounts() {
         setInactiveAccounts(null);
         setError(null);
@@ -32,6 +33,8 @@ function AdminAccountApprovalPage() {
     
 
     async function approveAccount(userId, role) {
+        setError(null);
+        setSendEmailStatus(null);
         try {
             const response = await apiFetch('/api/approve_account', {
                 method: 'POST',
@@ -46,11 +49,20 @@ function AdminAccountApprovalPage() {
                 return;
             }
             fetchInactiveAccounts();
+            const data = await response.json();
+            setSendEmailStatus(data.message);
         } catch (error) {
             setError(error.message);
             console.error('Error approving account:', error);
         }
     }
+
+    useEffect(() => {
+        const timer = setTimeout(()=>setSendEmailStatus(null), 5000);
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [sendEmailStatus]);
 
     async function denyAccount(userId) {
         try {
@@ -84,11 +96,17 @@ function AdminAccountApprovalPage() {
     return (
         <div className="admin_account_approval_page"> 
             <div className="accounts_box">
+                {sendEmailStatus !== null && (
+                    <div className="email_send_status_message">
+                        {sendEmailStatus}
+                    </div>
+                )}
                 <div className="accounts-table-wrap">
                         <table className="accounts-table">
                             <thead>
                                 <tr>
                                     <th>Email</th>
+                                    <th>Name</th>
                                     <th>Role</th>
                                     <th>Actions</th>
                                 </tr>
@@ -98,9 +116,10 @@ function AdminAccountApprovalPage() {
                                 {inactiveAccounts.map(account => (
                                     <tr key={account.id}>
                                         <td>{account.email}</td>
+                                        <td>{account.display_name}</td>
                                         <td>
                                             <select className="role_dropdown" value={account.role} onChange={(e) => setInactiveAccounts(prev => prev.map(acc => acc.id === account.id ? {...acc, role: e.target.value} : acc))}>
-                                                <option value="viewer">Viewer</option>
+                                                <option value="viewer">--Select a role--</option>
                                                 <option value="staff">Staff</option>
                                                 <option value="admin">Admin</option>
                                             </select>
@@ -119,7 +138,7 @@ function AdminAccountApprovalPage() {
                             {inactiveAccounts.length === 0 && (
                                 <tbody> 
                                     <tr>
-                                        <td colSpan='3'>No inactive account available</td>
+                                        <td colSpan='4'>No inactive account available</td>
                                     </tr>
                                 </tbody>
                             )}

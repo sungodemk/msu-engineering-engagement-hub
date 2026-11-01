@@ -729,9 +729,9 @@ function CompanyPage() {
                     <div className='not_available_message'>No contacts available</div>
                 )}
             </div>
-            <div className="relationship_map_box">
-                <div className="relationship_map_title_box">
-                    <div className="relationship_map_title">📈Temporal Graph</div>
+            <div className="temporal_graph_box">
+                <div className="temporal_graph_title_box">
+                    <div className="temporal_graph_title">📈Temporal Graph</div>
                 </div>
                 {activities.length > 0 ? (
                     <Temporal activities={activities} />
