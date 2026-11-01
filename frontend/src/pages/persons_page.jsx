@@ -139,6 +139,9 @@ function PersonsPage(){
                         {title && <div className="pp-title">{title}</div>}
                         {current && <div className="pp-company">{current.company}</div>}
                         {location && <div className="pp-label">{location}</div>}
+                        <div className="pp-print-only pp-label">
+                            Printed {new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} from MSU Engagement Hub
+                        </div>
                         {flags.length > 0 &&  (
                             <div className="pp-flags">
                                 {flags.map((flag) => <span className="pp-flag" key={flag}>{flag}</span>)}
@@ -159,8 +162,12 @@ function PersonsPage(){
                             <div>Not assigned</div>
                         )}
                     </div>
-                    {/* edits this person's fields (Aayush) */}
-                    <EditEntityButton key={id} entityId={id} />
+                    <div className="no-print">
+                        <EditEntityButton key={id} entityId={id} />
+                        <button type="button" className="pp-print-btn" onClick={() => window.print()}>
+                            Print / PDF 
+                        </button>
+                    </div>
                 </div>
                 {degrees.length > 0 && (
                     <div className="pp-card pp-alumni">
