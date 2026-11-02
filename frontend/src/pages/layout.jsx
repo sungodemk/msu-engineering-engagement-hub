@@ -6,6 +6,7 @@ import SidebarSearch from '../components/SidebarSearch';
 import { NavLink, Outlet } from 'react-router-dom';
 import { apiFetch } from '../api';
 import SidebarProfile from '../components/SidebarProfile';
+import msuLogo from '../images/msu_logo.png';
 
 /* Emmanuel Koshy */
 const navItems = [
@@ -39,7 +40,7 @@ function Layout() {
            {/* Sidebar nav */}
            <aside className="sidebar">
                 <div className="brand">
-                    <div className="brand-mark">M</div>
+                    <img src={msuLogo} alt="Michigan State University Logo" className="brand-logo" />
                     <div>
                         <div className="brand-name">MSU</div>
                         <div className="brand-sub">Engagement Hub</div>
