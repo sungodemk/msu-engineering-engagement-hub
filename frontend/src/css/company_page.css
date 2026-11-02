@@ -46,40 +46,49 @@
     border-bottom: 0.01vw solid #e3e6e8;
 }
 
+.company_info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
 .c_title_text {
     font-size: 1.5em;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     color: black;
-    position: relative;
-    top: -1vh;
-    right: 1.5vw;
+}
+
+.location_owner_section {
+    gap: 50px;
+    display: flex;
 }
 
 .location {
     font-size: 0.9em;
     color: rgb(109, 108, 108);
-    position: absolute;
-    top: 6em;
-    left: 2.5em;
 }
 
 .owner {
     font-size: 0.9em;
     color: rgb(109, 108, 108);
-    position: absolute;
-    top: 6em;
-    left: 15em;
+}
 
+.company_header_info {
+    gap: 30px;
+    display: flex;
+}
+
+.industry_info {
+    gap: 12px;
+    display: flex;
+    align-items: center;
 }
 
 .industry_box {
-    width: auto;
-    height: auto;
     padding: 2px 4px;
     background-color: #f8fbfa;
-    position: relative;
-    top: -1vh;
+
     border-radius: 0.2vw;
     border: 0.01vw solid #18453B;
 }
@@ -92,12 +101,9 @@
 }
 
 .industry_detail_box {
-    width: auto;
-    height: auto;
     padding: 2px 4px;
     background-color: rgb(209, 247, 209);
-    position: relative;
-    top: -1vh;
+
     border-radius: 0.2vw;
     border: 0.01vw solid #18453B;
 }
@@ -108,7 +114,6 @@
     position: relative;
     text-align: center;
 }
-
 
 
 
@@ -137,6 +142,7 @@
 }
 
 .four_boxes_section {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 4.25vw;
@@ -881,4 +887,148 @@
     position: static;
     margin-top: 2vh;
     margin-left: 1vw;
+}
+
+.cp_print_button {
+    height: 2vw;
+    width: 7vw;
+    border: 0.05vw solid #18453B;
+    border-radius: 0.5vw;
+    background: #FFFFFF;
+    color: #18453b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    margin-left: 0;
+    cursor: pointer;
+}
+.cp_print_button:hover {
+    background: #eef6f1;
+}
+
+@media print {
+    @page{ size: letter; margin: 0.5in;}
+
+    /* hides the side bar and anything interactive */
+    .sidebar,
+    footer,
+    .cp_print_button,
+    .log_ac_box,
+    .company-follow,
+    .entity-edit,
+    .activity_type_button, 
+    .delete_button {display: none !important;}
+
+    html, body, .shell, .pane, main {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+    }
+
+    .company-page {
+        display: flex;
+        max-width: none;
+        width: 100%;
+        left: 0vw;
+        box-sizing: border-box;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0 5%;
+        color: #000000;
+        gap: 0vh;
+    }
+    .title_box, .four_boxes_section,
+    .inbound_outbound_section, .activity_box,
+    .msu_task_box, .research_award_box, 
+    .contacts_box, .caps_box, 
+    .temporal_graph_box { display: flex; width: 100%; 
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box;
+    }
+
+    .title_box{
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 12px;
+        padding: 12px 14px;
+        left: 0vw;
+        border: 1px solid #cccccc;
+        break-inside: avoid;
+    }
+    .four_boxes_section {
+        width: 100%;
+        margin-bottom: 12px;
+        flex-direction: row;
+    }
+
+    .inbound_outbound_section {
+        width: 100%;
+        flex-direction: row;
+        margin-bottom: 12px;
+    }
+
+    .total_giving_box, .award_box, 
+    .caps_team_box, .last_contact_date_box {
+        flex-grow: 1;
+        flex-basis: auto;
+        border: 1px solid #cccccc;
+    }
+
+    .inbound_box, .outbound_box, .research_award_box {
+        flex-grow: 1;
+        flex-basis: auto;
+        left: 0vw;
+        border: 1px solid #cccccc;
+    }
+
+    .inbound_title_box, .outbound_title_box, .research_award_title_box {
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+    }
+
+    .activity_box, .msu_task_box {
+        width: 100%;
+        display: block;
+        box-sizing: border-box;
+        break-inside: avoid;
+        margin-bottom: 12px;
+    }
+
+    .activity_title_box, .msu_task_title_box{
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .research_award_box {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .research_award_title_box {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .activity-table-wrap, .company-table-wrap {
+        width: 100%;
+        box-sizing: border-box;
+        overflow: visible;
+    }
+
+    .activity-table th, .company-table th {
+        padding: 12px 14px;
+        break-inside: avoid;
+    }
+
+    .activity-table th, .company-table td {
+        padding: 12px 14px;
+    }
+
+    .c_title_text { break-after: avoid; }
 }

@@ -166,11 +166,10 @@
 
 .delete_button {
     text-align: center;
+    align-items: center;
     color: red;
     background-color: rgb(241, 171, 171);
     font-weight: bold;
-    height: auto;
-    width: auto;
     padding: 4px 6px;
     cursor: pointer;
     border-radius: 0.5vw;

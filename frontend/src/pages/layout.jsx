@@ -18,8 +18,6 @@ const navItems = [
     {to: '/relationship', label: 'Relationship Graph',icon:"🔗"},
     // Added Admin's Account Approval page (Zhixiang Miao)
     {to: '/account_management', label: 'Account Management (Admin only)', icon:"🛠️"},
-    // Added logout button (Zhixiang Miao)
-    {to: '/login', label: 'Logout'}
 ];
 
 function Layout() {
