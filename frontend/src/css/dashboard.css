@@ -1,0 +1,38 @@
+.dashbaord-page {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+    color: #1d2327;
+
+}
+
+.db-title {
+    margin: 0 0 16px;
+    font-size: 1.5em;
+}
+.db-layout {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+.db-card {
+    background-color: #ffffff;
+    border: 1px solid #e3e6e8;
+    border-radius: 10px;
+    padding: 18px 20px;
+    min-height: 300px;
+}
+.db-section-title {
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+.db-empty{ color: #6b7378;}
+
+@media (max-width: 900px) {
+    .db-layout {
+        grid-template-columns: 1fr;
+    }
+}

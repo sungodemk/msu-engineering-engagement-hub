@@ -16,6 +16,7 @@ const navItems = [
     {to: '/stewardship', label: 'Stewardship Queue',icon:"📝"},
     {to: '/temporal', label: 'Temporal Graph',icon:"📈"},
     {to: '/relationship', label: 'Relationship Graph',icon:"🔗"},
+    {to: '/dashboard', label: 'Dashboard', icon:"📋"},
     // Added Admin's Account Approval page (Zhixiang Miao)
     {to: '/account_management', label: 'Account Management (Admin only)', icon:"🛠️"},
     // Added logout button (Zhixiang Miao)

@@ -16,7 +16,7 @@ import RequireAuth from './components/RequireAuth.jsx';
 import AccountManagementPage from './pages/account_management_page.jsx';
 import AdminAccountApprovalPage from './pages/admin_account_approval_page.jsx';
 import AdminAccountDeletionPage from './pages/admin_account_deletion_page.jsx'
-
+import Dashboard from './pages/dashboard.jsx';
 import RelationshipPage from './pages/relationship_page.jsx';
 import ProfilePage from './pages/profile_page.jsx';
 
@@ -44,6 +44,7 @@ function App() {
             <Route path="/admin_account_approval" element={<AdminAccountApprovalPage />} />
             <Route path="/admin_account_deletion" element={<AdminAccountDeletionPage />} />
             <Route path="/relationship" element={<RelationshipPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
         </Route>
       </Routes>
