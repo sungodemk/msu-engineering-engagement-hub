@@ -26,7 +26,7 @@ def normalize_name(name):
     return name.strip().lower()
 
 def splitter(value):
-    return [section.strip() for section in value.split(",") if section.strip()]
+    return [section.strip() for section in value.split(";") if section.strip()]
 
 def feeConverter(value):
     if not value:
@@ -135,7 +135,7 @@ def load_sponsorships(cur, rows):
                     cur,
                     "person",
                     name,
-                    row["Contact Email(s)"],
+                    email,
                     {},
                 )
 

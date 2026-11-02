@@ -31,7 +31,7 @@ function tooltipDescription(activity) {
     return activity.notes || null;
 }
 
-function Temporal({activities}) {
+function Temporal({activities, svgRef}) {
     const [hovered, setHovered] = useState(null);
 
     if (!activities || activities.length === 0) {
@@ -80,7 +80,7 @@ function Temporal({activities}) {
 
     return (
         <div className="temporal-wrapper">
-            <svg width={chartWidth} height={chartHeight} className="temporal-svg">
+            <svg ref={svgRef} width={chartWidth} height={chartHeight} className="temporal-svg">
                 {/* year axis */}
                 {years.map(year => {
                     const x = dateToX(new Date(`${year}-01-01`), minDate, maxDate, chartLeft, chartRight);

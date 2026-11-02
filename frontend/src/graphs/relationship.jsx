@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { jsPDF } from 'jspdf';
 import cytoscape from 'cytoscape';
 import fcose from 'cytoscape-fcose';
 import '../css/relationship.css';
@@ -22,7 +23,10 @@ const TYPE_LABELS = {
 // data = { nodes: [{id, label, type}], edges: [{source, target, label}] }
 function RelationshipGraph({data}) {
     const containerRef = useRef(null);
+    const layoutRef = useRef(null);
+    const cyRef = useRef(null);
     const [selected, setSelected] = useState(null);
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     // Get nodes and edges from data and create cytoscape graph
         useEffect(() => {
@@ -102,10 +106,14 @@ function RelationshipGraph({data}) {
                 },
             ],
         });
+        cyRef.current = cy;
         // May change layout to accommodate for msu staff usability and aesthetics
         cy.resize();
         cy.layout({
             name: 'fcose',
+            //name: 'breadthfirst',
+            //directed: true,
+            //direction: 'upward',
             animate: true,
             randomize: true,
             fit: true,
@@ -138,7 +146,10 @@ function RelationshipGraph({data}) {
             }
         });
 
-        return () => cy.destroy();
+        return () => {
+            cy.destroy();
+            cyRef.current = null;
+        };
     }, [data]);
 
     const counts = data.nodes.reduce((acc, n) => {
@@ -146,8 +157,63 @@ function RelationshipGraph({data}) {
         return acc;
     }, {});
 
+    useEffect(() => {
+        function fullscreenChange() {
+            setIsFullscreen(document.fullscreenElement === layoutRef.current);
+        }
+        document.addEventListener('fullscreenchange', fullscreenChange);
+        return () => document.removeEventListener('fullscreenchange', fullscreenChange);
+    }, []);
+
+    // fixes resize issue after full screen
+    useEffect(() => {
+        const con = containerRef.current;
+        if (!con) return;
+
+        const resizeObserver = new ResizeObserver(() => {
+            if (cyRef.current) {
+                console.log('observer fired', con.clientWidth, con.clientHeight, cyRef.current?.width());
+                cyRef.current.resize();
+                cyRef.current.fit(undefined, 40);
+            }
+        });
+
+        resizeObserver.observe(con);
+        return () => resizeObserver.disconnect();
+    }, []);
+
+    function toggleFullscreen() {
+
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+        else {
+            layoutRef.current?.requestFullscreen();
+        }
+    }
+
+    function exportPDF() {
+        const cy = cyRef.current;
+        if (!cy) return;
+
+        const img = cy.png({ full: true, scale: 2, output: 'base64uri' });
+        const image = new Image();
+        image.onload = () => {
+            const width = image.width;
+            const height = image.height;
+            const pdf = new jsPDF({
+                orientation: width >= height ? 'landscape' : 'portrait',
+                unit: 'px',
+                format: [width, height],
+            });
+            pdf.addImage(image, 'PNG', 0, 0, width, height);
+            pdf.save('relationship_graph.pdf');
+        };
+        image.src = img;
+    }
+
     return (
-        <div className="graph-layout">
+        <div className="graph-layout" ref={layoutRef}>
             <div className="graph-card">
                 <div className="graph-legend">
                     {Object.entries(TYPE_COLORS).map(([type, color]) => (
@@ -190,6 +256,10 @@ function RelationshipGraph({data}) {
                         </div>
                     ))}
                 </div>
+                <button className="toolbar-button" onClick={toggleFullscreen}>
+                        {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+                </button>
+                <button className="toolbar-button" onClick={exportPDF}>Export PDF</button>
             </div>
         </div>
     );
