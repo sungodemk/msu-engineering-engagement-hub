@@ -324,25 +324,38 @@ function CompanyPage() {
         <div className="company-page">
 
             <div className='title_box'>
-                <div className='c_title_text'>
-                    {company ? company.display_name : 'Company Name'}
-                </div>
-                <div className='location'>
-                    📍{company?.city && company?.state ? `${company.city}, ${company.state}` : 'Not Available'}
-                </div>
-                <div className='industry_box'>
-                    <div className='industry_text'>
-                        {company?.industry ? company.industry : 'Industry Not Available'}
+                <div className="company_info">
+                    <div className="company_header_info">
+                        <div className='c_title_text'>
+                            {company ? company.display_name : 'Company Name'}
+                        </div>
+                        <div className="industry_info">
+                            <div className='industry_box'>
+                                <div className='industry_text'>
+                                    {company?.industry ? company.industry : 'Industry Not Available'}
+                                </div>
+                            </div>
+                            <div className='industry_detail_box'>
+                                <div className='industry_detail_text'>
+                                    {company?.industry_detail ? company.industry_detail : 'Detail Not Available'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="location_owner_section">
+                        <div className='location'>
+                            Location: {company?.city && company?.state ? `${company.city}, ${company.state}` : 'Not Available'}
+                        </div>
+                        <div className='owner'>
+                            Owner: {portfolio?.owner ? portfolio.owner : 'Not Available'}
+                        </div>
                     </div>
                 </div>
-                <div className='industry_detail_box'>
-                    <div className='industry_detail_text'>
-                        {company?.industry_detail ? company.industry_detail : 'Detail Not Available'}
-                    </div>
-                </div>
-                <div className='owner'>
-                    Owner: {portfolio?.owner ? portfolio.owner : 'Not Available'}
-                </div>
+                
+                
+                
+                
                 <button className='log_ac_box' type='button' onClick={() => setIsDialogOpen(true)}>
                     <span>+ Log Activity</span>
                 </button>
@@ -350,7 +363,10 @@ function CompanyPage() {
                 <FollowButton key={id} companyId={id} />
                 {/* edits this company's fields (Aayush) */}
                 <EditEntityButton key={id} entityId={id} />
-                
+                <button className="cp_print_button" type="button"  onClick={() => window.print()}>
+                    Print / PDF
+                </button>
+
             </div>
             
             <div className='four_boxes_section'>
@@ -561,9 +577,9 @@ function CompanyPage() {
             </div>
             <div className="msu_task_box">
                 <div className="msu_task_title_box">
-                    <div className="msu_task_title">
+                    {/* <div className="msu_task_title"> */}
                         <div className="msu_task_title">MSU Tasks (Action Items)</div>
-                    </div>
+                    {/* </div> */}
                 </div>
                 <div className='company-table-wrap'>
                     <table className='company-table'>
@@ -606,13 +622,13 @@ function CompanyPage() {
                     <table className='company-table'>
                         <thead>
                             <tr>
-                                <th className="award_id_title">Award ID</th>
-                                <th className="research_title_label">Title</th>
-                                <th className="PI_title">PI</th>
-                                <th className="lead_unit_title">Lead Unit</th>
-                                <th className="award_amount_title">Amount</th>
-                                <th className="research_status_title">Status</th>
-                                <th className="research_date_title">Date</th>
+                                <th>Award ID</th>
+                                <th>Title</th>
+                                <th>PI</th>
+                                <th>Lead Unit</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -672,7 +688,7 @@ function CompanyPage() {
                                     <td className="capstone_title">{capstone.title}</td>
                                     <td className="semester">{capstone.semester}</td>
                                     <td className="capstone_amount">{parseFloat(capstone.amount).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
-                                    <td classname="capstone_notes">{capstone.notes}</td>
+                                    <td className="capstone_notes">{capstone.notes}</td>
                                     {capstone.status === 'Completed' ? (
                                         <td className='capstone_status'>
                                                 <div className='completed_box'>

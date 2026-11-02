@@ -41,12 +41,16 @@
     margin-bottom: 12px;
 }
 
+.sidebar-profile-container {
+    display: flex;
+    margin-top: auto;
+}
+
 /* keeps the signed-in user's card at the bottom of the sidebar (Aayush) */
 .sidebar-profile {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: auto;
     padding: 10px;
     border-radius: 8px;
     color: #fff;
@@ -79,6 +83,21 @@
     font-size: 0.8rem;
     opacity: 0.8;
     text-transform: capitalize;
+}
+
+.sidebar-logout {
+    padding: 2px 4px;
+    background-color: #f8fbfa;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #18453B;
+    border-radius: 0.2vw;
+    border: 0.01vw solid red;
+    cursor: pointer;
+}
+
+.sidebar-logout:hover {
+    background: rgb(247, 212, 212);
 }
 
 .profile-search .pp-note-save:disabled {
