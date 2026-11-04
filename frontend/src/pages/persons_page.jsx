@@ -61,6 +61,7 @@ function PersonsPage(){
     const [noteTitle, setNoteTitle] = useState('');
     const [noteBody, setNoteBody] = useState('');
     const [noteError, setNoteError] = useState('');
+    const [pdfBusy, setPdfBusy] = useState(false);
 
     useEffect(() => {
         apiFetch(`/api/persons/${id}/notes`)
@@ -94,6 +95,22 @@ function PersonsPage(){
         if (res.ok) setNotes((prev) => prev.filter((n) => n.id !== noteId));
     }
 
+    async function downloadPdf() {
+        setPdfBusy(true);
+        try{
+            const { pdf } = await import('@react-pdf/renderer');
+            const { default: PersonReport } = await import('../components/PersonReport.jsx');
+            const blob = await pdf(<PersonReport data={data} notes={notes} />).toBlob();
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${data.person.display_name} - Engagement Report.pdf`;
+            link.click();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        } finally {
+            setPdfBusy(false);
+        }
+    }
 
     if (error) {
         return <div className="persons-page"><div className="pp-card">{error}</div></div>;
@@ -164,8 +181,8 @@ function PersonsPage(){
                     </div>
                     <div className="no-print">
                         <EditEntityButton key={id} entityId={id} />
-                        <button type="button" className="pp-print-btn" onClick={() => window.print()}>
-                            Print / PDF 
+                        <button type="button" className="pp-print-btn" onClick={downloadPdf} disabled= {pdfBusy}>
+                            {pdfBusy ? 'Generating...' : 'Download PDF'}
                         </button>
                     </div>
                 </div>
