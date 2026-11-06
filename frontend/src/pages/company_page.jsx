@@ -682,7 +682,6 @@ function CompanyPage() {
                                                 </div>
                                             </td>
                                     )}
-                                    {/* <td className="research_status">{award.status}</td> */}
                                     <td className="research_date">{award.date ? new Date(award.date).toLocaleDateString('en-US', {timeZone: 'America/New_York'}) : 'N/A'}</td>
                                 </tr>
                             ))} 

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { validatePassword, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import '../css/change_password_page.css'
+import '../css/login_page.css'
 
 function ChangePasswordPage() {
     const [passwordReqs] = useState(["Your password should be in between 6-20 characters",
@@ -11,8 +12,11 @@ function ChangePasswordPage() {
                         "It should contain numerical character",
                         "and special case character (!@#$%^, etc.)"])
     const [curPassword, setCurPassword] = useState('');
+    const [showCurPW, setShowCurPW] = useState('');
     const [changePassword, setChangePassword] = useState('');
-    const [changePWRetype, setchangePWRetype] = useState('');
+    const [showChangePW, setShowChangePW] = useState('');
+    const [changePWRetype, setChangePWRetype] = useState('');
+    const [showChangePWRetype, setShowChangePWRetype] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -115,11 +119,29 @@ function ChangePasswordPage() {
                         </div>
                     ))}
                     <label className="cur_password_title">Current Password:</label>
-                    <input className="cur_password_dialog_box" type="password" value={curPassword} onChange={(e) => setCurPassword(e.target.value)} />
-                    <label className="change_password_title">New Password:</label>
-                    <input className="change_password_dialog_box" type="password" value={changePassword} onChange={(e) => setChangePassword(e.target.value)} />
+                    {showCurPW ? (
+                        <input className="cur_password_dialog_box" type="text" value={curPassword} onChange={(e) => setCurPassword(e.target.value)} />
+                    ): <input className="cur_password_dialog_box" type="password" value={curPassword} onChange={(e) => setCurPassword(e.target.value)} />}
+                    <label className="show_pw_checkbox">
+                        Show Current Password <input type="checkbox" name="showPWCheckbox" checked={showCurPW} onChange={(e) => setShowCurPW(e.target.checked)} />
+                    </label>
+
+                    <label className="change_password_title">Change Password:</label>
+                    {showChangePW ? (
+                        <input className="change_password_dialog_box" type="text" value={changePassword} onChange={(e) => setChangePassword(e.target.value)} />
+                    ): <input className="change_password_dialog_box" type="password" value={changePassword} onChange={(e) => setChangePassword(e.target.value)} />}
+                    <label className="show_pw_checkbox">
+                        Show Changed Password <input type="checkbox" name="showPWCheckbox" checked={showChangePW} onChange={(e) => setShowChangePW(e.target.checked)} />
+                    </label>
+
                     <label className="change_password_retype_title">Confirm New Password:</label>
-                    <input className="change_password_retype_dialog_box" type="password" value={changePWRetype} onChange={(e) => setchangePWRetype(e.target.value)} />
+                    {showChangePWRetype ? (
+                        <input className="change_password_retype_dialog_box" type="text" value={changePWRetype} onChange={(e) => setChangePWRetype(e.target.value)} />
+                    ) : <input className="change_password_retype_dialog_box" type="password" value={changePWRetype} onChange={(e) => setChangePWRetype(e.target.value)} />}
+                    <label className="show_pw_checkbox">
+                        Show Changed Password <input type="checkbox" name="showPWCheckbox" checked={showChangePWRetype} onChange={(e) => setShowChangePWRetype(e.target.checked)} />
+                    </label>
+
                     {error && <p className="change_password_error_message">{error}</p>}
                     <button className="change_password_button" type="submit" disabled={loading}>
                         {loading ? 'Changing password...' : 'Change password'}
