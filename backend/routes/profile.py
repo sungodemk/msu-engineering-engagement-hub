@@ -4,6 +4,7 @@ from flask import Blueprint, g, jsonify, request
 
 from auth import require_login
 from database import get_db_connection
+from scripts.entity_edits import get_entity_id_by_source
 from scripts.merge_entities import get_final_entity
 
 
@@ -68,7 +69,7 @@ def get_profile():
     })
 
 
-# resolves follows when reading so company merges never rewrite them (Aayush)
+# resolves source-based follows to their current final companies (Aayush)
 @bp.route("/follows", methods=["GET"])
 @require_login
 def list_follows():
@@ -79,7 +80,7 @@ def list_follows():
         with conn.cursor() as cur:
             cur.execute(
                 """
-                SELECT company_entity_id
+                SELECT source_system, source_pk
                 FROM company_follows
                 WHERE user_id = %s
                 ORDER BY followed_at
@@ -89,7 +90,17 @@ def list_follows():
             follows = cur.fetchall()
 
             for follow in follows:
-                final = get_final_entity(cur, follow["company_entity_id"])
+                entity_id = get_entity_id_by_source(
+                    cur,
+                    follow["source_system"],
+                    follow["source_pk"],
+                )
+
+                if entity_id is None:
+                    continue
+
+                final = get_final_entity(cur, entity_id)
+
                 if final["id"] in seen:
                     continue
 
@@ -113,7 +124,7 @@ def list_follows():
     return jsonify(companies)
 
 
-# follows the requested company without creating duplicates (Aayush)
+# follows the final company using its stable source record (Aayush)
 @bp.route("/follows", methods=["POST"])
 @require_login
 def follow_company():
@@ -142,20 +153,30 @@ def follow_company():
             if company["entity_type"] != "organization":
                 return jsonify({"error": "Entity is not an organization"}), 400
 
-            # unique pair makes a repeated follow harmless
+            final = get_final_entity(cur, company_id)
+
+            # the unique source pair makes repeated follows harmless
             cur.execute(
                 """
-                INSERT INTO company_follows (user_id, company_entity_id)
-                VALUES (%s, %s)
-                ON CONFLICT (user_id, company_entity_id) DO NOTHING
+                INSERT INTO company_follows (
+                    user_id,
+                    source_system,
+                    source_pk
+                )
+                VALUES (%s, %s, %s)
+                ON CONFLICT (user_id, source_system, source_pk) DO NOTHING
                 """,
-                (g.user["id"], company_id),
+                (
+                    g.user["id"],
+                    final["source_system"],
+                    final["source_pk"],
+                ),
             )
 
     return jsonify({"company_id": str(company_id), "status": "followed"})
 
 
-# removes follows pointing to the same final company (Aayush)
+# removes all follows resolving to the same final company (Aayush)
 @bp.route("/follows/<company_id>", methods=["DELETE"])
 @require_login
 def unfollow_company(company_id):
@@ -182,7 +203,7 @@ def unfollow_company(company_id):
 
             cur.execute(
                 """
-                SELECT id, company_entity_id
+                SELECT id, source_system, source_pk
                 FROM company_follows
                 WHERE user_id = %s
                 """,
@@ -191,9 +212,20 @@ def unfollow_company(company_id):
             follows = cur.fetchall()
 
             removed = 0
-            # remove original and duplicate follows that now share a survivor
+
+            # remove every followed source that now points to this survivor
             for follow in follows:
-                final = get_final_entity(cur, follow["company_entity_id"])
+                entity_id = get_entity_id_by_source(
+                    cur,
+                    follow["source_system"],
+                    follow["source_pk"],
+                )
+
+                if entity_id is None:
+                    continue
+
+                final = get_final_entity(cur, entity_id)
+
                 if final["id"] != target:
                     continue
 

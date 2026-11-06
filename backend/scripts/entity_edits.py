@@ -64,6 +64,28 @@ def write_entity_field(cur, entity_id, field, value):
         )
 
 
+# finds the current entity using its original source record (Aayush)
+def get_entity_id_by_source(cur, source_system, source_pk):
+    cur.execute(
+        """
+        SELECT e.id
+        FROM source_records sr
+        JOIN entity_source_records esr
+            ON esr.source_record_id = sr.id
+        JOIN entities e
+            ON e.id = esr.entity_id
+        WHERE sr.source_system = %s
+          AND sr.source_pk = %s
+          AND esr.linked_type = 'origin'
+        LIMIT 1
+        """,
+        (source_system, source_pk),
+    )
+
+    entity = cur.fetchone()
+    return entity["id"] if entity is not None else None
+
+
 # restores the latest field edits after a reseed (Aayush)
 def main():
     applied = 0
@@ -91,29 +113,18 @@ def main():
             edits = cur.fetchall()
 
             for edit in edits:
-                cur.execute(
-                    """
-                    SELECT e.id
-                    FROM source_records sr
-                    JOIN entity_source_records esr
-                        ON esr.source_record_id = sr.id
-                    JOIN entities e
-                        ON e.id = esr.entity_id
-                    WHERE sr.source_system = %s
-                      AND sr.source_pk = %s
-                      AND esr.linked_type = 'origin'
-                    LIMIT 1
-                    """,
-                    (edit["source_system"], edit["source_pk"]),
+                entity_id = get_entity_id_by_source(
+                    cur,
+                    edit["source_system"],
+                    edit["source_pk"],
                 )
-                entity = cur.fetchone()
 
-                if entity is None:
+                if entity_id is None:
                     continue
 
                 write_entity_field(
                     cur,
-                    entity["id"],
+                    entity_id,
                     edit["field_name"],
                     edit["new_value"],
                 )
