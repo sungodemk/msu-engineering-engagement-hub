@@ -1,4 +1,5 @@
-.dashbaord-page {
+/*AUTHOR : EMMANUEL KOSHY */
+.dashboard-page {
     box-sizing: border-box;
     width: 100%;
     max-width: 1400px;
@@ -35,4 +36,166 @@
     .db-layout {
         grid-template-columns: 1fr;
     }
+}
+.db-count {
+    margin-left: 6px;
+    color:#6b7378;
+    font-weight: 400;
+    font-size: 0.9rem;
+}
+.db-search, .db-select {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    border: 1px solid #e3e6e8;
+    border-radius: 6px;
+    font: inherit;
+    background:#ffffff;
+}
+.db-list-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px 0 8px;
+    font-size: 0.85rems;
+    color: #6b7378;
+}
+.db-list-actions button {
+    border: none;
+    background: none;
+    color: #18453B;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+}
+.db-list-actions button:disabled { color:#b5bcb8; cursor: default;}
+.db-company-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 60vh;
+    overflow-y: auto;
+
+}
+.db-company {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.db-company:hover {background: #eef6f1; }
+.db-company input {accent-color: #18453B; }
+.db-disabled {opacity: 0.5; cursor: not-allowed;}
+.db-dot {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.db-company-text { display: flex; flex-direction:  column; min-width: 0;}
+.db-company-name { font-weight: 600; overflow-wrap: anywhere;}
+.db-company-sub { font-size: 0.8rem; color: #6b7378;}
+.db-error { color: #b42318;}
+
+.db-right {
+    display: grid;
+    gap: 20px;
+    min-width: 0;
+}
+.db-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+.db-section-head .db-section-title {margin-bottom: 0;}
+
+.db-toggle {
+    display: inline-flex;
+    border: 1px solid #18453B;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.db-toggle button {
+    padding: 6px 12px;
+    border: none;
+    background: #ffffff;
+    color:#18453B;
+    font-weight: 600;
+    cursor: pointer;
+}
+.db-toggle button.active {
+    background: #18453B;
+    color: #ffffff;
+}
+
+.db-graph-grid {
+    display: grid;
+    gap: 16px;
+}
+.db-graph-card {
+    border: 1px solid #e3e6e8;
+    border-radius: 8px;
+    padding: 12px;
+    min-width: 0;
+}
+.db-graph-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+.db-graph-head a {color: inherit; text-decoration: none;}
+.db-graph-head a:hover { text-decoration: underline;}
+.db-graph-scroll {overflow-x: auto;}
+
+.db-select-inline { width: auto; margin-bottom: 0;}
+
+.db-table-wrap {
+    max-height: 520px;
+    overflow: auto;
+}
+.db-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+.db-table th {
+    position: relative;
+    top: 0;
+    background: #ffffff;
+    padding: 8px;
+    border-bottom: 1px solid #e3e6e8;
+    color: #6b7378;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: left;
+}
+.db-table td {
+    padding:8px;
+    border-bottom: 1px solid #e3e6e8;
+    vertical-align: top;
+}
+.db-cell-company {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+}
+.db-notes {min-width: 220px; }
+.db-nowrap {white-space: nowrap; } 
+.db-graph-scroll {
+    position: relative;
+}
+.db-graph-scroll .temporal-tooltip {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    transform: translateY(-56px);
 }

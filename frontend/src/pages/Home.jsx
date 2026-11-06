@@ -56,14 +56,14 @@ const cards = [
         to: '/relationship',
         link: 'View Relationship Graph'
     },
-    // Added Admin's Account Management card (Zhixiang Miao)
-    ...(userType === 'admin' ? [{
-      icon: '🛠️',
-      title: 'Account Management',
-      body: 'Manage active and inactive accounts (Administrators only)',
-      to: '/account_management',
-      link: 'Manage Accounts'
-    }] : [])
+    // Added DashBoard page (Emmanuel)
+    {
+      icon: '📋',
+      title: 'Dashboard',
+      body: 'Curate personal views based on companies you follow.',
+      to: '/dashboard',
+      link: 'View you Dashboard'
+    }
   ];
 
   return (
