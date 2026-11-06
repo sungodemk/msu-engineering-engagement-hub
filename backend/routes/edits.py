@@ -6,6 +6,7 @@ from auth import require_login
 from database import get_db_connection
 from scripts.entity_edits import ALLOWED_FIELDS, write_entity_field
 from scripts.merge_entities import get_final_entity
+from scripts.rescoring import rescore_person, rescore_company
 
 
 bp = Blueprint("edits", __name__)
@@ -165,6 +166,12 @@ def patch_entity(entity_id):
                     ),
                 )
 
+            # rescore changed entities in the same transaction (Aayush)
+            if entity["entity_type"] == "person":
+                rescored = rescore_person(conn, entity["id"])
+            else:
+                rescored = rescore_company(conn, entity["id"])
+
             cur.execute(
                 """
                 SELECT id, entity_type, display_name, email, attributes
@@ -174,4 +181,6 @@ def patch_entity(entity_id):
                 (entity["id"],),
             )
 
-            return jsonify(get_editable_values(cur.fetchone()))
+            result = get_editable_values(cur.fetchone())
+            result["rescored"] = rescored
+            return jsonify(result)

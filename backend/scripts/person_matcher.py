@@ -6,8 +6,6 @@ from itertools import combinations
 import psycopg
 from psycopg.rows import dict_row
 
-from merge_entities import get_final_entity, merge_persons
-
 
 DATABASE_URL = os.environ["DATABASE_URL"]
 
@@ -321,6 +319,8 @@ def pair_key(left_id, right_id):
 
 
 def write_matches(cur, results):
+    from merge_entities import get_final_entity, merge_persons
+
     # only removes unreviewed person matches so past merges and logs survive
     cur.execute(
         """
