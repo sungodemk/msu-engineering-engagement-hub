@@ -8,6 +8,7 @@ import Dialog from '../components/Dialog';
 import Temporal from '../graphs/temporal'
 import FollowButton from '../components/FollowButton.jsx';
 import EditEntityButton from '../components/EditEntityButton.jsx';
+import RelationshipGraph from '../graphs/relationship.jsx';
 
 function CompanyPage() {
     useEffect(() => {
@@ -17,6 +18,7 @@ function CompanyPage() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const [logActivities, setLogActivities] = useState([]);
+    const [selectLogActType, setSelectLogActType] = useState('');
 
     const [sortKey, setSortKey] = useState('activity_occurred_on');
     const [sortDir, setSortDir] = useState('desc');
@@ -43,6 +45,7 @@ function CompanyPage() {
 
     const [portfolios, setPortfolios] = useState([]);
     const [activities, setActivities] = useState([]);
+    const [loaded, setLoaded] = useState({ id: '', data: null });
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -68,19 +71,25 @@ function CompanyPage() {
             alert("Activity type is missing");
             return;
         }
-        if (!stage_name) {
-            alert("Status is missing");
-            return;
+        if (activity_record_type === "ask" || activity_record_type === "recruiting") {
+            if (!stage_name) {
+                alert("Status is missing");
+                return;
+            }
         }
+
+        // if (!stage_name) {
+        //     stage_name = "";
+        // }
+
         if (!close_date) {
             alert("Date is missing");
             return;
         }
 
-        if (!notes) {
-            alert("Notes are missing");
-            return;
-        }
+        // if (!notes) {
+        //     notes = "";
+        // }
 
         const activity = {
             company_id: id,
@@ -284,6 +293,16 @@ function CompanyPage() {
     }, [id]);
 
     useEffect(() => {
+        fetch(`http://localhost:8080/api/companies/${id}/relationship`)
+            .then(result => (result.ok ? result.json() : null))
+            .then(data => setLoaded({ id: id, data }))
+            .catch(() => setLoaded({ id: id, data: null }));
+    }, [id])
+
+    const isLoaded = loaded.id === id;
+    const graph = isLoaded ? loaded.data : null;
+
+    useEffect(() => {
         fetch(`http://localhost:8080/api/persons`)
         .then((res) => {
             if (!res.ok) throw new Error(`Server returned ${res.status}`);
@@ -456,7 +475,13 @@ function CompanyPage() {
                                     {loggedActivities.map(activity => (
                                         <tr key={activity.id}>
                                             <td className='outbound_type'>{activity.activity_record_type.charAt(0).toUpperCase() + activity.activity_record_type.slice(1)}</td>
-                                            <td className='outbound_notes'>{activity.notes}</td>
+                                            {activity.notes ? (
+                                                <td className='outbound_notes'>{activity.notes}</td>
+                                            ): <td></td>}
+                                            
+                                            {!activity.stage_name && (
+                                                <td></td>
+                                            )}
                                             {activity.stage_name === "open" && (
                                             <td className='activity_stage'>
                                                 <div className='open_act_box'>
@@ -544,6 +569,7 @@ function CompanyPage() {
                                                     <td className='activity_amount'>{parseFloat(activity.activity_amount).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
                                                 ) : <td className='activity_amount'> </td>}
                                                 {activity.activity_type === 'ask' || activity.act_data === 'logged' ? (
+                                                    
                                                     activity.activity_status === 'open' ? (
                                                         <td className='activity_stage'>
                                                             <div className='open_act_box'>
@@ -551,11 +577,13 @@ function CompanyPage() {
                                                             </div>
                                                         </td>
                                                     ) : (
-                                                        <td className='activity_stage'>
-                                                            <div className='close_act_box'>
-                                                                <div className='close_act_status'>{activity.activity_status}</div>
-                                                            </div>
-                                                        </td>
+                                                        activity.activity_status ? (
+                                                            <td className='activity_stage'>
+                                                                <div className='close_act_box'>
+                                                                    <div className='close_act_status'>{activity.activity_status}</div>
+                                                                </div>
+                                                            </td>
+                                                        ) : (<td></td>)
                                                     )
                                                 ) : <td className='activity_stage'> </td>}
                                                 <td className='activity_close_date'>{new Date(activity.activity_occurred_on).toLocaleDateString('en-US', { timeZone: 'UTC' })}</td>
@@ -577,9 +605,7 @@ function CompanyPage() {
             </div>
             <div className="msu_task_box">
                 <div className="msu_task_title_box">
-                    {/* <div className="msu_task_title"> */}
-                        <div className="msu_task_title">MSU Tasks (Action Items)</div>
-                    {/* </div> */}
+                    <div className="msu_task_title">MSU Tasks (Action Items)</div>
                 </div>
                 <div className='company-table-wrap'>
                     <table className='company-table'>
@@ -755,6 +781,12 @@ function CompanyPage() {
                     <div className='not_available_message'>No temporal data available</div>
                 )}
             </div>
+            <div className="relationship_graph_box">
+                <div className="relationship_graph_title_box">
+                    <div className="relationship_graph_title">🔗Relationship Graph</div>
+                </div>
+                {graph && <RelationshipGraph data={graph} />}
+            </div>
             <Dialog className='log_activity_dialog' open_dialog={isDialogOpen}>
                 <form onSubmit={logActivityEventHandler} className='log_form'>
                     <div className='lg_act_dia_title_box'>
@@ -765,8 +797,11 @@ function CompanyPage() {
                     </div>
                     <div className='form_row_one'>
                     <div className='activity_type_title'>
-                        <label htmlFor="activity_type">Activity Type</label>
-                        <select id="activity_type" name="activity_type" className='activity_type_box'>
+                        <label htmlFor="activity_type">
+                            Activity Type
+                            <span style={{color: 'red'}}>*</span>
+                        </label>
+                        <select id="activity_type" name="activity_type" className='activity_type_box' onChange={(e) => setSelectLogActType(e.target.value)}>
                             <option value="" disabled selected>Select activity type</option>
                             <option value="touchpoint">Touchpoint</option>
                             <option value="ask">Ask</option>
@@ -776,7 +811,13 @@ function CompanyPage() {
                         
                     </div>
                     <div className='dia_status_title'>
-                        <label htmlFor="status">Status</label>
+                        {(selectLogActType === 'ask' || selectLogActType === 'recruiting') ? (
+                            <label htmlFor="status">
+                                Status
+                                <span style={{color: 'red'}}>*</span>
+                            </label>
+                        ): <label htmlFor="status">Status</label>}
+                        
                         <select id="status" name="status" className='dia_status_box'>
                             <option value="" disabled selected>Select status</option>
                             <option value="open">open</option>
@@ -785,7 +826,10 @@ function CompanyPage() {
                     </div>
                     </div>
                     <div className='date_title'>
-                        <label htmlFor="date">Date</label>
+                        <label htmlFor="date">
+                            Date
+                            <span style={{color: 'red'}}>*</span>
+                        </label>
                         <input type="date" id="date" name="date" className='date_box' />
                     </div>
                     <div className='notes_title'>

@@ -110,8 +110,12 @@ def log_activity(company_id):
         stage_name = data.get("stage_name")
         notes = data.get("notes")
         close_date = data.get("close_date")
-        if not activity_record_type or not stage_name or not notes or not close_date:
-            return jsonify({"error": "Missing required fields"}), 400
+        if activity_record_type == "ask" or activity_record_type == "recruiting":
+            if not activity_record_type or not stage_name or not close_date:
+                return jsonify({"error": "Missing required fields"}), 400
+        else:
+            if not activity_record_type or not close_date:
+                return jsonify({"error": "Missing required fields"}), 400
     with get_db_connection() as conn:
         with conn.cursor() as cur:
             if request.method == "POST":

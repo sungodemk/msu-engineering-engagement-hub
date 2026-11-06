@@ -14,6 +14,7 @@ import '../css/login_page.css';
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -49,19 +50,23 @@ function LoginPage() {
                     <label className="netid_title">MSU Email:</label>
                     <input className="netid_dialog_box" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <label className="password_title">Password:</label>
-                    <input className="password_dialog_box" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    
+                    
+                    {showPassword ? (
+                        <input className="password_dialog_box" type="text" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    ): <input className="password_dialog_box" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />}
+
+                    <label className="show_pw_checkbox">
+                        Show Password <input type="checkbox" name="showPWCheckbox" checked={showPassword} onChange={(e) => setShowPassword(e.target.checked)} />
+                    </label>
+
                     {error && <p className="login_error">{error}</p>}
                     <button className="login_button" type="submit" disabled={loading}>
                         {loading ? 'Signing in...' : 'Sign in'}
                     </button>
-                    {/* <div className="modify_pw_section"> */}
                     <div className="forgot_pw_redirect" type="button" onClick={() => navigate('/forgot_password')}>
                         Forgot Password?
                     </div>
-                        {/* <div className="change_pw_redirect" type="button" onClick={() => navigate('/change_password')}>
-                            Change Password
-                        </div> */}
-                    {/* </div> */}
                     <button className="redirect_sign_up_button" type="button" onClick={() => navigate('/sign_up')}>
                         Sign Up
                     </button>

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { validatePassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import '../css/sign_up_page.css';
+import '../css/login_page.css'
 import { apiFetch } from '../api';
 
 function SignUpPage() {
@@ -11,6 +12,8 @@ function SignUpPage() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPWRetype, setShowPWRetype] = useState(false);
     const [passwordReqs] = useState(["Your password should be in between 6-20 characters",
                         "It should contain uppercase character",
                         "and lower case character",
@@ -138,9 +141,21 @@ function SignUpPage() {
                         </div>
                     ))}
                     <label className="sign_up_password_title">Password:</label>
-                    <input className="sign_up_password_dialog_box" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    {showPassword ? (
+                        <input className="password_dialog_box" type="text" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    ): <input className="password_dialog_box" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />}
+
+                    <label className="show_pw_checkbox">
+                        Show Password <input type="checkbox" name="showPWCheckbox" checked={showPassword} onChange={(e) => setShowPassword(e.target.checked)} />
+                    </label>
                     <label className="password_retype_title">Confirm Password:</label>
-                    <input className="password_retype_dialog_box" type="password" value={passwordRetype} onChange={(e) => setPasswordRetype(e.target.value)} />
+                    {showPWRetype ? (
+                        <input className="password_dialog_box" type="text" value={passwordRetype} onChange={(e) => setPasswordRetype(e.target.value)} />
+                    ): <input className="password_dialog_box" type="password" value={passwordRetype} onChange={(e) => setPasswordRetype(e.target.value)} />}
+
+                    <label className="show_pw_checkbox">
+                        Show Confirm Password <input type="checkbox" name="showPWCheckbox" checked={showPWRetype} onChange={(e) => setShowPWRetype(e.target.checked)} />
+                    </label>
                     {error && <p className="sign_up_error_message">{error}</p>}
                     <button className="sign_up_button" type="submit" disabled={loading}>
                         {loading ? 'Signing up...' : 'Sign up'}

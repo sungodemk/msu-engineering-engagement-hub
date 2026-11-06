@@ -5,6 +5,10 @@ import AccountApprovalPage from './admin_account_approval_page'
 import AccountDeletionPage from './admin_account_deletion_page'
 
 function AccountManagementPage() {
+    useEffect(() => {
+        document.title = "Account Management Page";
+    }, []);
+
     const [activeTab, setActiveTab] = useState("admin_account_approval");
 
     return (

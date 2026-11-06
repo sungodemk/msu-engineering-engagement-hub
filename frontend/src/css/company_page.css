@@ -855,7 +855,7 @@
     background-color: #eef6f1;
 }
 
-.temporal_graph_box {
+.temporal_graph_box, .relationship_graph_box {
     width: 72.8vw;
     height: auto;
     background-color: white;
@@ -866,7 +866,11 @@
     margin-bottom: 10vh;
 }
 
-.temporal_graph_title_box {
+.relationship_graph_box .graph-canvas {
+    text-align: left;
+}
+
+.temporal_graph_title_box, .relationship_graph_title_box {
     width: 72.8vw;
     height: 5vh;
     background-color: #f8fbfa;
@@ -879,7 +883,7 @@
     border-top-right-radius: 0.5vw;
 }
 
-.temporal_graph_title {
+.temporal_graph_title, .relationship_graph_title {
     font-size: 0.9em;
     color: black;
     text-align: left;

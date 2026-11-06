@@ -86,6 +86,10 @@
     border: 0.05vw solid #18453B;
 }
 
+.show_pw_checkbox {
+    align-self: flex-start;
+}
+
 .login_button {
     margin-top: 8px;
     display: block;
