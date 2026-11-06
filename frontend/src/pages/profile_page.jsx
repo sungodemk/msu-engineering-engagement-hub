@@ -1,3 +1,5 @@
+import { FOLLOWS_CHANGED_EVENT } from '../components/SidebarFollows';
+
 // shows the signed-in user's profile and followed companies (Aayush)
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -81,7 +83,10 @@ function ProfilePage() {
 
         apiFetch(path, options)
             .then(readJson)
-            .then(loadFollows)
+            .then(() => {
+                window.dispatchEvent(new Event(FOLLOWS_CHANGED_EVENT));
+                return loadFollows();
+            })
             .catch((err) => setError(err.message));
     }
 

@@ -7,6 +7,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { apiFetch } from '../api';
 import SidebarProfile from '../components/SidebarProfile';
 import msuLogo from '../images/msu_logo.png';
+import SidebarFollows from '../components/SidebarFollows';
 
 /* Emmanuel Koshy */
 const navItems = [
@@ -60,11 +61,8 @@ function Layout() {
                         </NavLink>
                     ))}
                 </nav>
-                <div className="section-label">Recent Companies</div>
-                <ul className="recent">
-                    <li className="recent-empty">No recent companies</li>
-                   
-                </ul>
+                {/* shows followed companies in the sidebar (Aayush) */}
+                <SidebarFollows />
                 {/* shows the signed-in user's profile at the bottom (Aayush) */}
                 <SidebarProfile />
             </aside>

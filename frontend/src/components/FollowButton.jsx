@@ -1,3 +1,5 @@
+import { FOLLOWS_CHANGED_EVENT } from './SidebarFollows';
+
 // lets users follow or unfollow a company from its page (Aayush)
 import { useEffect, useState } from 'react';
 import { apiFetch } from '../api';
@@ -40,7 +42,10 @@ function FollowButton({ companyId }) {
 
         apiFetch(path, options)
             .then(readJson)
-            .then(loadFollows)
+            .then(() => {
+                window.dispatchEvent(new Event(FOLLOWS_CHANGED_EVENT));
+                return loadFollows();
+            })
             .catch((err) => setError(err.message))
             .finally(() => setSaving(false));
     }
