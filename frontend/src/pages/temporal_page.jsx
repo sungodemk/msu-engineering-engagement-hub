@@ -121,7 +121,7 @@ function TemporalPage() {
 
             </div>
             {selectedId ? (
-                <Temporal activities={activities} svgRef={svgRef}/>
+                <Temporal key={selectedId} activities={activities} svgRef={svgRef}/>
             ) : (
                 <p className={"graph-empty"}>Select a company to view its temporal activity graph.</p>
             )}

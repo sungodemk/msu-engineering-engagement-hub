@@ -1,3 +1,42 @@
+/* Temporal Graph Styles (Alvin) */
+
+.temporal-range {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #333;
+}
+
+.temporal-range label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.temporal-range select {
+    padding: 6px 10px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #FFFFFF;
+}
+
+.range-reset {
+    padding: 6px 12px;
+    font-size: 13px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.range-reset:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .temporal-wrapper {
     background: #fff;
     border-radius: 8px;

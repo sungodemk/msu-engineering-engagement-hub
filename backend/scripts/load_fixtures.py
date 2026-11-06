@@ -509,6 +509,8 @@ def load_contact_reports(cur, rows, account_entities, contact_entities, units_by
             notes_parts.append(report["Summary__c"])
         if report["Additional_Attendees__c"]:
             notes_parts.append(f'Also attended: {report["Additional_Attendees__c"]}')
+        if report["Opportunity__r.External_ID__c"]:
+            notes_parts.append(f're: {report["Opportunity__r.External_ID__c"]}')
         notes = " - ".join(notes_parts)
 
         cur.execute("""
@@ -568,10 +570,10 @@ def load_action_items(cur, rows, account_entities, contact_entities):
         occurred_on = act["Completed_Date__c"] or act["Due_Date__c"]
 
         notes_parts = [f'{act["Subject__c"]} ({act["Status__c"]})']
-        if act["Opportunity__r.External_ID__c"]:
-            notes_parts.append(f're: {act["Opportunity__r.External_ID__c"]}')
         if act["Notes__c"]:
             notes_parts.append(act["Notes__c"])
+        if act["Opportunity__r.External_ID__c"]:
+            notes_parts.append(f're: {act["Opportunity__r.External_ID__c"]}')
         notes = " — ".join(notes_parts)
 
         cur.execute("""

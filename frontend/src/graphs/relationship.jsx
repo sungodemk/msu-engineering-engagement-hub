@@ -91,13 +91,12 @@ function RelationshipGraph({data}) {
                         'target-arrow-color': '#ccc',
                         'target-arrow-shape': 'triangle',
                         'curve-style': 'bezier',
-                        label: 'data(label)',
                         'font-size': '8px',
                         color: '#777',
-                        'edge-text-rotation': 'autorotate',
-                        'text-background-color': '#fff',
-                        'text-background-opacity': 1,
-                        'text-background-padding': '2px',
+                        //'edge-text-rotation': 'autorotate',
+                        //'text-background-color': '#fff',
+                        //'text-background-opacity': 1,
+                        //'text-background-padding': '2px',
                     },
                 },
                 {
@@ -110,10 +109,10 @@ function RelationshipGraph({data}) {
         // May change layout to accommodate for msu staff usability and aesthetics
         cy.resize();
         cy.layout({
-            name: 'fcose',
-            //name: 'breadthfirst',
-            //directed: true,
-            //direction: 'upward',
+            //name: 'fcose',
+            name: 'breadthfirst',
+            directed: true,
+            direction: 'upward',
             animate: true,
             randomize: true,
             fit: true,
@@ -126,11 +125,16 @@ function RelationshipGraph({data}) {
 
         cy.on('tap', 'node', evt => {
             const node = evt.target;
-            const connections = node
-                .connectedEdges()
-                .connectedNodes()
-                .not(node)
-                .map(n => ({ id: n.id(), label: n.data('label'), type: n.data('type') }));
+            const connections = node.connectedEdges().map(edge => {
+                const otherNode = edge.source().id() === node.id() ? edge.target() : edge.source();
+                return {
+                    id: edge.id(),
+                    label: otherNode.data('label'),
+                    type: otherNode.data('type'),
+                    edgeLabel: edge.data('label'),
+                    outgoing: edge.source().id() === node.id()
+                };
+            });
 
             setSelected({
                 id: node.id(),
@@ -238,7 +242,11 @@ function RelationshipGraph({data}) {
                             <div className="selected-type">{TYPE_LABELS[selected.type]}</div>
                             <div className="connected-title">Connected To ({selected.connections.length})</div>
                             {selected.connections.map(c => (
-                                <div key={c.id} className="connected-item">{c.label}</div>
+                                <div key={c.id} className="connected-item">
+                                    {c.label}
+                                    {c.outgoing ? ' → ' : ' ← '}
+                                    {c.edgeLabel}
+                                </div>
                             ))}
                             <button className="clear-button" onClick={() => setSelected(null)}>
                                 Clear selection
