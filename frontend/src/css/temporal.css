@@ -143,3 +143,16 @@
     color: #94a3b8;
     font-size: 12px;
 }
+
+.temporal-link-line {
+    fill: none;
+    stroke: #444444;
+    stroke-width: 2;
+    stroke-dasharray: 5 4;
+}
+
+.temporal-link-ring {
+    fill: none;
+    stroke: #444444;
+    stroke-width: 2;
+}

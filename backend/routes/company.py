@@ -95,7 +95,7 @@ def temporal(company_id):
     with get_db_connection() as conn:
         with conn.cursor() as cur:
             cur.execute("""
-            SELECT id, activity_type, sub_type, occurred_on, ended_on, amount, status, notes
+            SELECT id, activity_type, sub_type, occurred_on, ended_on, amount, status, notes, resulting_id
             FROM activities WHERE company_entity_id = %s ORDER BY occurred_on """, (company_id,))
             rows = cur.fetchall()
 
@@ -248,6 +248,7 @@ def all_research_awards(company_id):
         "research_awards": awards,
     })
 
+# Get capstone sponsorships for a company (Alvin)
 @bp.route("/api/companies/<company_id>/capstone_sponsorships", methods=["GET"])
 def get_capstone(company_id):
     with get_db_connection() as conn:

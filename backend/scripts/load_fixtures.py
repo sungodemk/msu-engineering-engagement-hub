@@ -413,6 +413,7 @@ def load_opportunities(cur, rows, account_entities, contact_entities,
                         units_by_code):
     # Safety check for dangling Account.External_ID__c references (none for now)
     skipped_no_account = 0
+    activity_ids = {}
 
     for opp in rows:
         account_id = opp["Account.External_ID__c"]
@@ -458,6 +459,7 @@ def load_opportunities(cur, rows, account_entities, contact_entities,
                 source_record_id
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING id
             """,(
                 company_entity_id,
                 person_entity_id,
@@ -473,6 +475,7 @@ def load_opportunities(cur, rows, account_entities, contact_entities,
                 source_id,
             ),
         )
+        activity_ids[opp["External_ID__c"]] = cur.fetchone()[0]
 
     # Prints a warning if any opportunities were skipped due to missing account references
     if skipped_no_account:
@@ -480,8 +483,21 @@ def load_opportunities(cur, rows, account_entities, contact_entities,
             f"Skipped {skipped_no_account} opportunities with no "
             f"matching Account (dangling Account.External_ID__c)"
         )
+
+    return activity_ids
+
+# Loads resulting gifts for opportunities (Alvin)
+def load_resulting_gifts(cur, rows, activity_ids):
+
+    for row in rows:
+        ask = activity_ids.get(row["External_ID__c"])
+        gift = activity_ids.get(row["Resulting_Gift__r.External_ID__c"])
+
+        cur.execute("UPDATE activities SET resulting_id = %s WHERE id = %s", (gift, ask))
+
+
 # Loads contact reports as touchpoints (Alvin)
-def load_contact_reports(cur, rows, account_entities, contact_entities, units_by_code):
+def load_contact_reports(cur, rows, account_entities, contact_entities, units_by_code, activity_ids):
     skipped_no_account = 0
 
     for report in rows:
@@ -503,13 +519,14 @@ def load_contact_reports(cur, rows, account_entities, contact_entities, units_by
         unit_entity_id = units_by_code.get(report["Unit__c"])
 
         occurred_on = report["Contact_Date__c"]
+        resulting_opp = activity_ids.get(report["Opportunity__r.External_ID__c"])
 
         notes_parts = [f'Purpose: {report["Purpose__c"]}']
         if report["Summary__c"]:
             notes_parts.append(report["Summary__c"])
         if report["Additional_Attendees__c"]:
             notes_parts.append(f'Also attended: {report["Additional_Attendees__c"]}')
-        if report["Opportunity__r.External_ID__c"]:
+        if resulting_opp:
             notes_parts.append(f're: {report["Opportunity__r.External_ID__c"]}')
         notes = " - ".join(notes_parts)
 
@@ -526,9 +543,10 @@ def load_contact_reports(cur, rows, account_entities, contact_entities, units_by
                 status,
                 owner_entity_id,
                 notes,
-                source_record_id
+                source_record_id,
+                resulting_id
             )
-            VALUES (%s, %s, %s, 'touchpoint', %s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, 'touchpoint', %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,(
                 company_entity_id,
                 person_entity_id,
@@ -541,6 +559,7 @@ def load_contact_reports(cur, rows, account_entities, contact_entities, units_by
                 owner_entity_id,
                 notes,
                 source_id,
+                resulting_opp
             ),)
     if skipped_no_account:
         print(
@@ -549,7 +568,7 @@ def load_contact_reports(cur, rows, account_entities, contact_entities, units_by
         )
 
 # Loads action items as part of activities (Alvin)
-def load_action_items(cur, rows, account_entities, contact_entities):
+def load_action_items(cur, rows, account_entities, contact_entities, activity_ids):
     skipped_no_account = 0
 
     for act in rows:
@@ -568,11 +587,12 @@ def load_action_items(cur, rows, account_entities, contact_entities):
         )
 
         occurred_on = act["Completed_Date__c"] or act["Due_Date__c"]
+        resulting_opp = activity_ids.get(act["Opportunity__r.External_ID__c"])
 
         notes_parts = [f'{act["Subject__c"]} ({act["Status__c"]})']
         if act["Notes__c"]:
             notes_parts.append(act["Notes__c"])
-        if act["Opportunity__r.External_ID__c"]:
+        if resulting_opp:
             notes_parts.append(f're: {act["Opportunity__r.External_ID__c"]}')
         notes = " — ".join(notes_parts)
 
@@ -589,9 +609,10 @@ def load_action_items(cur, rows, account_entities, contact_entities):
                 status,
                 owner_entity_id,
                 notes,
-                source_record_id
+                source_record_id,
+                resulting_id
             )
-            VALUES (%s, %s, %s, 'action_item', %s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, 'action_item', %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,(
                 company_entity_id,
                 person_entity_id,
@@ -604,6 +625,7 @@ def load_action_items(cur, rows, account_entities, contact_entities):
                 owner_entity_id,
                 notes,
                 source_id,
+                resulting_opp
             ),)
     if skipped_no_account:
         print(
@@ -711,6 +733,9 @@ def main():
     action_items = read_csv(
         ROOT / "db" / "seeds" / "11_Action_Item__c.csv"
     )
+    results = read_csv(
+        ROOT / "db" / "seeds" / "07b_Opportunity_Resulting_Gift_Links.csv"
+    )
     
 
     with psycopg.connect(DATABASE_URL) as conn:
@@ -727,11 +752,12 @@ def main():
             load_affiliations(cur, affiliations, account_entities, contact_entities)
             load_unit_hierarchy(cur, accounts, account_entities)
             load_relationship_assignments(cur, assignments, account_entities, contact_entities)
-            load_opportunities(cur, opportunities, account_entities, contact_entities, units_by_code)
+            activities = load_opportunities(cur, opportunities, account_entities, contact_entities, units_by_code)
             load_degrees(cur, degrees, contact_entities)
-            load_contact_reports(cur, reports, account_entities, contact_entities, units_by_code)
-            load_action_items(cur, action_items, account_entities, contact_entities)
+            load_contact_reports(cur, reports, account_entities, contact_entities, units_by_code, activities)
+            load_action_items(cur, action_items, account_entities, contact_entities, activities)
             load_activity_unit_edges(cur)
+            load_resulting_gifts(cur, results, activities)
 
             for table in [
                 "source_records",

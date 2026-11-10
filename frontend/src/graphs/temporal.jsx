@@ -32,8 +32,7 @@ function tooltipDescription(activity) {
     return activity.notes || null;
 }
 
-// key was added to Temporal component to force the years to not safe
-function Temporal({key, activities, svgRef}) {
+function Temporal({activities, svgRef}) {
     const [hovered, setHovered] = useState(null);
     const [fromYear, setFromYear] = useState(null);
     const [toYear, setToYear] = useState(null);
@@ -41,8 +40,6 @@ function Temporal({key, activities, svgRef}) {
     if (!activities || activities.length === 0) {
         return <p>No activity history yet.</p>;
     }
-
-
 
     const categories = [...new Set(activities.map(a => a.activity_type))];
 
@@ -93,6 +90,18 @@ function Temporal({key, activities, svgRef}) {
             y: e.clientY - rect.top
         });
     }
+
+    // Where the dot is positioned on the graph for a given activity
+    function dotPosition(act) {
+        const y = 50 + categories.indexOf(act.activity_type) * rowHeight + rowHeight / 2;
+        const x = dateToX(act.occurred_on, minDate, maxDate, chartLeft, chartRight);
+        return {x, y};
+    }
+
+    const linked = hovered ? visible.filter(a =>
+        a.id === hovered.activity.resulting_id || a.resulting_id === hovered.activity.id)
+        : [];
+
 
     function handleToChange(e) {
         const value = Number(e.target.value);
@@ -208,6 +217,22 @@ function Temporal({key, activities, svgRef}) {
                             </g>
                         );
                     })}
+
+                    {/* line from hovered activity to connected activity*/}
+                    {linked.map(other => {
+                        const from = dotPosition(hovered.activity);
+                        const to = dotPosition(other);
+                        return (
+                            <g key={other.id} pointerEvents={"none"}>
+                                <path
+                                    d={`M ${from.x} ${from.y}, ${to.x} ${to.y}`}
+                                    className="temporal-link-line"
+                                />
+                                <circle cx={to.x} cy={to.y} r={10} className="temporal-link-ring"/>
+                            </g>
+                        )
+                    })}
+
                 </svg>
 
                 {hovered && (() => {
