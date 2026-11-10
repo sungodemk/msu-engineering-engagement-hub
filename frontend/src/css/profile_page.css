@@ -16,7 +16,47 @@
     margin-top: 8px;
 }
 
+/* Added button to redirect to profile page and logout button inside the profile menu after clicked on the profile (Zhixiang Miao) */
+.profile-menu {
+    position: absolute;
+    bottom: 100%;
+    background-color: white;
+    border: 1px solid #e3e6e8;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-button {
+    padding: 6px 12px;
+    border-bottom: 2px solid #e3e6e8;
+    text-decoration: None;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #18453B;
+    cursor: pointer;
+}
+
+.logout-button {
+    padding: 6px 12px;
+    border: None;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background-color: white;
+    color: #18453B;
+    cursor: pointer;
+}
+
+.error-msg {
+    background-color: rgb(209, 247, 209);
+    font-size: 0.85rem;
+    color: #18453B;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid #18453B;
+}
+
 .profile-change-pw-label {
+    align-self: flex-start;
     color: #6b7378;
     font-size: 0.9rem;
     margin-top: 8px;
@@ -44,6 +84,7 @@
 .sidebar-profile-container {
     display: flex;
     margin-top: auto;
+    position: relative;
 }
 
 /* keeps the signed-in user's card at the bottom of the sidebar (Aayush) */
@@ -53,6 +94,7 @@
     gap: 10px;
     padding: 10px;
     border-radius: 8px;
+    border: None;
     color: #fff;
     text-decoration: none;
     background: rgba(255, 255, 255, 0.08);

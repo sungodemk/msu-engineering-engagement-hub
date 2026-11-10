@@ -1,6 +1,7 @@
 // Zhixiang Miao
 import {useEffect, useState} from 'react';
 import "../css/admin_account_deletion_page.css"
+import "../css/company_page.css"
 import { apiFetch } from '../api';
 
 function AccountDeletionPage() {
@@ -84,14 +85,10 @@ function AccountDeletionPage() {
                                     </tr>
                                 ))}
                             </tbody>
-                            {activeAccounts.length === 0 && (
-                                <tbody> 
-                                    <tr>
-                                        <td colSpan='4'>No active account available</td>
-                                    </tr>
-                                </tbody>
-                            )}
                         </table>
+                        {activeAccounts.length === 0 && (
+                            <div className='not_available_message'>No active account available</div>
+                        )}
                     </div>
             </div>
         </div>

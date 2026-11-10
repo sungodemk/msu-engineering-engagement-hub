@@ -98,6 +98,19 @@ def temporal(company_id):
             SELECT id, activity_type, sub_type, occurred_on, ended_on, amount, status, notes
             FROM activities WHERE company_entity_id = %s ORDER BY occurred_on """, (company_id,))
             rows = cur.fetchall()
+
+    # Format dates consistently (Zhixiang Miao)
+    for row in rows:
+        if row["occurred_on"]:
+            row["occurred_on"] = row["occurred_on"].isoformat()
+        else:
+            row["occurred_on"] = None
+
+        if row["ended_on"]:
+            row["ended_on"] = row["ended_on"].isoformat()
+        else:
+            row["ended_on"] = None
+
     return jsonify(rows)
 
 

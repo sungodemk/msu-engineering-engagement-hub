@@ -120,9 +120,10 @@ function ProfilePage() {
                             <div className="pp-label">Role</div>
                             <div className="profile-role">{profile.role}</div>
                             {/* Be able to change the password inside the profile page (Zhixiang Miao) */}
-                            <div className="profile-change-pw-label" type="button" onClick={() => navigate('/change_password')}>
+                            <span className="profile-change-pw-label" type="button" onClick={() => navigate('/change_password')}>
                                 Change Password
-                            </div>
+                            </span>
+
                             {profile.person_id && (
                                 <Link to={`/persons/${profile.person_id}`} className="pp-person-name">
                                     View full record

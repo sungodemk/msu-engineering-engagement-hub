@@ -55,6 +55,7 @@ function CompanyPage() {
     const [contacts, setContacts] = useState([]);
     const [activeResearchAwards, setActiveResearchAwards] = useState([]);
     const [allResearchAwards, setAllResearchAwards] = useState([]);
+    const [pdfBusy, setPdfBusy] = useState(false);
 
     {/* Need to wait for the server to respond until a promise is resolved. 
         Learned from this link: https://medium.com/@luwen900131/async-await-in-react-b10e36dac6f1*/}
@@ -331,6 +332,28 @@ function CompanyPage() {
         .catch((err) => setError(err.message));
     }, [id]);
 
+    async function downloadPdf() {
+        setPdfBusy(true);
+        try {
+            const { pdf } = await import('@react-pdf/renderer');
+            const { default: CompanyReport } = await import('../components/CompanyReport.jsx');
+            const blob = await pdf(<CompanyReport company={company} owner={portfolio?.owner}
+                c_contacts={contact_people} activities={combinedActivities} 
+                capstones={capsTeams} research_awards={allResearchAwards} />).toBlob();
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${company.display_name} - Engagement Report.pdf`;
+            link.click();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        } catch {
+            alert("Error when download the pdf");
+            return;
+        } finally {
+            setPdfBusy(false);
+        }
+    }
+
     if (error) {
         return <div className="company-page">{error}</div>;
     }
@@ -382,9 +405,11 @@ function CompanyPage() {
                 <FollowButton key={id} companyId={id} />
                 {/* edits this company's fields (Aayush) */}
                 <EditEntityButton key={id} entityId={id} />
-                <button className="cp_print_button" type="button"  onClick={() => window.print()}>
-                    Print / PDF
+
+                <button type="button" className="cp_print_button" onClick={downloadPdf} disabled= {pdfBusy}>
+                    {pdfBusy ? 'Generating...' : 'Download PDF'}
                 </button>
+                
 
             </div>
             

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import '../css/admin_account_approval_page.css';
+import '../css/company_page.css'
 import { apiFetch } from '../api';
 
 function AdminAccountApprovalPage() {
@@ -135,14 +136,12 @@ function AdminAccountApprovalPage() {
                                     </tr>
                                 ))}
                             </tbody>
-                            {inactiveAccounts.length === 0 && (
-                                <tbody> 
-                                    <tr>
-                                        <td colSpan='4'>No inactive account available</td>
-                                    </tr>
-                                </tbody>
-                            )}
                         </table>
+
+                        {inactiveAccounts.length === 0 && (
+                            <div className='not_available_message'>No inactive account available</div>
+                        )}
+
                     </div>
             </div>
         </div>
