@@ -405,3 +405,40 @@
     color: rgba(255, 255, 255, 0.6);
     font-size: 0.8rem;
 }
+
+/* positions the affiliation editor beside its section heading (Aayush) */
+.persons-page .pp-card:has(> .affiliation-edit) {
+    position: relative;
+}
+
+.persons-page .pp-card > .affiliation-edit {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    margin: 0;
+}
+
+.affiliation-edit .entity-edit-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.affiliation-edit-job {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.affiliation-edit-company {
+    color: #18453B;
+    font-weight: 700;
+}
+
+.affiliation-edit-actions {
+    display: flex;
+    justify-content: flex-end;
+}

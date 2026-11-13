@@ -4,6 +4,7 @@ import {Link,useParams } from "react-router-dom";
 import '../css/persons_page.css';
 import { apiFetch } from'../api';
 import EditEntityButton from '../components/EditEntityButton.jsx';
+import AffiliationEditButton from '../components/AffiliationEditButton';
 
 const API_BASE  = "http://localhost:8080";
 
@@ -242,6 +243,8 @@ function PersonsPage(){
 
                 <div className="pp-card">
                     <div className="pp-section-title">Affiliation History</div>
+                    {/* edits affiliation history in its own dialog (Aayush) */}
+                    <AffiliationEditButton key={id} personId={id} />
                     {affiliations.length ===0?(
                         <div className="pp-empty">No employment history.</div>
                     ) : (
