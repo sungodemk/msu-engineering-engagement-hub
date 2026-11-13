@@ -1,15 +1,27 @@
-/* keeps profile-only layout out of the shared person styles (Aayush) */
-.profile-page {
+/* keeps profile cards in one full-width column (Aayush) */
+.persons-page.profile-page {
     grid-template-columns: minmax(0, 1fr);
 }
 
-.profile-page .pp-header {
+/* keeps the profile header compact with room around the account details */
+.persons-page.profile-page .pp-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
     flex-wrap: wrap;
+    padding-right: 24px;
 }
 
 .profile-page .pp-owner {
     margin-left: auto;
     overflow-wrap: anywhere;
+}
+
+/* places view full record below change password */
+.profile-page .pp-owner .pp-person-name {
+    display: block;
+    margin-top: 8px;
+    text-align: right;
 }
 
 .profile-page .pp-owner .pp-label:not(:first-child) {
