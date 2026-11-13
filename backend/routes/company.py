@@ -68,12 +68,38 @@ def get_company(company_id):
                 WHERE id = %s AND entity_type = 'organization'
             """, (company_id,))
             row = cur.fetchone()
-    if row is None:
-        return jsonify({"error": "Company not found"}), 404
+
+        if row is None:
+            return jsonify({"error": "Company not found"}), 404
+
+        # Get owner's id for action item (Zhixiang Miao)
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT sr.source_pk AS act_itm_id, a.owner_entity_id
+                FROM activities a
+                JOIN source_records sr ON a.source_record_id = sr.id
+                WHERE a.company_entity_id = %s
+                    AND a.activity_type = 'action_item'
+                    AND sr.source_system = 'salesforce'
+                    AND sr.source_table = 'Action_Item__c'
+            """, (company_id,))
+            act_itms = cur.fetchall()
+
+    if row["msu_tasks"]:
+        for task in row["msu_tasks"]:
+            for itm in act_itms:
+                if task["act_id"] == itm["act_itm_id"]:
+                    task["owner_entity_id"] = itm["owner_entity_id"]
+
+
+    
     if row['latest_contact_date']:
         row['days_passed'] = days_passed_calc(row['latest_contact_date'])
     else:
         row['days_passed'] = None
+
+    
+
     return jsonify(row)
 
 # Get the calculated days passed since the last contact date (Zhixiang Miao)

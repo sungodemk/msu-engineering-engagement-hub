@@ -646,14 +646,26 @@ function CompanyPage() {
                             {company?.msu_tasks?.length > 0 ? (
                                 company.msu_tasks.map(task => (
                                     <tr key={task.task_id}>
-                                        <td className='msu_unit'>{task.msu_unit}</td>
-                                        <td className='comp_owner'>{task.owner_name}</td>
-                                        <td className='subject'>{task.subject}</td>
-                                        <td className='status'>
-                                            <div className='status_box'>
-                                                {task.status}
-                                            </div>
+                                        <td className='act_itm_msu_unit'>{task.msu_unit}</td>
+                                        <td className="act_itm_owner" onClick={() => navigate(`/persons/${task.owner_entity_id}`)}>
+                                            <Link to={`/persons/${task.owner_entity_id}`} className="cp-person-name">
+                                                {task.owner_name}
+                                            </Link>
                                         </td>
+                                        <td className='act_itm_subject'>{task.subject}</td>
+                                        {task.status === 'Open' ? (
+                                            <td className='research_status'>
+                                                <div className='research_active_box'>
+                                                    <div className='research_active_status'>{task.status}</div>
+                                                </div>
+                                            </td>
+                                        ) : (
+                                            <td className='research_status'>
+                                                <div className='research_closed_box'>
+                                                    <div className='research_closed_status'>{task.status}</div>
+                                                </div>
+                                            </td>
+                                    )}
                                     </tr>
                                 ))
                             ) : (
