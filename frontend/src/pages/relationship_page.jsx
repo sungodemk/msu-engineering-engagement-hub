@@ -10,7 +10,7 @@ function RelationshipPage() {
     const [loaded, setLoaded] = useState({ id: '', data: null });
 
     useEffect(() => {
-        fetch('${API_BASE}/api/companies')
+        fetch(`${API_BASE}/api/companies`)
             .then(r => r.json())
             .then(setCompanies);
     }, []);

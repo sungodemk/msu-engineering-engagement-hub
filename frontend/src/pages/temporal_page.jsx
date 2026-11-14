@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { jsPDF } from "jspdf";
 import Temporal from '../graphs/temporal';
 import '../css/graph_page.css';
+import { API_BASE } from '../api';
 
 
 // have to inline styles for the svg to be exported as pdf
@@ -28,7 +29,7 @@ function TemporalPage() {
 
     // fetch the dropdown list
     useEffect(() => {
-        fetch('http://localhost:8080/api/companies')
+        fetch(`${API_BASE}/api/companies`)
             .then(res => res.json())
             .then(setCompanies);
     }, []);
@@ -36,11 +37,11 @@ function TemporalPage() {
     useEffect(() => {
         if (!selectedId) return;
 
-        fetch(`http://localhost:8080/api/companies/${selectedId}`)
+        fetch(`${API_BASE}/api/companies/${selectedId}`)
             .then(res => res.json())
             .then(setCompany);
 
-        fetch(`http://localhost:8080/api/companies/${selectedId}/temporal`)
+        fetch(`${API_BASE}/api/companies/${selectedId}/temporal`)
             .then(res => res.json())
             .then(setActivities);
     }, [selectedId]);
