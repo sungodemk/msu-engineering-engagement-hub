@@ -441,6 +441,45 @@
     font-weight: bold;
 }
 
+.cp_box_controls {
+    width: 72.8vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    /* margin: 20px 0; */
+    margin-left: 1vw;
+    /* padding: 12px; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: white;
+    border: 1px solid #e3e6e8;
+    border-radius: 6px;
+    
+}
+
+.cp_box_tabs {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+}
+
+.cp_box_tab {
+    padding: 6px 12px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #444;
+    cursor: pointer;
+}
+
+.cp_box_tab.active {
+    background-color: #18453B;
+    border-color: #18453B;
+    color: white;
+}
+
 .activity_box {
     width: 72.8vw;
     height: auto;
@@ -653,38 +692,6 @@
     position: static;
     padding-top: 1vh;
     margin-left: 0.5vw;
-}
-
-.msu_unit {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
-    text-align: center;
-}
-.comp_owner {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
-    text-align: center;
-}
-.subject {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
-    text-align: center;
-}
-
-.status_box {
-    width: auto;
-    height: auto;
-    padding: 2px 4px;
-    background-color: rgb(209, 247, 209);
-    display: inline-block;
-    border-radius: 0.2vw;
-    border: 0.01vw solid #18453B;
-}
-
-.status {
-    font-size: 0.8em;
-    color: rgb(99, 99, 99);
-    text-align: center;
 }
 
 .research_award_box, .caps_box {

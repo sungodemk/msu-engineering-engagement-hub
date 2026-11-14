@@ -27,7 +27,9 @@ function CompanyPage() {
     const [capsTeams, setCapsTeams] = useState([]);
     const [totalCapsTeams, setTotalCapsTeams] = useState(0);
 
-    const [selectActivityType, setSelectActivityType] = useState('all')
+    const [activeBox, setActiveBox] = useState('all');
+
+    const [selectActivityType, setSelectActivityType] = useState('all');
 
     function handleSort(key) {
         if (sortKey === key) {
@@ -80,18 +82,10 @@ function CompanyPage() {
             }
         }
 
-        // if (!stage_name) {
-        //     stage_name = "";
-        // }
-
         if (!close_date) {
             alert("Date is missing");
             return;
         }
-
-        // if (!notes) {
-        //     notes = "";
-        // }
 
         const activity = {
             company_id: id,
@@ -535,295 +529,375 @@ function CompanyPage() {
                         )}
                 </div>
             </div>
-            <div className='activity_box'>
-                <div className='activity_title_box'>
-                    <div className='activity_title'>Activity Timeline</div>
-                    <div className='activity_type_buttons'>
-                        <button
-                        className={selectActivityType === "all" ? "activity_type_button active" : "activity_type_button"}
-                        type="button"
-                        onClick={() => setSelectActivityType("all")}>
-                            All
-                        </button>
-                        {filterActivitiesArray.length > 0 && (
-                            filterActivitiesArray.map(act_type => (
-                                <button
-                                key={act_type}
-                                className={selectActivityType === act_type ? "activity_type_button active" : "activity_type_button"}
-                                type="button"
-                                onClick={() => setSelectActivityType(act_type)}>
-                                    {act_type.charAt(0).toUpperCase() + act_type.slice(1)}
-                                </button>
-                            ))
-                        )}
-                    </div>
-                </div>
-                <div className='activity-table-wrap'>
-                    <table className='activity-table'> 
-                        <thead>
-                            <tr>
-                                <th onClick={() => handleSort('activity_type')}>Type{arrow('activity_type')}</th>
-                                <th onClick={() => handleSort('activity_sub_type')}>Sub Type{arrow('activity_sub_type')}</th>
-                                <th onClick={() => handleSort('activity_notes')}>Notes{arrow('activity_notes')}</th>
-                                <th onClick={() => handleSort('activity_amount')}>Amount{arrow('activity_amount')}</th>
-                                <th onClick={() => handleSort('activity_status')}>Stage{arrow('activity_status')}</th>
-                                <th onClick={() => handleSort('activity_occurred_on')}>Date{arrow('activity_occurred_on')}</th>
-                            </tr>
-                        </thead>
-                        {sortedActivities?.length > 0 && (
-                            <tbody>
-                                {sortedActivities.map(activity => (
-                                    <tr key={activity.act_data + activity.id}>
-                                        {activity.activity_type !== 'award' && activity.activity_type !== 'action_item' && (
-                                            <>
-                                                {activity.act_data === 'original' && (
-                                                    <td className='activity_type'>{activity.activity_type.charAt(0).toUpperCase() + activity.activity_type.slice(1)}</td>
-                                                )}
-                                                
-                                                {activity.act_data === 'logged' && (
-                                                        <td className='activity_type'>{
-                                                            activity.activity_type.charAt(0).toUpperCase() + activity.activity_type.slice(1)}
-                                                            <button className="delete_button" onClick={() => deleteLoggedActivity(activity.id)}>
-                                                                Delete
-                                                            </button>
-                                                        </td>
-                                                )}
-                                                <td className='activity_sub_type'>{activity.activity_sub_type}</td>
-                                                <td className='activity_notes'>{activity.activity_notes}</td>
 
-                                                {activity.activity_type === 'gift' ? (
-                                                    <td className='activity_amount'>{parseFloat(activity.activity_amount).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
-                                                ) : <td className='activity_amount'> </td>}
-                                                {activity.activity_type === 'ask' || activity.act_data === 'logged' ? (
-                                                    
-                                                    activity.activity_status === 'open' ? (
-                                                        <td className='activity_stage'>
-                                                            <div className='open_act_box'>
-                                                                <div className='open_act_status'>{activity.activity_status}</div>
-                                                            </div>
-                                                        </td>
-                                                    ) : (
-                                                        activity.activity_status ? (
-                                                            <td className='activity_stage'>
-                                                                <div className='close_act_box'>
-                                                                    <div className='close_act_status'>{activity.activity_status}</div>
-                                                                </div>
-                                                            </td>
-                                                        ) : (<td></td>)
-                                                    )
-                                                ) : <td className='activity_stage'> </td>}
-                                                <td className='activity_close_date'>{new Date(activity.activity_occurred_on).toLocaleDateString('en-US', { timeZone: 'UTC' })}</td>
-                                            </> 
-                                        )}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        )}
-                        {(sortedActivities?.length === 0) && (
-                            <tbody>
-                                <tr>
-                                    <td className='not_available_message' colSpan="6">No activities available</td>
-                                </tr>
-                            </tbody>
-                        )}
-                    </table>
+            <div className="cp_box_controls">
+                <div className="cp_box_tabs">
+                    <button
+                        className={activeBox === "all" ? "cp_box_tab active" : "cp_box_tab"}
+                        type="button"
+                        onClick={() => setActiveBox("all")}
+                    >
+                        All
+                    </button>
+                    <button
+                        className={activeBox === "activity_timeline" ? "cp_box_tab active" : "cp_box_tab"}
+                        type="button"
+                        onClick={() => setActiveBox("activity_timeline")}
+                    >
+                        Activity Timeline
+                    </button>
+                    <button
+                        className={activeBox === "msu_tasks" ? "cp_box_tab active" : "cp_box_tab"}
+                        type="button"
+                        onClick={() => setActiveBox("msu_tasks")}
+                    >
+                        MSU Tasks
+                    </button>
+                    <button
+                        className={activeBox === "research_awards" ? "cp_box_tab active" : "cp_box_tab"}
+                        type="button"
+                        onClick={() => setActiveBox("research_awards")}
+                    >
+                        Research Awards
+                    </button>
+                    <button
+                        className={activeBox === "caps_teams" ? "cp_box_tab active" : "cp_box_tab"}
+                        type="button"
+                        onClick={() => setActiveBox("caps_teams")}
+                    >
+                        Capstone Teams
+                    </button>
+                    <button
+                        className={activeBox === "contacts_cp" ? "cp_box_tab active" : "cp_box_tab"}
+                        type="button"
+                        onClick={() => setActiveBox("contacts_cp")}
+                    >
+                        Contacts at Company
+                    </button>
+                    <button
+                        className={activeBox === "temporal_graph" ? "cp_box_tab active" : "cp_box_tab"}
+                        type="button"
+                        onClick={() => setActiveBox("temporal_graph")}
+                    >
+                        Temporal Graph
+                    </button>
+                    <button
+                        className={activeBox === "relationship_graph" ? "cp_box_tabactive" : "cp_box_tab"}
+                        type="button"
+                        onClick={() => setActiveBox("relationship_graph")}
+                    >
+                        Relationship Graph
+                    </button>
                 </div>
             </div>
-            <div className="msu_task_box">
-                <div className="msu_task_title_box">
-                    <div className="msu_task_title">MSU Tasks (Action Items)</div>
-                </div>
-                <div className='company-table-wrap'>
-                    <table className='company-table'>
-                        <thead>
-                            <tr>
-                                <th>MSU Unit</th>
-                                <th>Owner</th>
-                                <th>Subject</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {company?.msu_tasks?.length > 0 ? (
-                                company.msu_tasks.map(task => (
-                                    <tr key={task.task_id}>
-                                        <td className='act_itm_msu_unit'>{task.msu_unit}</td>
-                                        <td className="act_itm_owner" onClick={() => navigate(`/persons/${task.owner_entity_id}`)}>
-                                            <Link to={`/persons/${task.owner_entity_id}`} className="cp-person-name">
-                                                {task.owner_name}
-                                            </Link>
-                                        </td>
-                                        <td className='act_itm_subject'>{task.subject}</td>
-                                        {task.status === 'Open' ? (
-                                            <td className='research_status'>
-                                                <div className='research_active_box'>
-                                                    <div className='research_active_status'>{task.status}</div>
-                                                </div>
-                                            </td>
-                                        ) : (
-                                            <td className='research_status'>
-                                                <div className='research_closed_box'>
-                                                    <div className='research_closed_status'>{task.status}</div>
-                                                </div>
-                                            </td>
-                                    )}
-                                    </tr>
+            {(activeBox === 'all' || activeBox === 'activity_timeline') && (
+                <div className='activity_box'>
+                    <div className='activity_title_box'>
+                        <div className='activity_title'>Activity Timeline</div>
+                        <div className='activity_type_buttons'>
+                            <button
+                            className={selectActivityType === "all" ? "activity_type_button active" : "activity_type_button"}
+                            type="button"
+                            onClick={() => setSelectActivityType("all")}>
+                                All
+                            </button>
+                            {filterActivitiesArray.length > 0 && (
+                                filterActivitiesArray.map(act_type => (
+                                    <button
+                                    key={act_type}
+                                    className={selectActivityType === act_type ? "activity_type_button active" : "activity_type_button"}
+                                    type="button"
+                                    onClick={() => setSelectActivityType(act_type)}>
+                                        {act_type.charAt(0).toUpperCase() + act_type.slice(1)}
+                                    </button>
                                 ))
-                            ) : (
-                                <tr>
-                                    <td className='not_available_message' colSpan="4">No tasks available</td>
-                                </tr>
                             )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div className="research_award_box">
-                <div className="research_award_title_box">
-                    <div className="research_award_title">🔬Research Awards</div>
-                </div>
-                <div className='company-table-wrap'>
-                    <table className='company-table'>
-                        <thead>
-                            <tr>
-                                <th>Award ID</th>
-                                <th>Title</th>
-                                <th>PI</th>
-                                <th>Lead Unit</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {allResearchAwards.map(award => (
-                                <tr key={award.id}>
-                                    <td>{award.award_id}</td>
-                                    <td>{award.title}</td>
-                                    <td className="PI" onClick={() => navigate(`/persons/${award.pi_entity_id}`)}>
-                                        <Link to={`/persons/${award.pi_entity_id}`} className="cp-person-name">
-                                            {award.pi}
-                                        </Link>
-                                    </td>
-                                    <td>{award.lead_unit}</td>
-                                    <td className="award_amount">{award.total_amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
-                                    {award.status === 'Active' ? (
-                                            <td className='research_status'>
-                                                <div className='research_active_box'>
-                                                    <div className='research_active_status'>{award.status}</div>
-                                                </div>
-                                            </td>
-                                        ) : (
-                                            <td className='research_status'>
-                                                <div className='research_closed_box'>
-                                                    <div className='research_closed_status'>{award.status}</div>
-                                                </div>
-                                            </td>
-                                    )}
-                                    <td className="research_date">{award.date ? new Date(award.date).toLocaleDateString('en-US', {timeZone: 'America/New_York'}) : 'N/A'}</td>
-                                </tr>
-                            ))} 
-                        </tbody>
-                    </table>
-                </div>
-                {allResearchAwards.length === 0 && (
-                    <div className='not_available_message'>No research awards available</div>
-                )}
-            </div>
-            <div className="caps_box">
-                <div className="caps_title_box">
-                    <div className="caps_title">Capstone Teams</div>
-                </div>
-                <div className='company-table-wrap'>
-                    <table className='company-table'>
-                        <thead>
-                            <tr>
-                                <th className="caps_title_label">Title</th>
-                                <th className="semester_title">Semester</th>
-                                <th className="caps_amount_title">Amount</th>
-                                <th className="caps_notes_title">Notes</th>
-                                <th className="caps_status_title">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {capsTeams.map(capstone => (
-                                <tr key={capstone.id}>
-                                    <td className="capstone_title">{capstone.title}</td>
-                                    <td className="semester">{capstone.semester}</td>
-                                    <td className="capstone_amount">{parseFloat(capstone.amount).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
-                                    <td className="capstone_notes">{capstone.notes}</td>
-                                    {capstone.status === 'Completed' ? (
-                                        <td className='capstone_status'>
-                                                <div className='completed_box'>
-                                                    <div className='completed_status'>{capstone.status}</div>
-                                                </div>
-                                            </td>
-                                        ) : (
-                                            <td className='capstone_status'>
-                                                <div className='in_progress_box'>
-                                                    <div className='in_progress_status'>{capstone.status}</div>
-                                                </div>
-                                            </td>
-                                    )}
-                                </tr>
-                            ))} 
-                        </tbody>
-                    </table>
-                </div>
-                {totalCapsTeams === 0 && (
-                    <div className='not_available_message' colSpan="5">No Capstone Team Available</div>
-                )}
-            </div>
-            <div className="contacts_box">
-                <div className="contacts_title_box">
-                    <div className="contacts_title">𝌕Contacts at Company</div>
-                </div>
-                {contact_people.length > 0 ? (
-                    <div className='contact-table-wrap'>
-                        <table className='contact-table'>
+                        </div>
+                    </div>
+                    <div className='activity-table-wrap'>
+                        <table className='activity-table'> 
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Title</th>
-                                    <th>Email</th>
+                                    <th onClick={() => handleSort('activity_type')}>Type{arrow('activity_type')}</th>
+                                    <th onClick={() => handleSort('activity_sub_type')}>Sub Type{arrow('activity_sub_type')}</th>
+                                    <th onClick={() => handleSort('activity_notes')}>Notes{arrow('activity_notes')}</th>
+                                    <th onClick={() => handleSort('activity_amount')}>Amount{arrow('activity_amount')}</th>
+                                    <th onClick={() => handleSort('activity_status')}>Stage{arrow('activity_status')}</th>
+                                    <th onClick={() => handleSort('activity_occurred_on')}>Date{arrow('activity_occurred_on')}</th>
+                                </tr>
+                            </thead>
+                            {sortedActivities?.length > 0 && (
+                                <tbody>
+                                    {sortedActivities.map(activity => (
+                                        <tr key={activity.act_data + activity.id}>
+                                            {activity.activity_type !== 'award' && activity.activity_type !== 'action_item' && (
+                                                <>
+                                                    {activity.act_data === 'original' && (
+                                                        <td className='activity_type'>{activity.activity_type.charAt(0).toUpperCase() + activity.activity_type.slice(1)}</td>
+                                                    )}
+                                                    
+                                                    {activity.act_data === 'logged' && (
+                                                            <td className='activity_type'>{
+                                                                activity.activity_type.charAt(0).toUpperCase() + activity.activity_type.slice(1)}
+                                                                <button className="delete_button" onClick={() => deleteLoggedActivity(activity.id)}>
+                                                                    Delete
+                                                                </button>
+                                                            </td>
+                                                    )}
+                                                    <td className='activity_sub_type'>{activity.activity_sub_type}</td>
+                                                    <td className='activity_notes'>{activity.activity_notes}</td>
+
+                                                    {activity.activity_type === 'gift' ? (
+                                                        <td className='activity_amount'>{parseFloat(activity.activity_amount).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
+                                                    ) : <td className='activity_amount'> </td>}
+                                                    {activity.activity_type === 'ask' || activity.act_data === 'logged' ? (
+                                                        
+                                                        activity.activity_status === 'open' ? (
+                                                            <td className='activity_stage'>
+                                                                <div className='open_act_box'>
+                                                                    <div className='open_act_status'>{activity.activity_status}</div>
+                                                                </div>
+                                                            </td>
+                                                        ) : (
+                                                            activity.activity_status ? (
+                                                                <td className='activity_stage'>
+                                                                    <div className='close_act_box'>
+                                                                        <div className='close_act_status'>{activity.activity_status}</div>
+                                                                    </div>
+                                                                </td>
+                                                            ) : (<td></td>)
+                                                        )
+                                                    ) : <td className='activity_stage'> </td>}
+                                                    <td className='activity_close_date'>{new Date(activity.activity_occurred_on).toLocaleDateString('en-US', { timeZone: 'UTC' })}</td>
+                                                </> 
+                                            )}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            )}
+                            {(sortedActivities?.length === 0) && (
+                                <tbody>
+                                    <tr>
+                                        <td className='not_available_message' colSpan="6">No activities available</td>
+                                    </tr>
+                                </tbody>
+                            )}
+                        </table>
+                    </div>
+                </div>
+            )}
+            {(activeBox === 'all' || activeBox === 'msu_tasks') && (
+                <div className="msu_task_box">
+                    <div className="msu_task_title_box">
+                        <div className="msu_task_title">MSU Tasks (Action Items)</div>
+                    </div>
+                    <div className='company-table-wrap'>
+                        <table className='company-table'>
+                            <thead>
+                                <tr>
+                                    <th>MSU Unit</th>
+                                    <th>Owner</th>
+                                    <th>Subject</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {contact_people.map((p) =>(
-                                    <tr key={p.id} onClick={() => navigate(`/persons/${p.id}`)}>
-                                        <td>
-                                            <Link to={`/persons/${p.id}`} className="cp-person-name">
-                                                {p.display_name}
-                                            </Link>
-                                        </td>
-                                        <td>{p.title ?? ''}</td>
-                                        {!company && <td>{p.company ?? 'No current employer'}</td>}
-                                        <td>{p.email ?? ''}</td>
+                                {company?.msu_tasks?.length > 0 ? (
+                                    company.msu_tasks.map(task => (
+                                        <tr key={task.task_id}>
+                                            <td className='act_itm_msu_unit'>{task.msu_unit}</td>
+                                            <td className="act_itm_owner" onClick={() => navigate(`/persons/${task.owner_entity_id}`)}>
+                                                <Link to={`/persons/${task.owner_entity_id}`} className="cp-person-name">
+                                                    {task.owner_name}
+                                                </Link>
+                                            </td>
+                                            <td className='act_itm_subject'>{task.subject}</td>
+                                            {task.status === 'Open' ? (
+                                                <td className='research_status'>
+                                                    <div className='research_active_box'>
+                                                        <div className='research_active_status'>{task.status}</div>
+                                                    </div>
+                                                </td>
+                                            ) : (
+                                                <td className='research_status'>
+                                                    <div className='research_closed_box'>
+                                                        <div className='research_closed_status'>{task.status}</div>
+                                                    </div>
+                                                </td>
+                                        )}
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td className='not_available_message' colSpan="4">No tasks available</td>
                                     </tr>
-                                ))}
+                                )}
                             </tbody>
                         </table>
                     </div>
-                ) : (
-                    <div className='not_available_message'>No contacts available</div>
-                )}
-            </div>
-            <div className="temporal_graph_box">
-                <div className="temporal_graph_title_box">
-                    <div className="temporal_graph_title">📈Temporal Graph</div>
                 </div>
-                {activities.length > 0 ? (
-                    <Temporal activities={activities} />
-                ) : (
-                    <div className='not_available_message'>No temporal data available</div>
-                )}
-            </div>
-            <div className="relationship_graph_box">
-                <div className="relationship_graph_title_box">
-                    <div className="relationship_graph_title">🔗Relationship Graph</div>
+            )}
+            {(activeBox === 'all' || activeBox === 'research_awards') && (
+                <div className="research_award_box">
+                    <div className="research_award_title_box">
+                        <div className="research_award_title">🔬Research Awards</div>
+                    </div>
+                    <div className='company-table-wrap'>
+                        <table className='company-table'>
+                            <thead>
+                                <tr>
+                                    <th>Award ID</th>
+                                    <th>Title</th>
+                                    <th>PI</th>
+                                    <th>Lead Unit</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {allResearchAwards.map(award => (
+                                    <tr key={award.id}>
+                                        <td>{award.award_id}</td>
+                                        <td>{award.title}</td>
+                                        <td className="PI" onClick={() => navigate(`/persons/${award.pi_entity_id}`)}>
+                                            <Link to={`/persons/${award.pi_entity_id}`} className="cp-person-name">
+                                                {award.pi}
+                                            </Link>
+                                        </td>
+                                        <td>{award.lead_unit}</td>
+                                        <td className="award_amount">{award.total_amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
+                                        {award.status === 'Active' ? (
+                                                <td className='research_status'>
+                                                    <div className='research_active_box'>
+                                                        <div className='research_active_status'>{award.status}</div>
+                                                    </div>
+                                                </td>
+                                            ) : (
+                                                <td className='research_status'>
+                                                    <div className='research_closed_box'>
+                                                        <div className='research_closed_status'>{award.status}</div>
+                                                    </div>
+                                                </td>
+                                        )}
+                                        <td className="research_date">{award.date ? new Date(award.date).toLocaleDateString('en-US', {timeZone: 'America/New_York'}) : 'N/A'}</td>
+                                    </tr>
+                                ))} 
+                            </tbody>
+                        </table>
+                    </div>
+                    {allResearchAwards.length === 0 && (
+                        <div className='not_available_message'>No research awards available</div>
+                    )}
                 </div>
-                {graph && <RelationshipGraph data={graph} />}
-            </div>
+            )}
+            
+            {(activeBox === 'all' || activeBox === 'caps_teams') && (
+                <div className="caps_box">
+                    <div className="caps_title_box">
+                        <div className="caps_title">Capstone Teams</div>
+                    </div>
+                    <div className='company-table-wrap'>
+                        <table className='company-table'>
+                            <thead>
+                                <tr>
+                                    <th className="caps_title_label">Title</th>
+                                    <th className="semester_title">Semester</th>
+                                    <th className="caps_amount_title">Amount</th>
+                                    <th className="caps_notes_title">Notes</th>
+                                    <th className="caps_status_title">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {capsTeams.map(capstone => (
+                                    <tr key={capstone.id}>
+                                        <td className="capstone_title">{capstone.title}</td>
+                                        <td className="semester">{capstone.semester}</td>
+                                        <td className="capstone_amount">{parseFloat(capstone.amount).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
+                                        <td className="capstone_notes">{capstone.notes}</td>
+                                        {capstone.status === 'Completed' ? (
+                                            <td className='capstone_status'>
+                                                    <div className='completed_box'>
+                                                        <div className='completed_status'>{capstone.status}</div>
+                                                    </div>
+                                                </td>
+                                            ) : (
+                                                <td className='capstone_status'>
+                                                    <div className='in_progress_box'>
+                                                        <div className='in_progress_status'>{capstone.status}</div>
+                                                    </div>
+                                                </td>
+                                        )}
+                                    </tr>
+                                ))} 
+                            </tbody>
+                        </table>
+                    </div>
+                    {totalCapsTeams === 0 && (
+                        <div className='not_available_message' colSpan="5">No Capstone Team Available</div>
+                    )}
+                </div>
+            )}
+
+            {(activeBox === 'all' || activeBox === 'contacts_cp') && (
+                <div className="contacts_box">
+                    <div className="contacts_title_box">
+                        <div className="contacts_title">𝌕Contacts at Company</div>
+                    </div>
+                    {contact_people.length > 0 ? (
+                        <div className='contact-table-wrap'>
+                            <table className='contact-table'>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Title</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {contact_people.map((p) =>(
+                                        <tr key={p.id} onClick={() => navigate(`/persons/${p.id}`)}>
+                                            <td>
+                                                <Link to={`/persons/${p.id}`} className="cp-person-name">
+                                                    {p.display_name}
+                                                </Link>
+                                            </td>
+                                            <td>{p.title ?? ''}</td>
+                                            {!company && <td>{p.company ?? 'No current employer'}</td>}
+                                            <td>{p.email ?? ''}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : (
+                        <div className='not_available_message'>No contacts available</div>
+                    )}
+                </div>
+            )}
+            
+            {(activeBox === 'all' || activeBox === 'temporal_graph') && (
+                <div className="temporal_graph_box">
+                    <div className="temporal_graph_title_box">
+                        <div className="temporal_graph_title">📈Temporal Graph</div>
+                    </div>
+                    {activities.length > 0 ? (
+                        <Temporal activities={activities} />
+                    ) : (
+                        <div className='not_available_message'>No temporal data available</div>
+                    )}
+                </div>
+            )}
+            
+            {(activeBox === 'all' || activeBox === 'relationship_graph') && (
+                <div className="relationship_graph_box">
+                    <div className="relationship_graph_title_box">
+                        <div className="relationship_graph_title">🔗Relationship Graph</div>
+                    </div>
+                    {graph && <RelationshipGraph data={graph} />}
+                </div>
+            )}
+            
             <Dialog className='log_activity_dialog' open_dialog={isDialogOpen}>
                 <form onSubmit={logActivityEventHandler} className='log_form'>
                     <div className='lg_act_dia_title_box'>
