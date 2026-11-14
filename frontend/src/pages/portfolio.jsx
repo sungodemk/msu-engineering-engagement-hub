@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../css/Portfolio.css';
+import '../css/portfolio.css';
 import { API_BASE } from '../api';
 
 const NUMERIC_KEYS = ['total_giving', 'active_research', 'recruiting_volume'];
