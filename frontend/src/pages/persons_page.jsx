@@ -5,8 +5,7 @@ import '../css/persons_page.css';
 import { apiFetch } from'../api';
 import EditEntityButton from '../components/EditEntityButton.jsx';
 import AffiliationEditButton from '../components/AffiliationEditButton';
-
-const API_BASE  = "http://localhost:8080";
+import { API_BASE } from "../api";
 
 const MONTHS = ['Jan','Feb','Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 

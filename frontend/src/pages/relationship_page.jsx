@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import RelationshipGraph from '../graphs/relationship.jsx';
 import '../css/graph_page.css';
+import { API_BASE } from '../api.js';
 
 function RelationshipPage() {
     const [companies, setCompanies] = useState([]);
@@ -9,7 +10,7 @@ function RelationshipPage() {
     const [loaded, setLoaded] = useState({ id: '', data: null });
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/companies')
+        fetch('${API_BASE}/api/companies')
             .then(r => r.json())
             .then(setCompanies);
     }, []);
@@ -17,11 +18,11 @@ function RelationshipPage() {
     useEffect(() => {
         if (!selectedId) return;
 
-        fetch(`http://localhost:8080/api/companies/${selectedId}`)
+        fetch(`${API_BASE}/api/companies/${selectedId}`)
             .then(res => res.json())
             .then(setCompany);
 
-        fetch(`http://localhost:8080/api/companies/${selectedId}/relationship`)
+        fetch(`${API_BASE}/api/companies/${selectedId}/relationship`)
             .then(r => (r.ok ? r.json() : null))
             .then(data => setLoaded({ id: selectedId, data }))
             .catch(() => setLoaded({ id: selectedId, data: null }));

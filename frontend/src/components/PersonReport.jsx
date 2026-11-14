@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     page: {paddingTop: 40, paddingBottom: 56, paddingHorizontal: 44, fontSize: 10, fontFamily: 'Helvetica',  color: '#1d2327', lineHeight: 1.4},
     brand: {fontSize: 16, fontWeight: 'bold', color: GREEN, marginBottom: 8},
     header: {fontSize: 12, fontWeight: 'bold', color: GREEN, marginBottom: 4},
-    name: {fontSize: 20, fontWeight: 'bold', color: GREEN, marginBottom: 4},
+    name: {fontSize: 20, fontWeight: 'Helvecta-Bold', color: GREEN, lineHeight: 1.2,  marginBottom: 10},
     subheader: {fontSize: 10, fontWeight: 'bold', color: MUTED, marginBottom: 4},
     metaRow: {flexDirection: 'row', flexWrap: 'wrap', marginTop: 8, marginBottom: 12, paddingBottom: 8, borderBottomWidth: 1.5, borderBottomColor: GREEN,},
     metaItem: {width: '33.33%', paddingRight: 8, marginBottom: 8 },

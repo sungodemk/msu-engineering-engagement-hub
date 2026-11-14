@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Portfolio.css';
+import { API_BASE } from '../api';
 
 const NUMERIC_KEYS = ['total_giving', 'active_research', 'recruiting_volume'];
 const DORMANT_DAYS = 365;
@@ -30,7 +31,7 @@ function Portfolio() {
 
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/portfolio')
+        fetch('${API_BASE}/api/portfolio')
         .then(res => res.json())
         .then(setCompanies);
     }, []);

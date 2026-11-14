@@ -39,6 +39,7 @@ services:
       migrate:
         condition: service_completed_successfully
     command: sh -c "python scripts/load_fixtures.py && python scripts/load_kuali.py && python scripts/load_handshake.py && python scripts/load_spreadsheets.py && python scripts/entity_edits.py && python scripts/company_matcher.py && python scripts/person_matcher.py"
+    profiles: ["seed"]  
   # A name for this container
   flask-app:
     container_name: engagement-hub

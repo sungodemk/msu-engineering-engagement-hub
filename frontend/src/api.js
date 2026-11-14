@@ -1,6 +1,6 @@
 import { auth } from './firebase';
 
-const API_BASE = 'http://localhost:8080';
+export const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:8080';
 
 export async function apiFetch(path, options = {}) {
     const user = auth.currentUser;

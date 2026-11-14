@@ -19,9 +19,10 @@ from routes.profile import bp as profile_bp
 from routes.edits import bp as edits_bp
 from auth import require_login
 from email_sender import send_email
+import json
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
+CORS(app, resources={r"/api/*": {"origins": os.environ.get("CORS_ORIGINS", "http://localhost:5173").split(",")}})
 
 
 app.register_blueprint(company_bp)
@@ -32,13 +33,18 @@ app.register_blueprint(profile_bp)
 app.register_blueprint(edits_bp)
 
 FIREBASE_KEY = os.environ.get("FIREBASE_CREDENTIALS", "/app/firebase-key.json")
+key_json = os.environ.get("FIREBASE_CREDENTIALS_JSON")
+
 if not firebase_admin._apps:
-    if os.path.exists(FIREBASE_KEY):
+    if key_json:
+        # uses the deployed Render env variable 
+        firebase_admin.initialize_app(credentials.Certificate(json.loads(key_json)))
+    elif os.path.exists(FIREBASE_KEY):
         firebase_admin.initialize_app(credentials.Certificate(FIREBASE_KEY))
     else:
-        app.logger.warning("Firebase key not found at %s, login will not work")
-        firebase_admin.initialize_app(credentials.Certificate(FIREBASE_KEY))
-
+        app.logger.warning("Firebase key not found, login will not work")
+        firebase_admin.initialize_app(options={'projectId': "msu-capstone-384e5"})
+        
 
 
 

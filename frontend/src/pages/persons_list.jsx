@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState  } from "react";
 import {Link, useNavigate } from 'react-router-dom';
 import '../css/persons_page.css';
 
-const API_BASE = "http://localhost:8080";
+import { API_BASE } from "../api";
 
 const COLUMNS = [
     { key: 'display_name', label: 'Name' },

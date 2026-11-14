@@ -9,6 +9,7 @@ import Temporal from '../graphs/temporal'
 import FollowButton from '../components/FollowButton.jsx';
 import EditEntityButton from '../components/EditEntityButton.jsx';
 import RelationshipGraph from '../graphs/relationship.jsx';
+import { API_BASE } from '../api.js';
 
 function CompanyPage() {
     useEffect(() => {
@@ -100,7 +101,7 @@ function CompanyPage() {
             notes,
         };
         try {
-            const response = await fetch(`http://localhost:8080/api/companies/${id}/log_activity`, {
+            const response = await fetch(`${API_BASE}/api/companies/${id}/log_activity`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -127,7 +128,7 @@ function CompanyPage() {
 
     async function deleteLoggedActivity(activity_id) {
         try {
-            const response = await fetch(`http://localhost:8080/api/companies/${id}/log_activity?activity_id=${activity_id}`, {
+            const response = await fetch(`${API_BASE}/api/companies/${id}/log_activity?activity_id=${activity_id}`, {
                 method: "DELETE",
             });
 
@@ -213,7 +214,7 @@ function CompanyPage() {
     const inboundGivingsCount = Object.fromEntries(company?.inbound_giving_counts ? (Object.keys(company.inbound_giving_counts).map((type) => [type, company.inbound_giving_counts[type]])) || [] : []);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/portfolio`)
+        fetch(`${API_BASE}/api/portfolio`)
         .then(result => result.json())
         .then(data => {
             setPortfolios(data);
@@ -237,7 +238,7 @@ function CompanyPage() {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/companies/${id}/capstone_sponsorships`)
+        fetch(`${API_BASE}/api/companies/${id}/capstone_sponsorships`)
         .then(result => result.json())
         .then(data => {
             setTotalCapsTeams(data.length);
@@ -247,7 +248,7 @@ function CompanyPage() {
 
     useEffect(() => {
         if (latestDate) {
-            fetch(`http://localhost:8080/api/days_passed?last_date=${latestDate}`)
+            fetch(`${API_BASE}/api/days_passed?last_date=${latestDate}`)
             .then(result => result.json())
             .then(data => {
                 setDaysPassed(data.days_passed);
@@ -259,7 +260,7 @@ function CompanyPage() {
     }, [latestDate]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/companies/${id}/active_research_awards`)
+        fetch(`${API_BASE}/api/companies/${id}/active_research_awards`)
         .then(result => result.json())
         .then(data => {
             setActiveResearchAwards(data.active_research_awards);
@@ -267,7 +268,7 @@ function CompanyPage() {
     }, [id]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/companies/${id}/all_research_awards`)
+        fetch(`${API_BASE}/api/companies/${id}/all_research_awards`)
         .then(result => result.json())
         .then(data => {
             setAllResearchAwards(data.research_awards);
@@ -278,7 +279,7 @@ function CompanyPage() {
     const capsTotalAmount = capsTeams.reduce((total, team) => total + parseFloat(team.amount || 0), 0);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/companies/${id}/log_activity`)
+        fetch(`${API_BASE}/api/companies/${id}/log_activity`)
         .then(result => result.json())
         .then(data => {
             setLogActivities(data.activities);
@@ -286,7 +287,7 @@ function CompanyPage() {
     }, [id]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/companies/${id}/temporal`)
+        fetch(`${API_BASE}/api/companies/${id}/temporal`)
         .then(result => result.json())
         .then(data => {
             setActivities(data);
@@ -294,7 +295,7 @@ function CompanyPage() {
     }, [id]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/companies/${id}/relationship`)
+        fetch(`${API_BASE}/api/companies/${id}/relationship`)
             .then(result => (result.ok ? result.json() : null))
             .then(data => setLoaded({ id: id, data }))
             .catch(() => setLoaded({ id: id, data: null }));
@@ -304,7 +305,7 @@ function CompanyPage() {
     const graph = isLoaded ? loaded.data : null;
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/persons`)
+        fetch(`${API_BASE}/api/persons`)
         .then((res) => {
             if (!res.ok) throw new Error(`Server returned ${res.status}`);
             return res.json();
@@ -319,7 +320,7 @@ function CompanyPage() {
         setCompany(null);
         setError(null);
 
-        fetch(`http://localhost:8080/api/companies/${id}`)
+        fetch(`${API_BASE}/api/companies/${id}`)
         .then(res => {
                 if (res.status === 404) throw new Error('Company not found');
                 if (!res.ok) throw new Error('Server has returned');
