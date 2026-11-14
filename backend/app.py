@@ -22,7 +22,8 @@ from email_sender import send_email
 import json
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": os.environ.get("CORS_ORIGINS", "http://localhost:5173").split(",")}})
+origins = [o.strip().rstrip("/") for o in os.environ.get("CORS_ORIGINS", "http://localhost:5173").split(",") if o.strip()]
+CORS(app, resources={r"/api/*": {"origins":origins}})
 
 
 app.register_blueprint(company_bp)
@@ -44,7 +45,7 @@ if not firebase_admin._apps:
     else:
         app.logger.warning("Firebase key not found, login will not work")
         firebase_admin.initialize_app(options={'projectId': "msu-capstone-384e5"})
-        
+app.logger.warning("CORS origins: %s", origins)
 
 
 
