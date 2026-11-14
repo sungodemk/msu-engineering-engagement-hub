@@ -13,12 +13,7 @@
     margin: 0 0 16px;
     font-size: 1.5em;
 }
-.db-layout {
-    display: grid;
-    grid-template-columns: 300px minmax(0, 1fr);
-    gap: 20px;
-    align-items: start;
-}
+
 .db-card {
     background-color: #ffffff;
     border: 1px solid #e3e6e8;
@@ -32,11 +27,7 @@
 }
 .db-empty{ color: #6b7378;}
 
-@media (max-width: 900px) {
-    .db-layout {
-        grid-template-columns: 1fr;
-    }
-}
+
 .db-count {
     margin-left: 6px;
     color:#6b7378;
@@ -58,7 +49,7 @@
     justify-content: space-between;
     align-items: center;
     margin: 4px 0 8px;
-    font-size: 0.85rems;
+    font-size: 0.85rem;
     color: #6b7378;
 }
 .db-list-actions button {
@@ -100,11 +91,7 @@
 .db-company-sub { font-size: 0.8rem; color: #6b7378;}
 .db-error { color: #b42318;}
 
-.db-right {
-    display: grid;
-    gap: 20px;
-    min-width: 0;
-}
+
 .db-section-head {
     display: flex;
     justify-content: space-between;
@@ -167,7 +154,7 @@
     font-size: 0.9rem;
 }
 .db-table th {
-    position: relative;
+    position: sticky;
     top: 0;
     background: #ffffff;
     padding: 8px;
@@ -198,4 +185,133 @@
     z-index: 10;
     pointer-events: none;
     transform: translateY(-56px);
+}
+
+.db-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+.db-header .db-title {margin: 0;}
+.db-drawer-toggle {
+    display:inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #18453B;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+}
+.db-drawer-toggle:hover { background: #12352c; }
+.db-badge {
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255, 0.2);
+    font-size: 0.8rem;
+}
+
+.db-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-bottom: 16px;
+}
+.db-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.db-legend-item:hover { text-decoration: underline;}
+
+.db-main {
+    display: grid;
+    gap: 20px;
+    min-width: 0;
+}
+.db-link-btn {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #18453B;
+    font: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.db-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 25, 22, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 900;
+}
+.db-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+.db-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 360px;
+    max-width: 90vw;
+    height: 100vh;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: -8px 0 24px rgba(0,0,0, 0.15);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.25s ease, visibility 0s linear 0.25s;
+    z-index: 901;
+}
+.db-drawer.open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform 0.25s ease;
+}
+.db-drawer-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.db-drawer-head .db-section-title { margin-bottom: 0; }
+.db-drawer-close {
+    padding: 4px 8px;
+    border: none;
+    background: none;
+    color: #6b7378;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.db-drawer-close:hover { color: #1d2327;}
+.db-drawer .db-company-list {
+    flex: 1;
+    max-height: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .db-drawer, .db-backdrop { transition: none;}
+}
+.db-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
 }

@@ -34,6 +34,8 @@ function Dashboard() {
     const requested = useRef(new Set());
     const [graphView, setGraphView] = useState('temporal');
     const [typeFilter, setTypeFilter] = useState('all');
+    const [timelineIndustry, setTimelineIndustry] = useState('all');
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(() => {
         apiFetch('/api/me/follows')
@@ -68,6 +70,13 @@ function Dashboard() {
         }
     }, [selected]);
 
+    useEffect(() => {
+        if (!drawerOpen) return;
+        const onKey = (e) => { if(e.key === 'Escape') setDrawerOpen(false); };
+        window.addEventListener('keydown', onKey);
+        return ()=> window.removeEventListener('keydown', onKey);
+    }, [drawerOpen]);
+
     const industries = useMemo(
         () => [...new Set(companies.map((c) => c.industry).filter(Boolean))].sort(),
         [companies],
@@ -98,28 +107,162 @@ function Dashboard() {
     
     // every companies activity merged into one list ordered by the newest one 
     const allActivities = selectedCompanies.flatMap((c) =>
-        (details[c.id]?.activities ?? []).map((a) => ({ ...a, companyId: c.id, companyName: c.name })));
+        (details[c.id]?.activities ?? []).map((a) => ({ ...a, companyId: c.id, companyName: c.name, companyIndustry: c.industry })));
     const activityType = [...new Set(allActivities.map((a) => a.activity_type).filter(Boolean))].sort();
+    const timelineIndustries = [...new Set(selectedCompanies.map((c) => c.industry).filter(Boolean))].sort();
     const timeline = allActivities
         .filter((a) => typeFilter === 'all' || a.activity_type === typeFilter)
+        .filter((a) => timelineIndustry === 'all' || a.companyIndustry === timelineIndustry)
         .sort((a,b) => toTime(b.occurred_on) - toTime(a.occurred_on));
     
     return (
-        <div className='dashboard-page'>
-            <h1 className='db-title'>Dashboard</h1>
+        <div className='dashboard-page'> 
+            <div className='db-header'>
+                <h1 className='db-title'>Dashboard</h1>
+                <button type='button' className='db-drawer-toggle'
+                        aria-expanded={drawerOpen} aria-controls='db-drawer'
+                        onClick={() => setDrawerOpen(true)}>
+                    Followed Companies
+                    <span className='db-badge'>{selected.length}/{companies.length}</span>
+                </button>        
+            </div>
 
-            <div className='db-layout'>
-                <aside className='db-card db-companies'>
-                    <div className='db-section-title'>
-                        Followed Companies <span className='db-count'>{companies.length}</span>
+            {selectedCompanies.length > 0 && (
+                <div className='db-legend'>
+                    {selectedCompanies.map((c) => (
+                        <Link key={c.id} to={`/company_page/${c.id}`} className='db-legend-item'>
+                            <span className='db-dot' style={{ background: colorFor(c.id) }} />
+                            {c.name}
+                        </Link>
+                    ))}
+                </div>
+            )}
+
+            <div className='db-main'>
+                {/*graphs in the cetner of the page*/}
+                <section className='db-card'>
+                    <div className='db-section-head'>
+                        <div className='db-section-title'>Graphs</div>
+                        <div className='db-toggle'>
+                            <button type='button' className={graphView === 'temporal' ? 'active' : '' }
+                                    onClick={() => setGraphView('temporal')}>Temporal</button>
+                            <button type='button' className={graphView === 'relationship' ? 'active' : '' }
+                                    onClick={() => setGraphView('relationship')}>Relationship</button>
+                        </div>
                     </div>
+
+                    {selectedCompanies.length === 0 ? (
+                        <div className='db-empty'>
+                            No Companies Selected.{' '}
+                            <button type='button' className='db-link-btn' onClick={() => setDrawerOpen(true)}>
+                                Choose companies
+                            </button>{' '}
+                            to compare their graphs.
+                        </div>
+                    ) : (
+                        <div className='db-graph-grid'>
+                            {selectedCompanies.map((c) => {
+                                const d = details[c.id];
+                                return(
+                                    <div className='db-graph-card' key={c.id}>
+                                        <div className='db-graph-head'>
+                                            <span className='db-dot' style={{ background: colorFor(c.id) }} />
+                                            <Link to={`/company_page/${c.id}`}>{c.name}</Link>
+                                        </div>
+                                        {!d || d.loading ? (
+                                            <div className='db-empty'>Loading...</div>
+                                        ) : graphView ==='temporal' ?(
+                                            d.activities.length > 0
+                                                ? <div className='db-graph-scroll'><Temporal activities={d.activities} /></div>
+                                                : <div className='db-empty'>No temporal data available.</div>
+                                        ) : (
+                                            d.graph
+                                                ? <RelationshipGraph data={d.graph} />
+                                                : <div className='db-empty'>No relationship data available.</div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </section>
+
+                <section className='db-card'>
+                    <div className='db-section-head'>
+                        <div className='db-section-title'>
+                            Combined Activity Timeline <span className='db-count'>{timeline.length}</span>
+                        </div>
+                        <div className='db-filter'>
+                            <select className='db-select db-select-inline' value={timelineIndustry}
+                                    onChange={(e) => setTimelineIndustry(e.target.value)}>
+                                <option value='all'>All industries</option>
+                                {timelineIndustries.map((i) => <option key={i} value={i}>{i}</option>)}
+                            </select>
+                            <select className='db-select db-select-inine' value={typeFilter}
+                                    onChange={(e) => setTypeFilter(e.target.value)}>
+                                <option value='all'>All types</option>
+                                {activityType.map((t) => <option key={t} value={t}>{humanize(t)}</option>)}
+                            </select>
+                        </div>
+                    </div>
+                    {timeline.length === 0 ? (
+                        <div className='db-empty'>
+                            {selectedCompanies.length === 0 ? 'Choose companies to build a timeline.' : 'No activities found.'}
+                        </div>
+                    ) : (
+                        <div className='db-table-wrap'>
+                            <table className='db-table'>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Company</th>
+                                        <th>Type</th>
+                                        <th>Notes</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {timeline.map((a) => (
+                                        <tr key={`${a.companyId}-${a.id}`}>
+                                            <td className='db-nowrap'>{showDate(a.occurred_on)}</td>
+                                            <td>
+                                                <span className='db-cell-company'>
+                                                    <span className='db-dot' style={{ background: colorFor(a.companyId) }} />
+                                                    {a.companyName}
+                                                </span>
+                                            </td>
+                                            <td>{humanize(a.activity_type)}</td>
+                                            <td className='db-notes'>{a.notes}</td>
+                                            <td className='db-nowrap'>{showMoney(a.amount)}</td>
+                                            <td>{a.status ? humanize(a.status) : ''}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </section>
+            </div>
+
+            {/* followed companies side out panel */}
+            <div className={`db-backdrop${drawerOpen ? ' open' : ''}`} onClick={() => setDrawerOpen(false)} />
+                <aside id='db-drawer' className={`db-drawer${drawerOpen ? ' open' : ''}`} aria-label='Followed companies'>
+                    <div className='db-drawer-head'>
+                        <div className='db-section-title'>
+                            Followed Companies <span className='db-count'>{companies.length}</span>
+                        </div>
+                        <button type='button' className='db-drawer-close' aria-label='Close'
+                                onClick={() => setDrawerOpen(false)}>x</button>
+                    </div>
+
                     {loading && <div className='db-empty'>Loading...</div>}
                     {error && <div className='db-error'>{error}</div>}
 
                     {!loading && !error && companies.length === 0 && (
                         <div className='db-empty'>
-                            You're not following any companies yet. Open a company from {' '}
-                            <Link to="/portfolio">Portfolio</Link> and click follow 
+                            You are not following any companies yet. Open a company from{' '}
+                            <Link to="/portfolio">Portfolio</Link> and click Follow.
                         </div>
                     )}
 
@@ -145,11 +288,11 @@ function Dashboard() {
                                     const full = !checked && selected.length >= MAX_SELECTED;
                                     return (
                                         <li key={c.id}>
-                                            <label className={`db-company${full ? ` db-disabled` : ''}`}
-                                                   title={full ?  `Select up to ${MAX_SELECTED}` : ''}>
+                                            <label className={`db-company${full ? ' db-disabled' : ''}`}
+                                                    title={full ? `Select up to ${MAX_SELECTED}` : ''}>
                                                 <input type="checkbox" checked={checked} disabled={full}
-                                                       onChange={() => toggle(c.id)} />
-                                                <span className="db-dot" style={{ background: colorFor(c.id) }} />
+                                                    onChange={() => toggle(c.id)} />
+                                                <span className='db-dot' style={{ background: colorFor(c.id) }} />
                                                 <span className='db-company-text'>
                                                     <span className='db-company-name'>{c.name}</span>
                                                     {c.industry && <span className='db-company-sub'>{c.industry}</span>}
@@ -158,109 +301,12 @@ function Dashboard() {
                                         </li>
                                     );
                                 })}
-                                {visible.length === 0 && <li className='db-empty'>No companies match.</li>}
+                                {visible.length === 0 && <li className='db-empty'>No Companies match.</li>}
                             </ul>
                         </>
-
                     )}
                 </aside>
-
-                <div className='db-right'>
-                    {/*graphs*/}
-                    <section className='db-card'>
-                        <div className='db-section-head'>
-                            <div className='db-section-title'>Graphs</div>
-                            <div className='db-toggle'>
-                                <button type='button' className={graphView === 'temporal' ? 'active' : ''}
-                                        onClick={() => setGraphView('temporal')}>Temporal</button>
-                                <button type='button' className={graphView === 'relationship' ? 'active' : ''}
-                                        onClick={() => setGraphView('relationship')}>Relationship</button>        
-                            </div>
-                        </div>
-
-                        {selectedCompanies.length === 0 ? (
-                            <div className='db-empty'>Check off companies on the left to see their graphs.</div>
-                        ) : (
-                            <div className='db-graph-grid'>
-                                {selectedCompanies.map((c) => {
-                                    const d = details[c.id];
-                                    return (
-                                        <div className='db-graph-card' key={c.id}>
-                                            <div className='db-graph-head'>
-                                                <span className='db-dot' style={{ background: colorFor(c.id) }} />
-                                                <Link to={`/company_page/${c.id}`}>{c.name}</Link>
-                                            </div>
-                                            {!d || d.loading ? (
-                                                <div className='db-empty'>Loading...</div>
-                                            ) : graphView === 'temporal' ? (
-                                                d.activities.length > 0 
-                                                ? <div className='db-graph-scroll'><Temporal activities={d.activities} /> </div>
-                                                : <div className='db-empty'>No temporal data available.</div>
-                                            ) : (
-                                                d.graph
-                                                    ? <RelationshipGraph data={d.graph} />
-                                                    : <div className='db-empty'>No relationship data available.</div>
-                                            )}
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        )}    
-                    </section>
-                    <section className='db-card'>
-                        <div className='db-section-head'>
-                            <div className='db-section-title'>
-                                Combined Activity Timeline <span className='db-count'>{timeline.length}</span>
-                            </div>
-                            <select className='db-select db-select-inline' value={typeFilter}
-                                    onChange={(e) => setTypeFilter(e.target.value)}>
-                                <option value="all">All types</option>
-                                    {activityType.map((t) => <option key={t} value={t}>{humanize(t)}</option>)}
-                            </select>
-                        </div>
-                        {timeline.length === 0 ? (
-                            <div className='db-empty'>
-                                {selectedCompanies.length === 0 ? 'Check companies to build a timeline.' : 'No activities found '}
-                            </div>
-
-                        ) : (
-                            <div className='db-table-wrap'>
-                                <table className='db-table'>
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Company</th>
-                                            <th>Type</th>
-                                            <th>Notes</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {timeline.map((a) => (
-                                            <tr key={`${a.companyId}-${a.id}`}>
-                                                <td className='db-nowrap'>{showDate(a.occurred_on)}</td>
-                                                <td>
-                                                    <span className='db-cell-company'>
-                                                        <span className='db-dot' style={{background: colorFor(a.companyId) }} />
-                                                        {a.companyName}
-                                                    </span>
-                                                </td>
-                                                <td>{humanize(a.activity_type)}</td>
-                                                <td className='db-notes'>{a.notes}</td>
-                                                <td className='db-nowrap'>{showMoney(a.amount)}</td>
-                                                <td>{a.status ? humanize(a.status) : ''}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        )}
-                    </section>
-                </div>
             </div>
-        </div>
-    );
+        );
 }
 export default Dashboard;
- 
