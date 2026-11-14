@@ -31,7 +31,7 @@ function Portfolio() {
 
 
     useEffect(() => {
-        fetch('${API_BASE}/api/portfolio')
+        fetch(`${API_BASE}/api/portfolio`)
         .then(res => res.json())
         .then(setCompanies);
     }, []);

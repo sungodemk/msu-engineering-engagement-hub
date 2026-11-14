@@ -3,8 +3,7 @@ import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import MatchCard from '../components/MatchCard.jsx';
 import '../css/stewardship_queue.css';
-import { apiFetch } from '../api';
-import { API_BASE } from '../api';
+import { apiFetch, API_BASE } from '../api';
 
 
 function StewardshipQueue() {
@@ -18,7 +17,7 @@ function StewardshipQueue() {
 
     function loadQueue() {
         // load company and person matcher results
-        fetch("${API_BASE}/api/stewardship-queue")
+        fetch(`${API_BASE}/api/stewardship-queue`)
             .then(result => {
                 if (!result.ok) {
                     throw new Error("Failed to load stewardship queue");
