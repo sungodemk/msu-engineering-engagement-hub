@@ -55,17 +55,21 @@ function RelationshipGraph({data}) {
                         'text-halign': 'center',
                         width: 130,
                         height: 60,
-                        shape: 'round-rectangle',
                         'background-color': '#999',
                     },
                 },
                 {
                     selector: 'node[type = "company"]',
-                    style: { 'background-color': TYPE_COLORS.company, color: '#ffffff' },
+                    style: { 'background-color': TYPE_COLORS.company,
+                        color: '#ffffff',
+                        shape: 'round-rectangle'
+                    },
                 },
                 {
                     selector: 'node[type = "msu_unit"]',
-                    style: { 'background-color': TYPE_COLORS.msu_unit },
+                    style: { 'background-color': TYPE_COLORS.msu_unit,
+                            shape: 'round-octagon'
+                    },
                 },
                 {
                     selector: 'node[type = "staff"]',
@@ -89,7 +93,7 @@ function RelationshipGraph({data}) {
                         width: 1,
                         'line-color': '#ccc',
                         'target-arrow-color': '#ccc',
-                        'target-arrow-shape': 'triangle',
+                        'target-arrow-shape': 'circle-triangle',
                         'curve-style': 'bezier',
                         'font-size': '8px',
                         color: '#777',
@@ -113,6 +117,7 @@ function RelationshipGraph({data}) {
             name: 'breadthfirst',
             directed: true,
             direction: 'upward',
+            roots: data.nodes.filter(n => n.type === 'company').map(n => n.id),
             animate: true,
             randomize: true,
             fit: true,

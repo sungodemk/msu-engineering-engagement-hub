@@ -1,8 +1,7 @@
 //Emmanuel Koshy
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-
-const API_URL = 'http://localhost:8080'; 
+import { API_BASE } from '../api.js';
 
 
 const LINKS = {
@@ -26,7 +25,7 @@ function SidebarSearch() {
         setResults(null);
         let ignored = false;
         const timer = setTimeout(() => {
-            fetch(`${API_URL}/api/search?q=${encodeURIComponent(term)}`)
+            fetch(`${API_BASE}/api/search?q=${encodeURIComponent(term)}`)
                 .then(response => response.json())
                 .then((data) => { if (!ignored) setResults(data); })
                 .catch(() => { if (!ignored) setResults([]); });
