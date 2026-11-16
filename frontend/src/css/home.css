@@ -38,10 +38,15 @@
 
 
 .card {
+    display: block;
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
 }
 
 .card-head{
@@ -73,17 +78,18 @@
 
 }
 
-.card a {
-
-    color: #4a5b55;
-    text-decoration: none;
-    font-size: 0.85em;
-}
-
-.card a:hover {
+.card:hover {
     color: #18453B;
-
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
+
+.card-link {
+    color: #4a5b55;
+    font-size: 0.85em;
+    text-decoration: underline;
+}
+
 .card-icon{
     width: 36px;
     height: 36px;

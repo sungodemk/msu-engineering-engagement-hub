@@ -134,7 +134,7 @@ function StewardshipQueue() {
         <div className="stewardship-page">
             <div className="stewardship-header">
                 <div>
-                    <h1>Stewardship Queue</h1>
+                    <h1>Match Review</h1>
                     <p>
                         Review possible duplicate records found across our data sources.
                     </p>

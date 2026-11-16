@@ -127,7 +127,7 @@ function Portfolio() {
           <span onClick={() => handleSort('last_activity_date')}>Last Activity{arrow('last_activity_date')}</span>
           <span onClick={() => handleSort('total_giving')}>Total Giving{arrow('total_giving')}</span>
           <span onClick={() => handleSort('active_research')}>Research (Active){arrow('active_research')}</span>
-          <span onClick={() => handleSort('recruiting_volume')}>Recruiting{arrow('recruiting_volume')}</span>
+          <span onClick={() => handleSort('recruiting_volume')}>Recruiting Events{arrow('recruiting_volume')}</span>
         </div>
 
         {sorted.map(c => (

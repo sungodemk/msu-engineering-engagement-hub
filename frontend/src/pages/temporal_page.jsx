@@ -97,7 +97,7 @@ function TemporalPage() {
         <div className="graph-page">
             <div className="graph-header">
                 <div>
-                    <p className="graph-type">Temporal Activity Graph</p>
+                    <p className="graph-type">Engagement Timelines</p>
                     <h1>{company ? company.display_name : 'Select a company'}</h1>
                 </div>
 

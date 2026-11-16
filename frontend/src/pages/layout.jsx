@@ -12,10 +12,10 @@ import SidebarFollows from '../components/SidebarFollows';
 /* Emmanuel Koshy */
 const navItems = [
     {to: '/', label: 'Home'},
-    {to: '/persons', label: 'Persons', icon:"👤"},
+    {to: '/persons', label: 'People', icon:"👤"},
     {to: '/portfolio', label: 'Portfolio', icon:"📂"},
-    {to: '/stewardship', label: 'Stewardship Queue',icon:"📝"},
-    {to: '/temporal', label: 'Temporal Graph',icon:"📈"},
+    {to: '/stewardship', label: 'Match Review',icon:"📝"},
+    {to: '/temporal', label: 'Engagement Timelines',icon:"📈"},
     {to: '/relationship', label: 'Relationship Graph',icon:"🔗"},
     {to: '/dashboard', label: 'Dashboard', icon:"📋"},
     // Added Admin's Account Approval page (Zhixiang Miao)

@@ -22,7 +22,7 @@ function Home() {
 const cards = [
     {
       icon: '👤',
-      title: 'Person',
+      title: 'People',
       body: 'Connect with professionals and maintain your network.',
       to: '/persons',
       link: 'View People'
@@ -36,18 +36,18 @@ const cards = [
     },
     {
       icon: '📊',
-      title: 'Stewardship Queue',
-      body: 'Gain insights from your engineering data and performance metrics.',
+      title: 'Match Review',
+      body: 'Gain insights from your engineering data and merge companies and contacts.',
       to: '/stewardship',
-      link: 'View Stewardship'
+      link: 'View Match Review'
     },
     // Added Temporal Graph card (Alvin)
     {
       icon: '📅',
-      title: 'Temporal Graph',
+      title: 'Engagement Timelines',
       body: 'View the timeline of a company.',
       to: '/temporal',
-      link: 'View Temporal Graph'
+      link: 'View Engagement Timelines'
     },
     {
         icon: '🔗',
@@ -78,14 +78,14 @@ const cards = [
      
       <div className="card-grid">
         {cards.map((card) => (
-          <div className="card" key={card.title}>
+          <Link className="card" to={card.to} key={card.title}>
             <div className="card-head">
             <span className="card-icon">{card.icon}</span>
           </div>
           <h2>{card.title}</h2>
           <p>{card.body}</p>
-          <Link to={card.to}>{card.link}</Link>
-          </div>
+          <span className="card-link">{card.link}</span>
+          </Link>
         ))}
       </div>
     </div>

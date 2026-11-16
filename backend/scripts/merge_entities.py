@@ -35,6 +35,16 @@ def move_column(cur, survivor_id, duplicate_id, table, row_type, column, match_i
     if table == "edges":
         other_column = "to_entity_id" if column == "from_entity_id" else "from_entity_id"
         edge_filter = f"AND {other_column} <> %(survivor)s"
+        edge_filter += f"""
+                    AND NOT EXISTS (
+                        SELECT 1
+                        FROM edges survivor_edge
+                        WHERE survivor_edge.{column} = %(survivor)s
+                            AND survivor_edge.{other_column} = edges.{other_column}
+                            AND survivor_edge.edge_type = edges.edge_type
+                            AND survivor_edge.edge_role IS NOT DISTINCT FROM edges.edge_role
+                    )
+                """
 
     params = {
         "survivor": survivor_id,

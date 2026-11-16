@@ -879,7 +879,7 @@ function CompanyPage() {
             {(activeBox === 'all' || activeBox === 'temporal_graph') && (
                 <div className="temporal_graph_box">
                     <div className="temporal_graph_title_box">
-                        <div className="temporal_graph_title">📈Temporal Graph</div>
+                        <div className="temporal_graph_title">📈Engagement Timeline</div>
                     </div>
                     {activities.length > 0 ? (
                         <Temporal activities={activities} />
