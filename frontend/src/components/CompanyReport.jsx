@@ -177,9 +177,9 @@ function CompanyReport({ company, owner, c_contacts = [], activities = [], capst
                         rows={c_contacts}
                         empty="No contacts on record."
                         columns={[
-                            { label: 'Organization', width: '40%', value: (a) => a.display_name },
+                            { label: 'Organization', width: '30%', value: (a) => a.display_name },
                             { label: 'Title', width: '40%', value: (a) => a.title },
-                            { label: 'Contact Email', width: '20%', value: (a) => a.email },
+                            { label: 'Contact Email', width: '30%', value: (a) => a.email },
                         ]}
                     />
                 </Section>
