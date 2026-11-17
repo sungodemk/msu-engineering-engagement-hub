@@ -1,5 +1,5 @@
 // shows the linked staff person in the sidebar (Aayush)
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
@@ -11,6 +11,7 @@ function SidebarProfile() {
     const [profile, setProfile] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
+    const profileRef = useRef(null);
 
     useEffect(() => {
         apiFetch('/api/me/profile')
@@ -42,14 +43,26 @@ function SidebarProfile() {
     }
 
     
+    // Closes the profile menu when the user clicks on anywhere of the webpage outside of the menu and the profile button (Zhixiang Miao)
+    useEffect(() => {
+        function pointerdownHandler(e) {
+            if (profileRef.current && !profileRef.current.contains(e.target)) {
+                setMenuOpen(false);
+            }
+        }
+        document.addEventListener('pointerdown', pointerdownHandler);
+        
+        return () => document.removeEventListener('pointerdown', pointerdownHandler);
+    }, []);
+    
     if (!profile) return null;
 
     const name = profile.person_name || profile.display_name;
     const avatar = name.split(/\s+/).map((part) => part[0]).join('').slice(0, 2).toUpperCase();
 
     return (
-        
-        <div className="sidebar-profile-container">
+        <div className="sidebar-profile-container" ref={profileRef}>
+            {/* Profile button, and when the user clicks on the profile button, the profile menu can switch between open and close (Zhixiang Miao) */}
             <button type="button" className="sidebar-profile" onClick={menuSwitch}>
                 <div className="sidebar-profile-avatar">{avatar}</div>
                 <div>
