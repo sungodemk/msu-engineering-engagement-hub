@@ -27,10 +27,10 @@ const humanize = (v) => {
 
 const styles = StyleSheet.create({
     page: {paddingTop: 40, paddingBottom: 56, paddingHorizontal: 44, fontSize: 10, fontFamily: 'Helvetica',  color: '#1d2327', lineHeight: 1.4},
-    brand: {fontSize: 16, fontFamily: 'bold', color: GREEN, marginBottom: 8},
-    header: {fontSize: 12, fontFamily: 'bold', color: GREEN, marginBottom: 4},
-    name: {fontSize: 20, fontFamily: 'Helvecta-Bold', color: GREEN, lineHeight: 1.2,  marginBottom: 10},
-    subheader: {fontSize: 10, fontFamily: 'bold', color: MUTED, marginBottom: 4},
+    brand: {fontSize: 16, fontFamily: 'Helvetica-Bold', color: GREEN, marginBottom: 8},
+    header: {fontSize: 12, fontFamily: 'Helvetica-Bold', color: GREEN, marginBottom: 4},
+    name: {fontSize: 20, fontFamily: 'Helvetica-Bold', color: GREEN, lineHeight: 1.2,  marginBottom: 10},
+    subheader: {fontSize: 10, fontFamily: 'Helvetica-Bold', color: MUTED, marginBottom: 4},
     metaRow: {flexDirection: 'row', flexWrap: 'wrap', marginTop: 8, marginBottom: 12, paddingBottom: 8, borderBottomWidth: 1.5, borderBottomColor: GREEN,},
     metaItem: {width: '33.33%', paddingRight: 8, marginBottom: 8 },
     metaLabel: {fontSize: 7.5, color: MUTED, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 1},
@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
     flags: {flexDirection: 'row', marginTop: 6},
     flag: {fontSize: 10, color: MUTED, marginRight: 8},
     section: {marginTop: 16, marginBottom: 8},
-    sectionTitle: {fontSize: 12, fontFamily: 'bold', color: GREEN, marginBottom: 4},
+    sectionTitle: {fontSize: 12, fontFamily: 'Helvetica-Bold', color: GREEN, marginBottom: 4},
     thead: {flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: LINE, borderBottomStyle: 'solid', marginBottom: 4},
-    th: {fontSize: 10, fontFamily: 'bold', color: GREEN, paddingRight: 6},
+    th: {fontSize: 10, fontFamily: 'Helvetica-Bold', color: GREEN, paddingRight: 6},
     row: {flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: LINE, borderBottomStyle: 'solid', marginBottom: 4},
     cell: {fontSize: 10, color: '#1d2327', paddingRight: 6},
-    empty: {fontSize: 10, color: MUTED, fontStyle: 'italic', flex: 1},
+    empty: {fontSize: 10, color: MUTED, fontFamily: 'Helvetica-Oblique', flex: 1},
     item: {marginBottom: 4},
     itemHead: {flexDirection: 'row', justifyContent: 'space-between', marginBottom: 2},
     itemTitle: {fontFamily: 'Helvetica-Bold'},
@@ -127,7 +127,7 @@ function PersonReport({ data, notes = [] }) {
     const openAsks = activities.filter((a) => a.activity_type === 'ask' && a.status === 'open').length;
     const giving = activities.filter((a) => a.activity_type === 'gift').reduce((t, a) => t + (a.amount ?? 0), 0);
     const ownerText = owner
-        ? `${owner.name}${owner.source === 'company' ? `(via ${current?.company ?? 'company'})` : owner.role ? ` (${owner.role})` : ''}`
+        ? `${owner.name}${owner.source === 'company' ? ` (via ${current?.company ?? 'company'})` : owner.role ? ` (${owner.role})` : ''}`
         : 'Not assigned';
     const printed = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
