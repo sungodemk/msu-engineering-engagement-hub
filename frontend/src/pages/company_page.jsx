@@ -582,7 +582,7 @@ function CompanyPage() {
                         Temporal Graph
                     </button>
                     <button
-                        className={activeBox === "relationship_graph" ? "cp_box_tabactive" : "cp_box_tab"}
+                        className={activeBox === "relationship_graph" ? "cp_box_tab active" : "cp_box_tab"}
                         type="button"
                         onClick={() => setActiveBox("relationship_graph")}
                     >
@@ -637,11 +637,13 @@ function CompanyPage() {
                                                     )}
                                                     
                                                     {activity.act_data === 'logged' && (
-                                                            <td className='activity_type'>{
-                                                                activity.activity_type.charAt(0).toUpperCase() + activity.activity_type.slice(1)}
-                                                                <button className="delete_button" onClick={() => deleteLoggedActivity(activity.id)}>
-                                                                    Delete
-                                                                </button>
+                                                            <td className='activity_type'>
+                                                                <div className='log_act_wrapper'>
+                                                                    {activity.activity_type.charAt(0).toUpperCase() + activity.activity_type.slice(1)}
+                                                                    <button className="delete_button" onClick={() => deleteLoggedActivity(activity.id)}>
+                                                                        Delete
+                                                                    </button>
+                                                                </div>
                                                             </td>
                                                     )}
                                                     <td className='activity_sub_type'>{activity.activity_sub_type}</td>

@@ -164,6 +164,12 @@
     border: 0.05vw solid #18453B;
 }
 
+.log_act_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
 .delete_button {
     text-align: center;
     align-items: center;
@@ -174,4 +180,9 @@
     cursor: pointer;
     border-radius: 0.5vw;
     border: 0.05vw solid red;
+}
+
+.delete_button:hover {
+    background-color: red;
+    color: white;
 }
