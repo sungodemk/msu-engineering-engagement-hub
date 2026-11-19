@@ -471,12 +471,18 @@ function CompanyPage() {
                             <table className='company-table'>
                                 {activities.some(activity => activity.activity_type === 'gift') && (
                                 <tbody>
-                                    {activities.filter(activity => activity.activity_type === 'gift').map(activity => (
-                                        <tr key={activity.id}>
-                                            <td className='inbound_notes'>{activity.notes}</td>
-                                            <td className='inbound_amount'>{`${parseFloat(activity.amount).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 })}`}</td>
-                                            <td className='inbound_occurred_on'>{new Date(activity.occurred_on).toLocaleDateString('en-US')}</td>
-                                        </tr>
+                                    {activities
+                                        .filter(activity => activity.activity_type === 'gift')
+                                        .sort(
+                                            (event_1, event_2) => 
+                                                new Date(event_2.occurred_on).getTime() - new Date(event_1.occurred_on).getTime()
+                                        )
+                                        .map(activity => (
+                                            <tr key={activity.id}>
+                                                <td className='inbound_notes'>{activity.notes}</td>
+                                                <td className='inbound_amount'>{`${parseFloat(activity.amount).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 2 })}`}</td>
+                                                <td className='inbound_occurred_on'>{new Date(activity.occurred_on).toLocaleDateString('en-US')}</td>
+                                            </tr>
                                     ))}
                                 </tbody>)}
                             </table>
@@ -492,32 +498,37 @@ function CompanyPage() {
                         <div className='company-table-wrap'>
                             <table className='company-table'>
                                 <tbody>
-                                    {loggedActivities.map(activity => (
-                                        <tr key={activity.id}>
-                                            <td className='outbound_type'>{activity.activity_record_type.charAt(0).toUpperCase() + activity.activity_record_type.slice(1)}</td>
-                                            {activity.notes ? (
-                                                <td className='outbound_notes'>{activity.notes}</td>
-                                            ): <td></td>}
-                                            
-                                            {!activity.stage_name && (
-                                                <td></td>
-                                            )}
-                                            {activity.stage_name === "open" && (
-                                            <td className='activity_stage'>
-                                                <div className='open_act_box'>
-                                                    <div className='open_act_status'>{activity.stage_name}</div>
-                                                </div>
-                                            </td>
-                                            )}
-                                            {activity.stage_name === "closed" && (
-                                            <td className='activity_stage'>
-                                                <div className='close_act_box'>
-                                                    <div className='close_act_status'>{activity.stage_name}</div>
-                                                </div>
-                                            </td>
-                                            )}
-                                            <td className='outbound_occurred_on'>{new Date(activity.close_date).toLocaleDateString('en-US', { timeZone: 'UTC' })}</td>
-                                        </tr>
+                                    {loggedActivities
+                                        .sort(
+                                            (event_1, event_2) => 
+                                                new Date(event_2.close_date).getTime() - new Date(event_1.close_date).getTime()
+                                        )
+                                        .map(activity => (
+                                            <tr key={activity.id}>
+                                                <td className='outbound_type'>{activity.activity_record_type.charAt(0).toUpperCase() + activity.activity_record_type.slice(1)}</td>
+                                                {activity.notes ? (
+                                                    <td className='outbound_notes'>{activity.notes}</td>
+                                                ): <td></td>}
+                                                
+                                                {!activity.stage_name && (
+                                                    <td></td>
+                                                )}
+                                                {activity.stage_name === "open" && (
+                                                <td className='activity_stage'>
+                                                    <div className='open_act_box'>
+                                                        <div className='open_act_status'>{activity.stage_name}</div>
+                                                    </div>
+                                                </td>
+                                                )}
+                                                {activity.stage_name === "closed" && (
+                                                <td className='activity_stage'>
+                                                    <div className='close_act_box'>
+                                                        <div className='close_act_status'>{activity.stage_name}</div>
+                                                    </div>
+                                                </td>
+                                                )}
+                                                <td className='outbound_occurred_on'>{new Date(activity.close_date).toLocaleDateString('en-US', { timeZone: 'UTC' })}</td>
+                                            </tr>
                                     ))}
                                 </tbody>
                             </table>
